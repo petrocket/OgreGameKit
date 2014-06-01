@@ -1,0 +1,8 @@
+//
+// Prefix header for all source files of the 'OgreGameKit' target in the 'OgreGameKit' project
+//
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    		
+#endif

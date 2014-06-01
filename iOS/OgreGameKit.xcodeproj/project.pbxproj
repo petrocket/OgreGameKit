@@ -1,0 +1,564 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FA8632AA193AADEB00B29028 /* Debug.material in Resources */ = {isa = PBXBuildFile; fileRef = FA8632A9193AADEB00B29028 /* Debug.material */; };
+		FAF726A1192C38E900CBCD29 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF726A0192C38E900CBCD29 /* CoreGraphics.framework */; };
+		FAF726A3192C38E900CBCD29 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF726A2192C38E900CBCD29 /* Foundation.framework */; };
+		FAF726A5192C38E900CBCD29 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF726A4192C38E900CBCD29 /* OpenGLES.framework */; };
+		FAF726A7192C38E900CBCD29 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF726A6192C38E900CBCD29 /* QuartzCore.framework */; };
+		FAF726A9192C38E900CBCD29 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF726A8192C38E900CBCD29 /* UIKit.framework */; };
+		FAF726B0192C38E900CBCD29 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FAF726AE192C38E900CBCD29 /* InfoPlist.strings */; };
+		FAF726B2192C38E900CBCD29 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = FAF726B1192C38E900CBCD29 /* main.mm */; };
+		FAF72710192C3BBD00CBCD29 /* OGKAppDelgate.mm in Sources */ = {isa = PBXBuildFile; fileRef = FAF7270F192C3BBD00CBCD29 /* OGKAppDelgate.mm */; };
+		FAF72713192C404400CBCD29 /* OGKGame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAF72711192C404400CBCD29 /* OGKGame.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		FA86325C193AA09300B29028 /* OGKShaderGeneratorListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKShaderGeneratorListener.h; path = ../../common/OGKShaderGeneratorListener.h; sourceTree = "<group>"; };
+		FA86325D193AA71C00B29028 /* ogre.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; name = ogre.cfg; path = resources/ogre.cfg; sourceTree = "<group>"; };
+		FA86325E193AA71C00B29028 /* plugins.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; name = plugins.cfg; path = resources/plugins.cfg; sourceTree = "<group>"; };
+		FA86325F193AA71C00B29028 /* resources.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; name = resources.cfg; path = resources/resources.cfg; sourceTree = "<group>"; };
+		FA863263193AACE000B29028 /* OgreGameKit.material */ = {isa = PBXFileReference; lastKnownFileType = text; path = OgreGameKit.material; sourceTree = "<group>"; };
+		FA86326C193AACE000B29028 /* SdkTrays.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = SdkTrays.zip; sourceTree = "<group>"; };
+		FA863274193AACE000B29028 /* skybox.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = skybox.zip; sourceTree = "<group>"; };
+		FA863276193AACE100B29028 /* FFPLib_Common.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Common.cg; sourceTree = "<group>"; };
+		FA863277193AACE100B29028 /* FFPLib_Common.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Common.glsl; sourceTree = "<group>"; };
+		FA863278193AACE100B29028 /* FFPLib_Common.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Common.glsles; sourceTree = "<group>"; };
+		FA863279193AACE100B29028 /* FFPLib_Common.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Common.hlsl; sourceTree = "<group>"; };
+		FA86327A193AACE100B29028 /* FFPLib_Fog.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Fog.cg; sourceTree = "<group>"; };
+		FA86327B193AACE100B29028 /* FFPLib_Fog.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Fog.glsl; sourceTree = "<group>"; };
+		FA86327C193AACE100B29028 /* FFPLib_Fog.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Fog.glsles; sourceTree = "<group>"; };
+		FA86327D193AACE100B29028 /* FFPLib_Fog.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Fog.hlsl; sourceTree = "<group>"; };
+		FA86327E193AACE100B29028 /* FFPLib_Lighting.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Lighting.cg; sourceTree = "<group>"; };
+		FA86327F193AACE100B29028 /* FFPLib_Lighting.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Lighting.glsl; sourceTree = "<group>"; };
+		FA863280193AACE100B29028 /* FFPLib_Lighting.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Lighting.glsles; sourceTree = "<group>"; };
+		FA863281193AACE100B29028 /* FFPLib_Lighting.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Lighting.hlsl; sourceTree = "<group>"; };
+		FA863282193AACE100B29028 /* FFPLib_Texturing.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Texturing.cg; sourceTree = "<group>"; };
+		FA863283193AACE100B29028 /* FFPLib_Texturing.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Texturing.glsl; sourceTree = "<group>"; };
+		FA863284193AACE100B29028 /* FFPLib_Texturing.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Texturing.glsles; sourceTree = "<group>"; };
+		FA863285193AACE100B29028 /* FFPLib_Texturing.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Texturing.hlsl; sourceTree = "<group>"; };
+		FA863286193AACE100B29028 /* FFPLib_Transform.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Transform.cg; sourceTree = "<group>"; };
+		FA863287193AACE100B29028 /* FFPLib_Transform.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Transform.glsl; sourceTree = "<group>"; };
+		FA863288193AACE100B29028 /* FFPLib_Transform.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Transform.glsles; sourceTree = "<group>"; };
+		FA863289193AACE100B29028 /* FFPLib_Transform.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Transform.hlsl; sourceTree = "<group>"; };
+		FA86328B193AACE100B29028 /* HardwareSkinningShadow.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = HardwareSkinningShadow.cg; sourceTree = "<group>"; };
+		FA86328C193AACE100B29028 /* HardwareSkinningShadow.material */ = {isa = PBXFileReference; lastKnownFileType = text; path = HardwareSkinningShadow.material; sourceTree = "<group>"; };
+		FA86328D193AACE100B29028 /* RTShaderSystem.material */ = {isa = PBXFileReference; lastKnownFileType = text; path = RTShaderSystem.material; sourceTree = "<group>"; };
+		FA86328E193AACE100B29028 /* SampleLib_InstancedViewports.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = SampleLib_InstancedViewports.cg; sourceTree = "<group>"; };
+		FA86328F193AACE100B29028 /* SampleLib_InstancedViewports.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SampleLib_InstancedViewports.glsl; sourceTree = "<group>"; };
+		FA863290193AACE100B29028 /* SampleLib_InstancedViewports.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SampleLib_InstancedViewports.hlsl; sourceTree = "<group>"; };
+		FA863291193AACE100B29028 /* SampleLib_ReflectionMap.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = SampleLib_ReflectionMap.cg; sourceTree = "<group>"; };
+		FA863292193AACE100B29028 /* SampleLib_ReflectionMap.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SampleLib_ReflectionMap.glsl; sourceTree = "<group>"; };
+		FA863293193AACE100B29028 /* SampleLib_ReflectionMap.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = SampleLib_ReflectionMap.glsles; sourceTree = "<group>"; };
+		FA863294193AACE100B29028 /* SampleLib_ReflectionMap.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SampleLib_ReflectionMap.hlsl; sourceTree = "<group>"; };
+		FA863295193AACE100B29028 /* SGXLib_IntegratedPSSM.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_IntegratedPSSM.cg; sourceTree = "<group>"; };
+		FA863296193AACE100B29028 /* SGXLib_IntegratedPSSM.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_IntegratedPSSM.glsl; sourceTree = "<group>"; };
+		FA863297193AACE100B29028 /* SGXLib_IntegratedPSSM.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_IntegratedPSSM.glsles; sourceTree = "<group>"; };
+		FA863298193AACE100B29028 /* SGXLib_IntegratedPSSM.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_IntegratedPSSM.hlsl; sourceTree = "<group>"; };
+		FA863299193AACE100B29028 /* SGXLib_LayeredBlending.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_LayeredBlending.cg; sourceTree = "<group>"; };
+		FA86329A193AACE100B29028 /* SGXLib_LayeredBlending.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_LayeredBlending.glsl; sourceTree = "<group>"; };
+		FA86329B193AACE100B29028 /* SGXLib_LayeredBlending.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_LayeredBlending.glsles; sourceTree = "<group>"; };
+		FA86329C193AACE100B29028 /* SGXLib_LayeredBlending.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_LayeredBlending.hlsl; sourceTree = "<group>"; };
+		FA86329D193AACE100B29028 /* SGXLib_NormalMapLighting.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_NormalMapLighting.cg; sourceTree = "<group>"; };
+		FA86329E193AACE100B29028 /* SGXLib_NormalMapLighting.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_NormalMapLighting.glsl; sourceTree = "<group>"; };
+		FA86329F193AACE100B29028 /* SGXLib_NormalMapLighting.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_NormalMapLighting.glsles; sourceTree = "<group>"; };
+		FA8632A0193AACE100B29028 /* SGXLib_NormalMapLighting.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_NormalMapLighting.hlsl; sourceTree = "<group>"; };
+		FA8632A1193AACE100B29028 /* SGXLib_PerPixelLighting.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_PerPixelLighting.cg; sourceTree = "<group>"; };
+		FA8632A2193AACE100B29028 /* SGXLib_PerPixelLighting.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_PerPixelLighting.glsl; sourceTree = "<group>"; };
+		FA8632A3193AACE100B29028 /* SGXLib_PerPixelLighting.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_PerPixelLighting.glsles; sourceTree = "<group>"; };
+		FA8632A4193AACE100B29028 /* SGXLib_PerPixelLighting.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_PerPixelLighting.hlsl; sourceTree = "<group>"; };
+		FA8632A5193AACE100B29028 /* SGXLib_TextureAtlas.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_TextureAtlas.cg; sourceTree = "<group>"; };
+		FA8632A6193AACE100B29028 /* SGXLib_TextureAtlas.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_TextureAtlas.glsl; sourceTree = "<group>"; };
+		FA8632A7193AACE100B29028 /* SGXLib_TextureAtlas.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_TextureAtlas.glsles; sourceTree = "<group>"; };
+		FA8632A8193AACE100B29028 /* SGXLib_TextureAtlas.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_TextureAtlas.hlsl; sourceTree = "<group>"; };
+		FA8632A9193AADEB00B29028 /* Debug.material */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Debug.material; sourceTree = "<group>"; };
+		FAF7269D192C38E900CBCD29 /* OgreGameKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OgreGameKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAF726A0192C38E900CBCD29 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		FAF726A2192C38E900CBCD29 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		FAF726A4192C38E900CBCD29 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		FAF726A6192C38E900CBCD29 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		FAF726A8192C38E900CBCD29 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		FAF726AC192C38E900CBCD29 /* OgreGameKit-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OgreGameKit-Prefix.pch"; sourceTree = "<group>"; };
+		FAF726AD192C38E900CBCD29 /* OgreGameKit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OgreGameKit-Info.plist"; sourceTree = "<group>"; };
+		FAF726AF192C38E900CBCD29 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FAF726B1192C38E900CBCD29 /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
+		FAF726BB192C38E900CBCD29 /* OgreStaticPluginLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OgreStaticPluginLoader.h; sourceTree = "<group>"; };
+		FAF7270E192C3BBD00CBCD29 /* OGKAppDelgate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGKAppDelgate.h; sourceTree = "<group>"; };
+		FAF7270F192C3BBD00CBCD29 /* OGKAppDelgate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OGKAppDelgate.mm; sourceTree = "<group>"; };
+		FAF72711192C404400CBCD29 /* OGKGame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OGKGame.cpp; path = ../../common/OGKGame.cpp; sourceTree = "<group>"; };
+		FAF72712192C404400CBCD29 /* OGKGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKGame.h; path = ../../common/OGKGame.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FAF72699192C38E900CBCD29 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FAF726A7192C38E900CBCD29 /* QuartzCore.framework in Frameworks */,
+				FAF726A1192C38E900CBCD29 /* CoreGraphics.framework in Frameworks */,
+				FAF726A3192C38E900CBCD29 /* Foundation.framework in Frameworks */,
+				FAF726A5192C38E900CBCD29 /* OpenGLES.framework in Frameworks */,
+				FAF726A9192C38E900CBCD29 /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FA863260193AACE000B29028 /* media */ = {
+			isa = PBXGroup;
+			children = (
+				FA863261193AACE000B29028 /* materials */,
+				FA863269193AACE000B29028 /* models */,
+				FA86326B193AACE000B29028 /* packs */,
+				FA863275193AACE000B29028 /* RTShaderLib */,
+			);
+			name = media;
+			path = ../../media;
+			sourceTree = "<group>";
+		};
+		FA863261193AACE000B29028 /* materials */ = {
+			isa = PBXGroup;
+			children = (
+				FA863262193AACE000B29028 /* scripts */,
+				FA863265193AACE000B29028 /* textures */,
+			);
+			path = materials;
+			sourceTree = "<group>";
+		};
+		FA863262193AACE000B29028 /* scripts */ = {
+			isa = PBXGroup;
+			children = (
+				FA863263193AACE000B29028 /* OgreGameKit.material */,
+				FA8632A9193AADEB00B29028 /* Debug.material */,
+			);
+			path = scripts;
+			sourceTree = "<group>";
+		};
+		FA863265193AACE000B29028 /* textures */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = textures;
+			sourceTree = "<group>";
+		};
+		FA863269193AACE000B29028 /* models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = models;
+			sourceTree = "<group>";
+		};
+		FA86326B193AACE000B29028 /* packs */ = {
+			isa = PBXGroup;
+			children = (
+				FA86326C193AACE000B29028 /* SdkTrays.zip */,
+				FA863274193AACE000B29028 /* skybox.zip */,
+			);
+			path = packs;
+			sourceTree = "<group>";
+		};
+		FA863275193AACE000B29028 /* RTShaderLib */ = {
+			isa = PBXGroup;
+			children = (
+				FA863276193AACE100B29028 /* FFPLib_Common.cg */,
+				FA863277193AACE100B29028 /* FFPLib_Common.glsl */,
+				FA863278193AACE100B29028 /* FFPLib_Common.glsles */,
+				FA863279193AACE100B29028 /* FFPLib_Common.hlsl */,
+				FA86327A193AACE100B29028 /* FFPLib_Fog.cg */,
+				FA86327B193AACE100B29028 /* FFPLib_Fog.glsl */,
+				FA86327C193AACE100B29028 /* FFPLib_Fog.glsles */,
+				FA86327D193AACE100B29028 /* FFPLib_Fog.hlsl */,
+				FA86327E193AACE100B29028 /* FFPLib_Lighting.cg */,
+				FA86327F193AACE100B29028 /* FFPLib_Lighting.glsl */,
+				FA863280193AACE100B29028 /* FFPLib_Lighting.glsles */,
+				FA863281193AACE100B29028 /* FFPLib_Lighting.hlsl */,
+				FA863282193AACE100B29028 /* FFPLib_Texturing.cg */,
+				FA863283193AACE100B29028 /* FFPLib_Texturing.glsl */,
+				FA863284193AACE100B29028 /* FFPLib_Texturing.glsles */,
+				FA863285193AACE100B29028 /* FFPLib_Texturing.hlsl */,
+				FA863286193AACE100B29028 /* FFPLib_Transform.cg */,
+				FA863287193AACE100B29028 /* FFPLib_Transform.glsl */,
+				FA863288193AACE100B29028 /* FFPLib_Transform.glsles */,
+				FA863289193AACE100B29028 /* FFPLib_Transform.hlsl */,
+				FA86328A193AACE100B29028 /* materials */,
+				FA86328E193AACE100B29028 /* SampleLib_InstancedViewports.cg */,
+				FA86328F193AACE100B29028 /* SampleLib_InstancedViewports.glsl */,
+				FA863290193AACE100B29028 /* SampleLib_InstancedViewports.hlsl */,
+				FA863291193AACE100B29028 /* SampleLib_ReflectionMap.cg */,
+				FA863292193AACE100B29028 /* SampleLib_ReflectionMap.glsl */,
+				FA863293193AACE100B29028 /* SampleLib_ReflectionMap.glsles */,
+				FA863294193AACE100B29028 /* SampleLib_ReflectionMap.hlsl */,
+				FA863295193AACE100B29028 /* SGXLib_IntegratedPSSM.cg */,
+				FA863296193AACE100B29028 /* SGXLib_IntegratedPSSM.glsl */,
+				FA863297193AACE100B29028 /* SGXLib_IntegratedPSSM.glsles */,
+				FA863298193AACE100B29028 /* SGXLib_IntegratedPSSM.hlsl */,
+				FA863299193AACE100B29028 /* SGXLib_LayeredBlending.cg */,
+				FA86329A193AACE100B29028 /* SGXLib_LayeredBlending.glsl */,
+				FA86329B193AACE100B29028 /* SGXLib_LayeredBlending.glsles */,
+				FA86329C193AACE100B29028 /* SGXLib_LayeredBlending.hlsl */,
+				FA86329D193AACE100B29028 /* SGXLib_NormalMapLighting.cg */,
+				FA86329E193AACE100B29028 /* SGXLib_NormalMapLighting.glsl */,
+				FA86329F193AACE100B29028 /* SGXLib_NormalMapLighting.glsles */,
+				FA8632A0193AACE100B29028 /* SGXLib_NormalMapLighting.hlsl */,
+				FA8632A1193AACE100B29028 /* SGXLib_PerPixelLighting.cg */,
+				FA8632A2193AACE100B29028 /* SGXLib_PerPixelLighting.glsl */,
+				FA8632A3193AACE100B29028 /* SGXLib_PerPixelLighting.glsles */,
+				FA8632A4193AACE100B29028 /* SGXLib_PerPixelLighting.hlsl */,
+				FA8632A5193AACE100B29028 /* SGXLib_TextureAtlas.cg */,
+				FA8632A6193AACE100B29028 /* SGXLib_TextureAtlas.glsl */,
+				FA8632A7193AACE100B29028 /* SGXLib_TextureAtlas.glsles */,
+				FA8632A8193AACE100B29028 /* SGXLib_TextureAtlas.hlsl */,
+			);
+			path = RTShaderLib;
+			sourceTree = "<group>";
+		};
+		FA86328A193AACE100B29028 /* materials */ = {
+			isa = PBXGroup;
+			children = (
+				FA86328B193AACE100B29028 /* HardwareSkinningShadow.cg */,
+				FA86328C193AACE100B29028 /* HardwareSkinningShadow.material */,
+				FA86328D193AACE100B29028 /* RTShaderSystem.material */,
+			);
+			path = materials;
+			sourceTree = "<group>";
+		};
+		FAF72693192C38E900CBCD29 = {
+			isa = PBXGroup;
+			children = (
+				FAF726AA192C38E900CBCD29 /* OgreGameKit */,
+				FAF7269F192C38E900CBCD29 /* Frameworks */,
+				FAF7269E192C38E900CBCD29 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FAF7269E192C38E900CBCD29 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FAF7269D192C38E900CBCD29 /* OgreGameKit.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FAF7269F192C38E900CBCD29 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FAF726A0192C38E900CBCD29 /* CoreGraphics.framework */,
+				FAF726A2192C38E900CBCD29 /* Foundation.framework */,
+				FAF726A4192C38E900CBCD29 /* OpenGLES.framework */,
+				FAF726A6192C38E900CBCD29 /* QuartzCore.framework */,
+				FAF726A8192C38E900CBCD29 /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FAF726AA192C38E900CBCD29 /* OgreGameKit */ = {
+			isa = PBXGroup;
+			children = (
+				FAF7270D192C3AB000CBCD29 /* common */,
+				FAF7270C192C3A8D00CBCD29 /* ios */,
+				FAF726B1192C38E900CBCD29 /* main.mm */,
+				FAF726BC192C38E900CBCD29 /* Resources */,
+				FAF726AB192C38E900CBCD29 /* Supporting Files */,
+			);
+			path = OgreGameKit;
+			sourceTree = "<group>";
+		};
+		FAF726AB192C38E900CBCD29 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				FAF726AE192C38E900CBCD29 /* InfoPlist.strings */,
+				FAF726AC192C38E900CBCD29 /* OgreGameKit-Prefix.pch */,
+				FAF726AD192C38E900CBCD29 /* OgreGameKit-Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		FAF726BC192C38E900CBCD29 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FA863260193AACE000B29028 /* media */,
+				FA86325D193AA71C00B29028 /* ogre.cfg */,
+				FA86325E193AA71C00B29028 /* plugins.cfg */,
+				FA86325F193AA71C00B29028 /* resources.cfg */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		FAF7270C192C3A8D00CBCD29 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				FAF726BB192C38E900CBCD29 /* OgreStaticPluginLoader.h */,
+				FAF7270E192C3BBD00CBCD29 /* OGKAppDelgate.h */,
+				FAF7270F192C3BBD00CBCD29 /* OGKAppDelgate.mm */,
+			);
+			name = ios;
+			sourceTree = "<group>";
+		};
+		FAF7270D192C3AB000CBCD29 /* common */ = {
+			isa = PBXGroup;
+			children = (
+				FAF72711192C404400CBCD29 /* OGKGame.cpp */,
+				FAF72712192C404400CBCD29 /* OGKGame.h */,
+				FA86325C193AA09300B29028 /* OGKShaderGeneratorListener.h */,
+			);
+			name = common;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FAF7269C192C38E900CBCD29 /* OgreGameKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FAF72709192C38E900CBCD29 /* Build configuration list for PBXNativeTarget "OgreGameKit" */;
+			buildPhases = (
+				FAF72698192C38E900CBCD29 /* Sources */,
+				FAF72699192C38E900CBCD29 /* Frameworks */,
+				FAF7269A192C38E900CBCD29 /* Resources */,
+				FAF7269B192C38E900CBCD29 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OgreGameKit;
+			productName = OgreGameKit;
+			productReference = FAF7269D192C38E900CBCD29 /* OgreGameKit.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FAF72694192C38E900CBCD29 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+			};
+			buildConfigurationList = FAF72697192C38E900CBCD29 /* Build configuration list for PBXProject "OgreGameKit" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = FAF72693192C38E900CBCD29;
+			productRefGroup = FAF7269E192C38E900CBCD29 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FAF7269C192C38E900CBCD29 /* OgreGameKit */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FAF7269A192C38E900CBCD29 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA8632AA193AADEB00B29028 /* Debug.material in Resources */,
+				FAF726B0192C38E900CBCD29 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		FAF7269B192C38E900CBCD29 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "# This shell script simply copies resources into their respective locations\nditto \"$PROJECT_DIR/$PROJECT_NAME/../../media/\" \"$BUILT_PRODUCTS_DIR/OgreGameKit.app/media/\"\nditto $PROJECT_DIR/$PROJECT_NAME/resources/*.cfg \"$BUILT_PRODUCTS_DIR/OgreGameKit.app/\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FAF72698192C38E900CBCD29 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FAF726B2192C38E900CBCD29 /* main.mm in Sources */,
+				FAF72710192C3BBD00CBCD29 /* OGKAppDelgate.mm in Sources */,
+				FAF72713192C404400CBCD29 /* OGKGame.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		FAF726AE192C38E900CBCD29 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FAF726AF192C38E900CBCD29 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FAF72707192C38E900CBCD29 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = No;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "OgreGameKit/OgreGameKit-Prefix.pch";
+				GCC_SYMBOLS_PRIVATE_EXTERN = No;
+				GCC_THUMB_SUPPORT = "";
+				INFOPLIST_FILE = "OgreGameKit/OgreGameKit-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(OGRE_SDK_ROOT)/lib/Release\"",
+					"\"$(OGRE_SDK_ROOT)/iOSDependencies/lib/release\"",
+					"\"$(OGRE_SDK_ROOT)/iOSDependencies/lib\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "arm64 armv7";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		FAF72708192C38E900CBCD29 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_INLINES_ARE_PRIVATE_EXTERN = No;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "OgreGameKit/OgreGameKit-Prefix.pch";
+				GCC_SYMBOLS_PRIVATE_EXTERN = No;
+				GCC_THUMB_SUPPORT = "";
+				INFOPLIST_FILE = "OgreGameKit/OgreGameKit-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(OGRE_SDK_ROOT)/lib/Release\"",
+					"\"$(OGRE_SDK_ROOT)/iOSDependencies/lib/release\"",
+					"\"$(OGRE_SDK_ROOT)/iOSDependencies/lib\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "arm64 armv7";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		FAF7270A192C38E900CBCD29 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++98";
+				CLANG_CXX_LIBRARY = "libc++";
+				HEADER_SEARCH_PATHS = (
+					"\"$(OGRE_SDK_ROOT)/include/OGRE\"",
+					"\"$(OGRE_SDK_ROOT)/include/OGRE/Overlay\"",
+					"\"$(OGRE_SDK_ROOT)/include/OGRE/RenderSystems/GLES2\"",
+					"\"$(OGRE_SDK_ROOT)/include/OGRE/RTShaderSystem\"",
+					"\"$(OGRE_SDK_ROOT)/include/OGRE/iOS\"",
+					"\"$(OGRE_SDK_ROOT)/include\"",
+					"\"$(OGRE_SDK_ROOT)/include/OIS\"",
+					"\"$(OGRE_SDK_ROOT)/iOSDependencies/include\"",
+				);
+				OGRE_SDK_ROOT = "/Users/alex/Documents/workspace/ogre/1.9.x/1.9.0-ios-sdk";
+				OTHER_CFLAGS = "-DOGRE_USE_GLES2=1";
+				OTHER_LDFLAGS = (
+					"-lOIS",
+					"-lOgreMainStatic",
+					"-lOgreOverlayStatic",
+					"-lRenderSystem_GLES2Static",
+					"-lOgreRTShaderSystemStatic",
+					"-lglsl_optimizer",
+					"-lboost_system",
+					"-lboost_chrono",
+					"-lboost_date_time",
+					"-lboost_thread",
+					"-lFreeType",
+					"-lFreeImage",
+					"-lzzip",
+					"-lz",
+				);
+				VALID_ARCHS = "arm64 armv7";
+			};
+			name = Debug;
+		};
+		FAF7270B192C38E900CBCD29 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++98";
+				CLANG_CXX_LIBRARY = "libc++";
+				HEADER_SEARCH_PATHS = (
+					"\"$(OGRE_SDK_ROOT)/include/OGRE\"",
+					"\"$(OGRE_SDK_ROOT)/include/OGRE/Overlay\"",
+					"\"$(OGRE_SDK_ROOT)/include/OGRE/RenderSystems/GLES2\"",
+					"\"$(OGRE_SDK_ROOT)/include/OGRE/RTShaderSystem\"",
+					"\"$(OGRE_SDK_ROOT)/include/OGRE/iOS\"",
+					"\"$(OGRE_SDK_ROOT)/include\"",
+					"\"$(OGRE_SDK_ROOT)/include/OIS\"",
+					"\"$(OGRE_SDK_ROOT)/iOSDependencies/include\"",
+				);
+				OGRE_SDK_ROOT = "/Users/alex/Documents/workspace/ogre/1.9.x/1.9.0-ios-sdk";
+				OTHER_CFLAGS = "-DOGRE_USE_GLES2=1";
+				OTHER_LDFLAGS = (
+					"-lOIS",
+					"-lOgreMainStatic",
+					"-lOgreOverlayStatic",
+					"-lRenderSystem_GLES2Static",
+					"-lOgreRTShaderSystemStatic",
+					"-lglsl_optimizer",
+					"-lboost_system",
+					"-lboost_chrono",
+					"-lboost_date_time",
+					"-lboost_thread",
+					"-lFreeType",
+					"-lFreeImage",
+					"-lzzip",
+					"-lz",
+				);
+				VALID_ARCHS = "arm64 armv7";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FAF72697192C38E900CBCD29 /* Build configuration list for PBXProject "OgreGameKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FAF72707192C38E900CBCD29 /* Debug */,
+				FAF72708192C38E900CBCD29 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FAF72709192C38E900CBCD29 /* Build configuration list for PBXNativeTarget "OgreGameKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FAF7270A192C38E900CBCD29 /* Debug */,
+				FAF7270B192C38E900CBCD29 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FAF72694192C38E900CBCD29 /* Project object */;
+}
