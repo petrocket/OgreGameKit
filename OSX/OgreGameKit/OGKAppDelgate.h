@@ -17,14 +17,9 @@
 @interface OGKAppDelegate : NSObject <NSApplicationDelegate>
 {
     NSTimer *mTimer;
-    id mDisplayLink;
-    NSDate *mDate;
 }
 
 - (void)renderOneFrame;
-
-@property double lastFrameTime;
-@property double startTime;
 
 @end
 

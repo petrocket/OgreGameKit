@@ -16,8 +16,6 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)application
 {
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    self.lastFrameTime = 1;
-    self.startTime = 0;
     
     try {
         new OGKGame();
@@ -32,10 +30,7 @@
         e.getFullDescription().c_str() << std::endl;
     }
     
-    mDate = [[NSDate alloc] init];
-    self.lastFrameTime = -[mDate timeIntervalSinceNow];
-    
-    mTimer = [NSTimer scheduledTimerWithTimeInterval:(NSTimeInterval)(1.0f / 60.0f) * self.lastFrameTime
+    mTimer = [NSTimer scheduledTimerWithTimeInterval:(NSTimeInterval)(1.0f / 60.0f)
                                               target:self
                                             selector:@selector(renderOneFrame)
                                             userInfo:nil
@@ -62,12 +57,6 @@
 
 - (void)terminate
 {
-    [mDate release];
-    mDate = nil;
-    
-    [mDisplayLink invalidate];
-    mDisplayLink = nil;
-    
     if(mTimer) {
         [mTimer invalidate];
         mTimer = nil;

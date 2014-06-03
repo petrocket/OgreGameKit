@@ -19,7 +19,7 @@ namespace Ogre
 
 OGKGame::OGKGame()
 {
-	m_MoveSpeed			= 0.1f;
+	m_MoveSpeed			= 10.0f;
 	m_RotateSpeed       = 0.3f;
     m_StartTime         = 0;
     m_TimeSinceLastFrame = 0;
