@@ -20,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FA77699B193E2F45005F4810 /* OGKStaticPluginLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKStaticPluginLoader.h; path = ../../common/OGKStaticPluginLoader.h; sourceTree = "<group>"; };
 		FA86325C193AA09300B29028 /* OGKShaderGeneratorListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKShaderGeneratorListener.h; path = ../../common/OGKShaderGeneratorListener.h; sourceTree = "<group>"; };
 		FA86325D193AA71C00B29028 /* ogre.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; name = ogre.cfg; path = resources/ogre.cfg; sourceTree = "<group>"; };
 		FA86325E193AA71C00B29028 /* plugins.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; name = plugins.cfg; path = resources/plugins.cfg; sourceTree = "<group>"; };
@@ -307,6 +308,7 @@
 				FAF72711192C404400CBCD29 /* OGKGame.cpp */,
 				FAF72712192C404400CBCD29 /* OGKGame.h */,
 				FA86325C193AA09300B29028 /* OGKShaderGeneratorListener.h */,
+				FA77699B193E2F45005F4810 /* OGKStaticPluginLoader.h */,
 			);
 			name = common;
 			sourceTree = "<group>";
@@ -477,6 +479,10 @@
 					"\"$(OGRE_SDK_ROOT)/include\"",
 					"\"$(OGRE_SDK_ROOT)/include/OIS\"",
 					"\"$(OGRE_SDK_ROOT)/iOSDependencies/include\"",
+					"\"$(OGRE_SDK_ROOT)/include/OGRE/Plugins/PCZSceneManager\"",
+					"\"$(OGRE_SDK_ROOT)/include/OGRE/Plugins/OctreeSceneManager\"",
+					"\"$(OGRE_SDK_ROOT)/include/OGRE/Plugins/OctreeZone\"",
+					"\"$(OGRE_SDK_ROOT)/include/OGRE/Terrain\"",
 				);
 				OGRE_SDK_ROOT = "/Users/alex/Documents/workspace/ogre/1.9.x/1.9.0-ios-sdk";
 				OTHER_CFLAGS = "-DOGRE_USE_GLES2=1";
@@ -495,6 +501,7 @@
 					"-lFreeImage",
 					"-lzzip",
 					"-lz",
+					"-lOgreTerrainStatic",
 				);
 				VALID_ARCHS = "arm64 armv7";
 			};
@@ -514,6 +521,10 @@
 					"\"$(OGRE_SDK_ROOT)/include\"",
 					"\"$(OGRE_SDK_ROOT)/include/OIS\"",
 					"\"$(OGRE_SDK_ROOT)/iOSDependencies/include\"",
+					"\"$(OGRE_SDK_ROOT)/include/OGRE/Plugins/PCZSceneManager\"",
+					"\"$(OGRE_SDK_ROOT)/include/OGRE/Plugins/OctreeSceneManager\"",
+					"\"$(OGRE_SDK_ROOT)/include/OGRE/Plugins/OctreeZone\"",
+					"\"$(OGRE_SDK_ROOT)/include/OGRE/Terrain\"",
 				);
 				OGRE_SDK_ROOT = "/Users/alex/Documents/workspace/ogre/1.9.x/1.9.0-ios-sdk";
 				OTHER_CFLAGS = "-DOGRE_USE_GLES2=1";
@@ -532,6 +543,7 @@
 					"-lFreeImage",
 					"-lzzip",
 					"-lz",
+					"-lOgreTerrainStatic",
 				);
 				VALID_ARCHS = "arm64 armv7";
 			};

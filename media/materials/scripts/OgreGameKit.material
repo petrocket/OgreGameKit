@@ -9,7 +9,7 @@ material OGK/DefaultSkyBox
 
 			texture_unit
 			{
-				cubic_texture bluecloud.jpg separateUV
+				cubic_texture sky.png separateUV
 				tex_address_mode clamp
 			}
 		}

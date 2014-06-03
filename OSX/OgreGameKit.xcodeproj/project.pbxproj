@@ -1,0 +1,638 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FA35946E193E64120050AB5C /* OGKGame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA35946A193E64120050AB5C /* OGKGame.cpp */; };
+		FA359471193E641D0050AB5C /* OGKAppDelgate.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA359470193E641D0050AB5C /* OGKAppDelgate.mm */; };
+		FA7769AA193E4B02005F4810 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA7769A9193E4B02005F4810 /* Carbon.framework */; };
+		FA7769AC193E4B02005F4810 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA7769AB193E4B02005F4810 /* Cocoa.framework */; };
+		FA7769AE193E4B02005F4810 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA7769AD193E4B02005F4810 /* IOKit.framework */; };
+		FA7769B0193E4B02005F4810 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA7769AF193E4B02005F4810 /* OpenGL.framework */; };
+		FA7769B2193E4B02005F4810 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA7769B1193E4B02005F4810 /* QuartzCore.framework */; };
+		FA7769B9193E4B02005F4810 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA7769B7193E4B02005F4810 /* InfoPlist.strings */; };
+		FA7769BB193E4B02005F4810 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA7769BA193E4B02005F4810 /* main.mm */; };
+		FA7769D6193E4B02005F4810 /* ogre.cfg in Resources */ = {isa = PBXBuildFile; fileRef = FA7769D5193E4B02005F4810 /* ogre.cfg */; };
+		FA7769D8193E4B02005F4810 /* plugins.cfg in Resources */ = {isa = PBXBuildFile; fileRef = FA7769D7193E4B02005F4810 /* plugins.cfg */; };
+		FA7769DA193E4B02005F4810 /* resources.cfg in Resources */ = {isa = PBXBuildFile; fileRef = FA7769D9193E4B02005F4810 /* resources.cfg */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		FA359420193E63FC0050AB5C /* Debug.material */ = {isa = PBXFileReference; lastKnownFileType = text; path = Debug.material; sourceTree = "<group>"; };
+		FA359421193E63FC0050AB5C /* OgreGameKit.material */ = {isa = PBXFileReference; lastKnownFileType = text; path = OgreGameKit.material; sourceTree = "<group>"; };
+		FA359423193E63FC0050AB5C /* dirt_grayrocky_diffusespecular.dds */ = {isa = PBXFileReference; lastKnownFileType = file; path = dirt_grayrocky_diffusespecular.dds; sourceTree = "<group>"; };
+		FA359424193E63FC0050AB5C /* dirt_grayrocky_normalheight.dds */ = {isa = PBXFileReference; lastKnownFileType = file; path = dirt_grayrocky_normalheight.dds; sourceTree = "<group>"; };
+		FA359425193E63FC0050AB5C /* grass_green-01_diffusespecular.dds */ = {isa = PBXFileReference; lastKnownFileType = file; path = "grass_green-01_diffusespecular.dds"; sourceTree = "<group>"; };
+		FA359426193E63FC0050AB5C /* grass_green-01_normalheight.dds */ = {isa = PBXFileReference; lastKnownFileType = file; path = "grass_green-01_normalheight.dds"; sourceTree = "<group>"; };
+		FA359427193E63FC0050AB5C /* growth_weirdfungus-03_diffusespecular.dds */ = {isa = PBXFileReference; lastKnownFileType = file; path = "growth_weirdfungus-03_diffusespecular.dds"; sourceTree = "<group>"; };
+		FA359428193E63FC0050AB5C /* growth_weirdfungus-03_normalheight.dds */ = {isa = PBXFileReference; lastKnownFileType = file; path = "growth_weirdfungus-03_normalheight.dds"; sourceTree = "<group>"; };
+		FA359429193E63FC0050AB5C /* height.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = height.png; sourceTree = "<group>"; };
+		FA35942A193E63FC0050AB5C /* terrain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = terrain.png; sourceTree = "<group>"; };
+		FA35942D193E63FC0050AB5C /* SdkTrays.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = SdkTrays.zip; sourceTree = "<group>"; };
+		FA35942F193E63FC0050AB5C /* sky_BK.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sky_BK.png; sourceTree = "<group>"; };
+		FA359430193E63FC0050AB5C /* sky_DN.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sky_DN.png; sourceTree = "<group>"; };
+		FA359431193E63FC0050AB5C /* sky_FR.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sky_FR.png; sourceTree = "<group>"; };
+		FA359432193E63FC0050AB5C /* sky_LF.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sky_LF.png; sourceTree = "<group>"; };
+		FA359433193E63FC0050AB5C /* sky_RT.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sky_RT.png; sourceTree = "<group>"; };
+		FA359434193E63FC0050AB5C /* sky_UP.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sky_UP.png; sourceTree = "<group>"; };
+		FA359435193E63FC0050AB5C /* skybox.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = skybox.zip; sourceTree = "<group>"; };
+		FA359437193E63FC0050AB5C /* FFPLib_Common.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Common.cg; sourceTree = "<group>"; };
+		FA359438193E63FC0050AB5C /* FFPLib_Common.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Common.glsl; sourceTree = "<group>"; };
+		FA359439193E63FC0050AB5C /* FFPLib_Common.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Common.glsles; sourceTree = "<group>"; };
+		FA35943A193E63FC0050AB5C /* FFPLib_Common.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Common.hlsl; sourceTree = "<group>"; };
+		FA35943B193E63FC0050AB5C /* FFPLib_Fog.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Fog.cg; sourceTree = "<group>"; };
+		FA35943C193E63FC0050AB5C /* FFPLib_Fog.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Fog.glsl; sourceTree = "<group>"; };
+		FA35943D193E63FC0050AB5C /* FFPLib_Fog.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Fog.glsles; sourceTree = "<group>"; };
+		FA35943E193E63FC0050AB5C /* FFPLib_Fog.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Fog.hlsl; sourceTree = "<group>"; };
+		FA35943F193E63FC0050AB5C /* FFPLib_Lighting.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Lighting.cg; sourceTree = "<group>"; };
+		FA359440193E63FC0050AB5C /* FFPLib_Lighting.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Lighting.glsl; sourceTree = "<group>"; };
+		FA359441193E63FC0050AB5C /* FFPLib_Lighting.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Lighting.glsles; sourceTree = "<group>"; };
+		FA359442193E63FC0050AB5C /* FFPLib_Lighting.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Lighting.hlsl; sourceTree = "<group>"; };
+		FA359443193E63FC0050AB5C /* FFPLib_Texturing.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Texturing.cg; sourceTree = "<group>"; };
+		FA359444193E63FC0050AB5C /* FFPLib_Texturing.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Texturing.glsl; sourceTree = "<group>"; };
+		FA359445193E63FC0050AB5C /* FFPLib_Texturing.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Texturing.glsles; sourceTree = "<group>"; };
+		FA359446193E63FC0050AB5C /* FFPLib_Texturing.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Texturing.hlsl; sourceTree = "<group>"; };
+		FA359447193E63FC0050AB5C /* FFPLib_Transform.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Transform.cg; sourceTree = "<group>"; };
+		FA359448193E63FC0050AB5C /* FFPLib_Transform.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Transform.glsl; sourceTree = "<group>"; };
+		FA359449193E63FC0050AB5C /* FFPLib_Transform.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Transform.glsles; sourceTree = "<group>"; };
+		FA35944A193E63FC0050AB5C /* FFPLib_Transform.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Transform.hlsl; sourceTree = "<group>"; };
+		FA35944C193E63FC0050AB5C /* HardwareSkinningShadow.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = HardwareSkinningShadow.cg; sourceTree = "<group>"; };
+		FA35944D193E63FC0050AB5C /* HardwareSkinningShadow.material */ = {isa = PBXFileReference; lastKnownFileType = text; path = HardwareSkinningShadow.material; sourceTree = "<group>"; };
+		FA35944E193E63FC0050AB5C /* RTShaderSystem.material */ = {isa = PBXFileReference; lastKnownFileType = text; path = RTShaderSystem.material; sourceTree = "<group>"; };
+		FA35944F193E63FC0050AB5C /* SampleLib_InstancedViewports.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = SampleLib_InstancedViewports.cg; sourceTree = "<group>"; };
+		FA359450193E63FC0050AB5C /* SampleLib_InstancedViewports.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SampleLib_InstancedViewports.glsl; sourceTree = "<group>"; };
+		FA359451193E63FC0050AB5C /* SampleLib_InstancedViewports.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SampleLib_InstancedViewports.hlsl; sourceTree = "<group>"; };
+		FA359452193E63FC0050AB5C /* SampleLib_ReflectionMap.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = SampleLib_ReflectionMap.cg; sourceTree = "<group>"; };
+		FA359453193E63FC0050AB5C /* SampleLib_ReflectionMap.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SampleLib_ReflectionMap.glsl; sourceTree = "<group>"; };
+		FA359454193E63FC0050AB5C /* SampleLib_ReflectionMap.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = SampleLib_ReflectionMap.glsles; sourceTree = "<group>"; };
+		FA359455193E63FC0050AB5C /* SampleLib_ReflectionMap.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SampleLib_ReflectionMap.hlsl; sourceTree = "<group>"; };
+		FA359456193E63FC0050AB5C /* SGXLib_IntegratedPSSM.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_IntegratedPSSM.cg; sourceTree = "<group>"; };
+		FA359457193E63FC0050AB5C /* SGXLib_IntegratedPSSM.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_IntegratedPSSM.glsl; sourceTree = "<group>"; };
+		FA359458193E63FC0050AB5C /* SGXLib_IntegratedPSSM.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_IntegratedPSSM.glsles; sourceTree = "<group>"; };
+		FA359459193E63FC0050AB5C /* SGXLib_IntegratedPSSM.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_IntegratedPSSM.hlsl; sourceTree = "<group>"; };
+		FA35945A193E63FC0050AB5C /* SGXLib_LayeredBlending.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_LayeredBlending.cg; sourceTree = "<group>"; };
+		FA35945B193E63FC0050AB5C /* SGXLib_LayeredBlending.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_LayeredBlending.glsl; sourceTree = "<group>"; };
+		FA35945C193E63FC0050AB5C /* SGXLib_LayeredBlending.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_LayeredBlending.glsles; sourceTree = "<group>"; };
+		FA35945D193E63FC0050AB5C /* SGXLib_LayeredBlending.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_LayeredBlending.hlsl; sourceTree = "<group>"; };
+		FA35945E193E63FC0050AB5C /* SGXLib_NormalMapLighting.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_NormalMapLighting.cg; sourceTree = "<group>"; };
+		FA35945F193E63FC0050AB5C /* SGXLib_NormalMapLighting.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_NormalMapLighting.glsl; sourceTree = "<group>"; };
+		FA359460193E63FC0050AB5C /* SGXLib_NormalMapLighting.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_NormalMapLighting.glsles; sourceTree = "<group>"; };
+		FA359461193E63FC0050AB5C /* SGXLib_NormalMapLighting.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_NormalMapLighting.hlsl; sourceTree = "<group>"; };
+		FA359462193E63FC0050AB5C /* SGXLib_PerPixelLighting.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_PerPixelLighting.cg; sourceTree = "<group>"; };
+		FA359463193E63FC0050AB5C /* SGXLib_PerPixelLighting.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_PerPixelLighting.glsl; sourceTree = "<group>"; };
+		FA359464193E63FC0050AB5C /* SGXLib_PerPixelLighting.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_PerPixelLighting.glsles; sourceTree = "<group>"; };
+		FA359465193E63FC0050AB5C /* SGXLib_PerPixelLighting.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_PerPixelLighting.hlsl; sourceTree = "<group>"; };
+		FA359466193E63FC0050AB5C /* SGXLib_TextureAtlas.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_TextureAtlas.cg; sourceTree = "<group>"; };
+		FA359467193E63FC0050AB5C /* SGXLib_TextureAtlas.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_TextureAtlas.glsl; sourceTree = "<group>"; };
+		FA359468193E63FC0050AB5C /* SGXLib_TextureAtlas.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_TextureAtlas.glsles; sourceTree = "<group>"; };
+		FA359469193E63FC0050AB5C /* SGXLib_TextureAtlas.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_TextureAtlas.hlsl; sourceTree = "<group>"; };
+		FA35946A193E64120050AB5C /* OGKGame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OGKGame.cpp; path = ../../common/OGKGame.cpp; sourceTree = "<group>"; };
+		FA35946B193E64120050AB5C /* OGKGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKGame.h; path = ../../common/OGKGame.h; sourceTree = "<group>"; };
+		FA35946C193E64120050AB5C /* OGKShaderGeneratorListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKShaderGeneratorListener.h; path = ../../common/OGKShaderGeneratorListener.h; sourceTree = "<group>"; };
+		FA35946D193E64120050AB5C /* OGKStaticPluginLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKStaticPluginLoader.h; path = ../../common/OGKStaticPluginLoader.h; sourceTree = "<group>"; };
+		FA35946F193E641D0050AB5C /* OGKAppDelgate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGKAppDelgate.h; sourceTree = "<group>"; };
+		FA359470193E641D0050AB5C /* OGKAppDelgate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OGKAppDelgate.mm; sourceTree = "<group>"; };
+		FA7769A6193E4B02005F4810 /* OgreGameKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OgreGameKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA7769A9193E4B02005F4810 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		FA7769AB193E4B02005F4810 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		FA7769AD193E4B02005F4810 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		FA7769AF193E4B02005F4810 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		FA7769B1193E4B02005F4810 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		FA7769B5193E4B02005F4810 /* OgreGameKit-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OgreGameKit-Prefix.pch"; sourceTree = "<group>"; };
+		FA7769B6193E4B02005F4810 /* OgreGameKit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OgreGameKit-Info.plist"; sourceTree = "<group>"; };
+		FA7769B8193E4B02005F4810 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FA7769BA193E4B02005F4810 /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
+		FA7769D5193E4B02005F4810 /* ogre.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = ogre.cfg; sourceTree = "<group>"; };
+		FA7769D7193E4B02005F4810 /* plugins.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = plugins.cfg; sourceTree = "<group>"; };
+		FA7769D9193E4B02005F4810 /* resources.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = resources.cfg; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FA7769A2193E4B02005F4810 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA7769B2193E4B02005F4810 /* QuartzCore.framework in Frameworks */,
+				FA7769AC193E4B02005F4810 /* Cocoa.framework in Frameworks */,
+				FA7769B0193E4B02005F4810 /* OpenGL.framework in Frameworks */,
+				FA7769AA193E4B02005F4810 /* Carbon.framework in Frameworks */,
+				FA7769AE193E4B02005F4810 /* IOKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FA359416193E62E30050AB5C /* common */ = {
+			isa = PBXGroup;
+			children = (
+				FA35946A193E64120050AB5C /* OGKGame.cpp */,
+				FA35946B193E64120050AB5C /* OGKGame.h */,
+				FA35946C193E64120050AB5C /* OGKShaderGeneratorListener.h */,
+				FA35946D193E64120050AB5C /* OGKStaticPluginLoader.h */,
+			);
+			name = common;
+			sourceTree = "<group>";
+		};
+		FA35941C193E637C0050AB5C /* osx */ = {
+			isa = PBXGroup;
+			children = (
+				FA35946F193E641D0050AB5C /* OGKAppDelgate.h */,
+				FA359470193E641D0050AB5C /* OGKAppDelgate.mm */,
+			);
+			name = osx;
+			sourceTree = "<group>";
+		};
+		FA35941D193E63FC0050AB5C /* media */ = {
+			isa = PBXGroup;
+			children = (
+				FA35941E193E63FC0050AB5C /* materials */,
+				FA35942B193E63FC0050AB5C /* models */,
+				FA35942C193E63FC0050AB5C /* packs */,
+				FA359436193E63FC0050AB5C /* RTShaderLib */,
+			);
+			name = media;
+			path = ../../media;
+			sourceTree = "<group>";
+		};
+		FA35941E193E63FC0050AB5C /* materials */ = {
+			isa = PBXGroup;
+			children = (
+				FA35941F193E63FC0050AB5C /* scripts */,
+				FA359422193E63FC0050AB5C /* textures */,
+			);
+			path = materials;
+			sourceTree = "<group>";
+		};
+		FA35941F193E63FC0050AB5C /* scripts */ = {
+			isa = PBXGroup;
+			children = (
+				FA359420193E63FC0050AB5C /* Debug.material */,
+				FA359421193E63FC0050AB5C /* OgreGameKit.material */,
+			);
+			path = scripts;
+			sourceTree = "<group>";
+		};
+		FA359422193E63FC0050AB5C /* textures */ = {
+			isa = PBXGroup;
+			children = (
+				FA359423193E63FC0050AB5C /* dirt_grayrocky_diffusespecular.dds */,
+				FA359424193E63FC0050AB5C /* dirt_grayrocky_normalheight.dds */,
+				FA359425193E63FC0050AB5C /* grass_green-01_diffusespecular.dds */,
+				FA359426193E63FC0050AB5C /* grass_green-01_normalheight.dds */,
+				FA359427193E63FC0050AB5C /* growth_weirdfungus-03_diffusespecular.dds */,
+				FA359428193E63FC0050AB5C /* growth_weirdfungus-03_normalheight.dds */,
+				FA359429193E63FC0050AB5C /* height.png */,
+				FA35942A193E63FC0050AB5C /* terrain.png */,
+			);
+			path = textures;
+			sourceTree = "<group>";
+		};
+		FA35942B193E63FC0050AB5C /* models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = models;
+			sourceTree = "<group>";
+		};
+		FA35942C193E63FC0050AB5C /* packs */ = {
+			isa = PBXGroup;
+			children = (
+				FA35942D193E63FC0050AB5C /* SdkTrays.zip */,
+				FA35942E193E63FC0050AB5C /* skybox */,
+				FA359435193E63FC0050AB5C /* skybox.zip */,
+			);
+			path = packs;
+			sourceTree = "<group>";
+		};
+		FA35942E193E63FC0050AB5C /* skybox */ = {
+			isa = PBXGroup;
+			children = (
+				FA35942F193E63FC0050AB5C /* sky_BK.png */,
+				FA359430193E63FC0050AB5C /* sky_DN.png */,
+				FA359431193E63FC0050AB5C /* sky_FR.png */,
+				FA359432193E63FC0050AB5C /* sky_LF.png */,
+				FA359433193E63FC0050AB5C /* sky_RT.png */,
+				FA359434193E63FC0050AB5C /* sky_UP.png */,
+			);
+			path = skybox;
+			sourceTree = "<group>";
+		};
+		FA359436193E63FC0050AB5C /* RTShaderLib */ = {
+			isa = PBXGroup;
+			children = (
+				FA359437193E63FC0050AB5C /* FFPLib_Common.cg */,
+				FA359438193E63FC0050AB5C /* FFPLib_Common.glsl */,
+				FA359439193E63FC0050AB5C /* FFPLib_Common.glsles */,
+				FA35943A193E63FC0050AB5C /* FFPLib_Common.hlsl */,
+				FA35943B193E63FC0050AB5C /* FFPLib_Fog.cg */,
+				FA35943C193E63FC0050AB5C /* FFPLib_Fog.glsl */,
+				FA35943D193E63FC0050AB5C /* FFPLib_Fog.glsles */,
+				FA35943E193E63FC0050AB5C /* FFPLib_Fog.hlsl */,
+				FA35943F193E63FC0050AB5C /* FFPLib_Lighting.cg */,
+				FA359440193E63FC0050AB5C /* FFPLib_Lighting.glsl */,
+				FA359441193E63FC0050AB5C /* FFPLib_Lighting.glsles */,
+				FA359442193E63FC0050AB5C /* FFPLib_Lighting.hlsl */,
+				FA359443193E63FC0050AB5C /* FFPLib_Texturing.cg */,
+				FA359444193E63FC0050AB5C /* FFPLib_Texturing.glsl */,
+				FA359445193E63FC0050AB5C /* FFPLib_Texturing.glsles */,
+				FA359446193E63FC0050AB5C /* FFPLib_Texturing.hlsl */,
+				FA359447193E63FC0050AB5C /* FFPLib_Transform.cg */,
+				FA359448193E63FC0050AB5C /* FFPLib_Transform.glsl */,
+				FA359449193E63FC0050AB5C /* FFPLib_Transform.glsles */,
+				FA35944A193E63FC0050AB5C /* FFPLib_Transform.hlsl */,
+				FA35944B193E63FC0050AB5C /* materials */,
+				FA35944F193E63FC0050AB5C /* SampleLib_InstancedViewports.cg */,
+				FA359450193E63FC0050AB5C /* SampleLib_InstancedViewports.glsl */,
+				FA359451193E63FC0050AB5C /* SampleLib_InstancedViewports.hlsl */,
+				FA359452193E63FC0050AB5C /* SampleLib_ReflectionMap.cg */,
+				FA359453193E63FC0050AB5C /* SampleLib_ReflectionMap.glsl */,
+				FA359454193E63FC0050AB5C /* SampleLib_ReflectionMap.glsles */,
+				FA359455193E63FC0050AB5C /* SampleLib_ReflectionMap.hlsl */,
+				FA359456193E63FC0050AB5C /* SGXLib_IntegratedPSSM.cg */,
+				FA359457193E63FC0050AB5C /* SGXLib_IntegratedPSSM.glsl */,
+				FA359458193E63FC0050AB5C /* SGXLib_IntegratedPSSM.glsles */,
+				FA359459193E63FC0050AB5C /* SGXLib_IntegratedPSSM.hlsl */,
+				FA35945A193E63FC0050AB5C /* SGXLib_LayeredBlending.cg */,
+				FA35945B193E63FC0050AB5C /* SGXLib_LayeredBlending.glsl */,
+				FA35945C193E63FC0050AB5C /* SGXLib_LayeredBlending.glsles */,
+				FA35945D193E63FC0050AB5C /* SGXLib_LayeredBlending.hlsl */,
+				FA35945E193E63FC0050AB5C /* SGXLib_NormalMapLighting.cg */,
+				FA35945F193E63FC0050AB5C /* SGXLib_NormalMapLighting.glsl */,
+				FA359460193E63FC0050AB5C /* SGXLib_NormalMapLighting.glsles */,
+				FA359461193E63FC0050AB5C /* SGXLib_NormalMapLighting.hlsl */,
+				FA359462193E63FC0050AB5C /* SGXLib_PerPixelLighting.cg */,
+				FA359463193E63FC0050AB5C /* SGXLib_PerPixelLighting.glsl */,
+				FA359464193E63FC0050AB5C /* SGXLib_PerPixelLighting.glsles */,
+				FA359465193E63FC0050AB5C /* SGXLib_PerPixelLighting.hlsl */,
+				FA359466193E63FC0050AB5C /* SGXLib_TextureAtlas.cg */,
+				FA359467193E63FC0050AB5C /* SGXLib_TextureAtlas.glsl */,
+				FA359468193E63FC0050AB5C /* SGXLib_TextureAtlas.glsles */,
+				FA359469193E63FC0050AB5C /* SGXLib_TextureAtlas.hlsl */,
+			);
+			path = RTShaderLib;
+			sourceTree = "<group>";
+		};
+		FA35944B193E63FC0050AB5C /* materials */ = {
+			isa = PBXGroup;
+			children = (
+				FA35944C193E63FC0050AB5C /* HardwareSkinningShadow.cg */,
+				FA35944D193E63FC0050AB5C /* HardwareSkinningShadow.material */,
+				FA35944E193E63FC0050AB5C /* RTShaderSystem.material */,
+			);
+			path = materials;
+			sourceTree = "<group>";
+		};
+		FA77699C193E4B02005F4810 = {
+			isa = PBXGroup;
+			children = (
+				FA7769B3193E4B02005F4810 /* OgreGameKit */,
+				FA7769A8193E4B02005F4810 /* Frameworks */,
+				FA7769A7193E4B02005F4810 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FA7769A7193E4B02005F4810 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FA7769A6193E4B02005F4810 /* OgreGameKit.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FA7769A8193E4B02005F4810 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FA7769A9193E4B02005F4810 /* Carbon.framework */,
+				FA7769AB193E4B02005F4810 /* Cocoa.framework */,
+				FA7769AD193E4B02005F4810 /* IOKit.framework */,
+				FA7769AF193E4B02005F4810 /* OpenGL.framework */,
+				FA7769B1193E4B02005F4810 /* QuartzCore.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FA7769B3193E4B02005F4810 /* OgreGameKit */ = {
+			isa = PBXGroup;
+			children = (
+				FA359416193E62E30050AB5C /* common */,
+				FA35941C193E637C0050AB5C /* osx */,
+				FA7769BA193E4B02005F4810 /* main.mm */,
+				FA7769C4193E4B02005F4810 /* Resources */,
+				FA7769B4193E4B02005F4810 /* Supporting Files */,
+			);
+			path = OgreGameKit;
+			sourceTree = "<group>";
+		};
+		FA7769B4193E4B02005F4810 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				FA7769B7193E4B02005F4810 /* InfoPlist.strings */,
+				FA7769B5193E4B02005F4810 /* OgreGameKit-Prefix.pch */,
+				FA7769B6193E4B02005F4810 /* OgreGameKit-Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		FA7769C4193E4B02005F4810 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FA35941D193E63FC0050AB5C /* media */,
+				FA7769D5193E4B02005F4810 /* ogre.cfg */,
+				FA7769D7193E4B02005F4810 /* plugins.cfg */,
+				FA7769D9193E4B02005F4810 /* resources.cfg */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FA7769A5193E4B02005F4810 /* OgreGameKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FA7769DD193E4B02005F4810 /* Build configuration list for PBXNativeTarget "OgreGameKit" */;
+			buildPhases = (
+				FA7769A1193E4B02005F4810 /* Sources */,
+				FA7769A2193E4B02005F4810 /* Frameworks */,
+				FA7769A3193E4B02005F4810 /* Resources */,
+				FA7769A4193E4B02005F4810 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OgreGameKit;
+			productName = OgreGameKit;
+			productReference = FA7769A6193E4B02005F4810 /* OgreGameKit.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FA77699D193E4B02005F4810 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+			};
+			buildConfigurationList = FA7769A0193E4B02005F4810 /* Build configuration list for PBXProject "OgreGameKit" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = FA77699C193E4B02005F4810;
+			productRefGroup = FA7769A7193E4B02005F4810 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FA7769A5193E4B02005F4810 /* OgreGameKit */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FA7769A3193E4B02005F4810 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA7769B9193E4B02005F4810 /* InfoPlist.strings in Resources */,
+				FA7769D6193E4B02005F4810 /* ogre.cfg in Resources */,
+				FA7769DA193E4B02005F4810 /* resources.cfg in Resources */,
+				FA7769D8193E4B02005F4810 /* plugins.cfg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		FA7769A4193E4B02005F4810 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "# This shell script simply copies resources into their respective locations\nmkdir -p \"$BUILT_PRODUCTS_DIR/OgreGameKit.app/Contents/Frameworks\"\nmkdir -p \"$BUILT_PRODUCTS_DIR/OgreGameKit.app/Contents/Plugins\"\nditto \"$OGRE_SDK_ROOT/lib/macosx/Release/Ogre.framework\" \"$BUILT_PRODUCTS_DIR/OgreGameKit.app/Contents/Frameworks/Ogre.framework\"\nditto \"$OGRE_SDK_ROOT/lib/macosx/Release/Plugin_CgProgramManager.framework\" \"$BUILT_PRODUCTS_DIR/OgreGameKit.app/Contents/Frameworks/Plugin_CgProgramManager.framework\"\nditto \"$OGRE_SDK_ROOT/lib/macosx/Release/OgreOverlay.framework\" \"$BUILT_PRODUCTS_DIR/OgreGameKit.app/Contents/Frameworks/OgreOverlay.framework\"\nditto \"$OGRE_SDK_ROOT/lib/macosx/Release/OgrePaging.framework\" \"$BUILT_PRODUCTS_DIR/OgreGameKit.app/Contents/Frameworks/OgrePaging.framework\"\nditto \"$OGRE_SDK_ROOT/lib/macosx/Release/OgreTerrain.framework\" \"$BUILT_PRODUCTS_DIR/OgreGameKit.app/Contents/Frameworks/OgreTerrain.framework\"\nditto \"$OGRE_SDK_ROOT/lib/macosx/Release/RenderSystem_GL.framework\" \"$BUILT_PRODUCTS_DIR/OgreGameKit.app/Contents/Frameworks/RenderSystem_GL.framework\"\nditto \"$PROJECT_DIR/$PROJECT_NAME/../../media/\" \"$BUILT_PRODUCTS_DIR/OgreGameKit.app/Contents/Resources/media/\"\nditto $PROJECT_DIR/$PROJECT_NAME/*.cfg \"$BUILT_PRODUCTS_DIR/OgreGameKit.app/Contents/Resources/\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FA7769A1193E4B02005F4810 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA7769BB193E4B02005F4810 /* main.mm in Sources */,
+				FA35946E193E64120050AB5C /* OGKGame.cpp in Sources */,
+				FA359471193E641D0050AB5C /* OGKAppDelgate.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		FA7769B7193E4B02005F4810 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FA7769B8193E4B02005F4810 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FA7769DB193E4B02005F4810 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(OGRE_SDK_ROOT)/lib/macosx/Release\"",
+					"\"$(OGRE_SDK_ROOT)/Dependencies\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "OgreGameKit/OgreGameKit-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"\"$(OGRE_SDK_ROOT)/include/OGRE\"",
+					"\"$(OGRE_SDK_ROOT)/include/OGRE/OSX\"",
+					"\"$(OGRE_SDK_ROOT)/include/OGRE/Overlay\"",
+					"\"$(OGRE_SDK_ROOT)/include/OIS\"",
+					"\"$(OGRE_SDK_ROOT)/Dependencies/include\"",
+					"\"$(OGRE_SDK_ROOT)/boost\"",
+				);
+				INFOPLIST_FILE = "OgreGameKit/OgreGameKit-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(OGRE_SDK_ROOT)/lib\"",
+					"\"$(OGRE_SDK_ROOT)/Dependencies/lib/Release\"",
+					/opt/local/lib,
+				);
+				OTHER_LDFLAGS = (
+					"-lOIS",
+					"-lboost_system-mt",
+					"-framework",
+					Ogre,
+					"-framework",
+					OgreOverlay,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		FA7769DC193E4B02005F4810 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(OGRE_SDK_ROOT)/lib/macosx/Release\"",
+					"\"$(OGRE_SDK_ROOT)/Dependencies\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "OgreGameKit/OgreGameKit-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"\"$(OGRE_SDK_ROOT)/include/OGRE\"",
+					"\"$(OGRE_SDK_ROOT)/include/OGRE/OSX\"",
+					"\"$(OGRE_SDK_ROOT)/include/OGRE/Overlay\"",
+					"\"$(OGRE_SDK_ROOT)/include/OIS\"",
+					"\"$(OGRE_SDK_ROOT)/Dependencies/include\"",
+					"\"$(OGRE_SDK_ROOT)/boost\"",
+				);
+				INFOPLIST_FILE = "OgreGameKit/OgreGameKit-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(OGRE_SDK_ROOT)/lib\"",
+					"\"$(OGRE_SDK_ROOT)/Dependencies/lib/Release\"",
+					/opt/local/lib,
+				);
+				OTHER_LDFLAGS = (
+					"-lOIS",
+					"-lboost_system-mt",
+					"-framework",
+					Ogre,
+					"-framework",
+					OgreOverlay,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		FA7769DE193E4B02005F4810 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++98";
+				CLANG_CXX_LIBRARY = "libc++";
+				HEADER_SEARCH_PATHS = (
+					"\"$(OGRE_SDK_ROOT)/include/OGRE\"",
+					"\"$(OGRE_SDK_ROOT)/include/OGRE/OSX\"",
+					"\"$(OGRE_SDK_ROOT)/include/OGRE/Overlay\"",
+					"\"$(OGRE_SDK_ROOT)/include/OGRE/Paging\"",
+					"\"$(OGRE_SDK_ROOT)/include/OGRE/Terrain\"",
+					"\"$(OGRE_SDK_ROOT)/include/OIS\"",
+					"\"$(OGRE_SDK_ROOT)/Dependencies/include\"",
+					"\"$(OGRE_SDK_ROOT)/boost\"",
+					"\"$(OGRE_SDK_ROOT)/include/OGRE/Plugins/CgProgramManager\"",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(OGRE_SDK_ROOT)/Dependencies/lib\"",
+					"\"$(OGRE_SDK_ROOT)/Dependencies/lib/Release\"",
+					"\"$(OGRE_SDK_ROOT)/lib\"",
+					/opt/local/lib,
+				);
+				OGRE_SDK_ROOT = "/Users/alex/Documents/workspace/ogre/1.9.x/1.9.0-osx-sdk";
+				OTHER_LDFLAGS = (
+					"-lOIS",
+					"-lboost_system",
+					"-framework",
+					Ogre,
+					"-framework",
+					OgreOverlay,
+					"-framework",
+					OgreTerrain,
+					"-framework",
+					OgrePaging,
+					"-framework",
+					Plugin_CgProgramManager,
+				);
+			};
+			name = Debug;
+		};
+		FA7769DF193E4B02005F4810 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++98";
+				CLANG_CXX_LIBRARY = "libc++";
+				HEADER_SEARCH_PATHS = (
+					"\"$(OGRE_SDK_ROOT)/include/OGRE\"",
+					"\"$(OGRE_SDK_ROOT)/include/OGRE/OSX\"",
+					"\"$(OGRE_SDK_ROOT)/include/OGRE/Overlay\"",
+					"\"$(OGRE_SDK_ROOT)/include/OGRE/Paging\"",
+					"\"$(OGRE_SDK_ROOT)/include/OGRE/Terrain\"",
+					"\"$(OGRE_SDK_ROOT)/include/OIS\"",
+					"\"$(OGRE_SDK_ROOT)/Dependencies/include\"",
+					"\"$(OGRE_SDK_ROOT)/boost\"",
+					"\"$(OGRE_SDK_ROOT)/include/OGRE/Plugins/CgProgramManager\"",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(OGRE_SDK_ROOT)/Dependencies/lib\"",
+					"\"$(OGRE_SDK_ROOT)/Dependencies/lib/Release\"",
+					"\"$(OGRE_SDK_ROOT)/lib\"",
+					/opt/local/lib,
+				);
+				OGRE_SDK_ROOT = "/Users/alex/Documents/workspace/ogre/1.9.x/1.9.0-osx-sdk";
+				OTHER_LDFLAGS = (
+					"-lOIS",
+					"-lboost_system",
+					"-framework",
+					Ogre,
+					"-framework",
+					OgreOverlay,
+					"-framework",
+					OgreTerrain,
+					"-framework",
+					OgrePaging,
+					"-framework",
+					Plugin_CgProgramManager,
+				);
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FA7769A0193E4B02005F4810 /* Build configuration list for PBXProject "OgreGameKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA7769DB193E4B02005F4810 /* Debug */,
+				FA7769DC193E4B02005F4810 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FA7769DD193E4B02005F4810 /* Build configuration list for PBXNativeTarget "OgreGameKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA7769DE193E4B02005F4810 /* Debug */,
+				FA7769DF193E4B02005F4810 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FA77699D193E4B02005F4810 /* Project object */;
+}
