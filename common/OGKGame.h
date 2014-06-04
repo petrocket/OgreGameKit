@@ -107,6 +107,7 @@ protected:
     void defineTerrain(long x, long y);
     void initBlendMaps(Ogre::Terrain *t);
     bool mTerrainsImported;
+    
 private:
 	OGKGame(const OGKGame&);
 	OGKGame& operator= (const OGKGame&);
@@ -120,7 +121,7 @@ private:
 #endif // INCLUDE_RTSHADER_SYSTEM
     
 	double m_TimeSinceLastFrame;
-	double m_StartTime ;
+	double m_StartTime;
     
     Ogre::FrameEvent            m_FrameEvent;
 	int                         m_iNumScreenShots;

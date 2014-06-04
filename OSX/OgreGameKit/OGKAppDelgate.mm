@@ -15,19 +15,19 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)application
 {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    
-    try {
-        new OGKGame();
-        OGKGame::getSingleton().start();
-        
-        Ogre::Root::getSingleton().getRenderSystem()->_initRenderTargets();
-        
-        // Clear event times
-		Ogre::Root::getSingleton().clearEventTimes();
-    } catch( Ogre::Exception& e ) {
-        std::cerr << "An exception has occurred: " <<
-        e.getFullDescription().c_str() << std::endl;
+    @autoreleasepool {
+        try {
+            new OGKGame();
+            OGKGame::getSingleton().start();
+            
+            Ogre::Root::getSingleton().getRenderSystem()->_initRenderTargets();
+            
+            // Clear event times
+            Ogre::Root::getSingleton().clearEventTimes();
+        } catch( Ogre::Exception& e ) {
+            std::cerr << "An exception has occurred: " <<
+            e.getFullDescription().c_str() << std::endl;
+        }
     }
     
     mTimer = [NSTimer scheduledTimerWithTimeInterval:(NSTimeInterval)(1.0f / 60.0f)
@@ -35,34 +35,23 @@
                                             selector:@selector(renderOneFrame)
                                             userInfo:nil
                                              repeats:YES];
-    [pool release];
+    [[NSRunLoop currentRunLoop] addTimer:mTimer forMode:NSEventTrackingRunLoopMode];
+        
 }
 
-- (void)dealloc
+- (void)applicationWillTerminate:(NSNotification *)notifciation
 {
     if(mTimer) {
         [mTimer invalidate];
         mTimer = nil;
     }
-    
-    [super dealloc];
 }
 
 - (void)renderOneFrame
 {
     if(!OGKGame::getSingletonPtr()->renderOneFrame()) {
-	    [self terminate];
+	    [NSApp terminate:self];
     }
-}
-
-- (void)terminate
-{
-    if(mTimer) {
-        [mTimer invalidate];
-        mTimer = nil;
-    }
-    
-    [NSApp performSelector:@selector(terminate:) withObject:nil afterDelay:0.0];
 }
 
 @end

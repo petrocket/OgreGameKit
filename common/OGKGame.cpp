@@ -75,9 +75,9 @@ bool OGKGame::initOgre(Ogre::String wndTitle, OIS::KeyListener *pKeyListener, OI
     
 	if(!m_pRoot->showConfigDialog())
 		return false;
+    m_pRoot->getRenderSystem()->setConfigOption("macAPI","cocoa");
 	m_pRenderWnd = m_pRoot->initialise(true, wndTitle);
     
-//	m_pSceneMgr = m_pRoot->createSceneManager("OctreeSceneManager");
 	m_pSceneMgr = m_pRoot->createSceneManager(ST_GENERIC, "SceneManager");
 	m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0.7f, 0.7f, 0.7f));
     
@@ -502,7 +502,9 @@ bool OGKGame::renderOneFrame()
     }
        
     if(m_pRenderWnd->isActive()) {
-        m_StartTime = m_pTimer->getMillisecondsCPU();
+        double current_time = m_pTimer->getMillisecondsCPU();
+        m_TimeSinceLastFrame = current_time - m_StartTime;
+        m_StartTime = current_time;
         
 #if !defined(OGRE_IS_IOS)
         m_pKeyboard->capture();
@@ -510,8 +512,6 @@ bool OGKGame::renderOneFrame()
         m_pMouse->capture();
         update(m_TimeSinceLastFrame);
         m_pRoot->renderOneFrame();
-        
-        m_TimeSinceLastFrame = m_pTimer->getMillisecondsCPU() - m_StartTime;
     }
     
     return true;
@@ -520,6 +520,7 @@ bool OGKGame::renderOneFrame()
 void OGKGame::setup()
 {
 	m_pSceneMgr->setSkyBox(true, "OGK/DefaultSkyBox");
+//    m_pSceneMgr->setSkyBoxEnabled(true);
     
     Ogre::Vector3 lightDir(0.55,-0.3,0.75);
     lightDir.normalise();
@@ -535,7 +536,7 @@ void OGKGame::setup()
     mTerrainGlobals = OGRE_NEW Ogre::TerrainGlobalOptions();
     mTerrainGroup = OGRE_NEW Ogre::TerrainGroup(m_pSceneMgr, Ogre::Terrain::ALIGN_X_Z, 513, 12000.f);
     mTerrainGroup->setFilenameConvention(Ogre::String("OGKTerrain"), Ogre::String("dat"));
-    mTerrainGroup->setOrigin(Ogre::Vector3::ZERO);
+    //mTerrainGroup->setOrigin(Ogre::Vector3::ZERO);
     
     configureTerrainDefaults(light);
     
@@ -567,6 +568,8 @@ void OGKGame::start()
     m_bShutDownOgre = false;
     
 	m_pLog->logMessage("Game initialized!");
+    
+    m_StartTime = m_pTimer->getMillisecondsCPU();
     
 #ifdef INCLUDE_RTSHADER_SYSTEM
     initialiseRTShaderSystem(m_pSceneMgr);
@@ -626,8 +629,6 @@ void OGKGame::update(double timeSinceLastFrame)
 	m_MoveScale = m_MoveSpeed   * (float)timeSinceLastFrame;
 	m_RotScale  = m_RotateSpeed * (float)timeSinceLastFrame;
     
-    m_pSceneMgr->setSkyBoxEnabled(true);
-    
 	m_TranslateVector = Vector3::ZERO;
     
 	getInput();
@@ -638,6 +639,7 @@ void OGKGame::update(double timeSinceLastFrame)
         m_pLog->logMessage("Saving terrain...");
         mTerrainGroup->saveAllTerrains(true);
         mTerrainsImported = false;
+        m_pLog->logMessage("Done Saving terrain...");
     }
 }
 
@@ -649,7 +651,7 @@ void OGKGame::moveCamera()
 	else
 #endif
         
-	m_pCamera->moveRelative(m_TranslateVector / 10);
+	m_pCamera->moveRelative(m_TranslateVector / 10.f);
 }
 
 void OGKGame::getInput()
