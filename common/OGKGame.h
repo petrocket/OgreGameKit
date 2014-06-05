@@ -66,6 +66,7 @@ public:
 	bool keyReleased(const OIS::KeyEvent &keyEventRef);
     
     bool renderOneFrame();
+    bool renderOneFrame(double timeSinceLastFrame);
     void setup();
     void start();
     void update(double timeSinceLastFrame);
@@ -89,6 +90,10 @@ public:
 	Ogre::Log*                  m_pLog;
 	Ogre::Timer*				m_pTimer;
     Ogre::OverlaySystem*        m_pOverlaySystem;
+    Ogre::Overlay*              m_pOverlay;
+    Ogre::OverlayContainer*     m_pOverlayContainer;
+    Ogre::OverlayElement*       m_pOverlayPanel;
+    Ogre::OverlayElement*       m_pFPS;
 	
 	OIS::InputManager*			m_pInputMgr;
 	OIS::Keyboard*				m_pKeyboard;
@@ -111,6 +116,8 @@ protected:
 private:
 	OGKGame(const OGKGame&);
 	OGKGame& operator= (const OGKGame&);
+    
+    void _initOverlays();
     
     bool initialiseRTShaderSystem(Ogre::SceneManager* sceneMgr);
     void destroyRTShaderSystem();

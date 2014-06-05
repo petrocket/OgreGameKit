@@ -545,6 +545,8 @@
 					"\"$(OGRE_SDK_ROOT)/Dependencies/include\"",
 					"\"$(OGRE_SDK_ROOT)/boost\"",
 					"\"$(OGRE_SDK_ROOT)/include/OGRE/Plugins/CgProgramManager\"",
+					"\"$(OGRE_SDK_ROOT)/include/OGRE/RenderSystems/GL\"",
+					"\"$(OGRE_SDK_ROOT)/include/OGRE/RenderSystems/GL/OSX\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(OGRE_SDK_ROOT)/Dependencies/lib\"",
@@ -586,6 +588,8 @@
 					"\"$(OGRE_SDK_ROOT)/Dependencies/include\"",
 					"\"$(OGRE_SDK_ROOT)/boost\"",
 					"\"$(OGRE_SDK_ROOT)/include/OGRE/Plugins/CgProgramManager\"",
+					"\"$(OGRE_SDK_ROOT)/include/OGRE/RenderSystems/GL\"",
+					"\"$(OGRE_SDK_ROOT)/include/OGRE/RenderSystems/GL/OSX\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(OGRE_SDK_ROOT)/Dependencies/lib\"",

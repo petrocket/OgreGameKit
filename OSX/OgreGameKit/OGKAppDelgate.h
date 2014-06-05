@@ -12,12 +12,15 @@
 
 #ifdef __OBJC__
 
-#import <Cocoa/Cocoa.h>
+//#import <Cocoa/Cocoa.h>
 
 @interface OGKAppDelegate : NSObject <NSApplicationDelegate>
 {
+    CVDisplayLinkRef displayLink;
     NSTimer *mTimer;
 }
+
+@property (nonatomic, strong) NSDate *lastFrameStart;
 
 - (void)renderOneFrame;
 

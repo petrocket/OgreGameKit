@@ -47,6 +47,7 @@ OGKGame::OGKGame()
 #endif
     
     mTerrainsImported = false;
+    mTerrainGroup = NULL;
 }
 
 //|||||||||||||||||||||||||||||||||||||||||||||||
@@ -152,6 +153,8 @@ bool OGKGame::initOgre(Ogre::String wndTitle, OIS::KeyListener *pKeyListener, OI
     }
 	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+    
+    _initOverlays();
     
 	m_pTimer = OGRE_NEW Ogre::Timer();
 	m_pTimer->reset();
@@ -493,28 +496,36 @@ void OGKGame::initBlendMaps(Ogre::Terrain *t)
     blendMap1->update();
 }
 
-bool OGKGame::renderOneFrame()
+bool OGKGame::renderOneFrame(double timeSinceLastFrame)
 {
     if(OGKGame::getSingletonPtr()->isOgreToBeShutDown() ||
        !Ogre::Root::getSingletonPtr() ||
        !Ogre::Root::getSingleton().isInitialised()) {
-           return false;
+        return false;
     }
-       
+    
     if(m_pRenderWnd->isActive()) {
-        double current_time = m_pTimer->getMillisecondsCPU();
-        m_TimeSinceLastFrame = current_time - m_StartTime;
-        m_StartTime = current_time;
         
 #if !defined(OGRE_IS_IOS)
         m_pKeyboard->capture();
 #endif
         m_pMouse->capture();
-        update(m_TimeSinceLastFrame);
-        m_pRoot->renderOneFrame();
+        update(timeSinceLastFrame);
+        m_pRoot->renderOneFrame(timeSinceLastFrame);
     }
     
     return true;
+}
+
+bool OGKGame::renderOneFrame()
+{
+    // this doesn't seem to work correctly in OSX - timer
+    // getting paused when multi threading happening?
+    double current_time = m_pTimer->getMillisecondsCPU();
+    m_TimeSinceLastFrame = current_time - m_StartTime;
+    m_StartTime = current_time;
+    
+    return renderOneFrame(m_TimeSinceLastFrame);
 }
 
 void OGKGame::setup()
@@ -634,7 +645,14 @@ void OGKGame::update(double timeSinceLastFrame)
 	getInput();
 	moveCamera();
     
-    if(!mTerrainGroup->isDerivedDataUpdateInProgress() &&
+    if(m_pOverlay->isVisible()) {
+        int fps = (int)floorf(m_pRenderWnd->getLastFPS());
+        int ms = (int)ceil(timeSinceLastFrame);
+        m_pFPS->setCaption(Ogre::StringConverter::toString(fps) + "fps " + Ogre::StringConverter::toString(ms) + "ms");
+    }
+    
+    if(mTerrainGroup &&
+       !mTerrainGroup->isDerivedDataUpdateInProgress() &&
        mTerrainsImported) {
         m_pLog->logMessage("Saving terrain...");
         mTerrainGroup->saveAllTerrains(true);
@@ -669,4 +687,29 @@ void OGKGame::getInput()
 	if(m_pKeyboard->isKeyDown(OIS::KC_S))
 		m_TranslateVector.z = m_MoveScale;
 #endif
+}
+
+void OGKGame::_initOverlays()
+{
+    // Main Overlay
+    m_pOverlay = Ogre::OverlayManager::getSingleton().create("MainOverlay");
+    
+    // Container Panel
+    m_pOverlayContainer = static_cast<Ogre::OverlayContainer*>(Ogre::OverlayManager::getSingleton().createOverlayElement("Panel", "container1"));
+    m_pOverlayContainer->setDimensions(0.3f,0.3f);
+    m_pOverlayContainer->setPosition(0,0);
+    m_pOverlay->add2D(m_pOverlayContainer);
+    
+    // FPS Text
+    m_pFPS = Ogre::OverlayManager::getSingleton().createOverlayElement("TextArea", "id1");
+    m_pFPS->setDimensions(0.2f,0.2f);
+    m_pFPS->setMetricsMode(Ogre::GMM_PIXELS);
+    m_pFPS->setPosition(10,10);
+    m_pFPS->setParameter("font_name","SdkTrays/Caption");
+    m_pFPS->setParameter("char_height", "15");
+    m_pFPS->setCaption("hello");
+    m_pFPS->setColour(Ogre::ColourValue(1.0, 1.0, 1.0));
+    m_pOverlayContainer->addChild(m_pFPS);
+    
+    m_pOverlay->show();
 }

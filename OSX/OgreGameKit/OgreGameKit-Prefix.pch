@@ -3,5 +3,8 @@
 //
 
 #ifdef __OBJC__
+    // must include prereq first to get glew.h first before cocoa includes
+    // gl.h
+    #import <OgreGLPrerequisites.h>
     #import <Cocoa/Cocoa.h>
 #endif
