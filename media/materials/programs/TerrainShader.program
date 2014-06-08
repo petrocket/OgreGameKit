@@ -1,0 +1,61 @@
+////////////////////////////////////////////////////////////////////////////////
+// MOBILE
+vertex_program Terrain/Programs/TerrainVPMobile glsles
+{
+	source TerrainVPMobile.glsles
+    profile glsles
+}
+fragment_program Terrain/Programs/TerrainFPMobile glsles
+{
+	source TerrainFPMobile.glsles
+    profile glsles
+    default_params {
+		param_named lightMap int 0
+		param_named splat1 int 1
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// UNIFIED
+vertex_program Terrain/Programs/TerrainVP unified
+{
+//    delegate Terrain/Programs/TerrainVPGLSLES
+    delegate Terrain/Programs/TerrainVPCG
+}
+fragment_program Terrain/Programs/TerrainFP unified
+{
+//    delegate Terrain/Programs/TerrainFPGLSLES
+    delegate Terrain/Programs/TerrainFPCG
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// GLSLES
+vertex_program Terrain/Programs/TerrainVPGLSLES glsles
+{
+	source TerrainVP.glsles
+    profile glsles
+}
+
+fragment_program Terrain/Programs/TerrainFPGLSLES glsles
+{
+	source TerrainFP.glsles
+    profile glsles
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// CG
+vertex_program Terrain/Programs/TerrainVPCG cg
+{
+	source TerrainVP.cg
+	entry_point terrain_vp
+	profiles vs_2_x arbvp1
+}
+
+fragment_program Terrain/Programs/TerrainFPCG cg
+{
+	source TerrainFP.cg
+	entry_point terrain_fp
+	profiles ps_2_x arbfp1
+}
+
+

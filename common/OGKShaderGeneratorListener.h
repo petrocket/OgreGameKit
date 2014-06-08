@@ -9,6 +9,7 @@
 #ifndef OgreGameKit_ShaderGeneratorTechniqueResolver_h
 #define OgreGameKit_ShaderGeneratorTechniqueResolver_h
 
+#ifdef INCLUDE_RTSHADER_SYSTEM
 #include "OgreRTShaderSystem.h"
 
 /** This class demonstrates basic usage of the RTShader system.
@@ -75,4 +76,5 @@ public:
 protected:
 	Ogre::RTShader::ShaderGenerator*	mShaderGenerator;			// The shader generator instance.
 };
+#endif // #ifdef INCLUDE_RTSHADER_SYSTEM
 #endif

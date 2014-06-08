@@ -9,11 +9,16 @@
 #import <QuartzCore/QuartzCore.h>
 #import "OGKAppDelgate.h"
 #import "Ogre.h"
+
+#ifdef USE_CVDISPLAY_LINK
 #import "OgreOSXCocoaWindow.h"
+#endif
 
 @implementation OGKAppDelegate
 
+#ifdef USE_CVDISPLAY_LINK
 static Ogre::OSXCocoaWindow *ogkWindow = 0;
+#endif
 
 - (void)applicationDidFinishLaunching:(NSNotification *)application
 {
@@ -21,7 +26,6 @@ static Ogre::OSXCocoaWindow *ogkWindow = 0;
         try {
             new OGKGame();
             OGKGame::getSingleton().start();
-//#define USE_CVDISPLAY_LINK
 #ifdef USE_CVDISPLAY_LINK
             Ogre::RenderWindow *rw =OGKGame::getSingleton().m_pRenderWnd;
             ogkWindow = static_cast<Ogre::OSXCocoaWindow *>(rw);

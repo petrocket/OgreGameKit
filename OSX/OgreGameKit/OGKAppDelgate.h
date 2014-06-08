@@ -8,11 +8,7 @@
 
 #include "OGKGame.h"
 
-#include "OgrePlatform.h"
-
 #ifdef __OBJC__
-
-//#import <Cocoa/Cocoa.h>
 
 @interface OGKAppDelegate : NSObject <NSApplicationDelegate>
 {

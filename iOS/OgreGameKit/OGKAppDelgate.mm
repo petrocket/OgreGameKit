@@ -25,10 +25,7 @@
     try {
         new OGKGame();
         OGKGame::getSingleton().start();
-        
         Ogre::Root::getSingleton().getRenderSystem()->_initRenderTargets();
-        
-        // Clear event times
 		Ogre::Root::getSingleton().clearEventTimes();
     } catch( Ogre::Exception& e ) {
         std::cerr << "An exception has occurred: " <<

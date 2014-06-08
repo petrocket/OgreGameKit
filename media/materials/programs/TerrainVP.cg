@@ -1,0 +1,19 @@
+    void terrain_vp(
+	    float4 position : POSITION,
+	    float2 uv   	: TEXCOORD0,
+	    float delta     : BLENDWEIGHT,
+
+	    out float4 oPosition : POSITION,
+	    out float2 oUv		 : TEXCOORD0,
+	    out float4 oColor	 : COLOR,
+	    
+	    uniform float4 ambient,
+	    uniform float4x4 worldViewProj,
+	    uniform float morphFactor
+	    )
+    {
+	    position.y = position.y + (delta.x * morphFactor);
+	    oPosition = mul(worldViewProj, position);
+	    oUv = uv;
+	    oColor = ambient;
+    }

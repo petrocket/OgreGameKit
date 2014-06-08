@@ -1,0 +1,94 @@
+float4 expand(float4 v)
+{ 
+	return v * 2 - 1;
+}
+
+void terrain_fp
+(
+  float2 iTexCoord0 : TEXCOORD0,
+  float4 iPosition : TEXCOORD1,
+  float iAmbient    : COLOR,
+  
+  uniform float4 lightDiffuse,
+  uniform float4 lightSpecular,
+  uniform float exponent,
+  uniform float4 lightPosition,
+  uniform float3 eyePosition,
+  uniform float4 attenuation,
+ 
+  out float4 oColor : COLOR,
+ 
+  uniform sampler2D covMap1,
+  uniform sampler2D covMap2,
+  uniform sampler2D covMap3,
+  uniform sampler2D splat1,
+  uniform sampler2D splat2,
+  uniform sampler2D splat3,
+  uniform sampler2D splat4,
+  uniform sampler2D splat5,
+  uniform sampler2D splat6,
+  uniform sampler2D splat7,
+  uniform sampler2D splat8,
+  uniform sampler2D splat9,
+  uniform sampler2D colourMap,
+  uniform sampler2D lightMap, 
+   
+  /* global normalmap is added by the TerrainMaterialGenerator to TerrainMaterial
+	since Ogre::Terrain doesn't have vertex normals */	
+  uniform sampler2D normalMap, 
+  
+  uniform float splatScaleX,
+  uniform float splatScaleZ
+) 
+{
+	float3 cov1 = tex2D(covMap1, iTexCoord0).rgb;
+	float3 cov2 = tex2D(covMap2, iTexCoord0).rgb;
+	float3 cov3 = tex2D(covMap3, iTexCoord0).rgb;
+
+	// save TexCoord for Global Textures
+	float2 globalTexCoord = iTexCoord0;
+
+	iTexCoord0.x *= splatScaleX;
+	iTexCoord0.y *= splatScaleZ;
+
+	// calculate Splatting
+	oColor = tex2D(splat1, iTexCoord0) * cov1.x
+           + tex2D(splat2, iTexCoord0) * cov1.y
+           + tex2D(splat3, iTexCoord0) * cov1.z
+           + tex2D(splat4, iTexCoord0) * cov2.x
+           + tex2D(splat5, iTexCoord0) * cov2.y
+           + tex2D(splat6, iTexCoord0) * cov2.z
+		   + tex2D(splat7, iTexCoord0) * cov3.x
+		   + tex2D(splat8, iTexCoord0) * cov3.y
+		   + tex2D(splat9, iTexCoord0) * cov3.z;	
+	// add global Colourmap		 
+	oColor *= tex2D(colourMap, globalTexCoord);
+	// add global Lightmap
+	oColor *= tex2D(lightMap, globalTexCoord); //*tex2D(lightMap, globalTexCoord);	
+   
+	// lighting
+	float3 normal = expand(tex2D(normalMap, globalTexCoord)).rgb;	
+	normal = normalize(normal);
+
+	float3 lightDir = lightPosition.xyz - (iPosition.xyz * lightPosition.w);
+	lightDir = normalize(lightDir); 
+	
+	float distance = length(lightDir);
+	float lumination = 1 / (attenuation.y + attenuation.z * distance + attenuation.w * distance * distance);
+
+	lumination = min(lumination, 1.0);
+
+	float3 eyeDir = normalize(eyePosition - iPosition.xyz);
+	eyeDir = normalize(eyeDir);
+
+	float3 halfAngle = normalize(lightDir + eyeDir);
+
+	float NdotL = dot(lightDir, normal);
+	float NdotH = dot(halfAngle, normal);
+	float4 Lit = lit(NdotL, NdotH, exponent);
+
+	// add lighting to color
+	oColor *= iAmbient + lumination * (lightDiffuse * Lit.y + lightSpecular * Lit.z * Lit.y);   
+    //oColor = float4(globalTexCoord.x,0,0,1);
+}
+

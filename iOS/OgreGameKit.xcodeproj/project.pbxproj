@@ -7,7 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FA8632AA193AADEB00B29028 /* Debug.material in Resources */ = {isa = PBXBuildFile; fileRef = FA8632A9193AADEB00B29028 /* Debug.material */; };
+		FACF19EC1940EE8600F099AA /* OGKTerrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FACF19EA1940EE8600F099AA /* OGKTerrain.cpp */; };
+		FACF19F0194220A400F099AA /* OGKAudioiOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = FACF19EF194220A400F099AA /* OGKAudioiOS.mm */; };
+		FACF19FD1942214500F099AA /* CDAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FACF19F51942214500F099AA /* CDAudioManager.m */; };
+		FACF19FE1942214500F099AA /* CDOpenALSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = FACF19F81942214500F099AA /* CDOpenALSupport.m */; };
+		FACF19FF1942214500F099AA /* CocosDenshion.m in Sources */ = {isa = PBXBuildFile; fileRef = FACF19FA1942214500F099AA /* CocosDenshion.m */; };
+		FACF1A001942214500F099AA /* SimpleAudioEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = FACF19FC1942214500F099AA /* SimpleAudioEngine.m */; };
+		FACF1A021942219300F099AA /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FACF1A011942219300F099AA /* AudioToolbox.framework */; };
+		FACF1A041942219900F099AA /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FACF1A031942219900F099AA /* OpenAL.framework */; };
+		FACF1A061942220300F099AA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FACF1A051942220300F099AA /* AVFoundation.framework */; };
+		FACF1A291942574300F099AA /* OGKTerrainMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FACF1A271942574300F099AA /* OGKTerrainMaterial.cpp */; };
 		FAF726A1192C38E900CBCD29 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF726A0192C38E900CBCD29 /* CoreGraphics.framework */; };
 		FAF726A3192C38E900CBCD29 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF726A2192C38E900CBCD29 /* Foundation.framework */; };
 		FAF726A5192C38E900CBCD29 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF726A4192C38E900CBCD29 /* OpenGLES.framework */; };
@@ -25,60 +34,136 @@
 		FA86325D193AA71C00B29028 /* ogre.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; name = ogre.cfg; path = resources/ogre.cfg; sourceTree = "<group>"; };
 		FA86325E193AA71C00B29028 /* plugins.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; name = plugins.cfg; path = resources/plugins.cfg; sourceTree = "<group>"; };
 		FA86325F193AA71C00B29028 /* resources.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; name = resources.cfg; path = resources/resources.cfg; sourceTree = "<group>"; };
-		FA863263193AACE000B29028 /* OgreGameKit.material */ = {isa = PBXFileReference; lastKnownFileType = text; path = OgreGameKit.material; sourceTree = "<group>"; };
-		FA86326C193AACE000B29028 /* SdkTrays.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = SdkTrays.zip; sourceTree = "<group>"; };
-		FA863274193AACE000B29028 /* skybox.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = skybox.zip; sourceTree = "<group>"; };
-		FA863276193AACE100B29028 /* FFPLib_Common.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Common.cg; sourceTree = "<group>"; };
-		FA863277193AACE100B29028 /* FFPLib_Common.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Common.glsl; sourceTree = "<group>"; };
-		FA863278193AACE100B29028 /* FFPLib_Common.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Common.glsles; sourceTree = "<group>"; };
-		FA863279193AACE100B29028 /* FFPLib_Common.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Common.hlsl; sourceTree = "<group>"; };
-		FA86327A193AACE100B29028 /* FFPLib_Fog.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Fog.cg; sourceTree = "<group>"; };
-		FA86327B193AACE100B29028 /* FFPLib_Fog.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Fog.glsl; sourceTree = "<group>"; };
-		FA86327C193AACE100B29028 /* FFPLib_Fog.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Fog.glsles; sourceTree = "<group>"; };
-		FA86327D193AACE100B29028 /* FFPLib_Fog.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Fog.hlsl; sourceTree = "<group>"; };
-		FA86327E193AACE100B29028 /* FFPLib_Lighting.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Lighting.cg; sourceTree = "<group>"; };
-		FA86327F193AACE100B29028 /* FFPLib_Lighting.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Lighting.glsl; sourceTree = "<group>"; };
-		FA863280193AACE100B29028 /* FFPLib_Lighting.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Lighting.glsles; sourceTree = "<group>"; };
-		FA863281193AACE100B29028 /* FFPLib_Lighting.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Lighting.hlsl; sourceTree = "<group>"; };
-		FA863282193AACE100B29028 /* FFPLib_Texturing.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Texturing.cg; sourceTree = "<group>"; };
-		FA863283193AACE100B29028 /* FFPLib_Texturing.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Texturing.glsl; sourceTree = "<group>"; };
-		FA863284193AACE100B29028 /* FFPLib_Texturing.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Texturing.glsles; sourceTree = "<group>"; };
-		FA863285193AACE100B29028 /* FFPLib_Texturing.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Texturing.hlsl; sourceTree = "<group>"; };
-		FA863286193AACE100B29028 /* FFPLib_Transform.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Transform.cg; sourceTree = "<group>"; };
-		FA863287193AACE100B29028 /* FFPLib_Transform.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Transform.glsl; sourceTree = "<group>"; };
-		FA863288193AACE100B29028 /* FFPLib_Transform.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Transform.glsles; sourceTree = "<group>"; };
-		FA863289193AACE100B29028 /* FFPLib_Transform.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Transform.hlsl; sourceTree = "<group>"; };
-		FA86328B193AACE100B29028 /* HardwareSkinningShadow.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = HardwareSkinningShadow.cg; sourceTree = "<group>"; };
-		FA86328C193AACE100B29028 /* HardwareSkinningShadow.material */ = {isa = PBXFileReference; lastKnownFileType = text; path = HardwareSkinningShadow.material; sourceTree = "<group>"; };
-		FA86328D193AACE100B29028 /* RTShaderSystem.material */ = {isa = PBXFileReference; lastKnownFileType = text; path = RTShaderSystem.material; sourceTree = "<group>"; };
-		FA86328E193AACE100B29028 /* SampleLib_InstancedViewports.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = SampleLib_InstancedViewports.cg; sourceTree = "<group>"; };
-		FA86328F193AACE100B29028 /* SampleLib_InstancedViewports.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SampleLib_InstancedViewports.glsl; sourceTree = "<group>"; };
-		FA863290193AACE100B29028 /* SampleLib_InstancedViewports.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SampleLib_InstancedViewports.hlsl; sourceTree = "<group>"; };
-		FA863291193AACE100B29028 /* SampleLib_ReflectionMap.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = SampleLib_ReflectionMap.cg; sourceTree = "<group>"; };
-		FA863292193AACE100B29028 /* SampleLib_ReflectionMap.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SampleLib_ReflectionMap.glsl; sourceTree = "<group>"; };
-		FA863293193AACE100B29028 /* SampleLib_ReflectionMap.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = SampleLib_ReflectionMap.glsles; sourceTree = "<group>"; };
-		FA863294193AACE100B29028 /* SampleLib_ReflectionMap.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SampleLib_ReflectionMap.hlsl; sourceTree = "<group>"; };
-		FA863295193AACE100B29028 /* SGXLib_IntegratedPSSM.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_IntegratedPSSM.cg; sourceTree = "<group>"; };
-		FA863296193AACE100B29028 /* SGXLib_IntegratedPSSM.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_IntegratedPSSM.glsl; sourceTree = "<group>"; };
-		FA863297193AACE100B29028 /* SGXLib_IntegratedPSSM.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_IntegratedPSSM.glsles; sourceTree = "<group>"; };
-		FA863298193AACE100B29028 /* SGXLib_IntegratedPSSM.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_IntegratedPSSM.hlsl; sourceTree = "<group>"; };
-		FA863299193AACE100B29028 /* SGXLib_LayeredBlending.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_LayeredBlending.cg; sourceTree = "<group>"; };
-		FA86329A193AACE100B29028 /* SGXLib_LayeredBlending.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_LayeredBlending.glsl; sourceTree = "<group>"; };
-		FA86329B193AACE100B29028 /* SGXLib_LayeredBlending.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_LayeredBlending.glsles; sourceTree = "<group>"; };
-		FA86329C193AACE100B29028 /* SGXLib_LayeredBlending.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_LayeredBlending.hlsl; sourceTree = "<group>"; };
-		FA86329D193AACE100B29028 /* SGXLib_NormalMapLighting.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_NormalMapLighting.cg; sourceTree = "<group>"; };
-		FA86329E193AACE100B29028 /* SGXLib_NormalMapLighting.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_NormalMapLighting.glsl; sourceTree = "<group>"; };
-		FA86329F193AACE100B29028 /* SGXLib_NormalMapLighting.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_NormalMapLighting.glsles; sourceTree = "<group>"; };
-		FA8632A0193AACE100B29028 /* SGXLib_NormalMapLighting.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_NormalMapLighting.hlsl; sourceTree = "<group>"; };
-		FA8632A1193AACE100B29028 /* SGXLib_PerPixelLighting.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_PerPixelLighting.cg; sourceTree = "<group>"; };
-		FA8632A2193AACE100B29028 /* SGXLib_PerPixelLighting.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_PerPixelLighting.glsl; sourceTree = "<group>"; };
-		FA8632A3193AACE100B29028 /* SGXLib_PerPixelLighting.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_PerPixelLighting.glsles; sourceTree = "<group>"; };
-		FA8632A4193AACE100B29028 /* SGXLib_PerPixelLighting.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_PerPixelLighting.hlsl; sourceTree = "<group>"; };
-		FA8632A5193AACE100B29028 /* SGXLib_TextureAtlas.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_TextureAtlas.cg; sourceTree = "<group>"; };
-		FA8632A6193AACE100B29028 /* SGXLib_TextureAtlas.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_TextureAtlas.glsl; sourceTree = "<group>"; };
-		FA8632A7193AACE100B29028 /* SGXLib_TextureAtlas.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_TextureAtlas.glsles; sourceTree = "<group>"; };
-		FA8632A8193AACE100B29028 /* SGXLib_TextureAtlas.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_TextureAtlas.hlsl; sourceTree = "<group>"; };
-		FA8632A9193AADEB00B29028 /* Debug.material */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Debug.material; sourceTree = "<group>"; };
+		FACF19E91940EE8600F099AA /* OGKShaderGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKShaderGenerator.h; path = ../../common/OGKShaderGenerator.h; sourceTree = "<group>"; };
+		FACF19EA1940EE8600F099AA /* OGKTerrain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OGKTerrain.cpp; path = ../../common/OGKTerrain.cpp; sourceTree = "<group>"; };
+		FACF19EB1940EE8600F099AA /* OGKTerrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKTerrain.h; path = ../../common/OGKTerrain.h; sourceTree = "<group>"; };
+		FACF19ED1942202100F099AA /* OGKAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKAudio.h; path = ../../common/OGKAudio.h; sourceTree = "<group>"; };
+		FACF19EE194220A400F099AA /* OGKAudioiOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGKAudioiOS.h; sourceTree = "<group>"; };
+		FACF19EF194220A400F099AA /* OGKAudioiOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OGKAudioiOS.mm; sourceTree = "<group>"; };
+		FACF19F41942214500F099AA /* CDAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAudioManager.h; sourceTree = "<group>"; };
+		FACF19F51942214500F099AA /* CDAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAudioManager.m; sourceTree = "<group>"; };
+		FACF19F61942214500F099AA /* CDConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDConfig.h; sourceTree = "<group>"; };
+		FACF19F71942214500F099AA /* CDOpenALSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDOpenALSupport.h; sourceTree = "<group>"; };
+		FACF19F81942214500F099AA /* CDOpenALSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDOpenALSupport.m; sourceTree = "<group>"; };
+		FACF19F91942214500F099AA /* CocosDenshion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosDenshion.h; sourceTree = "<group>"; };
+		FACF19FA1942214500F099AA /* CocosDenshion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocosDenshion.m; sourceTree = "<group>"; };
+		FACF19FB1942214500F099AA /* SimpleAudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine.h; sourceTree = "<group>"; };
+		FACF19FC1942214500F099AA /* SimpleAudioEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine.m; sourceTree = "<group>"; };
+		FACF1A011942219300F099AA /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		FACF1A031942219900F099AA /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
+		FACF1A051942220300F099AA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		FACF1A271942574300F099AA /* OGKTerrainMaterial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OGKTerrainMaterial.cpp; path = ../../common/OGKTerrainMaterial.cpp; sourceTree = "<group>"; };
+		FACF1A281942574300F099AA /* OGKTerrainMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKTerrainMaterial.h; path = ../../common/OGKTerrainMaterial.h; sourceTree = "<group>"; };
+		FACF1AA61942646E00F099AA /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = background.mp3; sourceTree = "<group>"; };
+		FACF1AA71942646E00F099AA /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		FACF1AAA1942646E00F099AA /* TerrainFP.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = TerrainFP.cg; sourceTree = "<group>"; };
+		FACF1AAB1942646E00F099AA /* TerrainShader.program */ = {isa = PBXFileReference; lastKnownFileType = text; path = TerrainShader.program; sourceTree = "<group>"; };
+		FACF1AAC1942646E00F099AA /* TerrainVP.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = TerrainVP.cg; sourceTree = "<group>"; };
+		FACF1AAE1942646E00F099AA /* Debug.material */ = {isa = PBXFileReference; lastKnownFileType = text; path = Debug.material; sourceTree = "<group>"; };
+		FACF1AAF1942646E00F099AA /* OgreGameKit.material */ = {isa = PBXFileReference; lastKnownFileType = text; path = OgreGameKit.material; sourceTree = "<group>"; };
+		FACF1AB01942646E00F099AA /* Terrain.material */ = {isa = PBXFileReference; lastKnownFileType = text; path = Terrain.material; sourceTree = "<group>"; };
+		FACF1AB21942646E00F099AA /* artifexterra3d_colourmap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = artifexterra3d_colourmap.png; sourceTree = "<group>"; };
+		FACF1AB31942646E00F099AA /* dirt_grayrocky_diffusespecular.dds */ = {isa = PBXFileReference; lastKnownFileType = file; path = dirt_grayrocky_diffusespecular.dds; sourceTree = "<group>"; };
+		FACF1AB41942646E00F099AA /* dirt_grayrocky_normalheight.dds */ = {isa = PBXFileReference; lastKnownFileType = file; path = dirt_grayrocky_normalheight.dds; sourceTree = "<group>"; };
+		FACF1AB51942646E00F099AA /* ETcoverage.0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ETcoverage.0.png; sourceTree = "<group>"; };
+		FACF1AB61942646E00F099AA /* ETcoverage.1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ETcoverage.1.png; sourceTree = "<group>"; };
+		FACF1AB71942646E00F099AA /* ETcoverage.2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ETcoverage.2.png; sourceTree = "<group>"; };
+		FACF1AB81942646E00F099AA /* ETlightmap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ETlightmap.png; sourceTree = "<group>"; };
+		FACF1AB91942646E00F099AA /* ETterrain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ETterrain.png; sourceTree = "<group>"; };
+		FACF1ABA1942646E00F099AA /* grass_green-01_diffusespecular.dds */ = {isa = PBXFileReference; lastKnownFileType = file; path = "grass_green-01_diffusespecular.dds"; sourceTree = "<group>"; };
+		FACF1ABB1942646E00F099AA /* grass_green-01_normalheight.dds */ = {isa = PBXFileReference; lastKnownFileType = file; path = "grass_green-01_normalheight.dds"; sourceTree = "<group>"; };
+		FACF1ABC1942646E00F099AA /* growth_weirdfungus-03_diffusespecular.dds */ = {isa = PBXFileReference; lastKnownFileType = file; path = "growth_weirdfungus-03_diffusespecular.dds"; sourceTree = "<group>"; };
+		FACF1ABD1942646E00F099AA /* growth_weirdfungus-03_normalheight.dds */ = {isa = PBXFileReference; lastKnownFileType = file; path = "growth_weirdfungus-03_normalheight.dds"; sourceTree = "<group>"; };
+		FACF1ABE1942646E00F099AA /* height.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = height.png; sourceTree = "<group>"; };
+		FACF1ABF1942646E00F099AA /* splatting0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splatting0.png; sourceTree = "<group>"; };
+		FACF1AC01942646E00F099AA /* splatting1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splatting1.png; sourceTree = "<group>"; };
+		FACF1AC11942646E00F099AA /* splatting2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splatting2.png; sourceTree = "<group>"; };
+		FACF1AC21942646E00F099AA /* splatting3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splatting3.png; sourceTree = "<group>"; };
+		FACF1AC31942646E00F099AA /* splatting4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splatting4.png; sourceTree = "<group>"; };
+		FACF1AC41942646E00F099AA /* splatting5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splatting5.png; sourceTree = "<group>"; };
+		FACF1AC51942646E00F099AA /* splatting6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splatting6.png; sourceTree = "<group>"; };
+		FACF1AC61942646E00F099AA /* splatting7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splatting7.png; sourceTree = "<group>"; };
+		FACF1AC71942646E00F099AA /* splatting8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splatting8.png; sourceTree = "<group>"; };
+		FACF1AC81942646E00F099AA /* terrain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = terrain.png; sourceTree = "<group>"; };
+		FACF1ACC1942646E00F099AA /* ctrl_freak.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ctrl_freak.ttf; sourceTree = "<group>"; };
+		FACF1ACD1942646E00F099AA /* cuckoo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = cuckoo.ttf; sourceTree = "<group>"; };
+		FACF1ACE1942646E00F099AA /* sdk_bands.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sdk_bands.png; sourceTree = "<group>"; };
+		FACF1ACF1942646E00F099AA /* sdk_button_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sdk_button_down.png; sourceTree = "<group>"; };
+		FACF1AD01942646E00F099AA /* sdk_button_over.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sdk_button_over.png; sourceTree = "<group>"; };
+		FACF1AD11942646E00F099AA /* sdk_button_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sdk_button_up.png; sourceTree = "<group>"; };
+		FACF1AD21942646E00F099AA /* sdk_cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sdk_cursor.png; sourceTree = "<group>"; };
+		FACF1AD31942646E00F099AA /* sdk_frame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sdk_frame.png; sourceTree = "<group>"; };
+		FACF1AD41942646E00F099AA /* sdk_handle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sdk_handle.png; sourceTree = "<group>"; };
+		FACF1AD51942646E00F099AA /* sdk_label.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sdk_label.png; sourceTree = "<group>"; };
+		FACF1AD61942646E00F099AA /* sdk_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sdk_logo.png; sourceTree = "<group>"; };
+		FACF1AD71942646E00F099AA /* sdk_mini_text_box.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sdk_mini_text_box.png; sourceTree = "<group>"; };
+		FACF1AD81942646E00F099AA /* sdk_mini_text_box_over.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sdk_mini_text_box_over.png; sourceTree = "<group>"; };
+		FACF1AD91942646E00F099AA /* sdk_mini_tray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sdk_mini_tray.png; sourceTree = "<group>"; };
+		FACF1ADA1942646E00F099AA /* sdk_pulse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sdk_pulse.png; sourceTree = "<group>"; };
+		FACF1ADB1942646E00F099AA /* sdk_separator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sdk_separator.png; sourceTree = "<group>"; };
+		FACF1ADC1942646E00F099AA /* sdk_shade.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sdk_shade.png; sourceTree = "<group>"; };
+		FACF1ADD1942646E00F099AA /* sdk_text_box.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sdk_text_box.png; sourceTree = "<group>"; };
+		FACF1ADE1942646E00F099AA /* sdk_track.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sdk_track.png; sourceTree = "<group>"; };
+		FACF1ADF1942646E00F099AA /* sdk_tray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sdk_tray.png; sourceTree = "<group>"; };
+		FACF1AE01942646E00F099AA /* SdkTrays.fontdef */ = {isa = PBXFileReference; lastKnownFileType = text; path = SdkTrays.fontdef; sourceTree = "<group>"; };
+		FACF1AE11942646E00F099AA /* SdkTrays.material */ = {isa = PBXFileReference; lastKnownFileType = text; path = SdkTrays.material; sourceTree = "<group>"; };
+		FACF1AE21942646E00F099AA /* SdkTrays.overlay */ = {isa = PBXFileReference; lastKnownFileType = text; path = SdkTrays.overlay; sourceTree = "<group>"; };
+		FACF1AE31942646E00F099AA /* SdkTrays.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = SdkTrays.zip; sourceTree = "<group>"; };
+		FACF1AE41942646E00F099AA /* skybox.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = skybox.zip; sourceTree = "<group>"; };
+		FACF1AE61942646E00F099AA /* FFPLib_Common.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Common.cg; sourceTree = "<group>"; };
+		FACF1AE71942646E00F099AA /* FFPLib_Common.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Common.glsl; sourceTree = "<group>"; };
+		FACF1AE81942646E00F099AA /* FFPLib_Common.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Common.glsles; sourceTree = "<group>"; };
+		FACF1AE91942646E00F099AA /* FFPLib_Common.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Common.hlsl; sourceTree = "<group>"; };
+		FACF1AEA1942646E00F099AA /* FFPLib_Fog.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Fog.cg; sourceTree = "<group>"; };
+		FACF1AEB1942646E00F099AA /* FFPLib_Fog.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Fog.glsl; sourceTree = "<group>"; };
+		FACF1AEC1942646E00F099AA /* FFPLib_Fog.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Fog.glsles; sourceTree = "<group>"; };
+		FACF1AED1942646E00F099AA /* FFPLib_Fog.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Fog.hlsl; sourceTree = "<group>"; };
+		FACF1AEE1942646E00F099AA /* FFPLib_Lighting.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Lighting.cg; sourceTree = "<group>"; };
+		FACF1AEF1942646E00F099AA /* FFPLib_Lighting.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Lighting.glsl; sourceTree = "<group>"; };
+		FACF1AF01942646E00F099AA /* FFPLib_Lighting.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Lighting.glsles; sourceTree = "<group>"; };
+		FACF1AF11942646E00F099AA /* FFPLib_Lighting.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Lighting.hlsl; sourceTree = "<group>"; };
+		FACF1AF21942646E00F099AA /* FFPLib_Texturing.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Texturing.cg; sourceTree = "<group>"; };
+		FACF1AF31942646E00F099AA /* FFPLib_Texturing.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Texturing.glsl; sourceTree = "<group>"; };
+		FACF1AF41942646E00F099AA /* FFPLib_Texturing.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Texturing.glsles; sourceTree = "<group>"; };
+		FACF1AF51942646E00F099AA /* FFPLib_Texturing.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Texturing.hlsl; sourceTree = "<group>"; };
+		FACF1AF61942646E00F099AA /* FFPLib_Transform.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Transform.cg; sourceTree = "<group>"; };
+		FACF1AF71942646E00F099AA /* FFPLib_Transform.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Transform.glsl; sourceTree = "<group>"; };
+		FACF1AF81942646E00F099AA /* FFPLib_Transform.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Transform.glsles; sourceTree = "<group>"; };
+		FACF1AF91942646E00F099AA /* FFPLib_Transform.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFPLib_Transform.hlsl; sourceTree = "<group>"; };
+		FACF1AFB1942646E00F099AA /* HardwareSkinningShadow.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = HardwareSkinningShadow.cg; sourceTree = "<group>"; };
+		FACF1AFC1942646E00F099AA /* HardwareSkinningShadow.material */ = {isa = PBXFileReference; lastKnownFileType = text; path = HardwareSkinningShadow.material; sourceTree = "<group>"; };
+		FACF1AFD1942646E00F099AA /* RTShaderSystem.material */ = {isa = PBXFileReference; lastKnownFileType = text; path = RTShaderSystem.material; sourceTree = "<group>"; };
+		FACF1AFE1942646E00F099AA /* SampleLib_InstancedViewports.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = SampleLib_InstancedViewports.cg; sourceTree = "<group>"; };
+		FACF1AFF1942646E00F099AA /* SampleLib_InstancedViewports.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SampleLib_InstancedViewports.glsl; sourceTree = "<group>"; };
+		FACF1B001942646E00F099AA /* SampleLib_InstancedViewports.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SampleLib_InstancedViewports.hlsl; sourceTree = "<group>"; };
+		FACF1B011942646E00F099AA /* SampleLib_ReflectionMap.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = SampleLib_ReflectionMap.cg; sourceTree = "<group>"; };
+		FACF1B021942646E00F099AA /* SampleLib_ReflectionMap.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SampleLib_ReflectionMap.glsl; sourceTree = "<group>"; };
+		FACF1B031942646E00F099AA /* SampleLib_ReflectionMap.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = SampleLib_ReflectionMap.glsles; sourceTree = "<group>"; };
+		FACF1B041942646E00F099AA /* SampleLib_ReflectionMap.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SampleLib_ReflectionMap.hlsl; sourceTree = "<group>"; };
+		FACF1B051942646E00F099AA /* SGXLib_IntegratedPSSM.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_IntegratedPSSM.cg; sourceTree = "<group>"; };
+		FACF1B061942646E00F099AA /* SGXLib_IntegratedPSSM.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_IntegratedPSSM.glsl; sourceTree = "<group>"; };
+		FACF1B071942646E00F099AA /* SGXLib_IntegratedPSSM.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_IntegratedPSSM.glsles; sourceTree = "<group>"; };
+		FACF1B081942646E00F099AA /* SGXLib_IntegratedPSSM.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_IntegratedPSSM.hlsl; sourceTree = "<group>"; };
+		FACF1B091942646E00F099AA /* SGXLib_LayeredBlending.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_LayeredBlending.cg; sourceTree = "<group>"; };
+		FACF1B0A1942646E00F099AA /* SGXLib_LayeredBlending.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_LayeredBlending.glsl; sourceTree = "<group>"; };
+		FACF1B0B1942646E00F099AA /* SGXLib_LayeredBlending.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_LayeredBlending.glsles; sourceTree = "<group>"; };
+		FACF1B0C1942646E00F099AA /* SGXLib_LayeredBlending.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_LayeredBlending.hlsl; sourceTree = "<group>"; };
+		FACF1B0D1942646E00F099AA /* SGXLib_NormalMapLighting.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_NormalMapLighting.cg; sourceTree = "<group>"; };
+		FACF1B0E1942646E00F099AA /* SGXLib_NormalMapLighting.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_NormalMapLighting.glsl; sourceTree = "<group>"; };
+		FACF1B0F1942646E00F099AA /* SGXLib_NormalMapLighting.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_NormalMapLighting.glsles; sourceTree = "<group>"; };
+		FACF1B101942646E00F099AA /* SGXLib_NormalMapLighting.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_NormalMapLighting.hlsl; sourceTree = "<group>"; };
+		FACF1B111942646E00F099AA /* SGXLib_PerPixelLighting.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_PerPixelLighting.cg; sourceTree = "<group>"; };
+		FACF1B121942646E00F099AA /* SGXLib_PerPixelLighting.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_PerPixelLighting.glsl; sourceTree = "<group>"; };
+		FACF1B131942646E00F099AA /* SGXLib_PerPixelLighting.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_PerPixelLighting.glsles; sourceTree = "<group>"; };
+		FACF1B141942646E00F099AA /* SGXLib_PerPixelLighting.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_PerPixelLighting.hlsl; sourceTree = "<group>"; };
+		FACF1B151942646E00F099AA /* SGXLib_TextureAtlas.cg */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_TextureAtlas.cg; sourceTree = "<group>"; };
+		FACF1B161942646E00F099AA /* SGXLib_TextureAtlas.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_TextureAtlas.glsl; sourceTree = "<group>"; };
+		FACF1B171942646E00F099AA /* SGXLib_TextureAtlas.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_TextureAtlas.glsles; sourceTree = "<group>"; };
+		FACF1B181942646E00F099AA /* SGXLib_TextureAtlas.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_TextureAtlas.hlsl; sourceTree = "<group>"; };
+		FACF1B19194268AA00F099AA /* TerrainFP.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = TerrainFP.glsles; sourceTree = "<group>"; };
+		FACF1B1A194268AA00F099AA /* TerrainVP.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = TerrainVP.glsles; sourceTree = "<group>"; };
+		FACF1B1B194295A400F099AA /* TerrainFPMobile.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = TerrainFPMobile.glsles; sourceTree = "<group>"; };
+		FACF1B1C194295A400F099AA /* TerrainVPMobile.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = TerrainVPMobile.glsles; sourceTree = "<group>"; };
 		FAF7269D192C38E900CBCD29 /* OgreGameKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OgreGameKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAF726A0192C38E900CBCD29 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		FAF726A2192C38E900CBCD29 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -106,126 +191,242 @@
 				FAF726A3192C38E900CBCD29 /* Foundation.framework in Frameworks */,
 				FAF726A5192C38E900CBCD29 /* OpenGLES.framework in Frameworks */,
 				FAF726A9192C38E900CBCD29 /* UIKit.framework in Frameworks */,
+				FACF1A021942219300F099AA /* AudioToolbox.framework in Frameworks */,
+				FACF1A061942220300F099AA /* AVFoundation.framework in Frameworks */,
+				FACF1A041942219900F099AA /* OpenAL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		FA863260193AACE000B29028 /* media */ = {
+		FACF19F1194220FC00F099AA /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				FA863261193AACE000B29028 /* materials */,
-				FA863269193AACE000B29028 /* models */,
-				FA86326B193AACE000B29028 /* packs */,
-				FA863275193AACE000B29028 /* RTShaderLib */,
+				FACF19F21942210A00F099AA /* audio */,
+			);
+			name = lib;
+			sourceTree = "<group>";
+		};
+		FACF19F21942210A00F099AA /* audio */ = {
+			isa = PBXGroup;
+			children = (
+				FACF19F31942214500F099AA /* CocosDenshion */,
+			);
+			name = audio;
+			sourceTree = "<group>";
+		};
+		FACF19F31942214500F099AA /* CocosDenshion */ = {
+			isa = PBXGroup;
+			children = (
+				FACF19F41942214500F099AA /* CDAudioManager.h */,
+				FACF19F51942214500F099AA /* CDAudioManager.m */,
+				FACF19F61942214500F099AA /* CDConfig.h */,
+				FACF19F71942214500F099AA /* CDOpenALSupport.h */,
+				FACF19F81942214500F099AA /* CDOpenALSupport.m */,
+				FACF19F91942214500F099AA /* CocosDenshion.h */,
+				FACF19FA1942214500F099AA /* CocosDenshion.m */,
+				FACF19FB1942214500F099AA /* SimpleAudioEngine.h */,
+				FACF19FC1942214500F099AA /* SimpleAudioEngine.m */,
+			);
+			name = CocosDenshion;
+			path = lib/audio/CocosDenshion;
+			sourceTree = "<group>";
+		};
+		FACF1AA41942646E00F099AA /* media */ = {
+			isa = PBXGroup;
+			children = (
+				FACF1AA51942646E00F099AA /* audio */,
+				FACF1AA81942646E00F099AA /* materials */,
+				FACF1AC91942646E00F099AA /* models */,
+				FACF1ACA1942646E00F099AA /* packs */,
+				FACF1AE51942646E00F099AA /* RTShaderLib */,
 			);
 			name = media;
 			path = ../../media;
 			sourceTree = "<group>";
 		};
-		FA863261193AACE000B29028 /* materials */ = {
+		FACF1AA51942646E00F099AA /* audio */ = {
 			isa = PBXGroup;
 			children = (
-				FA863262193AACE000B29028 /* scripts */,
-				FA863265193AACE000B29028 /* textures */,
+				FACF1AA61942646E00F099AA /* background.mp3 */,
+				FACF1AA71942646E00F099AA /* README.md */,
+			);
+			path = audio;
+			sourceTree = "<group>";
+		};
+		FACF1AA81942646E00F099AA /* materials */ = {
+			isa = PBXGroup;
+			children = (
+				FACF1AA91942646E00F099AA /* programs */,
+				FACF1AAD1942646E00F099AA /* scripts */,
+				FACF1AB11942646E00F099AA /* textures */,
 			);
 			path = materials;
 			sourceTree = "<group>";
 		};
-		FA863262193AACE000B29028 /* scripts */ = {
+		FACF1AA91942646E00F099AA /* programs */ = {
 			isa = PBXGroup;
 			children = (
-				FA863263193AACE000B29028 /* OgreGameKit.material */,
-				FA8632A9193AADEB00B29028 /* Debug.material */,
+				FACF1AAA1942646E00F099AA /* TerrainFP.cg */,
+				FACF1B19194268AA00F099AA /* TerrainFP.glsles */,
+				FACF1B1B194295A400F099AA /* TerrainFPMobile.glsles */,
+				FACF1AAB1942646E00F099AA /* TerrainShader.program */,
+				FACF1AAC1942646E00F099AA /* TerrainVP.cg */,
+				FACF1B1A194268AA00F099AA /* TerrainVP.glsles */,
+				FACF1B1C194295A400F099AA /* TerrainVPMobile.glsles */,
+			);
+			path = programs;
+			sourceTree = "<group>";
+		};
+		FACF1AAD1942646E00F099AA /* scripts */ = {
+			isa = PBXGroup;
+			children = (
+				FACF1AAE1942646E00F099AA /* Debug.material */,
+				FACF1AAF1942646E00F099AA /* OgreGameKit.material */,
+				FACF1AB01942646E00F099AA /* Terrain.material */,
 			);
 			path = scripts;
 			sourceTree = "<group>";
 		};
-		FA863265193AACE000B29028 /* textures */ = {
+		FACF1AB11942646E00F099AA /* textures */ = {
 			isa = PBXGroup;
 			children = (
+				FACF1AB21942646E00F099AA /* artifexterra3d_colourmap.png */,
+				FACF1AB31942646E00F099AA /* dirt_grayrocky_diffusespecular.dds */,
+				FACF1AB41942646E00F099AA /* dirt_grayrocky_normalheight.dds */,
+				FACF1AB51942646E00F099AA /* ETcoverage.0.png */,
+				FACF1AB61942646E00F099AA /* ETcoverage.1.png */,
+				FACF1AB71942646E00F099AA /* ETcoverage.2.png */,
+				FACF1AB81942646E00F099AA /* ETlightmap.png */,
+				FACF1AB91942646E00F099AA /* ETterrain.png */,
+				FACF1ABA1942646E00F099AA /* grass_green-01_diffusespecular.dds */,
+				FACF1ABB1942646E00F099AA /* grass_green-01_normalheight.dds */,
+				FACF1ABC1942646E00F099AA /* growth_weirdfungus-03_diffusespecular.dds */,
+				FACF1ABD1942646E00F099AA /* growth_weirdfungus-03_normalheight.dds */,
+				FACF1ABE1942646E00F099AA /* height.png */,
+				FACF1ABF1942646E00F099AA /* splatting0.png */,
+				FACF1AC01942646E00F099AA /* splatting1.png */,
+				FACF1AC11942646E00F099AA /* splatting2.png */,
+				FACF1AC21942646E00F099AA /* splatting3.png */,
+				FACF1AC31942646E00F099AA /* splatting4.png */,
+				FACF1AC41942646E00F099AA /* splatting5.png */,
+				FACF1AC51942646E00F099AA /* splatting6.png */,
+				FACF1AC61942646E00F099AA /* splatting7.png */,
+				FACF1AC71942646E00F099AA /* splatting8.png */,
+				FACF1AC81942646E00F099AA /* terrain.png */,
 			);
 			path = textures;
 			sourceTree = "<group>";
 		};
-		FA863269193AACE000B29028 /* models */ = {
+		FACF1AC91942646E00F099AA /* models */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			path = models;
 			sourceTree = "<group>";
 		};
-		FA86326B193AACE000B29028 /* packs */ = {
+		FACF1ACA1942646E00F099AA /* packs */ = {
 			isa = PBXGroup;
 			children = (
-				FA86326C193AACE000B29028 /* SdkTrays.zip */,
-				FA863274193AACE000B29028 /* skybox.zip */,
+				FACF1ACB1942646E00F099AA /* SdkTrays */,
+				FACF1AE31942646E00F099AA /* SdkTrays.zip */,
+				FACF1AE41942646E00F099AA /* skybox.zip */,
 			);
 			path = packs;
 			sourceTree = "<group>";
 		};
-		FA863275193AACE000B29028 /* RTShaderLib */ = {
+		FACF1ACB1942646E00F099AA /* SdkTrays */ = {
 			isa = PBXGroup;
 			children = (
-				FA863276193AACE100B29028 /* FFPLib_Common.cg */,
-				FA863277193AACE100B29028 /* FFPLib_Common.glsl */,
-				FA863278193AACE100B29028 /* FFPLib_Common.glsles */,
-				FA863279193AACE100B29028 /* FFPLib_Common.hlsl */,
-				FA86327A193AACE100B29028 /* FFPLib_Fog.cg */,
-				FA86327B193AACE100B29028 /* FFPLib_Fog.glsl */,
-				FA86327C193AACE100B29028 /* FFPLib_Fog.glsles */,
-				FA86327D193AACE100B29028 /* FFPLib_Fog.hlsl */,
-				FA86327E193AACE100B29028 /* FFPLib_Lighting.cg */,
-				FA86327F193AACE100B29028 /* FFPLib_Lighting.glsl */,
-				FA863280193AACE100B29028 /* FFPLib_Lighting.glsles */,
-				FA863281193AACE100B29028 /* FFPLib_Lighting.hlsl */,
-				FA863282193AACE100B29028 /* FFPLib_Texturing.cg */,
-				FA863283193AACE100B29028 /* FFPLib_Texturing.glsl */,
-				FA863284193AACE100B29028 /* FFPLib_Texturing.glsles */,
-				FA863285193AACE100B29028 /* FFPLib_Texturing.hlsl */,
-				FA863286193AACE100B29028 /* FFPLib_Transform.cg */,
-				FA863287193AACE100B29028 /* FFPLib_Transform.glsl */,
-				FA863288193AACE100B29028 /* FFPLib_Transform.glsles */,
-				FA863289193AACE100B29028 /* FFPLib_Transform.hlsl */,
-				FA86328A193AACE100B29028 /* materials */,
-				FA86328E193AACE100B29028 /* SampleLib_InstancedViewports.cg */,
-				FA86328F193AACE100B29028 /* SampleLib_InstancedViewports.glsl */,
-				FA863290193AACE100B29028 /* SampleLib_InstancedViewports.hlsl */,
-				FA863291193AACE100B29028 /* SampleLib_ReflectionMap.cg */,
-				FA863292193AACE100B29028 /* SampleLib_ReflectionMap.glsl */,
-				FA863293193AACE100B29028 /* SampleLib_ReflectionMap.glsles */,
-				FA863294193AACE100B29028 /* SampleLib_ReflectionMap.hlsl */,
-				FA863295193AACE100B29028 /* SGXLib_IntegratedPSSM.cg */,
-				FA863296193AACE100B29028 /* SGXLib_IntegratedPSSM.glsl */,
-				FA863297193AACE100B29028 /* SGXLib_IntegratedPSSM.glsles */,
-				FA863298193AACE100B29028 /* SGXLib_IntegratedPSSM.hlsl */,
-				FA863299193AACE100B29028 /* SGXLib_LayeredBlending.cg */,
-				FA86329A193AACE100B29028 /* SGXLib_LayeredBlending.glsl */,
-				FA86329B193AACE100B29028 /* SGXLib_LayeredBlending.glsles */,
-				FA86329C193AACE100B29028 /* SGXLib_LayeredBlending.hlsl */,
-				FA86329D193AACE100B29028 /* SGXLib_NormalMapLighting.cg */,
-				FA86329E193AACE100B29028 /* SGXLib_NormalMapLighting.glsl */,
-				FA86329F193AACE100B29028 /* SGXLib_NormalMapLighting.glsles */,
-				FA8632A0193AACE100B29028 /* SGXLib_NormalMapLighting.hlsl */,
-				FA8632A1193AACE100B29028 /* SGXLib_PerPixelLighting.cg */,
-				FA8632A2193AACE100B29028 /* SGXLib_PerPixelLighting.glsl */,
-				FA8632A3193AACE100B29028 /* SGXLib_PerPixelLighting.glsles */,
-				FA8632A4193AACE100B29028 /* SGXLib_PerPixelLighting.hlsl */,
-				FA8632A5193AACE100B29028 /* SGXLib_TextureAtlas.cg */,
-				FA8632A6193AACE100B29028 /* SGXLib_TextureAtlas.glsl */,
-				FA8632A7193AACE100B29028 /* SGXLib_TextureAtlas.glsles */,
-				FA8632A8193AACE100B29028 /* SGXLib_TextureAtlas.hlsl */,
+				FACF1ACC1942646E00F099AA /* ctrl_freak.ttf */,
+				FACF1ACD1942646E00F099AA /* cuckoo.ttf */,
+				FACF1ACE1942646E00F099AA /* sdk_bands.png */,
+				FACF1ACF1942646E00F099AA /* sdk_button_down.png */,
+				FACF1AD01942646E00F099AA /* sdk_button_over.png */,
+				FACF1AD11942646E00F099AA /* sdk_button_up.png */,
+				FACF1AD21942646E00F099AA /* sdk_cursor.png */,
+				FACF1AD31942646E00F099AA /* sdk_frame.png */,
+				FACF1AD41942646E00F099AA /* sdk_handle.png */,
+				FACF1AD51942646E00F099AA /* sdk_label.png */,
+				FACF1AD61942646E00F099AA /* sdk_logo.png */,
+				FACF1AD71942646E00F099AA /* sdk_mini_text_box.png */,
+				FACF1AD81942646E00F099AA /* sdk_mini_text_box_over.png */,
+				FACF1AD91942646E00F099AA /* sdk_mini_tray.png */,
+				FACF1ADA1942646E00F099AA /* sdk_pulse.png */,
+				FACF1ADB1942646E00F099AA /* sdk_separator.png */,
+				FACF1ADC1942646E00F099AA /* sdk_shade.png */,
+				FACF1ADD1942646E00F099AA /* sdk_text_box.png */,
+				FACF1ADE1942646E00F099AA /* sdk_track.png */,
+				FACF1ADF1942646E00F099AA /* sdk_tray.png */,
+				FACF1AE01942646E00F099AA /* SdkTrays.fontdef */,
+				FACF1AE11942646E00F099AA /* SdkTrays.material */,
+				FACF1AE21942646E00F099AA /* SdkTrays.overlay */,
+			);
+			path = SdkTrays;
+			sourceTree = "<group>";
+		};
+		FACF1AE51942646E00F099AA /* RTShaderLib */ = {
+			isa = PBXGroup;
+			children = (
+				FACF1AE61942646E00F099AA /* FFPLib_Common.cg */,
+				FACF1AE71942646E00F099AA /* FFPLib_Common.glsl */,
+				FACF1AE81942646E00F099AA /* FFPLib_Common.glsles */,
+				FACF1AE91942646E00F099AA /* FFPLib_Common.hlsl */,
+				FACF1AEA1942646E00F099AA /* FFPLib_Fog.cg */,
+				FACF1AEB1942646E00F099AA /* FFPLib_Fog.glsl */,
+				FACF1AEC1942646E00F099AA /* FFPLib_Fog.glsles */,
+				FACF1AED1942646E00F099AA /* FFPLib_Fog.hlsl */,
+				FACF1AEE1942646E00F099AA /* FFPLib_Lighting.cg */,
+				FACF1AEF1942646E00F099AA /* FFPLib_Lighting.glsl */,
+				FACF1AF01942646E00F099AA /* FFPLib_Lighting.glsles */,
+				FACF1AF11942646E00F099AA /* FFPLib_Lighting.hlsl */,
+				FACF1AF21942646E00F099AA /* FFPLib_Texturing.cg */,
+				FACF1AF31942646E00F099AA /* FFPLib_Texturing.glsl */,
+				FACF1AF41942646E00F099AA /* FFPLib_Texturing.glsles */,
+				FACF1AF51942646E00F099AA /* FFPLib_Texturing.hlsl */,
+				FACF1AF61942646E00F099AA /* FFPLib_Transform.cg */,
+				FACF1AF71942646E00F099AA /* FFPLib_Transform.glsl */,
+				FACF1AF81942646E00F099AA /* FFPLib_Transform.glsles */,
+				FACF1AF91942646E00F099AA /* FFPLib_Transform.hlsl */,
+				FACF1AFA1942646E00F099AA /* materials */,
+				FACF1AFE1942646E00F099AA /* SampleLib_InstancedViewports.cg */,
+				FACF1AFF1942646E00F099AA /* SampleLib_InstancedViewports.glsl */,
+				FACF1B001942646E00F099AA /* SampleLib_InstancedViewports.hlsl */,
+				FACF1B011942646E00F099AA /* SampleLib_ReflectionMap.cg */,
+				FACF1B021942646E00F099AA /* SampleLib_ReflectionMap.glsl */,
+				FACF1B031942646E00F099AA /* SampleLib_ReflectionMap.glsles */,
+				FACF1B041942646E00F099AA /* SampleLib_ReflectionMap.hlsl */,
+				FACF1B051942646E00F099AA /* SGXLib_IntegratedPSSM.cg */,
+				FACF1B061942646E00F099AA /* SGXLib_IntegratedPSSM.glsl */,
+				FACF1B071942646E00F099AA /* SGXLib_IntegratedPSSM.glsles */,
+				FACF1B081942646E00F099AA /* SGXLib_IntegratedPSSM.hlsl */,
+				FACF1B091942646E00F099AA /* SGXLib_LayeredBlending.cg */,
+				FACF1B0A1942646E00F099AA /* SGXLib_LayeredBlending.glsl */,
+				FACF1B0B1942646E00F099AA /* SGXLib_LayeredBlending.glsles */,
+				FACF1B0C1942646E00F099AA /* SGXLib_LayeredBlending.hlsl */,
+				FACF1B0D1942646E00F099AA /* SGXLib_NormalMapLighting.cg */,
+				FACF1B0E1942646E00F099AA /* SGXLib_NormalMapLighting.glsl */,
+				FACF1B0F1942646E00F099AA /* SGXLib_NormalMapLighting.glsles */,
+				FACF1B101942646E00F099AA /* SGXLib_NormalMapLighting.hlsl */,
+				FACF1B111942646E00F099AA /* SGXLib_PerPixelLighting.cg */,
+				FACF1B121942646E00F099AA /* SGXLib_PerPixelLighting.glsl */,
+				FACF1B131942646E00F099AA /* SGXLib_PerPixelLighting.glsles */,
+				FACF1B141942646E00F099AA /* SGXLib_PerPixelLighting.hlsl */,
+				FACF1B151942646E00F099AA /* SGXLib_TextureAtlas.cg */,
+				FACF1B161942646E00F099AA /* SGXLib_TextureAtlas.glsl */,
+				FACF1B171942646E00F099AA /* SGXLib_TextureAtlas.glsles */,
+				FACF1B181942646E00F099AA /* SGXLib_TextureAtlas.hlsl */,
 			);
 			path = RTShaderLib;
 			sourceTree = "<group>";
 		};
-		FA86328A193AACE100B29028 /* materials */ = {
+		FACF1AFA1942646E00F099AA /* materials */ = {
 			isa = PBXGroup;
 			children = (
-				FA86328B193AACE100B29028 /* HardwareSkinningShadow.cg */,
-				FA86328C193AACE100B29028 /* HardwareSkinningShadow.material */,
-				FA86328D193AACE100B29028 /* RTShaderSystem.material */,
+				FACF1AFB1942646E00F099AA /* HardwareSkinningShadow.cg */,
+				FACF1AFC1942646E00F099AA /* HardwareSkinningShadow.material */,
+				FACF1AFD1942646E00F099AA /* RTShaderSystem.material */,
 			);
 			path = materials;
 			sourceTree = "<group>";
@@ -250,6 +451,9 @@
 		FAF7269F192C38E900CBCD29 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FACF1A051942220300F099AA /* AVFoundation.framework */,
+				FACF1A031942219900F099AA /* OpenAL.framework */,
+				FACF1A011942219300F099AA /* AudioToolbox.framework */,
 				FAF726A0192C38E900CBCD29 /* CoreGraphics.framework */,
 				FAF726A2192C38E900CBCD29 /* Foundation.framework */,
 				FAF726A4192C38E900CBCD29 /* OpenGLES.framework */,
@@ -284,7 +488,7 @@
 		FAF726BC192C38E900CBCD29 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				FA863260193AACE000B29028 /* media */,
+				FACF1AA41942646E00F099AA /* media */,
 				FA86325D193AA71C00B29028 /* ogre.cfg */,
 				FA86325E193AA71C00B29028 /* plugins.cfg */,
 				FA86325F193AA71C00B29028 /* resources.cfg */,
@@ -295,9 +499,12 @@
 		FAF7270C192C3A8D00CBCD29 /* ios */ = {
 			isa = PBXGroup;
 			children = (
-				FAF726BB192C38E900CBCD29 /* OgreStaticPluginLoader.h */,
+				FACF19F1194220FC00F099AA /* lib */,
 				FAF7270E192C3BBD00CBCD29 /* OGKAppDelgate.h */,
 				FAF7270F192C3BBD00CBCD29 /* OGKAppDelgate.mm */,
+				FACF19EE194220A400F099AA /* OGKAudioiOS.h */,
+				FACF19EF194220A400F099AA /* OGKAudioiOS.mm */,
+				FAF726BB192C38E900CBCD29 /* OgreStaticPluginLoader.h */,
 			);
 			name = ios;
 			sourceTree = "<group>";
@@ -305,10 +512,16 @@
 		FAF7270D192C3AB000CBCD29 /* common */ = {
 			isa = PBXGroup;
 			children = (
+				FACF19ED1942202100F099AA /* OGKAudio.h */,
 				FAF72711192C404400CBCD29 /* OGKGame.cpp */,
 				FAF72712192C404400CBCD29 /* OGKGame.h */,
+				FACF19E91940EE8600F099AA /* OGKShaderGenerator.h */,
 				FA86325C193AA09300B29028 /* OGKShaderGeneratorListener.h */,
 				FA77699B193E2F45005F4810 /* OGKStaticPluginLoader.h */,
+				FACF19EA1940EE8600F099AA /* OGKTerrain.cpp */,
+				FACF19EB1940EE8600F099AA /* OGKTerrain.h */,
+				FACF1A271942574300F099AA /* OGKTerrainMaterial.cpp */,
+				FACF1A281942574300F099AA /* OGKTerrainMaterial.h */,
 			);
 			name = common;
 			sourceTree = "<group>";
@@ -364,7 +577,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA8632AA193AADEB00B29028 /* Debug.material in Resources */,
 				FAF726B0192C38E900CBCD29 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -392,9 +604,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FACF19F0194220A400F099AA /* OGKAudioiOS.mm in Sources */,
+				FACF1A001942214500F099AA /* SimpleAudioEngine.m in Sources */,
+				FACF19FF1942214500F099AA /* CocosDenshion.m in Sources */,
 				FAF726B2192C38E900CBCD29 /* main.mm in Sources */,
+				FACF19EC1940EE8600F099AA /* OGKTerrain.cpp in Sources */,
 				FAF72710192C3BBD00CBCD29 /* OGKAppDelgate.mm in Sources */,
 				FAF72713192C404400CBCD29 /* OGKGame.cpp in Sources */,
+				FACF19FD1942214500F099AA /* CDAudioManager.m in Sources */,
+				FACF1A291942574300F099AA /* OGKTerrainMaterial.cpp in Sources */,
+				FACF19FE1942214500F099AA /* CDOpenALSupport.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
