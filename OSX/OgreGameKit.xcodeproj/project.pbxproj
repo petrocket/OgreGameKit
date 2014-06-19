@@ -19,6 +19,8 @@
 		FA7769D6193E4B02005F4810 /* ogre.cfg in Resources */ = {isa = PBXBuildFile; fileRef = FA7769D5193E4B02005F4810 /* ogre.cfg */; };
 		FA7769D8193E4B02005F4810 /* plugins.cfg in Resources */ = {isa = PBXBuildFile; fileRef = FA7769D7193E4B02005F4810 /* plugins.cfg */; };
 		FA7769DA193E4B02005F4810 /* resources.cfg in Resources */ = {isa = PBXBuildFile; fileRef = FA7769D9193E4B02005F4810 /* resources.cfg */; };
+		FAB8BF1A19531C8000DA2B26 /* OGKCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAB8BF1819531C8000DA2B26 /* OGKCamera.cpp */; };
+		FAB8BF26195327BE00DA2B26 /* OGKInputManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAB8BF24195327BE00DA2B26 /* OGKInputManager.cpp */; };
 		FACF19E51940DD7D00F099AA /* OGKTerrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FACF19E31940DD7D00F099AA /* OGKTerrain.cpp */; };
 		FACF1A191942499900F099AA /* CDAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FACF1A111942499900F099AA /* CDAudioManager.m */; };
 		FACF1A1A1942499900F099AA /* CDOpenALSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = FACF1A141942499900F099AA /* CDOpenALSupport.m */; };
@@ -52,6 +54,10 @@
 		FA7769D5193E4B02005F4810 /* ogre.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = ogre.cfg; sourceTree = "<group>"; };
 		FA7769D7193E4B02005F4810 /* plugins.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = plugins.cfg; sourceTree = "<group>"; };
 		FA7769D9193E4B02005F4810 /* resources.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = resources.cfg; sourceTree = "<group>"; };
+		FAB8BF1819531C8000DA2B26 /* OGKCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OGKCamera.cpp; path = ../../common/OGKCamera.cpp; sourceTree = "<group>"; };
+		FAB8BF1919531C8000DA2B26 /* OGKCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKCamera.h; path = ../../common/OGKCamera.h; sourceTree = "<group>"; };
+		FAB8BF24195327BE00DA2B26 /* OGKInputManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OGKInputManager.cpp; path = ../../common/OGKInputManager.cpp; sourceTree = "<group>"; };
+		FAB8BF25195327BE00DA2B26 /* OGKInputManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKInputManager.h; path = ../../common/OGKInputManager.h; sourceTree = "<group>"; };
 		FACF19E31940DD7D00F099AA /* OGKTerrain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OGKTerrain.cpp; path = ../../common/OGKTerrain.cpp; sourceTree = "<group>"; };
 		FACF19E41940DD7D00F099AA /* OGKTerrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKTerrain.h; path = ../../common/OGKTerrain.h; sourceTree = "<group>"; };
 		FACF19E71940E8CA00F099AA /* OGKShaderGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKShaderGenerator.h; path = ../../common/OGKShaderGenerator.h; sourceTree = "<group>"; };
@@ -205,8 +211,12 @@
 			isa = PBXGroup;
 			children = (
 				FACF1A091942495900F099AA /* OGKAudio.h */,
+				FAB8BF1819531C8000DA2B26 /* OGKCamera.cpp */,
+				FAB8BF1919531C8000DA2B26 /* OGKCamera.h */,
 				FA35946A193E64120050AB5C /* OGKGame.cpp */,
 				FA35946B193E64120050AB5C /* OGKGame.h */,
+				FAB8BF24195327BE00DA2B26 /* OGKInputManager.cpp */,
+				FAB8BF25195327BE00DA2B26 /* OGKInputManager.h */,
 				FACF19E71940E8CA00F099AA /* OGKShaderGenerator.h */,
 				FA35946C193E64120050AB5C /* OGKShaderGeneratorListener.h */,
 				FA35946D193E64120050AB5C /* OGKStaticPluginLoader.h */,
@@ -608,7 +618,9 @@
 				FACF1A1C1942499900F099AA /* SimpleAudioEngine.m in Sources */,
 				FA7769BB193E4B02005F4810 /* main.mm in Sources */,
 				FACF19E51940DD7D00F099AA /* OGKTerrain.cpp in Sources */,
+				FAB8BF1A19531C8000DA2B26 /* OGKCamera.cpp in Sources */,
 				FACF1A1B1942499900F099AA /* CocosDenshion.m in Sources */,
+				FAB8BF26195327BE00DA2B26 /* OGKInputManager.cpp in Sources */,
 				FACF1A2619424ADF00F099AA /* CDXMacOSXSupport.mm in Sources */,
 				FA35946E193E64120050AB5C /* OGKGame.cpp in Sources */,
 				FACF1A2E19425DEF00F099AA /* OGKTerrainMaterial.cpp in Sources */,

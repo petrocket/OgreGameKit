@@ -19,13 +19,19 @@
 #include <OISKeyboard.h>
 #include <OISMouse.h>
 
+// defines
+#include "OGKStaticPluginLoader.h"
+
+#include "OGKInputManager.h"
+
+// camera
+#include "OGKCamera.h"
+
 // audio
 #include "OGKAudio.h"
 
 // terrain
 #include "OGKTerrain.h"
-
-#include "OGKStaticPluginLoader.h"
 
 #ifdef OGRE_IS_IOS
 #include <OISMultiTouch.h>
@@ -40,9 +46,6 @@ public:
     
     bool initOgre(Ogre::String wndTitle);
 	
-	void moveCamera();
-	void getInput();
-    
 	bool isOgreToBeShutDown()const{return m_bShutDownOgre;}
     
 	bool keyPressed(const OIS::KeyEvent &keyEventRef);
@@ -68,21 +71,11 @@ public:
 	Ogre::Root*                 m_pRoot;
 	Ogre::SceneManager*			m_pSceneMgr;
 	Ogre::RenderWindow*			m_pRenderWnd;
-	Ogre::Camera*				m_pCamera;
-	Ogre::Viewport*				m_pViewport;
+	OGKCamera*                  mCamera;
 	Ogre::Log*                  m_pLog;
 	Ogre::Timer*				m_pTimer;
     Ogre::OverlaySystem*        m_pOverlaySystem;
 
-	// input
-	OIS::InputManager*			m_pInputMgr;
-	OIS::Keyboard*				m_pKeyboard;
-#ifdef OGRE_IS_IOS
-	OIS::MultiTouch*			m_pMouse;
-#else
-	OIS::Mouse*					m_pMouse;
-#endif
-    
 #ifdef OGRE_IS_IOS
     Ogre::OrientationMode       mViewportOrientation;
 #endif
@@ -116,6 +109,7 @@ private:
 	float                       m_MoveScale;
 	Ogre::Degree				m_RotScale;
 
+    Ogre::Entity*               mPlayer;
     
 #ifdef OGRE_STATIC_LIB
     Ogre::StaticPluginLoader    m_StaticPluginLoader;

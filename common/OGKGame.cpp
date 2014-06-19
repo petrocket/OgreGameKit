@@ -28,7 +28,7 @@ OGKGame::OGKGame() :
 #endif
     mTerrain(NULL)
 {
-	m_MoveSpeed			= 10.0f;
+	m_MoveSpeed			= 1.0f;
 	m_RotateSpeed       = 0.3f;
     m_StartTime         = 0;
     m_TimeSinceLastFrame = 0;
@@ -37,14 +37,11 @@ OGKGame::OGKGame() :
 	m_pRoot				= 0;
 	m_pSceneMgr			= 0;
 	m_pRenderWnd        = 0;
-	m_pCamera			= 0;
-	m_pViewport			= 0;
+	mCamera			= 0;
 	m_pLog				= 0;
 	m_pTimer			= 0;
     
-	m_pInputMgr			= 0;
-	m_pKeyboard			= 0;
-	m_pMouse			= 0;
+    mPlayer             = 0;
     
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     m_ResourcePath = macBundlePath() + "/Contents/Resources/";
@@ -58,7 +55,8 @@ OGKGame::OGKGame() :
 ////////////////////////////////////////////////////////////////////////////////
 OGKGame::~OGKGame()
 {
-    if(m_pInputMgr) OIS::InputManager::destroyInputSystem(m_pInputMgr);
+    delete OGKInputManager::getSingletonPtr();
+    
 #ifdef OGRE_STATIC_LIB
     m_StaticPluginLoader.unload();
 #endif
@@ -73,8 +71,7 @@ OGKGame::~OGKGame()
 ////////////////////////////////////////////////////////////////////////////////
 bool OGKGame::initOgre(Ogre::String wndTitle)
 {
-    Ogre::LogManager* logMgr = new Ogre::LogManager();
-    
+    new Ogre::LogManager();
     m_pLog = Ogre::LogManager::getSingleton().createLog("OgreLogfile.log",
                                                         true, true, false);
     m_pLog->setDebugOutputEnabled(true);
@@ -102,26 +99,17 @@ bool OGKGame::initOgre(Ogre::String wndTitle)
 	m_pSceneMgr = m_pRoot->createSceneManager(ST_GENERIC, "SceneManager");
 	m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0.1f, 0.12f, 0.3f));
     
-	m_pCamera = m_pSceneMgr->createCamera("Camera");
-	m_pCamera->setPosition(Vector3(0, 1000, 60));
-	m_pCamera->lookAt(Vector3(0, 1000, 0));
-	m_pCamera->setNearClipDistance(1);
-//    m_pCamera->setPolygonMode(Ogre::PM_WIREFRAME);
-    m_pCamera->setFarClipDistance(11000);
+	// INPUT
+    _initInput();
     
-	m_pViewport = m_pRenderWnd->addViewport(m_pCamera);
-	m_pViewport->setBackgroundColour(ColourValue(0.8f, 0.7f, 0.6f, 1.0f));
-    
-	m_pCamera->setAspectRatio(Real(m_pViewport->getActualWidth()) / Real(m_pViewport->getActualHeight()));
-	
-	m_pViewport->setCamera(m_pCamera);
+    // CAMERA (after input)
+    mCamera = OGRE_NEW OGKCamera(m_pSceneMgr, m_pRenderWnd);
+    mCamera->getCamera()->setPosition(0, 1000, 60);
+    mCamera->getCamera()->lookAt(Vector3(0, 1000, 0));
     
     // create overlay system BEFORE initializing resources (for fonts)
     m_pOverlaySystem = new Ogre::OverlaySystem();
     m_pSceneMgr->addRenderQueueListener(m_pOverlaySystem);
-    
-	// INPUT
-    _initInput();
     
     // RESOURCES
     _initResources();
@@ -135,18 +123,6 @@ bool OGKGame::initOgre(Ogre::String wndTitle)
 	m_pRenderWnd->setActive(true);
     
 	return true;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-void OGKGame::moveCamera()
-{
-#if !defined(OGRE_IS_IOS)
-	if(m_pKeyboard->isKeyDown(OIS::KC_LSHIFT))
-		m_pCamera->moveRelative(m_TranslateVector);
-	else
-#endif
-        
-    m_pCamera->moveRelative(m_TranslateVector / 10.f);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -172,11 +148,11 @@ bool OGKGame::renderOneFrame(double timeSinceLastFrame)
     
     if(m_pRenderWnd->isActive()) {
         
-#if !defined(OGRE_IS_IOS)
-        m_pKeyboard->capture();
-#endif
-        m_pMouse->capture();
+        // input
+        OGKInputManager::getSingletonPtr()->capture();
+        
         update(timeSinceLastFrame);
+        
         m_pRoot->renderOneFrame(timeSinceLastFrame);
     }
     
@@ -199,7 +175,6 @@ void OGKGame::setup()
     Ogre::MaterialManager::getSingleton().setDefaultAnisotropy(7);
     
     m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0.1,0.15,0.4));
-//    Ogre::ColourValue fogColour(189.0/255.0, 227.0/255.0, 255.0/255.0);
     Ogre::ColourValue fogColour(184.0/255.0, 223.0/255.0, 251.0/255.0);
     m_pSceneMgr->setFog(Ogre::FOG_LINEAR, fogColour, 0.0, 1000, 4000);
     m_pRenderWnd->getViewport(0)->setBackgroundColour(fogColour);
@@ -208,19 +183,36 @@ void OGKGame::setup()
     mTerrain->setup(m_pSceneMgr, light);
     
     playBackgroundMusic("media/audio/background.mp3");
+    
+    mPlayer = m_pSceneMgr->createEntity("Player", "Player.mesh");
+    Ogre::SceneNode *playerNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode();
+    playerNode->attachObject(mPlayer);
+    
+    float height = mTerrain->mTerrainGroup->getHeightAtWorldPosition(0, 1000.0, 0);
+//    playerNode->setPosition(0, height + 1.0, 0);
+    playerNode->setPosition(0, 1000.0, 0);
+
+    if(mPlayer->hasAnimationState("Walk")) {
+        mPlayer->getAnimationState("Walk")->setLoop(true);
+        mPlayer->getAnimationState("Walk")->setEnabled(false);
+    }
+    if(mPlayer->hasAnimationState("Idle")) {
+        mPlayer->getAnimationState("Idle")->setLoop(true);
+        mPlayer->getAnimationState("Walk")->setEnabled(true);
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void OGKGame::start()
 {
     if(!initOgre("Ogre Game Kit")) {
-        m_pLog->logMessage("Failed to init Ogre");
+        m_pLog->logMessage("Failed to init Ogre", Ogre::LML_CRITICAL);
         return;
     }
     
     m_bShutDownOgre = false;
     
-	m_pLog->logMessage("Ogre initialized!");
+	m_pLog->logMessage("Ogre initialized!", Ogre::LML_TRIVIAL);
     
     m_StartTime = m_pTimer->getMillisecondsCPU();
     
@@ -233,7 +225,7 @@ void OGKGame::start()
     m_pRenderWnd->resetStatistics();
 
 #if !((OGRE_PLATFORM == OGRE_PLATFORM_APPLE) && __LP64__) && !defined(OGRE_IS_IOS)
-    m_pLog->logMessage("Start main loop...");
+    m_pLog->logMessage("Start main loop...", Ogre::LML_TRIVIAL);
 	
 	double timeSinceLastFrame = 0;
 	double startTime = 0;
@@ -272,14 +264,17 @@ void OGKGame::start()
 ////////////////////////////////////////////////////////////////////////////////
 void OGKGame::update(double timeSinceLastFrame)
 {
-	m_MoveScale = m_MoveSpeed   * (float)timeSinceLastFrame;
-	m_RotScale  = m_RotateSpeed * (float)timeSinceLastFrame;
+    mCamera->update(timeSinceLastFrame);
     
-	m_TranslateVector = Vector3::ZERO;
-    
-	getInput();
-	moveCamera();
-    
+    if(mPlayer) {
+        if(mPlayer->hasAnimationState("Walk")) {
+            mPlayer->getAnimationState("Walk")->addTime(timeSinceLastFrame * 0.001);
+        }
+        if(mPlayer->hasAnimationState("Idle")) {
+            mPlayer->getAnimationState("Idle")->addTime(timeSinceLastFrame * 0.001);
+        }
+    }
+
     if(m_pOverlay->isVisible()) {
         int fps = (int)floorf(m_pRenderWnd->getLastFPS());
         int ms = (int)ceil(timeSinceLastFrame);
@@ -294,56 +289,44 @@ void OGKGame::update(double timeSinceLastFrame)
 #pragma mark - Input
 
 ////////////////////////////////////////////////////////////////////////////////
-void OGKGame::getInput()
-{
-#if !defined(OGRE_IS_IOS)
-	if(m_pKeyboard->isKeyDown(OIS::KC_A))
-		m_TranslateVector.x = -m_MoveScale;
-	
-	if(m_pKeyboard->isKeyDown(OIS::KC_D))
-		m_TranslateVector.x = m_MoveScale;
-	
-	if(m_pKeyboard->isKeyDown(OIS::KC_W))
-		m_TranslateVector.z = -m_MoveScale;
-	
-	if(m_pKeyboard->isKeyDown(OIS::KC_S))
-		m_TranslateVector.z = m_MoveScale;
-#endif
-}
-
-////////////////////////////////////////////////////////////////////////////////
 bool OGKGame::keyPressed(const OIS::KeyEvent &keyEventRef)
 {
 #if !defined(OGRE_IS_IOS)
-	if(m_pKeyboard->isKeyDown(OIS::KC_ESCAPE))
+    OIS::Keyboard *keyboard = OGKInputManager::getSingletonPtr()->getKeyboard();
+    
+	if(keyboard->isKeyDown(OIS::KC_ESCAPE))
 	{
         m_bShutDownOgre = true;
         return true;
 	}
+    if(keyboard->isKeyDown(OIS::KC_1)) {
+        mPlayer->getAnimationState("Idle")->setEnabled(false);
+        mPlayer->getAnimationState("Walk")->setEnabled(true);
+    }
     
-	if(m_pKeyboard->isKeyDown(OIS::KC_SYSRQ))
+	if(keyboard->isKeyDown(OIS::KC_SYSRQ))
 	{
 		m_pRenderWnd->writeContentsToTimestampedFile("OGK_Screenshot_", ".png");
 		return true;
 	}
     
-	if(m_pKeyboard->isKeyDown(OIS::KC_M))
+	if(keyboard->isKeyDown(OIS::KC_M))
 	{
 		static int mode = 0;
 		
 		if(mode == 2)
 		{
-			m_pCamera->setPolygonMode(PM_SOLID);
+			mCamera->getCamera()->setPolygonMode(PM_SOLID);
 			mode = 0;
 		}
 		else if(mode == 0)
 		{
-            m_pCamera->setPolygonMode(PM_WIREFRAME);
+            mCamera->getCamera()->setPolygonMode(PM_WIREFRAME);
             mode = 1;
 		}
 		else if(mode == 1)
 		{
-			m_pCamera->setPolygonMode(PM_POINTS);
+			mCamera->getCamera()->setPolygonMode(PM_POINTS);
 			mode = 2;
 		}
 	}
@@ -354,6 +337,13 @@ bool OGKGame::keyPressed(const OIS::KeyEvent &keyEventRef)
 ////////////////////////////////////////////////////////////////////////////////
 bool OGKGame::keyReleased(const OIS::KeyEvent &keyEventRef)
 {
+    OIS::Keyboard *keyboard = OGKInputManager::getSingletonPtr()->getKeyboard();
+    
+    if(!keyboard->isKeyDown(OIS::KC_1)) {
+        mPlayer->getAnimationState("Idle")->setEnabled(true);
+        mPlayer->getAnimationState("Walk")->setEnabled(false);
+    }
+    
 	return true;
 }
 
@@ -361,37 +351,6 @@ bool OGKGame::keyReleased(const OIS::KeyEvent &keyEventRef)
 ////////////////////////////////////////////////////////////////////////////////
 bool OGKGame::touchMoved(const OIS::MultiTouchEvent &evt)
 {
-    OIS::MultiTouchState state = evt.state;
-    int origTransX = 0, origTransY = 0;
-#if !OGRE_NO_VIEWPORT_ORIENTATIONMODE
-    switch(m_pCamera->getViewport()->getOrientationMode())
-#else
-    switch(mViewportOrientation)
-#endif
-    {
-        case Ogre::OR_LANDSCAPELEFT:
-            origTransX = state.X.rel;
-            origTransY = state.Y.rel;
-            state.X.rel = -origTransY;
-            state.Y.rel = origTransX;
-            break;
-            
-        case Ogre::OR_LANDSCAPERIGHT:
-            origTransX = state.X.rel;
-            origTransY = state.Y.rel;
-            state.X.rel = origTransY;
-            state.Y.rel = origTransX;
-            break;
-            
-            // Portrait doesn't need any change
-        case Ogre::OR_PORTRAIT:
-        default:
-            break;
-    }
-
-	m_pCamera->yaw(Degree(state.X.rel * -0.1));
-	m_pCamera->pitch(Degree(state.Y.rel * -0.1));
-	
 	return true;
 }
 
@@ -419,9 +378,6 @@ bool OGKGame::touchCancelled(const OIS:: MultiTouchEvent &evt)
 ////////////////////////////////////////////////////////////////////////////////
 bool OGKGame::mouseMoved(const OIS::MouseEvent &evt)
 {
-	m_pCamera->yaw(Degree(evt.state.X.rel * -0.1f));
-	m_pCamera->pitch(Degree(evt.state.Y.rel * -0.1f));
-	
 	return true;
 }
 
@@ -443,27 +399,14 @@ bool OGKGame::mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
 ////////////////////////////////////////////////////////////////////////////////
 void OGKGame::_initInput()
 {
-    unsigned long hWnd = 0;
-    OIS::ParamList paramList;
-    m_pRenderWnd->getCustomAttribute("WINDOW", &hWnd);
+    OGKInputManager::getSingletonPtr()->initialise(m_pRenderWnd);
     
-	paramList.insert(OIS::ParamList::value_type("WINDOW", Ogre::StringConverter::toString(hWnd)));
-    
-	m_pInputMgr = OIS::InputManager::createInputSystem(paramList);
-    
-#if !defined(OGRE_IS_IOS)
-    m_pKeyboard = static_cast<OIS::Keyboard*>(m_pInputMgr->createInputObject(OIS::OISKeyboard, true));
-    m_pKeyboard->setEventCallback(this);
-    
-	m_pMouse = static_cast<OIS::Mouse*>(m_pInputMgr->createInputObject(OIS::OISMouse, true));
-    
-	m_pMouse->getMouseState().height = m_pRenderWnd->getHeight();
-	m_pMouse->getMouseState().width	 = m_pRenderWnd->getWidth();
+    OGKInputManager::getSingletonPtr()->addKeyListener(this, "OGKGameListener");
+#ifdef OGRE_IS_IOS
+    OGKInputManager::getSingletonPtr()->addMultiTouchListener(this, "OGKGameListener");
 #else
-	m_pMouse = static_cast<OIS::MultiTouch*>(m_pInputMgr->createInputObject(OIS::OISMultiTouch, true));
+    OGKInputManager::getSingletonPtr()->addMouseListener(this, "OGKGameListener");
 #endif
-    
-    m_pMouse->setEventCallback(this);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -499,8 +442,7 @@ void OGKGame::_initResources()
 
 ////////////////////////////////////////////////////////////////////////////////
 void OGKGame::_initOverlays()
-{
-    
+{    
     // Main Overlay
     m_pOverlay = Ogre::OverlayManager::getSingleton().create("MainOverlay");
     
