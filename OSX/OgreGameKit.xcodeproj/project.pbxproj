@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		FA35946E193E64120050AB5C /* OGKGame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA35946A193E64120050AB5C /* OGKGame.cpp */; };
 		FA359471193E641D0050AB5C /* OGKAppDelgate.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA359470193E641D0050AB5C /* OGKAppDelgate.mm */; };
+		FA35A6C9195486DD0071F577 /* OGKOSXWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA35A6C8195486DD0071F577 /* OGKOSXWindow.mm */; };
 		FA7769AA193E4B02005F4810 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA7769A9193E4B02005F4810 /* Carbon.framework */; };
 		FA7769AC193E4B02005F4810 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA7769AB193E4B02005F4810 /* Cocoa.framework */; };
 		FA7769AE193E4B02005F4810 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA7769AD193E4B02005F4810 /* IOKit.framework */; };
@@ -21,6 +22,7 @@
 		FA7769DA193E4B02005F4810 /* resources.cfg in Resources */ = {isa = PBXBuildFile; fileRef = FA7769D9193E4B02005F4810 /* resources.cfg */; };
 		FAB8BF1A19531C8000DA2B26 /* OGKCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAB8BF1819531C8000DA2B26 /* OGKCamera.cpp */; };
 		FAB8BF26195327BE00DA2B26 /* OGKInputManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAB8BF24195327BE00DA2B26 /* OGKInputManager.cpp */; };
+		FAB8BF2F1953C71800DA2B26 /* OGKPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAB8BF2D1953C71800DA2B26 /* OGKPlayer.cpp */; };
 		FACF19E51940DD7D00F099AA /* OGKTerrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FACF19E31940DD7D00F099AA /* OGKTerrain.cpp */; };
 		FACF1A191942499900F099AA /* CDAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FACF1A111942499900F099AA /* CDAudioManager.m */; };
 		FACF1A1A1942499900F099AA /* CDOpenALSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = FACF1A141942499900F099AA /* CDOpenALSupport.m */; };
@@ -41,6 +43,9 @@
 		FA35946D193E64120050AB5C /* OGKStaticPluginLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKStaticPluginLoader.h; path = ../../common/OGKStaticPluginLoader.h; sourceTree = "<group>"; };
 		FA35946F193E641D0050AB5C /* OGKAppDelgate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGKAppDelgate.h; sourceTree = "<group>"; };
 		FA359470193E641D0050AB5C /* OGKAppDelgate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OGKAppDelgate.mm; sourceTree = "<group>"; };
+		FA35A6C7195486DD0071F577 /* OGKOSXWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGKOSXWindow.h; sourceTree = "<group>"; };
+		FA35A6C8195486DD0071F577 /* OGKOSXWindow.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OGKOSXWindow.mm; sourceTree = "<group>"; };
+		FA35A6CA195487020071F577 /* OGKOSXWindowInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGKOSXWindowInterface.h; sourceTree = "<group>"; };
 		FA7769A6193E4B02005F4810 /* OgreGameKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OgreGameKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA7769A9193E4B02005F4810 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		FA7769AB193E4B02005F4810 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -58,6 +63,8 @@
 		FAB8BF1919531C8000DA2B26 /* OGKCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKCamera.h; path = ../../common/OGKCamera.h; sourceTree = "<group>"; };
 		FAB8BF24195327BE00DA2B26 /* OGKInputManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OGKInputManager.cpp; path = ../../common/OGKInputManager.cpp; sourceTree = "<group>"; };
 		FAB8BF25195327BE00DA2B26 /* OGKInputManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKInputManager.h; path = ../../common/OGKInputManager.h; sourceTree = "<group>"; };
+		FAB8BF2D1953C71800DA2B26 /* OGKPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OGKPlayer.cpp; path = ../../common/OGKPlayer.cpp; sourceTree = "<group>"; };
+		FAB8BF2E1953C71800DA2B26 /* OGKPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKPlayer.h; path = ../../common/OGKPlayer.h; sourceTree = "<group>"; };
 		FACF19E31940DD7D00F099AA /* OGKTerrain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OGKTerrain.cpp; path = ../../common/OGKTerrain.cpp; sourceTree = "<group>"; };
 		FACF19E41940DD7D00F099AA /* OGKTerrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKTerrain.h; path = ../../common/OGKTerrain.h; sourceTree = "<group>"; };
 		FACF19E71940E8CA00F099AA /* OGKShaderGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKShaderGenerator.h; path = ../../common/OGKShaderGenerator.h; sourceTree = "<group>"; };
@@ -217,6 +224,8 @@
 				FA35946B193E64120050AB5C /* OGKGame.h */,
 				FAB8BF24195327BE00DA2B26 /* OGKInputManager.cpp */,
 				FAB8BF25195327BE00DA2B26 /* OGKInputManager.h */,
+				FAB8BF2D1953C71800DA2B26 /* OGKPlayer.cpp */,
+				FAB8BF2E1953C71800DA2B26 /* OGKPlayer.h */,
 				FACF19E71940E8CA00F099AA /* OGKShaderGenerator.h */,
 				FA35946C193E64120050AB5C /* OGKShaderGeneratorListener.h */,
 				FA35946D193E64120050AB5C /* OGKStaticPluginLoader.h */,
@@ -236,6 +245,9 @@
 				FA359470193E641D0050AB5C /* OGKAppDelgate.mm */,
 				FACF1A1D194249AC00F099AA /* OGKAudioOSX.h */,
 				FACF1A1E194249AC00F099AA /* OGKAudioOSX.mm */,
+				FA35A6C7195486DD0071F577 /* OGKOSXWindow.h */,
+				FA35A6C8195486DD0071F577 /* OGKOSXWindow.mm */,
+				FA35A6CA195487020071F577 /* OGKOSXWindowInterface.h */,
 			);
 			name = osx;
 			sourceTree = "<group>";
@@ -616,6 +628,7 @@
 			files = (
 				FACF1A1F194249AC00F099AA /* OGKAudioOSX.mm in Sources */,
 				FACF1A1C1942499900F099AA /* SimpleAudioEngine.m in Sources */,
+				FAB8BF2F1953C71800DA2B26 /* OGKPlayer.cpp in Sources */,
 				FA7769BB193E4B02005F4810 /* main.mm in Sources */,
 				FACF19E51940DD7D00F099AA /* OGKTerrain.cpp in Sources */,
 				FAB8BF1A19531C8000DA2B26 /* OGKCamera.cpp in Sources */,
@@ -627,6 +640,7 @@
 				FA359471193E641D0050AB5C /* OGKAppDelgate.mm in Sources */,
 				FACF1A191942499900F099AA /* CDAudioManager.m in Sources */,
 				FACF1A1A1942499900F099AA /* CDOpenALSupport.m in Sources */,
+				FA35A6C9195486DD0071F577 /* OGKOSXWindow.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

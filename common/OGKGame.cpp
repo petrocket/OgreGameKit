@@ -67,6 +67,12 @@ OGKGame::~OGKGame()
 #endif
 }
 
+////////////////////////////////////////////////////////////////////////////////
+OGKTerrain *OGKGame::getTerrain()
+{
+    return mTerrain;
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////
 bool OGKGame::initOgre(Ogre::String wndTitle)
@@ -104,8 +110,8 @@ bool OGKGame::initOgre(Ogre::String wndTitle)
     
     // CAMERA (after input)
     mCamera = OGRE_NEW OGKCamera(m_pSceneMgr, m_pRenderWnd);
-    mCamera->getCamera()->setPosition(0, 1000, 60);
-    mCamera->getCamera()->lookAt(Vector3(0, 1000, 0));
+//    mCamera->getCamera()->setPosition(0, 1000, 60);
+//    mCamera->getCamera()->lookAt(Vector3(0, 1000, 0));
     
     // create overlay system BEFORE initializing resources (for fonts)
     m_pOverlaySystem = new Ogre::OverlaySystem();
@@ -184,22 +190,11 @@ void OGKGame::setup()
     
     playBackgroundMusic("media/audio/background.mp3");
     
-    mPlayer = m_pSceneMgr->createEntity("Player", "Player.mesh");
-    Ogre::SceneNode *playerNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode();
-    playerNode->attachObject(mPlayer);
+    mPlayer = OGRE_NEW OGKPlayer(m_pSceneMgr);
+    mPlayer->setEnabled(true);
     
-    float height = mTerrain->mTerrainGroup->getHeightAtWorldPosition(0, 1000.0, 0);
-//    playerNode->setPosition(0, height + 1.0, 0);
-    playerNode->setPosition(0, 1000.0, 0);
-
-    if(mPlayer->hasAnimationState("Walk")) {
-        mPlayer->getAnimationState("Walk")->setLoop(true);
-        mPlayer->getAnimationState("Walk")->setEnabled(false);
-    }
-    if(mPlayer->hasAnimationState("Idle")) {
-        mPlayer->getAnimationState("Idle")->setLoop(true);
-        mPlayer->getAnimationState("Walk")->setEnabled(true);
-    }
+    mCamera->setTarget(mPlayer->getSceneNode());    
+    mCamera->setMode(OGKCamera::THIRD_PERSON);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -264,16 +259,9 @@ void OGKGame::start()
 ////////////////////////////////////////////////////////////////////////////////
 void OGKGame::update(double timeSinceLastFrame)
 {
+    mPlayer->update(timeSinceLastFrame);
+
     mCamera->update(timeSinceLastFrame);
-    
-    if(mPlayer) {
-        if(mPlayer->hasAnimationState("Walk")) {
-            mPlayer->getAnimationState("Walk")->addTime(timeSinceLastFrame * 0.001);
-        }
-        if(mPlayer->hasAnimationState("Idle")) {
-            mPlayer->getAnimationState("Idle")->addTime(timeSinceLastFrame * 0.001);
-        }
-    }
 
     if(m_pOverlay->isVisible()) {
         int fps = (int)floorf(m_pRenderWnd->getLastFPS());
@@ -299,10 +287,6 @@ bool OGKGame::keyPressed(const OIS::KeyEvent &keyEventRef)
         m_bShutDownOgre = true;
         return true;
 	}
-    if(keyboard->isKeyDown(OIS::KC_1)) {
-        mPlayer->getAnimationState("Idle")->setEnabled(false);
-        mPlayer->getAnimationState("Walk")->setEnabled(true);
-    }
     
 	if(keyboard->isKeyDown(OIS::KC_SYSRQ))
 	{
@@ -330,6 +314,21 @@ bool OGKGame::keyPressed(const OIS::KeyEvent &keyEventRef)
 			mode = 2;
 		}
 	}
+    
+    if(keyEventRef.key == OIS::KC_C) {
+        if(mCamera->getMode() == OGKCamera::FREE) {
+            mCamera->setMode(OGKCamera::THIRD_PERSON);
+            mPlayer->setEnabled(true);
+            
+            // show the mouse
+            OGKInputManager::getSingletonPtr()->setMouseVisible(true);
+        }
+        else {
+            mCamera->setMode(OGKCamera::FREE);
+            mPlayer->setEnabled(false);
+            OGKInputManager::getSingletonPtr()->setMouseVisible(false);
+        }
+    }
 #endif
 	return true;
 }
@@ -337,13 +336,6 @@ bool OGKGame::keyPressed(const OIS::KeyEvent &keyEventRef)
 ////////////////////////////////////////////////////////////////////////////////
 bool OGKGame::keyReleased(const OIS::KeyEvent &keyEventRef)
 {
-    OIS::Keyboard *keyboard = OGKInputManager::getSingletonPtr()->getKeyboard();
-    
-    if(!keyboard->isKeyDown(OIS::KC_1)) {
-        mPlayer->getAnimationState("Idle")->setEnabled(true);
-        mPlayer->getAnimationState("Walk")->setEnabled(false);
-    }
-    
 	return true;
 }
 

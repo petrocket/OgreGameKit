@@ -12,11 +12,15 @@
 OGKCamera::OGKCamera(
                      Ogre::SceneManager *sceneManager,
                      Ogre::RenderWindow *renderWindow) :
+    mCamera(NULL),
     mMode(FREE),
     mMoveSpeed(1.0),
-    mViewportOrientation(Ogre::OR_LANDSCAPELEFT)
+    mViewportOrientation(Ogre::OR_LANDSCAPELEFT),
+    mTargetNode(NULL),
+    mTightness(0.9)
 {
     mCamera = sceneManager->createCamera("OGKCamera");
+    mCamera->setFixedYawAxis(true);
     
     mViewport = renderWindow->addViewport(mCamera);
 	mViewport->setBackgroundColour(Ogre::ColourValue(0.8f, 0.7f, 0.6f, 1.0f));
@@ -28,7 +32,10 @@ OGKCamera::OGKCamera(
 	mViewport->setCamera(mCamera);
     
     mCameraNode = sceneManager->getRootSceneNode()->createChildSceneNode("OGKCameraNode");
-    mTargetNode = sceneManager->getRootSceneNode()->createChildSceneNode("OGKCameraNodeTarget");
+    mCameraNode->attachObject(mCamera);
+    mCameraNode->setFixedYawAxis(true);
+    
+//    mTargetNode = sceneManager->getRootSceneNode()->createChildSceneNode("OGKCameraNodeTarget");
     
     OGKInputManager::getSingletonPtr()->addKeyListener(this, "OGKCameraListener");
     
@@ -64,6 +71,17 @@ OGKCamera::CameraMode OGKCamera::getMode()
 void OGKCamera::setMode(OGKCamera::CameraMode mode)
 {
     mMode = mode;
+    if(mMode == THIRD_PERSON) {
+        // @TODO don't hard code this offset
+        mCamera->setPosition(0, 2.f, 10.f);
+        if(mTargetNode) {
+            mCamera->setAutoTracking(true, mTargetNode);
+        }
+    }
+    else {
+        mCamera->setPosition(0, 0, 0);
+        mCamera->setAutoTracking(false);
+    }
 }
 
 Ogre::Real OGKCamera::getMoveSpeed()
@@ -76,6 +94,10 @@ void OGKCamera::setMoveSpeed(Ogre::Real moveSpeed)
     mMoveSpeed = moveSpeed;
 }
 
+void OGKCamera::setTarget(Ogre::SceneNode *target)
+{
+    mTargetNode = target;
+}
 
 Ogre::Real OGKCamera::getTightness()
 {
@@ -154,8 +176,8 @@ bool OGKCamera::touchCancelled(const OIS::MultiTouchEvent &evt)
 bool OGKCamera::mouseMoved(const OIS::MouseEvent &evt)
 {
     if(mMode == OGKCamera::FREE) {
-        mCamera->yaw(Ogre::Degree(evt.state.X.rel * -0.1f));
-        mCamera->pitch(Ogre::Degree(evt.state.Y.rel * -0.1f));
+        mCameraNode->yaw(Ogre::Degree(evt.state.X.rel * -0.1f));
+        mCameraNode->pitch(Ogre::Degree(evt.state.Y.rel * -0.1f));
     }
     return TRUE;    
 }
@@ -193,13 +215,20 @@ void OGKCamera::update(Ogre::Real elapsedTime)
             translateVector.z = moveScale;
         
         if(keyboard->isKeyDown(OIS::KC_LSHIFT)) {
-            mCamera->moveRelative(translateVector * 0.1f);
+            mCameraNode->translate(translateVector * 0.1f,Ogre::Node::TS_LOCAL);
         }
         else {
-            mCamera->moveRelative(translateVector);
+            mCameraNode->translate(translateVector,Ogre::Node::TS_LOCAL);
         }
 #else
         // @TODO
 #endif
+    }
+    else if(mMode == OGKCamera::THIRD_PERSON) {
+        mTargetNode->_update(true,true);
+//        mCameraNode->_update(true, true);
+        Ogre::Vector3 translateVector = (mTargetNode->getPosition() - mCameraNode->getPosition()) * mTightness;
+        mCameraNode->translate(translateVector);
+        mCameraNode->_update(true, true);
     }
 }

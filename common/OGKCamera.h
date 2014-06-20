@@ -48,6 +48,8 @@ public:
     Ogre::Real getTightness();
     void setTightness(Ogre::Real tightness);
     
+    void setTarget(Ogre::SceneNode *target);
+    
     void update(Ogre::Real elapsedTime);
     
 	bool keyPressed(const OIS::KeyEvent &keyEventRef);

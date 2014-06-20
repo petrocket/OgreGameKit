@@ -33,6 +33,9 @@
 // terrain
 #include "OGKTerrain.h"
 
+// player
+#include "OGKPlayer.h"
+
 #ifdef OGRE_IS_IOS
 #include <OISMultiTouch.h>
 class OGKGame : public Ogre::Singleton<OGKGame>, OIS::KeyListener, OIS::MultiTouchListener
@@ -47,6 +50,8 @@ public:
     bool initOgre(Ogre::String wndTitle);
 	
 	bool isOgreToBeShutDown()const{return m_bShutDownOgre;}
+    
+    OGKTerrain *getTerrain();
     
 	bool keyPressed(const OIS::KeyEvent &keyEventRef);
 	bool keyReleased(const OIS::KeyEvent &keyEventRef);
@@ -80,6 +85,7 @@ public:
     Ogre::OrientationMode       mViewportOrientation;
 #endif
     
+    
 protected:
     Ogre::String                 m_ResourcePath;
     
@@ -109,7 +115,7 @@ private:
 	float                       m_MoveScale;
 	Ogre::Degree				m_RotScale;
 
-    Ogre::Entity*               mPlayer;
+    OGKPlayer*                  mPlayer;
     
 #ifdef OGRE_STATIC_LIB
     Ogre::StaticPluginLoader    m_StaticPluginLoader;

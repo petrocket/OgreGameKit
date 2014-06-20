@@ -8,6 +8,11 @@
 
 #include "OGKInputManager.h"
 
+#ifdef OIS_APPLE_PLATFORM
+#include <Carbon/Carbon.h>
+#include "OGKOSXWindowInterface.h"
+#endif
+
 OGKInputManager *OGKInputManager::mInputManager;
 
 OGKInputManager::OGKInputManager( void ) :
@@ -51,8 +56,10 @@ OGKInputManager::~OGKInputManager( void ) {
     }
 }
 
-void OGKInputManager::initialise( Ogre::RenderWindow *renderWindow ) {
+void OGKInputManager::initialise( Ogre::RenderWindow *renderWindow, bool showMouseCursor ) {
     if( !mInputSystem ) {
+        mRenderWindow = renderWindow;
+        
         // Setup basic variables
         OIS::ParamList paramList;
         unsigned long hWnd = 0;
@@ -61,15 +68,21 @@ void OGKInputManager::initialise( Ogre::RenderWindow *renderWindow ) {
         paramList.insert(OIS::ParamList::value_type("WINDOW", Ogre::StringConverter::toString(hWnd)));
         
         // Fill parameter list
-//        windowHndStr << (unsigned int) windowHnd;
-//        paramList.insert( std::make_pair( std::string( "WINDOW" ), windowHndStr.str() ) );
-//		paramList.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_FOREGROUND" )));
-//		paramList.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_NONEXCLUSIVE")));
-		//paramList.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_FOREGROUND")));
-		//paramList.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_NONEXCLUSIVE")));
+        if(showMouseCursor) {
+#if defined OIS_WIN32_PLATFORM
+            paramList.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_FOREGROUND" )));
+            paramList.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_NONEXCLUSIVE")));
+            paramList.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_FOREGROUND")));
+            paramList.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_NONEXCLUSIVE")));
+#elif defined OIS_LINUX_PLATFORM
+            paramList.insert(std::make_pair(std::string("x11_mouse_grab"), std::string("false")));
+            paramList.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("false")));
+            paramList.insert(std::make_pair(std::string("x11_keyboard_grab"), std::string("false")));
+            paramList.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true")));
+#endif
+        }
         // Create inputsystem
         mInputSystem = OIS::InputManager::createInputSystem( paramList );
-        
         
 #ifdef OGRE_IS_IOS
         mMouse = static_cast<OIS::MultiTouch*>( mInputSystem->createInputObject(OIS::OISMultiTouch, true));
@@ -88,6 +101,18 @@ void OGKInputManager::initialise( Ogre::RenderWindow *renderWindow ) {
         
         // Set mouse region
         this->setWindowExtents( width, height );
+#endif
+        
+#ifdef OIS_APPLE_PLATFORM
+        if(showMouseCursor) {
+            CGDisplayShowCursor(kCGDirectMainDisplay);
+            CGAssociateMouseAndMouseCursorPosition(TRUE);
+        }
+        else {
+            // fix mouse in wrong place
+            Ogre::Rect r = getWindowBounds(renderWindow);
+            CGDisplayMoveCursorToPoint(kCGDirectMainDisplay, CGPointMake(r.left + r.right / 2, r.top - r.bottom / 2));
+        }
 #endif
         // If possible create all joysticks in buffered mode
         /*
@@ -285,7 +310,14 @@ OIS::Mouse* OGKInputManager::getMouse( void )
 {
     return mMouse;
 }
-
+#ifndef OGRE_IS_IOS
+void OGKInputManager::setMouseVisible(bool visible)
+{
+    OIS::InputManager::destroyInputSystem(mInputSystem);
+    mInputSystem = NULL;
+    initialise(mRenderWindow, visible);
+}
+#endif
 OIS::Keyboard* OGKInputManager::getKeyboard( void ) {
     return mKeyboard;
 }

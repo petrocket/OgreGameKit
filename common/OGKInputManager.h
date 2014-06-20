@@ -27,7 +27,7 @@
 public:
     virtual ~OGKInputManager( void );
     
-    void initialise( Ogre::RenderWindow *renderWindow );
+    void initialise( Ogre::RenderWindow *renderWindow, bool showMouseCursor = false );
     void capture( void );
     
     void addKeyListener( OIS::KeyListener *keyListener, const std::string& instanceName );
@@ -62,6 +62,7 @@ public:
     OIS::MultiTouch* getMouse( void );
 #else
     OIS::Mouse*    getMouse( void );
+        void setMouseVisible(bool visible);
 #endif
     OIS::Keyboard* getKeyboard( void );
     OIS::JoyStick* getJoystick( unsigned int index );
@@ -131,6 +132,8 @@ private:
     std::map<std::string, OIS::JoyStickListener*>::iterator itJoystickListenerEnd;
     
     static OGKInputManager *mInputManager;
+        
+        Ogre::RenderWindow *mRenderWindow;
 };
 
 #endif /* defined(__OgreGameKit__OGKInputManager__) */
