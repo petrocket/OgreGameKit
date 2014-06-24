@@ -7,7 +7,7 @@
 //
 
 #include "OGKGame.h"
-
+#include "OGKConsole.h"
 #include "macUtils.h"
 
 #ifdef INCLUDE_RTSHADER_SYSTEM
@@ -155,11 +155,10 @@ void OGKGame::start()
         m_pLog->logMessage("Failed to init Ogre", Ogre::LML_CRITICAL);
         return;
     }
-    
+
     m_bShutDownOgre = false;
     
 	m_pLog->logMessage("Ogre initialized!");
-    
     
     m_StartTime = m_pTimer->getMillisecondsCPU();
     
@@ -215,11 +214,16 @@ void OGKGame::update(double timeSinceLastFrame)
 
     mCamera->update(timeSinceLastFrame);
 
-    if(m_pOverlay->isVisible()) {
-        int fps = (int)floorf(m_pRenderWnd->getLastFPS());
-        int ms = (int)ceil(timeSinceLastFrame);
-        m_pFPS->setCaption(Ogre::StringConverter::toString(fps) + "fps " + Ogre::StringConverter::toString(ms) + "ms");
+    if(mFPS) {
+        std::stringstream s;
+        s << "FPS: " << m_pRenderWnd->getLastFPS() << ", Batches: " << Ogre::Root::getSingletonPtr()->getRenderSystem()->_getBatchCount() << "\n";
+        mFPS->text(s.str());
     }
+//    if(m_pOverlay->isVisible()) {
+//        int fps = (int)floorf(m_pRenderWnd->getLastFPS());
+//        int ms = (int)ceil(timeSinceLastFrame);
+//        m_pFPS->setCaption(Ogre::StringConverter::toString(fps) + "fps " + Ogre::StringConverter::toString(ms) + "ms");
+//    }
     
     if(mTerrain) {
         mTerrain->update();
@@ -232,7 +236,20 @@ void OGKGame::update(double timeSinceLastFrame)
 bool OGKGame::keyPressed(const OIS::KeyEvent &keyEventRef)
 {
 #if !defined(OGRE_IS_IOS)
+    if(OGKConsole::getSingletonPtr() && OGKConsole::getSingletonPtr()->isVisible()) {
+        OGKConsole::getSingletonPtr()->onKeyPressed(keyEventRef);
+        if(keyEventRef.key == OIS::KC_GRAVE) {
+            OGKConsole::getSingletonPtr()->setVisible(false);
+        }
+        return true;
+    }
+    
     switch (keyEventRef.key) {
+        case OIS::KC_GRAVE:
+            if(OGKConsole::getSingletonPtr()) {
+                OGKConsole::getSingletonPtr()->setVisible(true);
+            }
+            break;
         case OIS::KC_C:
         {
             if(mCamera->getMode() == OGKCamera::FREE) {
@@ -427,8 +444,16 @@ bool OGKGame::_init(Ogre::String wndTitle)
     // RESOURCES
     _initResources();
     
+    // GUI
+    OGRE_NEW Gorilla::Silverback();
+    Gorilla::Silverback::getSingletonPtr()->loadAtlas("dejavu");
+    mOverlayScreen = Gorilla::Silverback::getSingletonPtr()->createScreen(m_pRenderWnd->getViewport(0), "dejavu");
+    
     // OVERLAYS
     _initOverlays();
+    
+    // CONSOLE
+    _initConsole();
     
 	m_pTimer = OGRE_NEW Ogre::Timer();
 	m_pTimer->reset();
@@ -436,6 +461,14 @@ bool OGKGame::_init(Ogre::String wndTitle)
 	m_pRenderWnd->setActive(true);
     
 	return true;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void OGKGame::_initConsole()
+{
+    OGRE_NEW OGKConsole();
+    OGKConsole::getSingletonPtr()->init(mOverlayScreen);
+    OGKConsole::getSingletonPtr()->setVisible(false);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -501,28 +534,32 @@ void OGKGame::_initResources()
 
 ////////////////////////////////////////////////////////////////////////////////
 void OGKGame::_initOverlays()
-{    
-    // Main Overlay
-    m_pOverlay = Ogre::OverlayManager::getSingleton().create("MainOverlay");
+{
     
-    // Container Panel
-    m_pOverlayContainer = static_cast<Ogre::OverlayContainer*>(Ogre::OverlayManager::getSingleton().createOverlayElement("Panel", "container1"));
-    m_pOverlayContainer->setDimensions(0.3f,0.3f);
-    m_pOverlayContainer->setPosition(0,0);
-    m_pOverlay->add2D(m_pOverlayContainer);
-    
-    // FPS Text
-    m_pFPS = Ogre::OverlayManager::getSingleton().createOverlayElement("TextArea", "id1");
-    m_pFPS->setDimensions(0.2f,0.2f);
-    m_pFPS->setMetricsMode(Ogre::GMM_PIXELS);
-    m_pFPS->setPosition(10,10);
-    m_pFPS->setParameter("font_name","SdkTrays/Caption");
-    m_pFPS->setParameter("char_height", "15");
-    m_pFPS->setCaption("hello");
-    m_pFPS->setColour(Ogre::ColourValue(1.0, 1.0, 1.0));
-    m_pOverlayContainer->addChild(m_pFPS);
-    
-    m_pOverlay->show();
+    Gorilla::Layer *overlayLayer = mOverlayScreen->createLayer(14);
+    mFPS = overlayLayer->createCaption(14,10,10,Ogre::StringUtil::BLANK);
+//    
+//    // Main Overlay
+//    m_pOverlay = Ogre::OverlayManager::getSingleton().create("MainOverlay");
+//    
+//    // Container Panel
+//    m_pOverlayContainer = static_cast<Ogre::OverlayContainer*>(Ogre::OverlayManager::getSingleton().createOverlayElement("Panel", "container1"));
+//    m_pOverlayContainer->setDimensions(0.3f,0.3f);
+//    m_pOverlayContainer->setPosition(0,0);
+//    m_pOverlay->add2D(m_pOverlayContainer);
+//    
+//    // FPS Text
+//    m_pFPS = Ogre::OverlayManager::getSingleton().createOverlayElement("TextArea", "id1");
+//    m_pFPS->setDimensions(0.2f,0.2f);
+//    m_pFPS->setMetricsMode(Ogre::GMM_PIXELS);
+//    m_pFPS->setPosition(10,10);
+//    m_pFPS->setParameter("font_name","SdkTrays/Caption");
+//    m_pFPS->setParameter("char_height", "15");
+//    m_pFPS->setCaption("hello");
+//    m_pFPS->setColour(Ogre::ColourValue(1.0, 1.0, 1.0));
+//    m_pOverlayContainer->addChild(m_pFPS);
+//    
+//    m_pOverlay->show();
 }
 
 ////////////////////////////////////////////////////////////////////////////////

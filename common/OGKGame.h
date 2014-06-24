@@ -36,6 +36,11 @@
 // player
 #include "OGKPlayer.h"
 
+namespace Gorilla {
+    class Caption;
+    class Screen;
+}
+
 #ifdef OGRE_IS_IOS
 #include <OISMultiTouch.h>
 class OGKGame : public Ogre::Singleton<OGKGame>, OIS::KeyListener, OIS::MultiTouchListener
@@ -95,6 +100,7 @@ private:
     bool _init(Ogre::String wndTitle);
     
     void _initInput();
+    void _initConsole();
     void _initRenderSystem();
     void _initResources();
     void _initOverlays();
@@ -103,11 +109,9 @@ private:
     // terrain
     OGKTerrain *mTerrain;
     
-    // overlays
-    Ogre::Overlay*              m_pOverlay;
-    Ogre::OverlayContainer*     m_pOverlayContainer;
-    Ogre::OverlayElement*       m_pOverlayPanel;
-    Ogre::OverlayElement*       m_pFPS;
+    // fps
+    Gorilla::Screen*  mOverlayScreen;
+    Gorilla::Caption* mFPS;
     
 	double                      m_TimeSinceLastFrame;
 	double                      m_StartTime;
