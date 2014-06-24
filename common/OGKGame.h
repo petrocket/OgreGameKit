@@ -47,10 +47,9 @@ public:
 	OGKGame();
 	~OGKGame();
     
-    bool initOgre(Ogre::String wndTitle);
-	
 	bool isOgreToBeShutDown()const{return m_bShutDownOgre;}
     
+    Ogre::ConfigFile* getGameConfig();
     OGKTerrain *getTerrain();
     
 	bool keyPressed(const OIS::KeyEvent &keyEventRef);
@@ -85,17 +84,21 @@ public:
     Ogre::OrientationMode       mViewportOrientation;
 #endif
     
-    
 protected:
     Ogre::String                 m_ResourcePath;
+    Ogre::ConfigFile            *mConfig;
     
 private:
 	OGKGame(const OGKGame&);
 	OGKGame& operator= (const OGKGame&);
     
+    bool _init(Ogre::String wndTitle);
+    
     void _initInput();
+    void _initRenderSystem();
     void _initResources();
     void _initOverlays();
+    void _loadGameConfig();
     
     // terrain
     OGKTerrain *mTerrain;
@@ -109,11 +112,6 @@ private:
 	double                      m_TimeSinceLastFrame;
 	double                      m_StartTime;
 	bool                        m_bShutDownOgre;
-	Ogre::Vector3				m_TranslateVector;
-	Ogre::Real                  m_MoveSpeed;
-	Ogre::Degree				m_RotateSpeed;
-	float                       m_MoveScale;
-	Ogre::Degree				m_RotScale;
 
     OGKPlayer*                  mPlayer;
     

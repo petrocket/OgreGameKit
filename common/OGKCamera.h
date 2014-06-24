@@ -33,10 +33,13 @@ public:
         FREE,
         FIXED,
         FIRST_PERSON,
-        THIRD_PERSON
+        THIRD_PERSON,
+        THIRD_PERSON_INDIRECT
     };
     
     Ogre::Camera *getCamera();
+    
+    void loadFromConfig();
     
     OGKCamera::CameraMode getMode();
     void setMode(OGKCamera::CameraMode mode);
@@ -49,6 +52,9 @@ public:
     void setTightness(Ogre::Real tightness);
     
     void setTarget(Ogre::SceneNode *target);
+    
+    // offset (3rd person only)
+    void setTargetOffset(Ogre::Vector3 offset);
     
     void update(Ogre::Real elapsedTime);
     
@@ -75,9 +81,16 @@ private:
     Ogre::SceneNode *mCameraNode;
     Ogre::SceneNode *mTargetNode;
     
-    // tightness (3rd person only)
     Ogre::Real mMoveSpeed;
+
+    Ogre::Vector3 mTargetOffset;
+    Ogre::Vector3 mLookAtOffset;
+    
+    // tightness (3rd person only)
     Ogre::Real mTightness;
+    
+    // edge buffer (3rd person only)
+    Ogre::Real mEdgeBuffer;
     
     Ogre::Viewport *mViewport;
     

@@ -8,16 +8,20 @@
 
 #include "OGKCamera.h"
 #include "OGKInputManager.h"
+#include "OGKGame.h"
 
 OGKCamera::OGKCamera(
                      Ogre::SceneManager *sceneManager,
                      Ogre::RenderWindow *renderWindow) :
     mCamera(NULL),
+    mEdgeBuffer(1.0),
+    mLookAtOffset(0,0,-10.0),
     mMode(FREE),
     mMoveSpeed(1.0),
     mViewportOrientation(Ogre::OR_LANDSCAPELEFT),
     mTargetNode(NULL),
-    mTightness(0.9)
+    mTargetOffset(0,5.0,10.5),
+    mTightness(0.97)
 {
     mCamera = sceneManager->createCamera("OGKCamera");
     mCamera->setFixedYawAxis(true);
@@ -44,6 +48,8 @@ OGKCamera::OGKCamera(
 #else
     OGKInputManager::getSingletonPtr()->addMouseListener(this, "OGKCameraListener");
 #endif
+    
+    loadFromConfig();
 }
 
 OGKCamera::~OGKCamera()
@@ -55,6 +61,49 @@ OGKCamera::~OGKCamera()
     if(mgr) {
         mgr->destroySceneNode("OGKCameraNode");
         mgr->destroySceneNode("OGKCameraNodeTarget");
+    }
+}
+
+void OGKCamera::loadFromConfig()
+{
+    Ogre::ConfigFile *cf = OGKGame::getSingletonPtr()->getGameConfig();
+    if(cf) {
+        Ogre::String setting;
+        setting = cf->getSetting("edgeBuffer","camera");
+        if(setting.length()) {
+            mEdgeBuffer = Ogre::StringConverter::parseReal(setting);
+        }
+        setting = cf->getSetting("moveSpeed","camera");
+        if(setting.length()) {
+            setMoveSpeed(Ogre::StringConverter::parseReal(setting));
+        }
+        setting = cf->getSetting("tightness","camera");
+        if(setting.length()) {
+            setTightness(Ogre::StringConverter::parseReal(setting));
+        }
+        setting = cf->getSetting("targetOffset","camera");
+        if(setting.length()) {
+            mTargetOffset = Ogre::StringConverter::parseVector3(setting);
+        }
+        setting = cf->getSetting("lookAtOffset","camera");
+        if(setting.length()) {
+            mLookAtOffset = Ogre::StringConverter::parseVector3(setting);
+        }
+        setting = cf->getSetting("mode","camera");
+        if(setting.length()) {
+            if(setting.compare("first person") == 0) {
+                setMode(OGKCamera::FIRST_PERSON);
+            }
+            else if(setting.compare("third person") == 0) {
+                setMode(OGKCamera::THIRD_PERSON);
+            }
+            else if(setting.compare("third person indirect") == 0) {
+                setMode(OGKCamera::THIRD_PERSON_INDIRECT);
+            }
+            else if(setting.compare("free") == 0) {
+                setMode(OGKCamera::FREE);
+            }
+        }
     }
 }
 
@@ -71,16 +120,26 @@ OGKCamera::CameraMode OGKCamera::getMode()
 void OGKCamera::setMode(OGKCamera::CameraMode mode)
 {
     mMode = mode;
-    if(mMode == THIRD_PERSON) {
-        // @TODO don't hard code this offset
-        mCamera->setPosition(0, 2.f, 10.f);
+    
+    Ogre::Vector3 oldDirection = mCamera->getOrientation() * -Ogre::Vector3::UNIT_Z;
+    
+    mCamera->setAutoTracking(false);
+    mCamera->setOrientation(Ogre::Quaternion::IDENTITY);
+    mCameraNode->setFixedYawAxis(true);
+    
+    if(mMode == THIRD_PERSON || mMode == THIRD_PERSON_INDIRECT) {
         if(mTargetNode) {
-            mCamera->setAutoTracking(true, mTargetNode);
+            mCamera->setAutoTracking(true, mTargetNode, mLookAtOffset);
         }
     }
-    else {
-        mCamera->setPosition(0, 0, 0);
-        mCamera->setAutoTracking(false);
+    else if(mMode == FIXED) {
+        if(mTargetNode) {
+            mCameraNode->lookAt(mTargetNode->getPosition(), Ogre::Node::TS_LOCAL);
+        }
+    }
+    else if(mMode == FREE) {
+        // maintain the old look at direction
+        mCameraNode->lookAt(oldDirection, Ogre::Node::TS_LOCAL);
     }
 }
 
@@ -176,7 +235,7 @@ bool OGKCamera::touchCancelled(const OIS::MultiTouchEvent &evt)
 bool OGKCamera::mouseMoved(const OIS::MouseEvent &evt)
 {
     if(mMode == OGKCamera::FREE) {
-        mCameraNode->yaw(Ogre::Degree(evt.state.X.rel * -0.1f));
+        mCameraNode->yaw(Ogre::Degree(evt.state.X.rel * -0.1f),Ogre::SceneNode::TS_WORLD);
         mCameraNode->pitch(Ogre::Degree(evt.state.Y.rel * -0.1f));
     }
     return TRUE;    
@@ -224,11 +283,28 @@ void OGKCamera::update(Ogre::Real elapsedTime)
         // @TODO
 #endif
     }
+    else if(mMode == OGKCamera::FIRST_PERSON) {
+        mTargetNode->_update(true,true);
+        mCameraNode->setPosition(mTargetNode->getPosition() + mTargetOffset);
+        mCameraNode->setOrientation(mTargetNode->getOrientation());
+    }
     else if(mMode == OGKCamera::THIRD_PERSON) {
         mTargetNode->_update(true,true);
-//        mCameraNode->_update(true, true);
-        Ogre::Vector3 translateVector = (mTargetNode->getPosition() - mCameraNode->getPosition()) * mTightness;
+        Ogre::Vector3 translateVector = ((mTargetNode->getPosition() + (mTargetNode->getOrientation() * mTargetOffset)) - mCameraNode->getPosition()) * mTightness;
         mCameraNode->translate(translateVector);
-        mCameraNode->_update(true, true);
+    }
+    else if(mMode == OGKCamera::THIRD_PERSON_INDIRECT) {
+        mTargetNode->_update(true,true);
+        
+        if(mEdgeBuffer < 1.0) {
+            // get the target's screen position
+            Ogre::Vector3 coords = mCamera->getProjectionMatrix() * mCamera->getViewMatrix() * mTargetNode->getPosition();
+            Ogre::Ray ray = mCamera->getCameraToViewportRay(0, 0);
+            
+            // @TODO cal distance from ray to target node position
+        }
+        
+        Ogre::Vector3 translateVector = ((mTargetNode->getPosition() + mTargetOffset) - mCameraNode->getPosition()) * mTightness;
+        mCameraNode->translate(translateVector);
     }
 }

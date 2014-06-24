@@ -15,8 +15,9 @@ OGKPlayer::OGKPlayer(Ogre::SceneManager *sceneManager) :
     mEnabled(true),
     mEntity(NULL),
     mMoveSpeed(1.0),
-    mSceneNode(NULL),
-    mWalking(false)
+    mMovingState(OGKPlayer::NONE),
+    mRotateSpeed(1.0),
+    mSceneNode(NULL)
 {
     mEntity = sceneManager->createEntity("Player", "Player.mesh");
     mSceneNode = sceneManager->getRootSceneNode()->createChildSceneNode();
@@ -44,6 +45,8 @@ OGKPlayer::OGKPlayer(Ogre::SceneManager *sceneManager) :
 #else
     OGKInputManager::getSingletonPtr()->addMouseListener(this, "OGKPlayerListener");
 #endif
+    
+    loadFromConfig();
 }
 
 OGKPlayer::~OGKPlayer()
@@ -102,56 +105,126 @@ bool OGKPlayer::mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
 }
 #endif
 
+////////////////////////////////////////////////////////////////////////////////
+void OGKPlayer::loadFromConfig()
+{
+    Ogre::ConfigFile *cf = OGKGame::getSingletonPtr()->getGameConfig();
+    if(cf) {
+        Ogre::String setting;
+        setting = cf->getSetting("moveSpeed","player");
+        if(setting.length()) {
+            setMoveSpeed(Ogre::StringConverter::parseReal(setting));
+        }
+        setting = cf->getSetting("rotateSpeed","player");
+        if(setting.length()) {
+            setRotateSpeed(Ogre::StringConverter::parseReal(setting));
+        }
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
 void OGKPlayer::update(Ogre::Real elapsedTime)
 {
     bool moving = false;
     
-    if(mEnabled) {
-        if(mWalking) {
+    if(mMovingState == USER_CONTROLLED) {
+        Ogre::Vector3 translateVector(0,0,0);
+        Ogre::Real rotateAmount = 0;
+        Ogre::Real moveScale = mMoveSpeed   * (float)elapsedTime;
+        Ogre::Real rotateScale = mRotateSpeed   * (float)elapsedTime;
+#ifndef OGRE_IS_IOS
+        OIS::Keyboard *keyboard = OGKInputManager::getSingletonPtr()->getKeyboard();
+        
+        if(keyboard->isKeyDown(OIS::KC_A))
+            rotateAmount = rotateScale;
+        
+        if(keyboard->isKeyDown(OIS::KC_D))
+            rotateAmount = -rotateScale;
+        
+        if(keyboard->isKeyDown(OIS::KC_W))
+            translateVector.z = -moveScale;
+        
+        if(keyboard->isKeyDown(OIS::KC_S))
+            translateVector.z = moveScale;
+        
+        if(rotateAmount > 0.01 || rotateAmount < -0.01) {
+            mSceneNode->yaw(Ogre::Radian(rotateAmount));
+        }
+        
+        if(translateVector.x < -0.01 || translateVector.x > 0.01 ||
+           translateVector.z < - 0.01 || translateVector.z > 0.01) {
+            
             moving = true;
+            
+            if(keyboard->isKeyDown(OIS::KC_LSHIFT)) {
+                mSceneNode->translate(translateVector * 0.1f,Ogre::SceneNode::TS_LOCAL);
+            }
+            else {
+                mSceneNode->translate(translateVector,Ogre::SceneNode::TS_LOCAL);
+            }
+            
+            // snap to terrain
+            OGKTerrain *terrain = OGKGame::getSingletonPtr()->getTerrain();
+            if(terrain) {
+                Ogre::Vector3 pos = mSceneNode->getPosition();
+                float height = terrain->mTerrainGroup->getHeightAtWorldPosition(pos);
+                pos.y = height + 1.f;
+                mSceneNode->setPosition(pos);
+            }
+        }
+#endif
+    }
+    else if(mMovingState != OGKPlayer::AT_DESTINATION &&
+           mMovingState != OGKPlayer::NONE) {
+
+        if(mMovingState == OGKPlayer::ARRIVED) {
+            mMovingState = OGKPlayer::AT_DESTINATION;
+        }
+        else if(mDestination.squaredDistance(mSceneNode->getPosition()) < 1.f) {
+            mMovingState = OGKPlayer::ARRIVED;
         }
         else {
-            Ogre::Vector3 translateVector(0,0,0);
+            Ogre::Vector3 dir = mDestination - mSceneNode->getPosition();
+            Ogre::Real dist = dir.normalise();
             Ogre::Real moveScale = mMoveSpeed   * (float)elapsedTime;
-#ifndef OGRE_IS_IOS
-            OIS::Keyboard *keyboard = OGKInputManager::getSingletonPtr()->getKeyboard();
             
-            if(keyboard->isKeyDown(OIS::KC_A))
-                translateVector.x = -moveScale;
-            
-            if(keyboard->isKeyDown(OIS::KC_D))
-                translateVector.x = moveScale;
-            
-            if(keyboard->isKeyDown(OIS::KC_W))
-                translateVector.z = -moveScale;
-            
-            if(keyboard->isKeyDown(OIS::KC_S))
-                translateVector.z = moveScale;
-            
-            if(translateVector.x < -0.01 || translateVector.x > 0.01 ||
-               translateVector.z < - 0.01 || translateVector.z > 0.01) {
+            if(mMovingState == OGKPlayer::START_MOVING) {
+                Ogre::Vector3 src = mSceneNode->getOrientation() * -Ogre::Vector3::UNIT_Z;
                 
-                moving = true;
+                // keep the player upright
+                Ogre::Vector3 rotateDir(dir.x, 0, dir.z);
+                rotateDir.normalise();
                 
-                if(keyboard->isKeyDown(OIS::KC_LSHIFT)) {
-                    mSceneNode->translate(translateVector * 0.1f);
-                }
-                else {
-                    mSceneNode->translate(translateVector);
-                }
-                
-                // snap to terrain
-                OGKTerrain *terrain = OGKGame::getSingletonPtr()->getTerrain();
-                if(terrain) {
-                    Ogre::Vector3 pos = mSceneNode->getPosition();
-                    float height = terrain->mTerrainGroup->getHeightAtWorldPosition(pos);
-                    pos.y = height + 1.f;
-                    mSceneNode->setPosition(pos);
-                }
+                Ogre::Quaternion quat = src.getRotationTo(rotateDir);
+                mSceneNode->rotate(quat);
             }
-#endif
+            
+            mMovingState = OGKPlayer::MOVING;
+            
+            if(moveScale > dist) {
+                // translate to the exact position
+                mSceneNode->setPosition(mDestination);
+                mMovingState = OGKPlayer::ARRIVED;
+            }
+            else {
+                mSceneNode->translate(dir * moveScale);
+            }
+        }
+        
+        moving = mMovingState != OGKPlayer::AT_DESTINATION;
+        
+        if(moving) {
+            // snap to terrain
+            OGKTerrain *terrain = OGKGame::getSingletonPtr()->getTerrain();
+            if(terrain) {
+                Ogre::Vector3 pos = mSceneNode->getPosition();
+                float height = terrain->mTerrainGroup->getHeightAtWorldPosition(pos);
+                pos.y = height + 1.f;
+                mSceneNode->setPosition(pos);
+            }
         }
     }
+
     
     if(mEntity) {
         OIS::Keyboard *keyboard = OGKInputManager::getSingletonPtr()->getKeyboard();
@@ -185,10 +258,31 @@ Ogre::Vector3 OGKPlayer::getDestination()
 void OGKPlayer::setDestination(Ogre::Vector3 destination)
 {
     mDestination = destination;
+    mMovingState = OGKPlayer::START_MOVING;
 }
 
 Ogre::SceneNode *OGKPlayer::getSceneNode()
 {
     return mSceneNode;
+}
+
+Ogre::Real OGKPlayer::getMoveSpeed()
+{
+    return mMoveSpeed;
+}
+
+void OGKPlayer::setMoveSpeed(Ogre::Real speed)
+{
+    mMoveSpeed = speed;
+}
+
+Ogre::Real OGKPlayer::getRotateSpeed()
+{
+    return mRotateSpeed;
+}
+
+void OGKPlayer::setRotateSpeed(Ogre::Real speed)
+{
+    mRotateSpeed = speed;
 }
 

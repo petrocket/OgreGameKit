@@ -43,10 +43,7 @@ OGKInputManager::~OGKInputManager( void ) {
             mJoysticks.clear();
         }
         
-        // If you use OIS1.0RC1 or above, uncomment this line
-        // and comment the line below it
         mInputSystem->destroyInputSystem( mInputSystem );
-        //mInputSystem->destroyInputSystem();
         mInputSystem = 0;
         
         // Clear Listeners

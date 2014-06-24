@@ -26,10 +26,11 @@ OGKGame::OGKGame() :
 #ifdef OGRE_IS_IOS
     mViewportOrientation(Ogre::OR_LANDSCAPELEFT),
 #endif
+    mCamera(NULL),
+    mConfig(NULL),
+    mPlayer(NULL),
     mTerrain(NULL)
 {
-	m_MoveSpeed			= 1.0f;
-	m_RotateSpeed       = 0.3f;
     m_StartTime         = 0;
     m_TimeSinceLastFrame = 0;
 	m_bShutDownOgre     = false;
@@ -37,11 +38,8 @@ OGKGame::OGKGame() :
 	m_pRoot				= 0;
 	m_pSceneMgr			= 0;
 	m_pRenderWnd        = 0;
-	mCamera			= 0;
 	m_pLog				= 0;
 	m_pTimer			= 0;
-    
-    mPlayer             = 0;
     
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     m_ResourcePath = macBundlePath() + "/Contents/Resources/";
@@ -68,67 +66,15 @@ OGKGame::~OGKGame()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+Ogre::ConfigFile* OGKGame::getGameConfig()
+{
+    return mConfig;
+}
+
+////////////////////////////////////////////////////////////////////////////////
 OGKTerrain *OGKGame::getTerrain()
 {
     return mTerrain;
-}
-
-
-////////////////////////////////////////////////////////////////////////////////
-bool OGKGame::initOgre(Ogre::String wndTitle)
-{
-    new Ogre::LogManager();
-    m_pLog = Ogre::LogManager::getSingleton().createLog("OgreLogfile.log",
-                                                        true, true, false);
-    m_pLog->setDebugOutputEnabled(true);
-    
-    String pluginsPath;
-    // only use plugins.cfg if not static
-#ifndef OGRE_STATIC_LIB
-    pluginsPath = m_ResourcePath + "plugins.cfg";
-#endif
-    
-    m_pRoot = new Ogre::Root(pluginsPath, m_ResourcePath + "ogre.cfg");
-    
-#ifdef OGRE_STATIC_LIB
-    m_StaticPluginLoader.load();
-#endif
-    
-	if(!m_pRoot->showConfigDialog())
-		return false;
-    
-#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-    m_pRoot->getRenderSystem()->setConfigOption("macAPI","cocoa");
-#endif
-	m_pRenderWnd = m_pRoot->initialise(true, wndTitle);
-    
-	m_pSceneMgr = m_pRoot->createSceneManager(ST_GENERIC, "SceneManager");
-	m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0.1f, 0.12f, 0.3f));
-    
-	// INPUT
-    _initInput();
-    
-    // CAMERA (after input)
-    mCamera = OGRE_NEW OGKCamera(m_pSceneMgr, m_pRenderWnd);
-//    mCamera->getCamera()->setPosition(0, 1000, 60);
-//    mCamera->getCamera()->lookAt(Vector3(0, 1000, 0));
-    
-    // create overlay system BEFORE initializing resources (for fonts)
-    m_pOverlaySystem = new Ogre::OverlaySystem();
-    m_pSceneMgr->addRenderQueueListener(m_pOverlaySystem);
-    
-    // RESOURCES
-    _initResources();
-    
-    // OVERLAYS
-    _initOverlays();
-    
-	m_pTimer = OGRE_NEW Ogre::Timer();
-	m_pTimer->reset();
-    
-	m_pRenderWnd->setActive(true);
-    
-	return true;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -168,6 +114,8 @@ bool OGKGame::renderOneFrame(double timeSinceLastFrame)
 ////////////////////////////////////////////////////////////////////////////////
 void OGKGame::setup()
 {
+    // @TODO Load from .scene file instead?
+    
 	m_pSceneMgr->setSkyBox(true, "OGK/DefaultSkyBox");
 
     Ogre::Vector3 lightDir(0.55,-0.3,0.75);
@@ -188,26 +136,26 @@ void OGKGame::setup()
     mTerrain = OGRE_NEW OGKTerrain();
     mTerrain->setup(m_pSceneMgr, light);
     
-    playBackgroundMusic("media/audio/background.mp3");
+    //playBackgroundMusic("media/audio/background.mp3");
     
     mPlayer = OGRE_NEW OGKPlayer(m_pSceneMgr);
     mPlayer->setEnabled(true);
     
     mCamera->setTarget(mPlayer->getSceneNode());    
-    mCamera->setMode(OGKCamera::THIRD_PERSON);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void OGKGame::start()
 {
-    if(!initOgre("Ogre Game Kit")) {
+    if(!_init("Ogre Game Kit")) {
         m_pLog->logMessage("Failed to init Ogre", Ogre::LML_CRITICAL);
         return;
     }
     
     m_bShutDownOgre = false;
     
-	m_pLog->logMessage("Ogre initialized!", Ogre::LML_TRIVIAL);
+	m_pLog->logMessage("Ogre initialized!");
+    
     
     m_StartTime = m_pTimer->getMillisecondsCPU();
     
@@ -280,55 +228,53 @@ void OGKGame::update(double timeSinceLastFrame)
 bool OGKGame::keyPressed(const OIS::KeyEvent &keyEventRef)
 {
 #if !defined(OGRE_IS_IOS)
-    OIS::Keyboard *keyboard = OGKInputManager::getSingletonPtr()->getKeyboard();
-    
-	if(keyboard->isKeyDown(OIS::KC_ESCAPE))
-	{
-        m_bShutDownOgre = true;
-        return true;
-	}
-    
-	if(keyboard->isKeyDown(OIS::KC_SYSRQ))
-	{
-		m_pRenderWnd->writeContentsToTimestampedFile("OGK_Screenshot_", ".png");
-		return true;
-	}
-    
-	if(keyboard->isKeyDown(OIS::KC_M))
-	{
-		static int mode = 0;
-		
-		if(mode == 2)
-		{
-			mCamera->getCamera()->setPolygonMode(PM_SOLID);
-			mode = 0;
-		}
-		else if(mode == 0)
-		{
-            mCamera->getCamera()->setPolygonMode(PM_WIREFRAME);
-            mode = 1;
-		}
-		else if(mode == 1)
-		{
-			mCamera->getCamera()->setPolygonMode(PM_POINTS);
-			mode = 2;
-		}
-	}
-    
-    if(keyEventRef.key == OIS::KC_C) {
-        if(mCamera->getMode() == OGKCamera::FREE) {
-            mCamera->setMode(OGKCamera::THIRD_PERSON);
-            mPlayer->setEnabled(true);
+    switch (keyEventRef.key) {
+        case OIS::KC_C:
+        {
+            if(mCamera->getMode() == OGKCamera::FREE) {
+                mCamera->setMode(OGKCamera::THIRD_PERSON_INDIRECT);
+                mPlayer->setEnabled(true);
+                
+                // show the mouse
+                OGKInputManager::getSingletonPtr()->setMouseVisible(true);
+            }
+            else {
+                mCamera->setMode(OGKCamera::FREE);
+                mPlayer->setEnabled(false);
+                OGKInputManager::getSingletonPtr()->setMouseVisible(false);
+            }
+            break;
+        }
+        case OIS::KC_ESCAPE: m_bShutDownOgre = true; break;
+        case OIS::KC_R: _loadGameConfig(); break;
+        case OIS::KC_M:
+        {
+            static int mode = 0;
             
-            // show the mouse
-            OGKInputManager::getSingletonPtr()->setMouseVisible(true);
+            if(mode == 2)
+            {
+                mCamera->getCamera()->setPolygonMode(PM_SOLID);
+                mode = 0;
+            }
+            else if(mode == 0)
+            {
+                mCamera->getCamera()->setPolygonMode(PM_WIREFRAME);
+                mode = 1;
+            }
+            else if(mode == 1)
+            {
+                mCamera->getCamera()->setPolygonMode(PM_POINTS);
+                mode = 2;
+            }
+            break;
         }
-        else {
-            mCamera->setMode(OGKCamera::FREE);
-            mPlayer->setEnabled(false);
-            OGKInputManager::getSingletonPtr()->setMouseVisible(false);
-        }
+        case OIS::KC_SYSRQ:
+            m_pRenderWnd->writeContentsToTimestampedFile("OGK_", ".png");
+            break;
+        default:
+            break;
     }
+    
 #endif
 	return true;
 }
@@ -376,6 +322,25 @@ bool OGKGame::mouseMoved(const OIS::MouseEvent &evt)
 ////////////////////////////////////////////////////////////////////////////////
 bool OGKGame::mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
 {
+    if(mCamera && mCamera->getMode() == OGKCamera::THIRD_PERSON_INDIRECT) {
+        
+        Ogre::Real x = (float)evt.state.X.abs / (float)evt.state.width;
+        Ogre::Real y = (float)evt.state.Y.abs / (float)evt.state.height;
+        
+        //const OIS::MouseState &mouseState = OGKInputManager::getSingletonPtr()->getMouse()->getMouseState();
+        
+        m_pLog->logMessage("click abs " +
+                           Ogre::StringConverter::toString(evt.state.X.abs) + " " +
+                           Ogre::StringConverter::toString(evt.state.Y.abs) + " rel " +
+                           Ogre::StringConverter::toString(x) + " " +
+                           Ogre::StringConverter::toString(y));
+        // set the player destination
+        Ogre::Ray ray = mCamera->getCamera()->getCameraToViewportRay(x,y);
+        TerrainGroup::RayResult rayResult=mTerrain->mTerrainGroup->rayIntersects(ray);
+        if(rayResult.hit) {
+            mPlayer->setDestination(rayResult.position);
+        }
+    }
 	return true;
 }
 
@@ -388,6 +353,66 @@ bool OGKGame::mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
 
 #pragma mark - Private
 
+
+////////////////////////////////////////////////////////////////////////////////
+bool OGKGame::_init(Ogre::String wndTitle)
+{
+    new Ogre::LogManager();
+    m_pLog = Ogre::LogManager::getSingleton().createLog("OgreLogfile.log",
+                                                        true, true, false);
+    m_pLog->setDebugOutputEnabled(true);
+    
+    // GAME CONFIG
+    _loadGameConfig();
+    
+    String pluginsPath;
+    // only use plugins.cfg if not static
+#ifndef OGRE_STATIC_LIB
+    pluginsPath = m_ResourcePath + "plugins.cfg";
+#endif
+    
+    m_pRoot = new Ogre::Root(pluginsPath, m_ResourcePath + "ogre.cfg");
+    
+#ifdef OGRE_STATIC_LIB
+    m_StaticPluginLoader.load();
+#endif
+    
+    m_pRoot->restoreConfig();
+    
+    // RENDER SYSTEM
+    _initRenderSystem();
+    
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+    m_pRoot->getRenderSystem()->setConfigOption("macAPI","cocoa");
+#endif
+	m_pRenderWnd = m_pRoot->initialise(true, wndTitle);
+    
+	m_pSceneMgr = m_pRoot->createSceneManager(ST_GENERIC, "SceneManager");
+    
+	// INPUT
+    _initInput();
+    
+    // CAMERA (after input)
+    mCamera = OGRE_NEW OGKCamera(m_pSceneMgr, m_pRenderWnd);
+    
+    // create overlay system BEFORE initializing resources (for fonts)
+    m_pOverlaySystem = new Ogre::OverlaySystem();
+    m_pSceneMgr->addRenderQueueListener(m_pOverlaySystem);
+    
+    // RESOURCES
+    _initResources();
+    
+    // OVERLAYS
+    _initOverlays();
+    
+	m_pTimer = OGRE_NEW Ogre::Timer();
+	m_pTimer->reset();
+    
+	m_pRenderWnd->setActive(true);
+    
+	return true;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 void OGKGame::_initInput()
 {
@@ -399,6 +424,23 @@ void OGKGame::_initInput()
 #else
     OGKInputManager::getSingletonPtr()->addMouseListener(this, "OGKGameListener");
 #endif
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void OGKGame::_initRenderSystem()
+{
+    const Ogre::RenderSystemList *renderSystems = NULL;
+    Ogre::RenderSystemList::iterator r_it;
+    renderSystems = &m_pRoot->getAvailableRenderers();
+    
+    // use first available if any
+    if(renderSystems && renderSystems->size()) {
+        m_pRoot->setRenderSystem(renderSystems->front());
+    }
+    else {
+        m_pLog->logMessage("No available render systems found");
+        m_pRoot->showConfigDialog();
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -456,4 +498,24 @@ void OGKGame::_initOverlays()
     m_pOverlayContainer->addChild(m_pFPS);
     
     m_pOverlay->show();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void OGKGame::_loadGameConfig()
+{
+    m_pLog->logMessage("Loading game.cfg...");
+    if(!mConfig) {
+        mConfig = OGRE_NEW Ogre::ConfigFile();
+    }
+    mConfig->load(m_ResourcePath + "game.cfg");
+    
+    // CAMERA
+    if(mCamera) {
+        mCamera->loadFromConfig();
+    }
+
+    // PLAYER
+    if(mPlayer) {
+        mPlayer->loadFromConfig();
+    }
 }

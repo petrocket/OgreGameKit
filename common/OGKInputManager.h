@@ -133,7 +133,7 @@ private:
     
     static OGKInputManager *mInputManager;
         
-        Ogre::RenderWindow *mRenderWindow;
+    Ogre::RenderWindow *mRenderWindow;
 };
 
 #endif /* defined(__OgreGameKit__OGKInputManager__) */

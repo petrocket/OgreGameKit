@@ -29,6 +29,15 @@ public:
     OGKPlayer(Ogre::SceneManager *sceneManager);
     ~OGKPlayer();
     
+    enum MovingState {
+        NONE,
+        USER_CONTROLLED,
+        START_MOVING,
+        MOVING,
+        ARRIVED,
+        AT_DESTINATION
+    };
+    
 	bool keyPressed(const OIS::KeyEvent &keyEventRef);
 	bool keyReleased(const OIS::KeyEvent &keyEventRef);
     
@@ -43,6 +52,8 @@ public:
     bool mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonID id);
 #endif
     
+    void loadFromConfig();
+    
     void update(Ogre::Real elapsedTime);
     
     bool getEnabled();
@@ -51,6 +62,12 @@ public:
     Ogre::Vector3 getDestination();
     void setDestination(Ogre::Vector3 destination);
     
+    Ogre::Real getMoveSpeed();
+    void setMoveSpeed(Ogre::Real speed);
+
+    Ogre::Real getRotateSpeed();
+    void setRotateSpeed(Ogre::Real speed);
+
     Ogre::SceneNode *getSceneNode();
     
 private:
@@ -58,8 +75,9 @@ private:
     Ogre::SceneNode *mSceneNode;
     
     bool mEnabled;
-    bool mWalking;
+    MovingState mMovingState;
     Ogre::Real mMoveSpeed;
+    Ogre::Real mRotateSpeed;
     Ogre::Vector3 mDestination;
 };
 
