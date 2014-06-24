@@ -180,7 +180,8 @@ void OGKPlayer::update(Ogre::Real elapsedTime)
         if(mMovingState == OGKPlayer::ARRIVED) {
             mMovingState = OGKPlayer::AT_DESTINATION;
         }
-        else if(mDestination.squaredDistance(mSceneNode->getPosition()) < 1.f) {
+        // check distance ignoring height
+        else if(Ogre::Vector3(mDestination.x,0,mDestination.z).squaredDistance(Ogre::Vector3(mSceneNode->getPosition().x,0,mSceneNode->getPosition().z)) < 2.f) {
             mMovingState = OGKPlayer::ARRIVED;
         }
         else {

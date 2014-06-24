@@ -136,12 +136,16 @@ void OGKGame::setup()
     mTerrain = OGRE_NEW OGKTerrain();
     mTerrain->setup(m_pSceneMgr, light);
     
-    //playBackgroundMusic("media/audio/background.mp3");
+    playBackgroundMusic("media/audio/background.mp3");
     
     mPlayer = OGRE_NEW OGKPlayer(m_pSceneMgr);
     mPlayer->setEnabled(true);
     
-    mCamera->setTarget(mPlayer->getSceneNode());    
+    mCamera->setTarget(mPlayer->getSceneNode());
+    mCamera->loadFromConfig();
+//    if(mCamera->getMode() == OGKCamera::THIRD_PERSON_INDIRECT) {
+//        OGKInputManager::getSingletonPtr()->setMouseVisible(true);
+//    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -316,6 +320,26 @@ bool OGKGame::touchCancelled(const OIS:: MultiTouchEvent &evt)
 ////////////////////////////////////////////////////////////////////////////////
 bool OGKGame::mouseMoved(const OIS::MouseEvent &evt)
 {
+    if(mCamera && mCamera->getMode() == OGKCamera::THIRD_PERSON_INDIRECT) {
+        if(evt.state.buttonDown(OIS::MB_Left)) {
+            Ogre::Real x = (float)evt.state.X.abs / (float)evt.state.width;
+            Ogre::Real y = (float)evt.state.Y.abs / (float)evt.state.height;
+            
+            //const OIS::MouseState &mouseState = OGKInputManager::getSingletonPtr()->getMouse()->getMouseState();
+            
+//            m_pLog->logMessage("click abs " +
+//                               Ogre::StringConverter::toString(evt.state.X.abs) + " " +
+//                               Ogre::StringConverter::toString(evt.state.Y.abs) + " rel " +
+//                               Ogre::StringConverter::toString(x) + " " +
+//                               Ogre::StringConverter::toString(y));
+            // set the player destination
+            Ogre::Ray ray = mCamera->getCamera()->getCameraToViewportRay(x,y);
+            TerrainGroup::RayResult rayResult=mTerrain->mTerrainGroup->rayIntersects(ray);
+            if(rayResult.hit) {
+                mPlayer->setDestination(rayResult.position);
+            }
+        }
+    }
 	return true;
 }
 
@@ -329,11 +353,11 @@ bool OGKGame::mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
         
         //const OIS::MouseState &mouseState = OGKInputManager::getSingletonPtr()->getMouse()->getMouseState();
         
-        m_pLog->logMessage("click abs " +
-                           Ogre::StringConverter::toString(evt.state.X.abs) + " " +
-                           Ogre::StringConverter::toString(evt.state.Y.abs) + " rel " +
-                           Ogre::StringConverter::toString(x) + " " +
-                           Ogre::StringConverter::toString(y));
+//        m_pLog->logMessage("click abs " +
+//                           Ogre::StringConverter::toString(evt.state.X.abs) + " " +
+//                           Ogre::StringConverter::toString(evt.state.Y.abs) + " rel " +
+//                           Ogre::StringConverter::toString(x) + " " +
+//                           Ogre::StringConverter::toString(y));
         // set the player destination
         Ogre::Ray ray = mCamera->getCamera()->getCameraToViewportRay(x,y);
         TerrainGroup::RayResult rayResult=mTerrain->mTerrainGroup->rayIntersects(ray);
@@ -341,6 +365,7 @@ bool OGKGame::mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
             mPlayer->setDestination(rayResult.position);
         }
     }
+    
 	return true;
 }
 
@@ -518,4 +543,8 @@ void OGKGame::_loadGameConfig()
     if(mPlayer) {
         mPlayer->loadFromConfig();
     }
+    
+    // @TODO audio volumes
+
+    
 }
