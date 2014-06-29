@@ -17,16 +17,18 @@ OGKScene::OGKScene(const Ogre::String& name) :
     mSceneName(name),
     mSceneNode(NULL)
 {
+    // this will call OGKScene:init (not sub class init)
     init();
 }
 
 OGKScene::~OGKScene()
 {
-    
+    Ogre::Root::getSingletonPtr()->destroySceneManager(mSceneManager);
 }
 
 void OGKScene::init()
 {
+    mSceneManager =  Ogre::Root::getSingletonPtr()->createSceneManager(Ogre::ST_GENERIC, "SceneManager" + mSceneName);
 }
 
 bool OGKScene::isRunning()
@@ -36,15 +38,13 @@ bool OGKScene::isRunning()
 
 void OGKScene::onEnter()
 {
-    Ogre::SceneManager *mgr = OGKGame::getSingletonPtr()->mSceneManager;
-
     // scene node gets deleted
     if(!mSceneNode) {
-        mSceneNode = mgr->getRootSceneNode()->createChildSceneNode("OGKScene" + mSceneName);
+        mSceneNode = mSceneManager->getRootSceneNode()->createChildSceneNode("OGKScene" + mSceneName);
     }
     
     if(!mCamera) {
-        mCamera = OGRE_NEW OGKCamera(mgr, OGKGame::getSingletonPtr()->mRenderWindow);
+        mCamera = OGRE_NEW OGKCamera(mSceneManager, OGKGame::getSingletonPtr()->mRenderWindow);
     }
     else {
         mCamera->setEnabled(true);
@@ -53,7 +53,9 @@ void OGKScene::onEnter()
 
 void OGKScene::onEnterTransitionDidFinish()
 {
-    
+    // get the mouse in the right position
+    OIS::MouseEvent evt(NULL, OGKInputManager::getSingletonPtr()->getMouse()->getMouseState());
+    mouseMoved(evt);
 }
 
 void OGKScene::update(double timeSinceLastFrame)
@@ -64,11 +66,7 @@ void OGKScene::update(double timeSinceLastFrame)
 void OGKScene::onExit()
 {
     if(mSceneNode) {
-        mSceneNode->detachAllObjects();
-        
-        Ogre::SceneManager *mgr = OGKGame::getSingletonPtr()->mSceneManager;
-        mgr->getRootSceneNode()->removeAndDestroyChild(mSceneNode->getName());
-
+        mSceneManager->clearScene();
         mSceneNode = NULL;
     }
     

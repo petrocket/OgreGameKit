@@ -89,8 +89,7 @@ bool OGKMenuScene::buttonPressed(Gui3D::PanelElement *e)
 
 void OGKMenuScene::init()
 {
-    OGKScene::init();
-    
+    // don't call OGKScene init (it's constructor already does that)
     mGUI = OGRE_NEW Gui3D::Gui3D(&gui3DTheme);
 }
 
@@ -102,9 +101,7 @@ void OGKMenuScene::onEnter()
     mCamera->getCamera()->setPosition(0, 0, 0);
     mCamera->getCamera()->lookAt(0,0,10);
     
-    // set the background colour
     Ogre::Viewport *vp = mCamera->getCamera()->getViewport();
-	vp->setBackgroundColour(Ogre::ColourValue(0.0f, 0.2f, 0.0f, 1.0f));
     
     // create the gui
     mScreen = mGUI->createScreenRenderable2D(vp, "default_theme","menu");
@@ -122,8 +119,8 @@ void OGKMenuScene::onEnter()
     mButton->setPressedCallback(this, &OGKMenuScene::buttonPressed);
     
     // create an object
-    Ogre::Entity *sphere = OGKGame::getSingletonPtr()->mSceneManager->createEntity( Ogre::SceneManager::PT_SPHERE);
-    sphere->setMaterialName("BaseWhite");
+    Ogre::Entity *sphere = mSceneManager->createEntity( Ogre::SceneManager::PT_SPHERE);
+    sphere->setMaterialName("BaseWhiteNoLighting");
     mSceneNode->attachObject(sphere);
     mSceneNode->setScale(0.05, 0.05, 0.05);
     mSceneNode->setPosition(Ogre::Vector3(-3.0,0,10));
@@ -133,7 +130,7 @@ void OGKMenuScene::onEnter()
 
 void OGKMenuScene::onEnterTransitionDidFinish()
 {
-    OGKScene::onEnter();
+    OGKScene::onEnterTransitionDidFinish();
     
     mPanel->showInternalMousePointer();
 }
@@ -168,7 +165,6 @@ bool OGKMenuScene::touchCancelled(const OIS::MultiTouchEvent &evt)  { return tru
 #else
 bool OGKMenuScene::mouseMoved(const OIS::MouseEvent &evt)
 {
-    //if(mMouseCursor) mMouseCursor->position(evt.state.X.abs, evt.state.Y.abs);
     if(mPanel) mPanel->injectMouseMoved(evt.state.X.abs, evt.state.Y.abs);
     return false;
 }
@@ -176,7 +172,6 @@ bool OGKMenuScene::mouseMoved(const OIS::MouseEvent &evt)
 bool OGKMenuScene::mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
 {
     if(mPanel) mPanel->injectMousePressed(evt, id);
-//    buttonPressed(NULL);
     return false;
 }
 bool OGKMenuScene::mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonID id)

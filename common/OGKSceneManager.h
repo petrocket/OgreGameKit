@@ -42,6 +42,7 @@ private:
     
     Ogre::RenderTexture *mRenderTexture;
     Ogre::TexturePtr mTransitionTexture;
+    Ogre::SceneNode *mTransitionNode;
     Ogre::Rectangle2D *mTransitionRect;
     Ogre::Real mTransitionTime;
     Ogre::Real mTransitionTimeRemaining;

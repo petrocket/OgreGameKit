@@ -23,24 +23,24 @@ public:
     OGKInGameScene(const Ogre::String& name);
     ~OGKInGameScene();
     
-    virtual void init();
-    virtual void onEnter();
-    virtual void onEnterTransitionDidFinish();
-    virtual void onExit();
-    virtual void onExitTransitionDidStart();
+    void init();
+    void onEnter();
+    void onEnterTransitionDidFinish();
+    void onExit();
+    void onExitTransitionDidStart();
     
-    virtual void update(Ogre::Real elapsedTime);
+    void update(Ogre::Real elapsedTime);
     
     // input
 #ifdef OGRE_IS_IOS
-	virtual bool touchMoved(const OIS::MultiTouchEvent &evt);
-	virtual bool touchPressed(const OIS::MultiTouchEvent &evt);
-	virtual bool touchReleased(const OIS::MultiTouchEvent &evt);
-	virtual bool touchCancelled(const OIS::MultiTouchEvent &evt);
+	bool touchMoved(const OIS::MultiTouchEvent &evt);
+	bool touchPressed(const OIS::MultiTouchEvent &evt);
+	bool touchReleased(const OIS::MultiTouchEvent &evt);
+	bool touchCancelled(const OIS::MultiTouchEvent &evt);
 #else
-	virtual bool mouseMoved(const OIS::MouseEvent &evt);
-	virtual bool mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID id);
-	virtual bool mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonID id);
+	bool mouseMoved(const OIS::MouseEvent &evt);
+	bool mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID id);
+	bool mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonID id);
 #endif
     
 private:

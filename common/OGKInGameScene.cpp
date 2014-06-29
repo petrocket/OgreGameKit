@@ -67,8 +67,8 @@ public:
 static Gui3DHUDTheme gui3DHUDTheme;
 
 OGKInGameScene::OGKInGameScene(const Ogre::String& name):OGKScene(name),
-mGUI(NULL),
-mPanel(NULL)
+    mGUI(NULL),
+    mPanel(NULL)
 {
     init();
 }
@@ -89,7 +89,8 @@ bool OGKInGameScene::buttonPressed(Gui3D::PanelElement *e)
 
 void OGKInGameScene::init()
 {
-    OGKScene::init();
+    // don't call OGKScene init (it's constructor already does that)
+//    OGKScene::init();
     
     mGUI = OGRE_NEW Gui3D::Gui3D(&gui3DHUDTheme);
 }
@@ -98,10 +99,9 @@ void OGKInGameScene::onEnter()
 {
     OGKScene::onEnter();
     
-	OGKGame::getSingletonPtr()->mSceneManager->setSkyBox(true, "OGK/DefaultSkyBox");
+	mSceneManager->setSkyBox(true, "OGK/DefaultSkyBox");
     
     Ogre::Viewport *vp = mCamera->getCamera()->getViewport();
-	vp->setBackgroundColour(Ogre::ColourValue(0.2f, 0.0f, 0.0f, 1.0f));
     
     mScreen = mGUI->createScreenRenderable2D(vp, "default_theme","ingame");
     mSceneNode->attachObject(mScreen);
@@ -117,19 +117,12 @@ void OGKInGameScene::onEnter()
     mButton = mPanel->makeButton(50, 10, 200, 30, "MENU");
     mButton->setPressedCallback(this, &OGKInGameScene::buttonPressed);
     
-    // Mouse Cursor
-//    mMouseLayer = mScreen->createLayer(4);
-//    mMouseCursor = mMouseLayer->createRectangle(vp->getActualWidth()/2,
-//                                                vp->getActualHeight()/2,
-//                                                15,22);
-//    mMouseCursor->background_image("mousepointer");
-    
     OGKInputManager::getSingletonPtr()->addMouseListener(this, "ingameScene");
 }
 
 void OGKInGameScene::onEnterTransitionDidFinish()
 {
-    OGKScene::onEnter();
+    OGKScene::onEnterTransitionDidFinish();
     
     mPanel->showInternalMousePointer();
 }
@@ -164,7 +157,6 @@ bool OGKInGameScene::touchCancelled(const OIS::MultiTouchEvent &evt)  { return t
 #else
 bool OGKInGameScene::mouseMoved(const OIS::MouseEvent &evt)
 {
-//    if(mMouseCursor) mMouseCursor->position(evt.state.X.abs, evt.state.Y.abs);
     if(mPanel)mPanel->injectMouseMoved(evt.state.X.abs, evt.state.Y.abs);
     return false;
 }

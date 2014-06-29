@@ -14,6 +14,7 @@ OGKSceneManager::OGKSceneManager() :
     mActiveScene(NULL),
     mPreviousScene(NULL),
     mRenderTexture(NULL),
+    mTransitionNode(NULL),
     mTransitionTimeRemaining(0),
     mTransitionRect(NULL)
 {
@@ -111,9 +112,19 @@ void OGKSceneManager::setActiveScene(const Ogre::String name, Ogre::Real transit
             }
         }
         
+        // Scene node
+        if(mActiveScene && mActiveScene->mSceneManager) {
+            mTransitionNode = mActiveScene->mSceneManager->getRootSceneNode()->createChildSceneNode("OGKTransitionNode");
+            mTransitionNode->attachObject(mTransitionRect);
+        }        
+        
         mTransitionRect->setVisible(true);
     }
     else {
+        if(mTransitionNode) {
+            mTransitionNode->detachAllObjects();
+        }
+        
         if(mPreviousScene) mPreviousScene->onExit();
         if(mActiveScene) mActiveScene->onEnterTransitionDidFinish();
     }
@@ -131,6 +142,10 @@ void OGKSceneManager::update(Ogre::Real timeElapsed)
 
             if(mActiveScene) {
                 mActiveScene->onEnterTransitionDidFinish();
+            }
+            
+            if(mTransitionNode) {
+                mTransitionNode->detachAllObjects();
             }
             
             if(mTransitionRect) {
@@ -186,10 +201,6 @@ void OGKSceneManager::_initRTT()
         mTransitionRect->setCorners(-1.0,1.0,1,-1);
         mTransitionRect->setBoundingBox(Ogre::AxisAlignedBox::BOX_INFINITE);
         mTransitionRect->setRenderQueueGroup(Ogre::RENDER_QUEUE_OVERLAY + 1);
-        
-        // Scene node
-        Ogre::SceneNode *node = OGKGame::getSingletonPtr()->mSceneManager->getRootSceneNode()->createChildSceneNode("OGKTransitionNode");
-        node->attachObject(mTransitionRect);
         
         // Material
         Ogre::MaterialManager *mgr = Ogre::MaterialManager::getSingletonPtr();

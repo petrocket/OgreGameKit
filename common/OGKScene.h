@@ -66,8 +66,9 @@ public:
 
     Ogre::String mSceneName;
 
-    // SCENE
+    Ogre::SceneManager *mSceneManager;
     Ogre::SceneNode *mSceneNode;
+    
 protected:
     bool mRunning;
 };
