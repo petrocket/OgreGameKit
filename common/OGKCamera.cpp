@@ -19,6 +19,7 @@ OGKCamera::OGKCamera(
     mLookAtOffset(0,0,-10.0),
     mMode(FREE),
     mMoveSpeed(1.0),
+    mSceneManager(sceneManager),
     mViewportOrientation(Ogre::OR_LANDSCAPELEFT),
     mTargetNode(NULL),
     mTargetOffset(0,5.0,10.5),
@@ -26,9 +27,10 @@ OGKCamera::OGKCamera(
 {
     static int numCameras = 0;
     
-    
     Ogre::String idx = Ogre::StringConverter::toString(numCameras);
-    mCamera = sceneManager->createCamera("OGKCamera" + idx);
+    mCameraName = "OGKCamera" + idx;
+    
+    mCamera = sceneManager->createCamera(mCameraName);
     numCameras++;
     mCamera->setFixedYawAxis(true);
 
@@ -40,18 +42,17 @@ OGKCamera::OGKCamera(
     
 	vp->setCamera(mCamera);
     
-    mCameraNode = sceneManager->getRootSceneNode()->createChildSceneNode("OGKCameraNode" +idx);
+    mCameraNode = sceneManager->getRootSceneNode()->createChildSceneNode(mCameraName + "Node");
     mCameraNode->attachObject(mCamera);
     mCameraNode->setFixedYawAxis(true);
     
-    mListenerName = "OGKCameraListener" + idx;
     
-    OGKInputManager::getSingletonPtr()->addKeyListener(this, mListenerName);
+    OGKInputManager::getSingletonPtr()->addKeyListener(this, mCameraName + "Listener");
     
 #ifdef OGRE_IS_IOS
-    OGKInputManager::getSingletonPtr()->addMultiTouchListener(this, mListenerName);
+    OGKInputManager::getSingletonPtr()->addMultiTouchListener(this, mCameraName + "Listener");
 #else
-    OGKInputManager::getSingletonPtr()->addMouseListener(this, mListenerName);
+    OGKInputManager::getSingletonPtr()->addMouseListener(this, mCameraName + "Listener");
 #endif
     
     loadFromConfig();
@@ -59,12 +60,11 @@ OGKCamera::OGKCamera(
 
 OGKCamera::~OGKCamera()
 {
-    mCameraNode->detachAllObjects();
+    if(mCameraNode) mCameraNode->detachAllObjects();
     delete mCamera;
-    Ogre::Root *root = Ogre::Root::getSingletonPtr();
-    Ogre::SceneManager *mgr = root->_getCurrentSceneManager();
-    if(mgr) {
-        mgr->destroySceneNode(mCameraNode);
+    
+    if(mSceneManager) {
+        mSceneManager->destroySceneNode(mCameraNode);
     }
 }
 
@@ -130,25 +130,31 @@ void OGKCamera::setEnabled(bool enabled)
     Ogre::RenderWindow *renderWindow = OGKGame::getSingletonPtr()->mRenderWindow;
     
     if(enabled) {
+        if(!mSceneManager->hasSceneNode(mCameraName + "Node")) {
+            mCameraNode = mSceneManager->getRootSceneNode()->createChildSceneNode(mCameraName + "Node");
+            mCameraNode->attachObject(mCamera);
+            mCameraNode->setFixedYawAxis(true);
+        }
+        
         renderWindow->removeAllViewports();
         
         Ogre::Viewport *vp = renderWindow->addViewport(mCamera);
+
         mCamera->setAspectRatio(Ogre::Real(vp->getActualWidth()) /
                                 Ogre::Real(vp->getActualHeight()));
         mCamera->setNearClipDistance(1);
         mCamera->setFarClipDistance(11000);
         
-        OGKInputManager::getSingletonPtr()->addKeyListener(this, mListenerName);
+        OGKInputManager::getSingletonPtr()->addKeyListener(this, mCameraName + "Listener");
         
 #ifdef OGRE_IS_IOS
-        OGKInputManager::getSingletonPtr()->addMultiTouchListener(this, mListenerName);
+        OGKInputManager::getSingletonPtr()->addMultiTouchListener(this, mCameraName + "Listener");
 #else
-        OGKInputManager::getSingletonPtr()->addMouseListener(this, mListenerName);
+        OGKInputManager::getSingletonPtr()->addMouseListener(this, mCameraName + "Listener");
 #endif
     }
     else {
         // remove from main render window if active
-        
         Ogre::Viewport *vp = renderWindow->getViewport(mCamera->getViewport()->getZOrder());
         if(vp == mCamera->getViewport()) {
             renderWindow->removeViewport(mCamera->getViewport()->getZOrder());
@@ -331,18 +337,16 @@ void OGKCamera::update(Ogre::Real elapsedTime)
 #endif
     }
     else if(mMode == OGKCamera::FIRST_PERSON) {
-        mTargetNode->_update(true,true);
+        if(mTargetNode) mTargetNode->_update(true,true);
         mCameraNode->setPosition(mTargetNode->getPosition() + mTargetOffset);
         mCameraNode->setOrientation(mTargetNode->getOrientation());
     }
-    else if(mMode == OGKCamera::THIRD_PERSON) {
+    else if(mMode == OGKCamera::THIRD_PERSON && mTargetNode) {
         mTargetNode->_update(true,true);
         Ogre::Vector3 translateVector = ((mTargetNode->getPosition() + (mTargetNode->getOrientation() * mTargetOffset)) - mCameraNode->getPosition()) * mTightness;
         mCameraNode->translate(translateVector);
     }
-    else if(mMode == OGKCamera::THIRD_PERSON_INDIRECT) {
-        mTargetNode->_update(true,true);
-        
+    else if(mMode == OGKCamera::THIRD_PERSON_INDIRECT && mTargetNode) {
         if(mEdgeBuffer < 1.0) {
             // get the target's screen position
             Ogre::Vector3 coords = mCamera->getProjectionMatrix() * mCamera->getViewMatrix() * mTargetNode->getPosition();

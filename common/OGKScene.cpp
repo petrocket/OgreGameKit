@@ -60,7 +60,7 @@ void OGKScene::onEnterTransitionDidFinish()
 
 void OGKScene::update(double timeSinceLastFrame)
 {
-    
+    if(mCamera) mCamera->update(timeSinceLastFrame);
 }
 
 void OGKScene::onExit()

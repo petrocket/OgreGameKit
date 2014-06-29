@@ -13,6 +13,9 @@
 
 #include "OGKCamera.h"
 
+// terrain
+#include "OGKTerrain.h"
+
 #include "Gui3D.h"
 #include "Gui3DButton.h"
 #include "Gui3DScreenRenderable2DPanel.h"
@@ -44,6 +47,10 @@ public:
 #endif
     
 private:
+    // terrain
+    OGKTerrain *mTerrain;
+    
+    // gui
     Gui3D::Gui3D *mGUI;
     Gui3D::ScreenRenderable2DPanel *mPanel;
     Gui3D::Button *mButton;

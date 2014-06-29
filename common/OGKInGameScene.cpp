@@ -117,6 +117,23 @@ void OGKInGameScene::onEnter()
     mButton = mPanel->makeButton(50, 10, 200, 30, "MENU");
     mButton->setPressedCallback(this, &OGKInGameScene::buttonPressed);
     
+    // terrain
+    Ogre::Vector3 lightDir(0.55,-0.3,0.75);
+    lightDir.normalise();
+    Ogre::Light *light = mSceneManager->createLight("Light");
+    light->setType(Ogre::Light::LT_DIRECTIONAL);
+    light->setDirection(lightDir);
+    light->setDiffuseColour(Ogre::ColourValue::White);
+    
+    mSceneManager->setAmbientLight(Ogre::ColourValue(0.1,0.15,0.4));
+    Ogre::ColourValue fogColour(184.0/255.0, 223.0/255.0, 251.0/255.0);
+    mSceneManager->setFog(Ogre::FOG_LINEAR, fogColour, 0.0, 1000, 4000);
+
+    mTerrain = OGRE_NEW OGKTerrain();
+    mTerrain->setup(mSceneManager, light);
+
+    mCamera->setMode(OGKCamera::FREE);
+    
     OGKInputManager::getSingletonPtr()->addMouseListener(this, "ingameScene");
 }
 

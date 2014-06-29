@@ -94,7 +94,9 @@ private:
     // edge buffer (3rd person only)
     Ogre::Real mEdgeBuffer;
     
-    Ogre::String mListenerName;
+    Ogre::String mCameraName;
+    
+    Ogre::SceneManager *mSceneManager;
     
     int mViewportOrientation;
 };
