@@ -91,10 +91,10 @@ void OGKTerrain::update()
     if(mTerrainGroup &&
        !mTerrainGroup->isDerivedDataUpdateInProgress() &&
        mTerrainsImported) {
-        OGKGame::getSingleton().m_pLog->logMessage("Saving terrain...");
+        OGKGame::getSingleton().mLog->logMessage("Saving terrain...");
         mTerrainGroup->saveAllTerrains(true);
         mTerrainsImported = false;
-        OGKGame::getSingleton().m_pLog->logMessage("Done Saving terrain...");
+        OGKGame::getSingleton().mLog->logMessage("Done Saving terrain...");
     }
 #endif
 }

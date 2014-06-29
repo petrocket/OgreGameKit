@@ -44,6 +44,8 @@
 #   define __FUNC__ "No function name info"
 #endif
 
+#define USE_RECTANGLE2D 1
+
 namespace Gorilla
 {
  
@@ -52,6 +54,7 @@ namespace Gorilla
  class LayerContainer;
  class Screen;
  class ScreenRenderable;
+ class ScreenRenderable2D;
  class Layer;
  class Rectangle;
  class Polygon;
@@ -446,7 +449,19 @@ namespace Gorilla
    /*! function. createScreenRenderable
    */
    ScreenRenderable* createScreenRenderable(const Ogre::Vector2& maxSize, const Ogre::String& atlas);
-   
+
+     /*! function. createScreenRenderable2D
+      */
+     ScreenRenderable2D* createScreenRenderable2D(Ogre::Viewport* viewport,const Ogre::String& atlas);
+     
+     
+     /*! function. destroyScreenRenderable2D
+      desc.
+      Destroy an existing screen, its layers and the contents of those layers.
+      */
+     void destroyScreenRenderable2D(ScreenRenderable2D*);
+     
+     
    /*! function. destroyScreen
        desc.
            Destroy an existing screen, its layers and the contents of those layers.
@@ -464,6 +479,7 @@ namespace Gorilla
    std::map<Ogre::String, TextureAtlas*>  mAtlases;
    std::vector<Screen*>                   mScreens;
    std::vector<ScreenRenderable*>         mScreenRenderables;
+   std::vector<ScreenRenderable2D*>        mScreenRenderables2D;
    
  };
  
@@ -864,7 +880,7 @@ namespace Gorilla
   };
   
   
-  class Screen : public LayerContainer, public Ogre::RenderQueueListener, public Ogre::GeneralAllocatedObject
+class Screen : public LayerContainer, public Ogre::RenderQueueListener, public Ogre::GeneralAllocatedObject
   {
    public:
     
@@ -880,7 +896,7 @@ namespace Gorilla
             Helper function to get vertical texel offset.
     */
     inline Ogre::Real getTexelOffsetY() const { return mRenderSystem->getVerticalTexelOffset(); }
-    
+      
     /*! desc. getWidth
             Get screen height in pixels.
     */
@@ -902,7 +918,15 @@ namespace Gorilla
             Show or hide the screen.
     */
     inline void setVisible(bool value) { mIsVisible = value;}
-    
+      
+    inline void setViewport(Ogre::Viewport *viewport) {
+        mViewport = viewport;
+        mWidth = mViewport->getActualWidth();
+        mHeight = mViewport->getActualHeight();
+        mInvWidth = 1.0f / mWidth;
+        mInvHeight = 1.0f / mHeight;
+    }
+      
     /*! desc. hide
             Hide the screen and the all of layers within it.
     */
@@ -912,6 +936,7 @@ namespace Gorilla
             Show the screen and the visible layers within it.
     */
     inline void show() { mIsVisible = true;}
+
     
 #if OGRE_NO_VIEWPORT_ORIENTATIONMODE == 1
     inline void setOrientation(Ogre::OrientationMode o)
@@ -940,14 +965,14 @@ namespace Gorilla
    ~Screen();
     
     // Internal -- Not used, but required by renderQueueListener
-    void renderQueueStarted(Ogre::uint8, const Ogre::String&, bool&) {}
+      void renderQueueStarted(Ogre::uint8 queueGroupId, const Ogre::String& invocation, bool&repeatThisInvocation) {}
     
     // Internal -- Called by Ogre to render the screen.
     void renderQueueEnded(Ogre::uint8 queueGroupId, const Ogre::String& invocation, bool& repeatThisInvocation);
     
     // Internal -- Prepares RenderSystem for rendering.
     void _prepareRenderSystem();
-    
+      
     // Internal -- Renders mVertexData to screen.
     void renderOnce();
     
@@ -1004,6 +1029,23 @@ namespace Gorilla
     Ogre::Vector2         mMaxSize;
     
   };
+    
+    class ScreenRenderable2D : public LayerContainer, public Ogre::Rectangle2D
+    {
+        
+    public:
+        
+        ScreenRenderable2D(Ogre::Viewport*, TextureAtlas*);
+        ~ScreenRenderable2D();
+        
+        void frameStarted();
+        void renderOnce();
+        void _transform(buffer<Vertex>& vertices, size_t begin, size_t end);
+        
+    protected:
+        Ogre::Real mInvWidth;
+        Ogre::Real mInvHeight;
+    };
   
   /*! class. Layer
       desc.

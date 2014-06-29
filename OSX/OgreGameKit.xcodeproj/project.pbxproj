@@ -13,6 +13,33 @@
 		FA35A6D21959C91D0071F577 /* Gorilla.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA35A6CF1959C91D0071F577 /* Gorilla.cpp */; };
 		FA35A6D31959C91D0071F577 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = FA35A6D11959C91D0071F577 /* README.md */; };
 		FA35A6D61959C9390071F577 /* OGKConsole.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA35A6D41959C9390071F577 /* OGKConsole.cpp */; };
+		FA35A6D91959F7CA0071F577 /* OGKScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA35A6D71959F7CA0071F577 /* OGKScene.cpp */; };
+		FA35A6DC195A141F0071F577 /* OGKSceneManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA35A6DA195A141F0071F577 /* OGKSceneManager.cpp */; };
+		FA35A6E2195A18E10071F577 /* OGKMenuScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA35A6E0195A18E10071F577 /* OGKMenuScene.cpp */; };
+		FA35A6E5195A19930071F577 /* OGKInGameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA35A6E3195A19930071F577 /* OGKInGameScene.cpp */; };
+		FA35A718195A45D50071F577 /* Gui3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA35A6E6195A45D50071F577 /* Gui3D.cpp */; };
+		FA35A719195A45D50071F577 /* Gui3DButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA35A6E8195A45D50071F577 /* Gui3DButton.cpp */; };
+		FA35A71A195A45D50071F577 /* Gui3DCaption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA35A6EA195A45D50071F577 /* Gui3DCaption.cpp */; };
+		FA35A71B195A45D50071F577 /* Gui3DCheckbox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA35A6EC195A45D50071F577 /* Gui3DCheckbox.cpp */; };
+		FA35A71C195A45D50071F577 /* Gui3DCheckboxSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA35A6EE195A45D50071F577 /* Gui3DCheckboxSprite.cpp */; };
+		FA35A71D195A45D50071F577 /* Gui3DCheckboxText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA35A6F0195A45D50071F577 /* Gui3DCheckboxText.cpp */; };
+		FA35A71E195A45D50071F577 /* Gui3DClock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA35A6F2195A45D50071F577 /* Gui3DClock.cpp */; };
+		FA35A71F195A45D50071F577 /* Gui3DCombobox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA35A6F4195A45D50071F577 /* Gui3DCombobox.cpp */; };
+		FA35A720195A45D50071F577 /* Gui3DContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA35A6F7195A45D50071F577 /* Gui3DContainer.cpp */; };
+		FA35A721195A45D50071F577 /* Gui3DDebugPanelColors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA35A6F9195A45D50071F577 /* Gui3DDebugPanelColors.cpp */; };
+		FA35A722195A45D50071F577 /* Gui3DInlineSelector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA35A6FC195A45D50071F577 /* Gui3DInlineSelector.cpp */; };
+		FA35A723195A45D50071F577 /* Gui3DListbox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA35A6FE195A45D50071F577 /* Gui3DListbox.cpp */; };
+		FA35A724195A45D50071F577 /* Gui3DMultipleElementsSelector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA35A701195A45D50071F577 /* Gui3DMultipleElementsSelector.cpp */; };
+		FA35A725195A45D50071F577 /* Gui3DPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA35A703195A45D50071F577 /* Gui3DPanel.cpp */; };
+		FA35A726195A45D50071F577 /* Gui3DPanelContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA35A706195A45D50071F577 /* Gui3DPanelContainer.cpp */; };
+		FA35A727195A45D50071F577 /* Gui3DPanelElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA35A708195A45D50071F577 /* Gui3DPanelElement.cpp */; };
+		FA35A728195A45D50071F577 /* Gui3DProgressBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA35A70B195A45D50071F577 /* Gui3DProgressBar.cpp */; };
+		FA35A729195A45D50071F577 /* Gui3DScreenPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA35A70D195A45D50071F577 /* Gui3DScreenPanel.cpp */; };
+		FA35A72A195A45D50071F577 /* Gui3DScrollBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA35A70F195A45D50071F577 /* Gui3DScrollBar.cpp */; };
+		FA35A72B195A45D50071F577 /* Gui3DStringCursorEdit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA35A711195A45D50071F577 /* Gui3DStringCursorEdit.cpp */; };
+		FA35A72C195A45D50071F577 /* Gui3DTextZone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA35A713195A45D50071F577 /* Gui3DTextZone.cpp */; };
+		FA35A72D195A45D50071F577 /* Gui3DVerticalSelector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA35A716195A45D50071F577 /* Gui3DVerticalSelector.cpp */; };
+		FA35A730195F0BBB0071F577 /* Gui3DScreenRenderable2DPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA35A72E195F0BBB0071F577 /* Gui3DScreenRenderable2DPanel.cpp */; };
 		FA7769AA193E4B02005F4810 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA7769A9193E4B02005F4810 /* Carbon.framework */; };
 		FA7769AC193E4B02005F4810 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA7769AB193E4B02005F4810 /* Cocoa.framework */; };
 		FA7769AE193E4B02005F4810 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA7769AD193E4B02005F4810 /* IOKit.framework */; };
@@ -55,6 +82,66 @@
 		FA35A6D11959C91D0071F577 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.md; path = ../../common/lib/gui/README.md; sourceTree = "<group>"; };
 		FA35A6D41959C9390071F577 /* OGKConsole.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OGKConsole.cpp; path = ../../common/OGKConsole.cpp; sourceTree = "<group>"; };
 		FA35A6D51959C9390071F577 /* OGKConsole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKConsole.h; path = ../../common/OGKConsole.h; sourceTree = "<group>"; };
+		FA35A6D71959F7CA0071F577 /* OGKScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OGKScene.cpp; path = ../../common/OGKScene.cpp; sourceTree = "<group>"; };
+		FA35A6D81959F7CA0071F577 /* OGKScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKScene.h; path = ../../common/OGKScene.h; sourceTree = "<group>"; };
+		FA35A6DA195A141F0071F577 /* OGKSceneManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OGKSceneManager.cpp; path = ../../common/OGKSceneManager.cpp; sourceTree = "<group>"; };
+		FA35A6DB195A141F0071F577 /* OGKSceneManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKSceneManager.h; path = ../../common/OGKSceneManager.h; sourceTree = "<group>"; };
+		FA35A6E0195A18E10071F577 /* OGKMenuScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OGKMenuScene.cpp; path = ../../common/OGKMenuScene.cpp; sourceTree = "<group>"; };
+		FA35A6E1195A18E10071F577 /* OGKMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKMenuScene.h; path = ../../common/OGKMenuScene.h; sourceTree = "<group>"; };
+		FA35A6E3195A19930071F577 /* OGKInGameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OGKInGameScene.cpp; path = ../../common/OGKInGameScene.cpp; sourceTree = "<group>"; };
+		FA35A6E4195A19930071F577 /* OGKInGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKInGameScene.h; path = ../../common/OGKInGameScene.h; sourceTree = "<group>"; };
+		FA35A6E6195A45D50071F577 /* Gui3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 2; name = Gui3D.cpp; path = ../../common/lib/gui/Gui3D.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		FA35A6E7195A45D50071F577 /* Gui3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gui3D.h; path = ../../common/lib/gui/Gui3D.h; sourceTree = "<group>"; };
+		FA35A6E8195A45D50071F577 /* Gui3DButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Gui3DButton.cpp; path = ../../common/lib/gui/Gui3DButton.cpp; sourceTree = "<group>"; };
+		FA35A6E9195A45D50071F577 /* Gui3DButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gui3DButton.h; path = ../../common/lib/gui/Gui3DButton.h; sourceTree = "<group>"; };
+		FA35A6EA195A45D50071F577 /* Gui3DCaption.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Gui3DCaption.cpp; path = ../../common/lib/gui/Gui3DCaption.cpp; sourceTree = "<group>"; };
+		FA35A6EB195A45D50071F577 /* Gui3DCaption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gui3DCaption.h; path = ../../common/lib/gui/Gui3DCaption.h; sourceTree = "<group>"; };
+		FA35A6EC195A45D50071F577 /* Gui3DCheckbox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Gui3DCheckbox.cpp; path = ../../common/lib/gui/Gui3DCheckbox.cpp; sourceTree = "<group>"; };
+		FA35A6ED195A45D50071F577 /* Gui3DCheckbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gui3DCheckbox.h; path = ../../common/lib/gui/Gui3DCheckbox.h; sourceTree = "<group>"; };
+		FA35A6EE195A45D50071F577 /* Gui3DCheckboxSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Gui3DCheckboxSprite.cpp; path = ../../common/lib/gui/Gui3DCheckboxSprite.cpp; sourceTree = "<group>"; };
+		FA35A6EF195A45D50071F577 /* Gui3DCheckboxSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gui3DCheckboxSprite.h; path = ../../common/lib/gui/Gui3DCheckboxSprite.h; sourceTree = "<group>"; };
+		FA35A6F0195A45D50071F577 /* Gui3DCheckboxText.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Gui3DCheckboxText.cpp; path = ../../common/lib/gui/Gui3DCheckboxText.cpp; sourceTree = "<group>"; };
+		FA35A6F1195A45D50071F577 /* Gui3DCheckboxText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gui3DCheckboxText.h; path = ../../common/lib/gui/Gui3DCheckboxText.h; sourceTree = "<group>"; };
+		FA35A6F2195A45D50071F577 /* Gui3DClock.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Gui3DClock.cpp; path = ../../common/lib/gui/Gui3DClock.cpp; sourceTree = "<group>"; };
+		FA35A6F3195A45D50071F577 /* Gui3DClock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gui3DClock.h; path = ../../common/lib/gui/Gui3DClock.h; sourceTree = "<group>"; };
+		FA35A6F4195A45D50071F577 /* Gui3DCombobox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Gui3DCombobox.cpp; path = ../../common/lib/gui/Gui3DCombobox.cpp; sourceTree = "<group>"; };
+		FA35A6F5195A45D50071F577 /* Gui3DCombobox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gui3DCombobox.h; path = ../../common/lib/gui/Gui3DCombobox.h; sourceTree = "<group>"; };
+		FA35A6F6195A45D50071F577 /* Gui3DConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; name = Gui3DConfig.h; path = ../../common/lib/gui/Gui3DConfig.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		FA35A6F7195A45D50071F577 /* Gui3DContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 2; name = Gui3DContainer.cpp; path = ../../common/lib/gui/Gui3DContainer.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		FA35A6F8195A45D50071F577 /* Gui3DContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gui3DContainer.h; path = ../../common/lib/gui/Gui3DContainer.h; sourceTree = "<group>"; };
+		FA35A6F9195A45D50071F577 /* Gui3DDebugPanelColors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Gui3DDebugPanelColors.cpp; path = ../../common/lib/gui/Gui3DDebugPanelColors.cpp; sourceTree = "<group>"; };
+		FA35A6FA195A45D50071F577 /* Gui3DDebugPanelColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gui3DDebugPanelColors.h; path = ../../common/lib/gui/Gui3DDebugPanelColors.h; sourceTree = "<group>"; };
+		FA35A6FB195A45D50071F577 /* Gui3DFunctorBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gui3DFunctorBase.h; path = ../../common/lib/gui/Gui3DFunctorBase.h; sourceTree = "<group>"; };
+		FA35A6FC195A45D50071F577 /* Gui3DInlineSelector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Gui3DInlineSelector.cpp; path = ../../common/lib/gui/Gui3DInlineSelector.cpp; sourceTree = "<group>"; };
+		FA35A6FD195A45D50071F577 /* Gui3DInlineSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gui3DInlineSelector.h; path = ../../common/lib/gui/Gui3DInlineSelector.h; sourceTree = "<group>"; };
+		FA35A6FE195A45D50071F577 /* Gui3DListbox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Gui3DListbox.cpp; path = ../../common/lib/gui/Gui3DListbox.cpp; sourceTree = "<group>"; };
+		FA35A6FF195A45D50071F577 /* Gui3DListbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gui3DListbox.h; path = ../../common/lib/gui/Gui3DListbox.h; sourceTree = "<group>"; };
+		FA35A700195A45D50071F577 /* Gui3DMemberFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; name = Gui3DMemberFunction.h; path = ../../common/lib/gui/Gui3DMemberFunction.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		FA35A701195A45D50071F577 /* Gui3DMultipleElementsSelector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Gui3DMultipleElementsSelector.cpp; path = ../../common/lib/gui/Gui3DMultipleElementsSelector.cpp; sourceTree = "<group>"; };
+		FA35A702195A45D50071F577 /* Gui3DMultipleElementsSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gui3DMultipleElementsSelector.h; path = ../../common/lib/gui/Gui3DMultipleElementsSelector.h; sourceTree = "<group>"; };
+		FA35A703195A45D50071F577 /* Gui3DPanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 2; name = Gui3DPanel.cpp; path = ../../common/lib/gui/Gui3DPanel.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		FA35A704195A45D50071F577 /* Gui3DPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gui3DPanel.h; path = ../../common/lib/gui/Gui3DPanel.h; sourceTree = "<group>"; };
+		FA35A705195A45D50071F577 /* Gui3DPanelColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gui3DPanelColors.h; path = ../../common/lib/gui/Gui3DPanelColors.h; sourceTree = "<group>"; };
+		FA35A706195A45D50071F577 /* Gui3DPanelContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 2; name = Gui3DPanelContainer.cpp; path = ../../common/lib/gui/Gui3DPanelContainer.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		FA35A707195A45D50071F577 /* Gui3DPanelContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gui3DPanelContainer.h; path = ../../common/lib/gui/Gui3DPanelContainer.h; sourceTree = "<group>"; };
+		FA35A708195A45D50071F577 /* Gui3DPanelElement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Gui3DPanelElement.cpp; path = ../../common/lib/gui/Gui3DPanelElement.cpp; sourceTree = "<group>"; };
+		FA35A709195A45D50071F577 /* Gui3DPanelElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gui3DPanelElement.h; path = ../../common/lib/gui/Gui3DPanelElement.h; sourceTree = "<group>"; };
+		FA35A70A195A45D50071F577 /* Gui3DPanelElementCallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gui3DPanelElementCallback.h; path = ../../common/lib/gui/Gui3DPanelElementCallback.h; sourceTree = "<group>"; };
+		FA35A70B195A45D50071F577 /* Gui3DProgressBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Gui3DProgressBar.cpp; path = ../../common/lib/gui/Gui3DProgressBar.cpp; sourceTree = "<group>"; };
+		FA35A70C195A45D50071F577 /* Gui3DProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gui3DProgressBar.h; path = ../../common/lib/gui/Gui3DProgressBar.h; sourceTree = "<group>"; };
+		FA35A70D195A45D50071F577 /* Gui3DScreenPanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Gui3DScreenPanel.cpp; path = ../../common/lib/gui/Gui3DScreenPanel.cpp; sourceTree = "<group>"; };
+		FA35A70E195A45D50071F577 /* Gui3DScreenPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gui3DScreenPanel.h; path = ../../common/lib/gui/Gui3DScreenPanel.h; sourceTree = "<group>"; };
+		FA35A70F195A45D50071F577 /* Gui3DScrollBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Gui3DScrollBar.cpp; path = ../../common/lib/gui/Gui3DScrollBar.cpp; sourceTree = "<group>"; };
+		FA35A710195A45D50071F577 /* Gui3DScrollBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gui3DScrollBar.h; path = ../../common/lib/gui/Gui3DScrollBar.h; sourceTree = "<group>"; };
+		FA35A711195A45D50071F577 /* Gui3DStringCursorEdit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Gui3DStringCursorEdit.cpp; path = ../../common/lib/gui/Gui3DStringCursorEdit.cpp; sourceTree = "<group>"; };
+		FA35A712195A45D50071F577 /* Gui3DStringCursorEdit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gui3DStringCursorEdit.h; path = ../../common/lib/gui/Gui3DStringCursorEdit.h; sourceTree = "<group>"; };
+		FA35A713195A45D50071F577 /* Gui3DTextZone.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Gui3DTextZone.cpp; path = ../../common/lib/gui/Gui3DTextZone.cpp; sourceTree = "<group>"; };
+		FA35A714195A45D50071F577 /* Gui3DTextZone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gui3DTextZone.h; path = ../../common/lib/gui/Gui3DTextZone.h; sourceTree = "<group>"; };
+		FA35A715195A45D50071F577 /* Gui3DUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gui3DUtils.h; path = ../../common/lib/gui/Gui3DUtils.h; sourceTree = "<group>"; };
+		FA35A716195A45D50071F577 /* Gui3DVerticalSelector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Gui3DVerticalSelector.cpp; path = ../../common/lib/gui/Gui3DVerticalSelector.cpp; sourceTree = "<group>"; };
+		FA35A717195A45D50071F577 /* Gui3DVerticalSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gui3DVerticalSelector.h; path = ../../common/lib/gui/Gui3DVerticalSelector.h; sourceTree = "<group>"; };
+		FA35A72E195F0BBB0071F577 /* Gui3DScreenRenderable2DPanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Gui3DScreenRenderable2DPanel.cpp; path = ../../common/lib/gui/Gui3DScreenRenderable2DPanel.cpp; sourceTree = "<group>"; };
+		FA35A72F195F0BBB0071F577 /* Gui3DScreenRenderable2DPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gui3DScreenRenderable2DPanel.h; path = ../../common/lib/gui/Gui3DScreenRenderable2DPanel.h; sourceTree = "<group>"; };
 		FA7769A6193E4B02005F4810 /* OgreGameKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OgreGameKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA7769A9193E4B02005F4810 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		FA7769AB193E4B02005F4810 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -230,14 +317,22 @@
 				FACF1A091942495900F099AA /* OGKAudio.h */,
 				FAB8BF1819531C8000DA2B26 /* OGKCamera.cpp */,
 				FAB8BF1919531C8000DA2B26 /* OGKCamera.h */,
-				FA35946A193E64120050AB5C /* OGKGame.cpp */,
-				FA35946B193E64120050AB5C /* OGKGame.h */,
 				FA35A6D41959C9390071F577 /* OGKConsole.cpp */,
 				FA35A6D51959C9390071F577 /* OGKConsole.h */,
+				FA35946A193E64120050AB5C /* OGKGame.cpp */,
+				FA35946B193E64120050AB5C /* OGKGame.h */,
+				FA35A6E3195A19930071F577 /* OGKInGameScene.cpp */,
+				FA35A6E4195A19930071F577 /* OGKInGameScene.h */,
 				FAB8BF24195327BE00DA2B26 /* OGKInputManager.cpp */,
 				FAB8BF25195327BE00DA2B26 /* OGKInputManager.h */,
+				FA35A6E0195A18E10071F577 /* OGKMenuScene.cpp */,
+				FA35A6E1195A18E10071F577 /* OGKMenuScene.h */,
 				FAB8BF2D1953C71800DA2B26 /* OGKPlayer.cpp */,
 				FAB8BF2E1953C71800DA2B26 /* OGKPlayer.h */,
+				FA35A6D71959F7CA0071F577 /* OGKScene.cpp */,
+				FA35A6D81959F7CA0071F577 /* OGKScene.h */,
+				FA35A6DA195A141F0071F577 /* OGKSceneManager.cpp */,
+				FA35A6DB195A141F0071F577 /* OGKSceneManager.h */,
 				FACF19E71940E8CA00F099AA /* OGKShaderGenerator.h */,
 				FA35946C193E64120050AB5C /* OGKShaderGeneratorListener.h */,
 				FA35946D193E64120050AB5C /* OGKStaticPluginLoader.h */,
@@ -277,6 +372,58 @@
 			children = (
 				FA35A6CF1959C91D0071F577 /* Gorilla.cpp */,
 				FA35A6D01959C91D0071F577 /* Gorilla.h */,
+				FA35A6E6195A45D50071F577 /* Gui3D.cpp */,
+				FA35A6E7195A45D50071F577 /* Gui3D.h */,
+				FA35A6E8195A45D50071F577 /* Gui3DButton.cpp */,
+				FA35A6E9195A45D50071F577 /* Gui3DButton.h */,
+				FA35A6EA195A45D50071F577 /* Gui3DCaption.cpp */,
+				FA35A6EB195A45D50071F577 /* Gui3DCaption.h */,
+				FA35A6EC195A45D50071F577 /* Gui3DCheckbox.cpp */,
+				FA35A6ED195A45D50071F577 /* Gui3DCheckbox.h */,
+				FA35A6EE195A45D50071F577 /* Gui3DCheckboxSprite.cpp */,
+				FA35A6EF195A45D50071F577 /* Gui3DCheckboxSprite.h */,
+				FA35A6F0195A45D50071F577 /* Gui3DCheckboxText.cpp */,
+				FA35A6F1195A45D50071F577 /* Gui3DCheckboxText.h */,
+				FA35A6F2195A45D50071F577 /* Gui3DClock.cpp */,
+				FA35A6F3195A45D50071F577 /* Gui3DClock.h */,
+				FA35A6F4195A45D50071F577 /* Gui3DCombobox.cpp */,
+				FA35A6F5195A45D50071F577 /* Gui3DCombobox.h */,
+				FA35A6F6195A45D50071F577 /* Gui3DConfig.h */,
+				FA35A6F7195A45D50071F577 /* Gui3DContainer.cpp */,
+				FA35A6F8195A45D50071F577 /* Gui3DContainer.h */,
+				FA35A6F9195A45D50071F577 /* Gui3DDebugPanelColors.cpp */,
+				FA35A6FA195A45D50071F577 /* Gui3DDebugPanelColors.h */,
+				FA35A6FB195A45D50071F577 /* Gui3DFunctorBase.h */,
+				FA35A6FC195A45D50071F577 /* Gui3DInlineSelector.cpp */,
+				FA35A6FD195A45D50071F577 /* Gui3DInlineSelector.h */,
+				FA35A6FE195A45D50071F577 /* Gui3DListbox.cpp */,
+				FA35A6FF195A45D50071F577 /* Gui3DListbox.h */,
+				FA35A700195A45D50071F577 /* Gui3DMemberFunction.h */,
+				FA35A701195A45D50071F577 /* Gui3DMultipleElementsSelector.cpp */,
+				FA35A702195A45D50071F577 /* Gui3DMultipleElementsSelector.h */,
+				FA35A703195A45D50071F577 /* Gui3DPanel.cpp */,
+				FA35A704195A45D50071F577 /* Gui3DPanel.h */,
+				FA35A705195A45D50071F577 /* Gui3DPanelColors.h */,
+				FA35A706195A45D50071F577 /* Gui3DPanelContainer.cpp */,
+				FA35A707195A45D50071F577 /* Gui3DPanelContainer.h */,
+				FA35A708195A45D50071F577 /* Gui3DPanelElement.cpp */,
+				FA35A709195A45D50071F577 /* Gui3DPanelElement.h */,
+				FA35A70A195A45D50071F577 /* Gui3DPanelElementCallback.h */,
+				FA35A70B195A45D50071F577 /* Gui3DProgressBar.cpp */,
+				FA35A70C195A45D50071F577 /* Gui3DProgressBar.h */,
+				FA35A70D195A45D50071F577 /* Gui3DScreenPanel.cpp */,
+				FA35A70E195A45D50071F577 /* Gui3DScreenPanel.h */,
+				FA35A72E195F0BBB0071F577 /* Gui3DScreenRenderable2DPanel.cpp */,
+				FA35A72F195F0BBB0071F577 /* Gui3DScreenRenderable2DPanel.h */,
+				FA35A70F195A45D50071F577 /* Gui3DScrollBar.cpp */,
+				FA35A710195A45D50071F577 /* Gui3DScrollBar.h */,
+				FA35A711195A45D50071F577 /* Gui3DStringCursorEdit.cpp */,
+				FA35A712195A45D50071F577 /* Gui3DStringCursorEdit.h */,
+				FA35A713195A45D50071F577 /* Gui3DTextZone.cpp */,
+				FA35A714195A45D50071F577 /* Gui3DTextZone.h */,
+				FA35A715195A45D50071F577 /* Gui3DUtils.h */,
+				FA35A716195A45D50071F577 /* Gui3DVerticalSelector.cpp */,
+				FA35A717195A45D50071F577 /* Gui3DVerticalSelector.h */,
 				FA35A6D11959C91D0071F577 /* README.md */,
 			);
 			name = gui;
@@ -658,21 +805,48 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA35A6D91959F7CA0071F577 /* OGKScene.cpp in Sources */,
 				FACF1A1F194249AC00F099AA /* OGKAudioOSX.mm in Sources */,
+				FA35A730195F0BBB0071F577 /* Gui3DScreenRenderable2DPanel.cpp in Sources */,
 				FA35A6D61959C9390071F577 /* OGKConsole.cpp in Sources */,
+				FA35A72C195A45D50071F577 /* Gui3DTextZone.cpp in Sources */,
+				FA35A71B195A45D50071F577 /* Gui3DCheckbox.cpp in Sources */,
+				FA35A722195A45D50071F577 /* Gui3DInlineSelector.cpp in Sources */,
+				FA35A71A195A45D50071F577 /* Gui3DCaption.cpp in Sources */,
 				FACF1A1C1942499900F099AA /* SimpleAudioEngine.m in Sources */,
 				FAB8BF2F1953C71800DA2B26 /* OGKPlayer.cpp in Sources */,
 				FA7769BB193E4B02005F4810 /* main.mm in Sources */,
+				FA35A71C195A45D50071F577 /* Gui3DCheckboxSprite.cpp in Sources */,
 				FACF19E51940DD7D00F099AA /* OGKTerrain.cpp in Sources */,
+				FA35A72A195A45D50071F577 /* Gui3DScrollBar.cpp in Sources */,
+				FA35A723195A45D50071F577 /* Gui3DListbox.cpp in Sources */,
+				FA35A720195A45D50071F577 /* Gui3DContainer.cpp in Sources */,
 				FAB8BF1A19531C8000DA2B26 /* OGKCamera.cpp in Sources */,
 				FA35A6D21959C91D0071F577 /* Gorilla.cpp in Sources */,
+				FA35A721195A45D50071F577 /* Gui3DDebugPanelColors.cpp in Sources */,
+				FA35A71D195A45D50071F577 /* Gui3DCheckboxText.cpp in Sources */,
 				FACF1A1B1942499900F099AA /* CocosDenshion.m in Sources */,
+				FA35A727195A45D50071F577 /* Gui3DPanelElement.cpp in Sources */,
+				FA35A718195A45D50071F577 /* Gui3D.cpp in Sources */,
+				FA35A6DC195A141F0071F577 /* OGKSceneManager.cpp in Sources */,
+				FA35A728195A45D50071F577 /* Gui3DProgressBar.cpp in Sources */,
+				FA35A724195A45D50071F577 /* Gui3DMultipleElementsSelector.cpp in Sources */,
+				FA35A725195A45D50071F577 /* Gui3DPanel.cpp in Sources */,
+				FA35A6E5195A19930071F577 /* OGKInGameScene.cpp in Sources */,
 				FAB8BF26195327BE00DA2B26 /* OGKInputManager.cpp in Sources */,
 				FACF1A2619424ADF00F099AA /* CDXMacOSXSupport.mm in Sources */,
+				FA35A71E195A45D50071F577 /* Gui3DClock.cpp in Sources */,
+				FA35A72B195A45D50071F577 /* Gui3DStringCursorEdit.cpp in Sources */,
+				FA35A6E2195A18E10071F577 /* OGKMenuScene.cpp in Sources */,
+				FA35A726195A45D50071F577 /* Gui3DPanelContainer.cpp in Sources */,
 				FA35946E193E64120050AB5C /* OGKGame.cpp in Sources */,
+				FA35A72D195A45D50071F577 /* Gui3DVerticalSelector.cpp in Sources */,
+				FA35A719195A45D50071F577 /* Gui3DButton.cpp in Sources */,
 				FACF1A2E19425DEF00F099AA /* OGKTerrainMaterial.cpp in Sources */,
+				FA35A729195A45D50071F577 /* Gui3DScreenPanel.cpp in Sources */,
 				FA359471193E641D0050AB5C /* OGKAppDelgate.mm in Sources */,
 				FACF1A191942499900F099AA /* CDAudioManager.m in Sources */,
+				FA35A71F195A45D50071F577 /* Gui3DCombobox.cpp in Sources */,
 				FACF1A1A1942499900F099AA /* CDOpenALSupport.m in Sources */,
 				FA35A6C9195486DD0071F577 /* OGKOSXWindow.mm in Sources */,
 			);

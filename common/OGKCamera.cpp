@@ -10,6 +10,7 @@
 #include "OGKInputManager.h"
 #include "OGKGame.h"
 
+
 OGKCamera::OGKCamera(
                      Ogre::SceneManager *sceneManager,
                      Ogre::RenderWindow *renderWindow) :
@@ -23,30 +24,34 @@ OGKCamera::OGKCamera(
     mTargetOffset(0,5.0,10.5),
     mTightness(0.97)
 {
-    mCamera = sceneManager->createCamera("OGKCamera");
-    mCamera->setFixedYawAxis(true);
+    static int numCameras = 0;
     
-    mViewport = renderWindow->addViewport(mCamera);
-	mViewport->setBackgroundColour(Ogre::ColourValue(0.8f, 0.7f, 0.6f, 1.0f));
+    
+    Ogre::String idx = Ogre::StringConverter::toString(numCameras);
+    mCamera = sceneManager->createCamera("OGKCamera" + idx);
+    numCameras++;
+    mCamera->setFixedYawAxis(true);
 
-	mCamera->setAspectRatio(Ogre::Real(mViewport->getActualWidth()) / Ogre::Real(mViewport->getActualHeight()));
+    Ogre::Viewport *vp = renderWindow->addViewport(mCamera,numCameras);
+
+	mCamera->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
 	mCamera->setNearClipDistance(1);
     mCamera->setFarClipDistance(11000);
     
-	mViewport->setCamera(mCamera);
+	vp->setCamera(mCamera);
     
-    mCameraNode = sceneManager->getRootSceneNode()->createChildSceneNode("OGKCameraNode");
+    mCameraNode = sceneManager->getRootSceneNode()->createChildSceneNode("OGKCameraNode" +idx);
     mCameraNode->attachObject(mCamera);
     mCameraNode->setFixedYawAxis(true);
     
-//    mTargetNode = sceneManager->getRootSceneNode()->createChildSceneNode("OGKCameraNodeTarget");
+    mListenerName = "OGKCameraListener" + idx;
     
-    OGKInputManager::getSingletonPtr()->addKeyListener(this, "OGKCameraListener");
+    OGKInputManager::getSingletonPtr()->addKeyListener(this, mListenerName);
     
 #ifdef OGRE_IS_IOS
-    OGKInputManager::getSingletonPtr()->addMultiTouchListener(this, "OGKCameraListener");
+    OGKInputManager::getSingletonPtr()->addMultiTouchListener(this, mListenerName);
 #else
-    OGKInputManager::getSingletonPtr()->addMouseListener(this, "OGKCameraListener");
+    OGKInputManager::getSingletonPtr()->addMouseListener(this, mListenerName);
 #endif
     
     loadFromConfig();
@@ -59,8 +64,7 @@ OGKCamera::~OGKCamera()
     Ogre::Root *root = Ogre::Root::getSingletonPtr();
     Ogre::SceneManager *mgr = root->_getCurrentSceneManager();
     if(mgr) {
-        mgr->destroySceneNode("OGKCameraNode");
-        mgr->destroySceneNode("OGKCameraNodeTarget");
+        mgr->destroySceneNode(mCameraNode);
     }
 }
 
@@ -115,6 +119,49 @@ Ogre::Camera *OGKCamera::getCamera()
 OGKCamera::CameraMode OGKCamera::getMode()
 {
     return mMode;
+}
+
+void OGKCamera::setEnabled(bool enabled)
+{
+    if(!mCamera || mCamera->getViewport() == NULL) {
+        return;
+    }
+    
+    Ogre::RenderWindow *renderWindow = OGKGame::getSingletonPtr()->mRenderWindow;
+    
+    if(enabled) {
+        renderWindow->removeAllViewports();
+        
+        Ogre::Viewport *vp = renderWindow->addViewport(mCamera);
+        mCamera->setAspectRatio(Ogre::Real(vp->getActualWidth()) /
+                                Ogre::Real(vp->getActualHeight()));
+        mCamera->setNearClipDistance(1);
+        mCamera->setFarClipDistance(11000);
+        
+        OGKInputManager::getSingletonPtr()->addKeyListener(this, mListenerName);
+        
+#ifdef OGRE_IS_IOS
+        OGKInputManager::getSingletonPtr()->addMultiTouchListener(this, mListenerName);
+#else
+        OGKInputManager::getSingletonPtr()->addMouseListener(this, mListenerName);
+#endif
+    }
+    else {
+        // remove from main render window if active
+        
+        Ogre::Viewport *vp = renderWindow->getViewport(mCamera->getViewport()->getZOrder());
+        if(vp == mCamera->getViewport()) {
+            renderWindow->removeViewport(mCamera->getViewport()->getZOrder());
+        }
+      
+        OGKInputManager::getSingletonPtr()->removeKeyListener(this);
+        
+#ifdef OGRE_IS_IOS
+        OGKInputManager::getSingletonPtr()->removeMultiTouchListener(this);
+#else
+        OGKInputManager::getSingletonPtr()->removeMouseListener(this);
+#endif
+    }
 }
 
 void OGKCamera::setMode(OGKCamera::CameraMode mode)

@@ -36,6 +36,10 @@
 // player
 #include "OGKPlayer.h"
 
+// scene
+#include "OGKScene.h"
+#include "OGKSceneManager.h"
+
 namespace Gorilla {
     class Caption;
     class Screen;
@@ -52,7 +56,7 @@ public:
 	OGKGame();
 	~OGKGame();
     
-	bool isOgreToBeShutDown()const{return m_bShutDownOgre;}
+	bool isOgreToBeShutDown()const{return mShutdown;}
     
     Ogre::ConfigFile* getGameConfig();
     OGKTerrain *getTerrain();
@@ -77,20 +81,22 @@ public:
 	bool mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonID id);
 #endif
 	
-	Ogre::Root*                 m_pRoot;
-	Ogre::SceneManager*			m_pSceneMgr;
-	Ogre::RenderWindow*			m_pRenderWnd;
+	Ogre::Root*                 mRoot;
+	Ogre::SceneManager*			mSceneManager;
+	Ogre::RenderWindow*			mRenderWindow;
 	OGKCamera*                  mCamera;
-	Ogre::Log*                  m_pLog;
-	Ogre::Timer*				m_pTimer;
-    Ogre::OverlaySystem*        m_pOverlaySystem;
-
+	Ogre::Log*                  mLog;
+	Ogre::Timer*				mTimer;
+    Ogre::OverlaySystem*        mOverlaySystem;
+    
+    OGKSceneManager*            mGameSceneManager;
+    
 #ifdef OGRE_IS_IOS
     Ogre::OrientationMode       mViewportOrientation;
 #endif
     
 protected:
-    Ogre::String                 m_ResourcePath;
+    Ogre::String                 mResourcePath;
     Ogre::ConfigFile            *mConfig;
     
 private:
@@ -106,6 +112,8 @@ private:
     void _initOverlays();
     void _loadGameConfig();
     
+    void _initRTTTest();
+    
     // terrain
     OGKTerrain *mTerrain;
     
@@ -113,14 +121,14 @@ private:
     Gorilla::Screen*  mOverlayScreen;
     Gorilla::Caption* mFPS;
     
-	double                      m_TimeSinceLastFrame;
-	double                      m_StartTime;
-	bool                        m_bShutDownOgre;
+	double                      mTimeSinceLastFrame;
+	double                      mStartTime;
+	bool                        mShutdown;
 
     OGKPlayer*                  mPlayer;
-    
+        
 #ifdef OGRE_STATIC_LIB
-    Ogre::StaticPluginLoader    m_StaticPluginLoader;
+    Ogre::StaticPluginLoader    mStaticPluginLoader;
 #endif
 };
 

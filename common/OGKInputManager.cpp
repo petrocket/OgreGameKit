@@ -427,7 +427,7 @@ bool OGKInputManager::mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID
 bool OGKInputManager::mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {
     itMouseListener    = mMouseListeners.begin();
     itMouseListenerEnd = mMouseListeners.end();
-    for(; itMouseListener != itMouseListenerEnd; ++itMouseListener ) {
+    for(; itMouseListener != mMouseListeners.end(); ++itMouseListener ) {
         if(!itMouseListener->second->mouseReleased( e, id ))
 			break;
     }

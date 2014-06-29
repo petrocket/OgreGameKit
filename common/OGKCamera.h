@@ -41,6 +41,8 @@ public:
     
     void loadFromConfig();
     
+    void setEnabled(bool enabled);
+    
     OGKCamera::CameraMode getMode();
     void setMode(OGKCamera::CameraMode mode);
     
@@ -92,7 +94,7 @@ private:
     // edge buffer (3rd person only)
     Ogre::Real mEdgeBuffer;
     
-    Ogre::Viewport *mViewport;
+    Ogre::String mListenerName;
     
     int mViewportOrientation;
 };
