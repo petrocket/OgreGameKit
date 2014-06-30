@@ -38,7 +38,7 @@ bool OGKScene::isRunning()
 
 void OGKScene::onEnter()
 {
-    // scene node gets deleted
+    // scene node gets deleted on exit, so re-create if needed
     if(!mSceneNode) {
         mSceneNode = mSceneManager->getRootSceneNode()->createChildSceneNode("OGKScene" + mSceneName);
     }

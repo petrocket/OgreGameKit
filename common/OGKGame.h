@@ -45,6 +45,8 @@ namespace Gorilla {
     class Screen;
 }
 
+#define OGKLOG(m) OGKGame::getSingletonPtr()->mLog->logMessage(m)
+
 #ifdef OGRE_IS_IOS
 #include <OISMultiTouch.h>
 class OGKGame : public Ogre::Singleton<OGKGame>, OIS::KeyListener, OIS::MultiTouchListener

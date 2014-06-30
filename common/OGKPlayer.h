@@ -38,6 +38,12 @@ public:
         AT_DESTINATION
     };
     
+    bool getEnabled();
+    Ogre::Vector3 getDestination();
+    Ogre::Real getMoveSpeed();
+    Ogre::Real getRotateSpeed();
+    Ogre::SceneNode *getSceneNode();
+
 	bool keyPressed(const OIS::KeyEvent &keyEventRef);
 	bool keyReleased(const OIS::KeyEvent &keyEventRef);
     
@@ -56,29 +62,20 @@ public:
     
     void update(Ogre::Real elapsedTime);
     
-    bool getEnabled();
     void setEnabled(bool enabled);
-    
-    Ogre::Vector3 getDestination();
     void setDestination(Ogre::Vector3 destination);
-    
-    Ogre::Real getMoveSpeed();
     void setMoveSpeed(Ogre::Real speed);
-
-    Ogre::Real getRotateSpeed();
     void setRotateSpeed(Ogre::Real speed);
 
-    Ogre::SceneNode *getSceneNode();
     
 private:
-    Ogre::Entity *mEntity;
-    Ogre::SceneNode *mSceneNode;
-    
+    Ogre::Vector3 mDestination;
     bool mEnabled;
+    Ogre::Entity *mEntity;
     MovingState mMovingState;
     Ogre::Real mMoveSpeed;
     Ogre::Real mRotateSpeed;
-    Ogre::Vector3 mDestination;
+    Ogre::SceneNode *mSceneNode;
 };
 
 #endif /* defined(__OgreGameKit__OGKPlayer__) */

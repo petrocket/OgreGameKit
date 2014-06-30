@@ -137,6 +137,14 @@ void OGKInGameScene::onEnter()
     
     OGKInputManager::getSingletonPtr()->addKeyListener(this, "ingameScene");
     OGKInputManager::getSingletonPtr()->addMouseListener(this, "ingameScene");
+    
+    Ogre::CompositorInstance *inst = Ogre::CompositorManager::getSingleton().addCompositor(vp, "Bloom");
+    if(!inst) {
+        OGKLOG("Failed to instanciate bloom compositor");
+    }
+    else {
+        Ogre::CompositorManager::getSingletonPtr()->setCompositorEnabled(vp,"Bloom",true);
+    }
 }
 
 void OGKInGameScene::onEnterTransitionDidFinish()

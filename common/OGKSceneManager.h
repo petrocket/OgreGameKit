@@ -22,7 +22,7 @@ public:
     void addScene(OGKScene *scene, const Ogre::String name);
     
     OGKScene *getActiveScene();
-    
+
     OGKScene *getScene(const Ogre::String name);
     
     void setActiveScene(const Ogre::String name, Ogre::Real transitionTime = 0.0);
@@ -36,9 +36,10 @@ protected:
 private:
     void _initRTT();
     
-    std::map<Ogre::String, OGKScene *> mScenes;
     OGKScene *mActiveScene;
     OGKScene *mPreviousScene;
+    
+    std::map<Ogre::String, OGKScene *> mScenes;
     
     Ogre::RenderTexture *mRenderTexture;
     Ogre::TexturePtr mTransitionTexture;

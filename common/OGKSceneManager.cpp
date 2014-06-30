@@ -10,6 +10,10 @@
 #include "OGKScene.h"
 #include "OGKGame.h"
 
+const Ogre::String kTransitionTextureName = "OGKTransitionTexture";
+const Ogre::String kTransitionMaterialName = "OGKTransitionMaterial";
+const Ogre::String kTransitionNodeName = "OGKTransitionNode";
+
 OGKSceneManager::OGKSceneManager() :
     mActiveScene(NULL),
     mPreviousScene(NULL),
@@ -90,11 +94,12 @@ void OGKSceneManager::setActiveScene(const Ogre::String name, Ogre::Real transit
     }
     
     if(mActiveScene) {
-        OGKGame::getSingletonPtr()->mLog->logMessage("Transitioning to " + name + " scene");
+        OGKLOG("Transitioning to " + name + " scene");
         mActiveScene->onEnter();
     }
     
     if(transitionTime > 0.01) {
+        // transition
         mTransitionTime = transitionTime;
         mTransitionTimeRemaining = transitionTime;
         
@@ -113,15 +118,16 @@ void OGKSceneManager::setActiveScene(const Ogre::String name, Ogre::Real transit
             }
         }
         
-        // Scene node
         if(mActiveScene && mActiveScene->mSceneManager) {
-            mTransitionNode = mActiveScene->mSceneManager->getRootSceneNode()->createChildSceneNode("OGKTransitionNode");
+            Ogre::SceneNode *node = mActiveScene->mSceneManager->getRootSceneNode();
+            mTransitionNode = node->createChildSceneNode(kTransitionNodeName);
             mTransitionNode->attachObject(mTransitionRect);
         }        
         
         mTransitionRect->setVisible(true);
     }
     else {
+        // instant
         if(mTransitionNode) {
             mTransitionNode->detachAllObjects();
         }
@@ -136,7 +142,7 @@ void OGKSceneManager::update(Ogre::Real timeElapsed)
     if(mTransitionTimeRemaining > 0.f) {
         mTransitionTimeRemaining -= timeElapsed;
         if(mTransitionTimeRemaining <= 0.f) {
-            OGKGame::getSingletonPtr()->mLog->logMessage("Transition completed");
+            OGKLOG("Transition completed");
             if(mPreviousScene) {
                 mPreviousScene->onExit();
             }
@@ -178,7 +184,7 @@ void OGKSceneManager::_initRTT()
 {
     if(mTransitionTexture.isNull()) {
         Ogre::TextureManager *mgr = Ogre::TextureManager::getSingletonPtr();
-        mTransitionTexture = mgr->createManual("OGKTransitionTexture",
+        mTransitionTexture = mgr->createManual(kTransitionTextureName,
                                                Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
                                                Ogre::TEX_TYPE_2D,
                                                OGKGame::getSingletonPtr()->mRenderWindow->getWidth(),
@@ -203,11 +209,11 @@ void OGKSceneManager::_initRTT()
         
         // Material
         Ogre::MaterialManager *mgr = Ogre::MaterialManager::getSingletonPtr();
-        Ogre::MaterialPtr mat = mgr->create("OGKTransitionMaterial",
+        Ogre::MaterialPtr mat = mgr->create(kTransitionMaterialName,
                                             Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
         mat->getTechnique(0)->getPass(0)->setLightingEnabled(false);
         mat->getTechnique(0)->getPass(0)->setSceneBlending(Ogre::SBT_TRANSPARENT_ALPHA);
-        mat->getTechnique(0)->getPass(0)->createTextureUnitState("OGKTransitionTexture");
-        mTransitionRect->setMaterial("OGKTransitionMaterial");
+        mat->getTechnique(0)->getPass(0)->createTextureUnitState(kTransitionTextureName);
+        mTransitionRect->setMaterial(kTransitionMaterialName);
     }
 }

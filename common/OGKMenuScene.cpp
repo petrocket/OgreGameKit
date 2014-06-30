@@ -101,6 +101,7 @@ void OGKMenuScene::onEnter()
     
     Ogre::Viewport *vp = mCamera->getCamera()->getViewport();
     
+    
     // create the gui
     mScreen = mGUI->createScreenRenderable2D(vp, "default_theme","menu");
     mSceneNode->attachObject(mScreen);
@@ -125,6 +126,7 @@ void OGKMenuScene::onEnter()
 
     OGKInputManager::getSingletonPtr()->addKeyListener(this, "menuScene");
     OGKInputManager::getSingletonPtr()->addMouseListener(this, "menuScene");
+    
 }
 
 void OGKMenuScene::onEnterTransitionDidFinish()
