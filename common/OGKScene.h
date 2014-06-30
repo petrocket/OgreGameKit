@@ -10,6 +10,7 @@
 #define __OgreGameKit__OGKScene__
 
 #include <Ogre.h>
+#include <OgreOverlaySystem.h>
 
 // input
 #include <OISKeyboard.h>
@@ -68,6 +69,9 @@ public:
 
     Ogre::SceneManager *mSceneManager;
     Ogre::SceneNode *mSceneNode;
+    
+    Ogre::Overlay *mOverlay;
+    Ogre::OverlaySystem *mOverlaySystem;
     
 protected:
     bool mRunning;

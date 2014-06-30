@@ -97,6 +97,8 @@ namespace Gorilla
         return ret;
     }
     
+#pragma mark - TextureAtlas
+    
     TextureAtlas::TextureAtlas(const Ogre::String& gorillaFile, const Ogre::String& groupName)
     {
         
@@ -651,6 +653,8 @@ namespace Gorilla
         return mMarkupColour[index];
     }
     
+#pragma mark - GlyphData
+    
     GlyphData::GlyphData()
     : mRangeBegin(0),
     mRangeEnd(0),
@@ -673,6 +677,7 @@ namespace Gorilla
         
     }
     
+#pragma mark - Silverback
     
     Silverback::Silverback()
     {
@@ -770,6 +775,8 @@ namespace Gorilla
             (*it)->frameStarted();
         return true;
     }
+    
+#pragma mark - LayerContainer
     
     LayerContainer::LayerContainer(TextureAtlas* atlas)
     : mIndexRedrawAll(false), mAtlas(atlas)
@@ -1040,6 +1047,8 @@ namespace Gorilla
         
     }
     
+#pragma mark - Screen
+    
     Screen::Screen(Ogre::Viewport* viewport, TextureAtlas* atlas)
     : LayerContainer(atlas), mViewport(viewport), mScale(1,1,1), mIsVisible(true), mCanRender(false)
     {
@@ -1155,7 +1164,7 @@ namespace Gorilla
         }
     }
     
-    
+#pragma mark - ScreenRenderable
     
     ScreenRenderable::ScreenRenderable(const Ogre::Vector2& maxSize, TextureAtlas* atlas)
     : LayerContainer(atlas), mMaxSize(maxSize)
@@ -1221,6 +1230,8 @@ namespace Gorilla
             vertices[i].position.y = (vertices[i].position.y * -0.01f) + halfSize.y;
         }
     }
+    
+#pragma mark - ScreenRenderable2D
     
     ///////////////////////////////////////////////////////////////////////////
     // ScreenRenderable2D

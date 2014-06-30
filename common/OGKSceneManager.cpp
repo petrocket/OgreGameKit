@@ -13,16 +13,17 @@
 const Ogre::String kTransitionTextureName = "OGKTransitionTexture";
 const Ogre::String kTransitionMaterialName = "OGKTransitionMaterial";
 const Ogre::String kTransitionNodeName = "OGKTransitionNode";
+const Ogre::String kTransitionOverlayName = "OGKTransitionOverlay";
+const Ogre::String kTransitionOverlayPanelName = "OGKTransitionOverlayPanel";
 
 OGKSceneManager::OGKSceneManager() :
     mActiveScene(NULL),
+    mPanel(NULL),
     mPreviousScene(NULL),
     mRenderTexture(NULL),
-    mTransitionNode(NULL),
-    mTransitionTimeRemaining(0),
-    mTransitionRect(NULL)
+    mTransitionTimeRemaining(0)
 {
-    
+    mOverlay = Ogre::OverlayManager::getSingletonPtr()->create(kTransitionOverlayName);
 }
 
 OGKSceneManager::~OGKSceneManager()
@@ -53,27 +54,33 @@ OGKScene *OGKSceneManager::getScene(const Ogre::String name)
 
 void OGKSceneManager::preRenderTargetUpdate(const Ogre::RenderTargetEvent& evt)
 {
-    if(mTransitionRect) {
-        mTransitionRect->setVisible(false);
-    }
     if(mActiveScene) {
         mActiveScene->mSceneNode->setVisible(false);
+        if(mActiveScene->mOverlay) {
+            mActiveScene->mOverlay->hide();
+        }
     }
     if(mPreviousScene) {
         mPreviousScene->mSceneNode->setVisible(true);
+        if(mPreviousScene->mOverlay) {
+            mPreviousScene->mOverlay->show();
+        }
     }
 }
 
 void OGKSceneManager::postRenderTargetUpdate(const Ogre::RenderTargetEvent& evt)
 {
-    if(mTransitionRect) {
-        mTransitionRect->setVisible(true);
-    }
     if(mActiveScene) {
         mActiveScene->mSceneNode->setVisible(true);
+        if(mActiveScene->mOverlay) {
+            mActiveScene->mOverlay->show();
+        }
     }
     if(mPreviousScene) {
         mPreviousScene->mSceneNode->setVisible(false);
+        if(mPreviousScene->mOverlay) {
+            mPreviousScene->mOverlay->hide();
+        }
     }
 }
 
@@ -114,24 +121,14 @@ void OGKSceneManager::setActiveScene(const Ogre::String name, Ogre::Real transit
             if(vp) {
                 vp->setClearEveryFrame(true);
                 vp->setBackgroundColour(bg);
+                vp->setOverlaysEnabled(true);
                 vp->setCamera(cam);
             }
         }
-        
-        if(mActiveScene && mActiveScene->mSceneManager) {
-            Ogre::SceneNode *node = mActiveScene->mSceneManager->getRootSceneNode();
-            mTransitionNode = node->createChildSceneNode(kTransitionNodeName);
-            mTransitionNode->attachObject(mTransitionRect);
-        }        
-        
-        mTransitionRect->setVisible(true);
+
+        if(mOverlay) mOverlay->show();
     }
     else {
-        // instant
-        if(mTransitionNode) {
-            mTransitionNode->detachAllObjects();
-        }
-        
         if(mPreviousScene) mPreviousScene->onExit();
         if(mActiveScene) mActiveScene->onEnterTransitionDidFinish();
     }
@@ -143,41 +140,24 @@ void OGKSceneManager::update(Ogre::Real timeElapsed)
         mTransitionTimeRemaining -= timeElapsed;
         if(mTransitionTimeRemaining <= 0.f) {
             OGKLOG("Transition completed");
-            if(mPreviousScene) {
-                mPreviousScene->onExit();
-            }
-
-            if(mActiveScene) {
-                mActiveScene->onEnterTransitionDidFinish();
-            }
-            
-            if(mTransitionNode) {
-                mTransitionNode->detachAllObjects();
-            }
-            
-            if(mTransitionRect) {
-                mTransitionRect->setVisible(false);
-            }
+            if(mPreviousScene) mPreviousScene->onExit();
+            if(mActiveScene) mActiveScene->onEnterTransitionDidFinish();
+            if(mOverlay) mOverlay->hide();
         }
         else if(mPreviousScene) {
             mPreviousScene->update(timeElapsed);
             
-            if(mRenderTexture) {
-                mRenderTexture->update();
-            }
+            if(mRenderTexture) mRenderTexture->update();
             
-            if(mTransitionRect) {
-                Ogre::MaterialPtr mat = mTransitionRect->getMaterial();
+            if(!mTransitionMaterial.isNull()) {
                 Ogre::Real fadeAmt = MIN(1.0,MAX(0.0,mTransitionTimeRemaining) / mTransitionTime);
-                Ogre::TextureUnitState *tex = mat->getTechnique(0)->getPass(0)->getTextureUnitState(0);
+                Ogre::TextureUnitState *tex = mTransitionMaterial->getTechnique(0)->getPass(0)->getTextureUnitState(0);
                 tex->setAlphaOperation(Ogre::LBX_SOURCE1, Ogre::LBS_MANUAL, Ogre::LBS_CURRENT, fadeAmt);
             }
         }
     }
     
-    if(mActiveScene) {
-        mActiveScene->update(timeElapsed);
-    }
+    if(mActiveScene) mActiveScene->update(timeElapsed);
 }
 
 void OGKSceneManager::_initRTT()
@@ -200,20 +180,18 @@ void OGKSceneManager::_initRTT()
         mRenderTexture->addListener(this);
     }
     
-    if(!mTransitionRect) {
-        // Rect
-        mTransitionRect = OGRE_NEW Ogre::Rectangle2D(true);
-        mTransitionRect->setCorners(-1.0,1.0,1,-1);
-        mTransitionRect->setBoundingBox(Ogre::AxisAlignedBox::BOX_INFINITE);
-        mTransitionRect->setRenderQueueGroup(Ogre::RENDER_QUEUE_OVERLAY + 1);
-        
-        // Material
+    if(!mPanel) {
         Ogre::MaterialManager *mgr = Ogre::MaterialManager::getSingletonPtr();
-        Ogre::MaterialPtr mat = mgr->create(kTransitionMaterialName,
+        mTransitionMaterial = mgr->create(kTransitionMaterialName,
                                             Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
-        mat->getTechnique(0)->getPass(0)->setLightingEnabled(false);
-        mat->getTechnique(0)->getPass(0)->setSceneBlending(Ogre::SBT_TRANSPARENT_ALPHA);
-        mat->getTechnique(0)->getPass(0)->createTextureUnitState(kTransitionTextureName);
-        mTransitionRect->setMaterial(kTransitionMaterialName);
+        mTransitionMaterial->getTechnique(0)->getPass(0)->setLightingEnabled(false);
+        mTransitionMaterial->getTechnique(0)->getPass(0)->setSceneBlending(Ogre::SBT_TRANSPARENT_ALPHA);
+        mTransitionMaterial->getTechnique(0)->getPass(0)->createTextureUnitState(kTransitionTextureName);
+        
+        mPanel = static_cast<Ogre::PanelOverlayElement*>(Ogre::OverlayManager::getSingleton().createOverlayElement( "Panel", kTransitionOverlayPanelName));
+        mPanel->setPosition(0.0, 0.0);
+        mPanel->setDimensions(1.0, 1.0);
+        mPanel->setMaterialName( kTransitionMaterialName );
+        mOverlay->add2D(mPanel);
     }
 }

@@ -29,6 +29,10 @@ OGKScene::~OGKScene()
 void OGKScene::init()
 {
     mSceneManager =  Ogre::Root::getSingletonPtr()->createSceneManager(Ogre::ST_GENERIC, "SceneManager" + mSceneName);
+    
+    mSceneManager->addRenderQueueListener(OGKGame::getSingletonPtr()->mOverlaySystem);
+    
+    mOverlay = Ogre::OverlayManager::getSingletonPtr()->create("SceneOverlay" + mSceneName);
 }
 
 bool OGKScene::isRunning()

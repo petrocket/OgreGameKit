@@ -129,11 +129,10 @@ void OGKInGameScene::onEnter()
     mTerrain = OGRE_NEW OGKTerrain();
     mTerrain->setup(mSceneManager, light);
 
-    mCamera->setMode(OGKCamera::FREE);
+    mCamera->setMode(OGKCamera::FIXED);
     mCamera->setPosition(Ogre::Vector3(0,1000,0));
 
-    
-    playBackgroundMusic("media/audio/background.mp3");
+    //playBackgroundMusic("media/audio/background.mp3");
     
     OGKInputManager::getSingletonPtr()->addKeyListener(this, "ingameScene");
     OGKInputManager::getSingletonPtr()->addMouseListener(this, "ingameScene");
@@ -150,8 +149,13 @@ void OGKInGameScene::onEnter()
 void OGKInGameScene::onEnterTransitionDidFinish()
 {
     OGKScene::onEnterTransitionDidFinish();
-    mSceneNode->attachObject(mScreen);
-    mScreen->setVisible(FALSE);
+    
+    Ogre::SceneNode *node = OGRE_NEW Ogre::SceneNode(mSceneManager);
+    node->attachObject(mScreen);
+    mOverlay->add3D(node);
+    mOverlay->hide();
+    
+    mCamera->setMode(OGKCamera::FREE);
     
     mPanel->showInternalMousePointer();
 }
@@ -187,14 +191,13 @@ bool OGKInGameScene::keyPressed(const OIS::KeyEvent &keyEventRef)
 {
     switch (keyEventRef.key) {
         case OIS::KC_ESCAPE:
-            //OGKGame::getSingletonPtr()->shutdown();
-            mScreen->setVisible(!mScreen->isVisible());
-            if(mScreen->isVisible()) {
-                // disable camera control
-                mCamera->setMode(OGKCamera::FIXED);
+            if(mOverlay->isVisible()) {
+                mOverlay->hide();
+                mCamera->setMode(OGKCamera::FREE);
             }
             else {
-                mCamera->setMode(OGKCamera::FREE);
+                mOverlay->show();
+                mCamera->setMode(OGKCamera::FIXED);
             }
             break;
         default:

@@ -427,7 +427,10 @@ bool OGKGame::_init(Ogre::String wndTitle)
 #endif
     
     mRoot = new Ogre::Root(pluginsPath, mResourcePath + "ogre.cfg");
-    
+
+    // create overlay system BEFORE initializing resources (for fonts)
+    mOverlaySystem = new Ogre::OverlaySystem();
+
 #ifdef OGRE_STATIC_LIB
     mStaticPluginLoader.load();
 #endif
@@ -450,8 +453,6 @@ bool OGKGame::_init(Ogre::String wndTitle)
     // CAMERA (after input)
     mCamera = OGRE_NEW OGKCamera(mSceneManager, mRenderWindow);
     
-    // create overlay system BEFORE initializing resources (for fonts)
-    mOverlaySystem = new Ogre::OverlaySystem();
     mSceneManager->addRenderQueueListener(mOverlaySystem);
     
     // RESOURCES

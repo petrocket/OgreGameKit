@@ -10,6 +10,7 @@
 #define __OgreGameKit__OGKSceneManager__
 
 #include <Ogre.h>
+#include <OgreOverlaySystem.h>
 
 class OGKScene;
 
@@ -36,15 +37,18 @@ protected:
 private:
     void _initRTT();
     
+    // scenes
     OGKScene *mActiveScene;
     OGKScene *mPreviousScene;
     
     std::map<Ogre::String, OGKScene *> mScenes;
-    
+
+    // transition elements
+    Ogre::Overlay *mOverlay;
+    Ogre::OverlayContainer *mPanel;
     Ogre::RenderTexture *mRenderTexture;
     Ogre::TexturePtr mTransitionTexture;
-    Ogre::SceneNode *mTransitionNode;
-    Ogre::Rectangle2D *mTransitionRect;
+    Ogre::MaterialPtr mTransitionMaterial;
     Ogre::Real mTransitionTime;
     Ogre::Real mTransitionTimeRemaining;
 };

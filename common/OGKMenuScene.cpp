@@ -80,7 +80,7 @@ OGKMenuScene::~OGKMenuScene()
 
 bool OGKMenuScene::buttonPressed(Gui3D::PanelElement *e)
 {
-    OGKGame::getSingletonPtr()->mGameSceneManager->setActiveScene("ingame", 500);
+    OGKGame::getSingletonPtr()->mGameSceneManager->setActiveScene("ingame", 5000);
     
     return true;
 }
@@ -100,11 +100,16 @@ void OGKMenuScene::onEnter()
     mCamera->getCamera()->lookAt(0,0,10);
     
     Ogre::Viewport *vp = mCamera->getCamera()->getViewport();
-    
+    vp->setBackgroundColour(Ogre::ColourValue::Blue);
+    vp->setOverlaysEnabled(true);
     
     // create the gui
     mScreen = mGUI->createScreenRenderable2D(vp, "default_theme","menu");
-    mSceneNode->attachObject(mScreen);
+    //mSceneNode->attachObject(mScreen);
+    Ogre::SceneNode *node = OGRE_NEW Ogre::SceneNode(mSceneManager);
+    node->attachObject(mScreen);
+    mOverlay->add3D(node);
+    mOverlay->show();
 
     mPanel = OGRE_NEW Gui3D::ScreenRenderable2DPanel(mGUI,
                                          mScreen,
