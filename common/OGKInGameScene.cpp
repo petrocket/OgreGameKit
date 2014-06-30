@@ -80,10 +80,7 @@ OGKInGameScene::~OGKInGameScene()
 
 bool OGKInGameScene::buttonPressed(Gui3D::PanelElement *e)
 {
-    OGKGame::getSingletonPtr()->mLog->logMessage("Switching to menu scene");
-    
-    OGKGame::getSingletonPtr()->mGameSceneManager->setActiveScene("menu", 3 * 1000);
-    
+    OGKGame::getSingletonPtr()->mGameSceneManager->setActiveScene("menu", 500);
     return true;
 }
 
@@ -104,11 +101,11 @@ void OGKInGameScene::onEnter()
     Ogre::Viewport *vp = mCamera->getCamera()->getViewport();
     
     mScreen = mGUI->createScreenRenderable2D(vp, "default_theme","ingame");
-    mSceneNode->attachObject(mScreen);
 
     mPanel = OGRE_NEW Gui3D::ScreenRenderable2DPanel(mGUI,
                                                      mScreen,
-                                                     Ogre::Vector2(vp->getActualWidth()/2 - 150,vp->getActualHeight()/2 - 100),
+                                                     Ogre::Vector2(vp->getActualWidth()/2 - 150,
+                                                                   vp->getActualHeight()/2 - 100),
                                                      Ogre::Vector2(300,200),
                                                      "default_theme",
                                                      "testPanel");
@@ -133,13 +130,20 @@ void OGKInGameScene::onEnter()
     mTerrain->setup(mSceneManager, light);
 
     mCamera->setMode(OGKCamera::FREE);
+    mCamera->setPosition(Ogre::Vector3(0,1000,0));
+
     
+    playBackgroundMusic("media/audio/background.mp3");
+    
+    OGKInputManager::getSingletonPtr()->addKeyListener(this, "ingameScene");
     OGKInputManager::getSingletonPtr()->addMouseListener(this, "ingameScene");
 }
 
 void OGKInGameScene::onEnterTransitionDidFinish()
 {
     OGKScene::onEnterTransitionDidFinish();
+    mSceneNode->attachObject(mScreen);
+    mScreen->setVisible(FALSE);
     
     mPanel->showInternalMousePointer();
 }
@@ -156,15 +160,42 @@ void OGKInGameScene::onExitTransitionDidStart()
 {
     OGKScene::onExitTransitionDidStart();
     
+    stopBackgroundMusic();
+    
     if(mPanel) mPanel->hideInternalMousePointer();
     
+    OGKInputManager::getSingletonPtr()->removeKeyListener("ingameScene");
     OGKInputManager::getSingletonPtr()->removeMouseListener("ingameScene");
 }
 
 void OGKInGameScene::update(Ogre::Real elapsedTime)
 {
     OGKScene::update(elapsedTime);
+    
+    if(mTerrain) mTerrain->update();    
 }
+
+bool OGKInGameScene::keyPressed(const OIS::KeyEvent &keyEventRef)
+{
+    switch (keyEventRef.key) {
+        case OIS::KC_ESCAPE:
+            //OGKGame::getSingletonPtr()->shutdown();
+            mScreen->setVisible(!mScreen->isVisible());
+            if(mScreen->isVisible()) {
+                // disable camera control
+                mCamera->setMode(OGKCamera::FIXED);
+            }
+            else {
+                mCamera->setMode(OGKCamera::FREE);
+            }
+            break;
+        default:
+            break;
+    }
+    
+    return true;
+}
+
 
 #ifdef OGRE_IS_IOS
 bool OGKInGameScene::touchMoved(const OIS::MultiTouchEvent &evt) { return true; }

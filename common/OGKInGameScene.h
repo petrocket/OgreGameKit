@@ -35,6 +35,8 @@ public:
     void update(Ogre::Real elapsedTime);
     
     // input
+	bool keyPressed(const OIS::KeyEvent &keyEventRef);
+    
 #ifdef OGRE_IS_IOS
 	bool touchMoved(const OIS::MultiTouchEvent &evt);
 	bool touchPressed(const OIS::MultiTouchEvent &evt);

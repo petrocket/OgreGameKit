@@ -121,6 +121,17 @@ OGKCamera::CameraMode OGKCamera::getMode()
     return mMode;
 }
 
+Ogre::Vector3 OGKCamera::getPosition()
+{
+    return mCameraNode->getPosition();
+}
+
+void OGKCamera::setPosition(Ogre::Vector3 position)
+{
+    mCameraNode->setPosition(position);
+}
+
+
 void OGKCamera::setEnabled(bool enabled)
 {
     if(!mCamera || mCamera->getViewport() == NULL) {

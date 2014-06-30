@@ -128,7 +128,6 @@ void OGKGame::setup()
     
     mGameSceneManager->setActiveScene("menu");
     
-    
     /*
 	mSceneManager->setSkyBox(true, "OGK/DefaultSkyBox");
 
@@ -158,6 +157,12 @@ void OGKGame::setup()
 //    if(mCamera->getMode() == OGKCamera::THIRD_PERSON_INDIRECT) {
 //        OGKInputManager::getSingletonPtr()->setMouseVisible(true);
 //    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void OGKGame::shutdown()
+{
+    mShutdown = TRUE;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -274,7 +279,7 @@ bool OGKGame::keyPressed(const OIS::KeyEvent &keyEventRef)
             }
             break;
         }
-        case OIS::KC_ESCAPE: mShutdown = true; break;
+//        case OIS::KC_ESCAPE: mShutdown = true; break;
         case OIS::KC_R: _loadGameConfig(); break;
         case OIS::KC_M:
         {
@@ -297,7 +302,7 @@ bool OGKGame::keyPressed(const OIS::KeyEvent &keyEventRef)
             }
             break;
         }
-        case OIS::KC_SYSRQ:
+        case OIS::KC_P:
             mRenderWindow->writeContentsToTimestampedFile("OGK_", ".png");
             break;
         default:

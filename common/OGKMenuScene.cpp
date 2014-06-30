@@ -80,9 +80,7 @@ OGKMenuScene::~OGKMenuScene()
 
 bool OGKMenuScene::buttonPressed(Gui3D::PanelElement *e)
 {
-    OGKGame::getSingletonPtr()->mLog->logMessage("Switching to ingame scene");
-    
-    OGKGame::getSingletonPtr()->mGameSceneManager->setActiveScene("ingame", 5 * 1000);
+    OGKGame::getSingletonPtr()->mGameSceneManager->setActiveScene("ingame", 500);
     
     return true;
 }
@@ -125,13 +123,13 @@ void OGKMenuScene::onEnter()
     mSceneNode->setScale(0.05, 0.05, 0.05);
     mSceneNode->setPosition(Ogre::Vector3(-3.0,0,10));
 
+    OGKInputManager::getSingletonPtr()->addKeyListener(this, "menuScene");
     OGKInputManager::getSingletonPtr()->addMouseListener(this, "menuScene");
 }
 
 void OGKMenuScene::onEnterTransitionDidFinish()
 {
     OGKScene::onEnterTransitionDidFinish();
-    
     mPanel->showInternalMousePointer();
 }
 
@@ -146,15 +144,29 @@ void OGKMenuScene::onExit()
 void OGKMenuScene::onExitTransitionDidStart()
 {
     OGKScene::onExitTransitionDidStart();
-
+    
     if(mPanel) mPanel->hideInternalMousePointer();
     
+    OGKInputManager::getSingletonPtr()->removeKeyListener("menuScene");
     OGKInputManager::getSingletonPtr()->removeMouseListener("menuScene");
 }
 
 void OGKMenuScene::update(Ogre::Real elapsedTime)
 {
     OGKScene::update(elapsedTime);
+}
+
+bool OGKMenuScene::keyPressed(const OIS::KeyEvent &keyEventRef)
+{
+    switch (keyEventRef.key) {
+        case OIS::KC_ESCAPE:
+            OGKGame::getSingletonPtr()->shutdown();
+            break;
+        default:
+            break;
+    }
+    
+    return true;
 }
 
 #ifdef OGRE_IS_IOS

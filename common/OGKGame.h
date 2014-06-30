@@ -67,6 +67,7 @@ public:
     bool renderOneFrame();
     bool renderOneFrame(double timeSinceLastFrame);
     void setup();
+    void shutdown();
     void start();
     void update(double timeSinceLastFrame);
     

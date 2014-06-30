@@ -90,6 +90,7 @@ void OGKSceneManager::setActiveScene(const Ogre::String name, Ogre::Real transit
     }
     
     if(mActiveScene) {
+        OGKGame::getSingletonPtr()->mLog->logMessage("Transitioning to " + name + " scene");
         mActiveScene->onEnter();
     }
     
@@ -161,9 +162,7 @@ void OGKSceneManager::update(Ogre::Real timeElapsed)
             
             if(mTransitionRect) {
                 Ogre::MaterialPtr mat = mTransitionRect->getMaterial();
-                Ogre::Real fadeAmt = MIN(1.0,MAX(0.0,mTransitionTimeRemaining / mTransitionTime));
-//                OGKGame::getSingletonPtr()->mLog->logMessage("Fade: " +
-//                                                             Ogre::StringConverter::toString(fadeAmt));
+                Ogre::Real fadeAmt = MIN(1.0,MAX(0.0,mTransitionTimeRemaining) / mTransitionTime);
                 Ogre::TextureUnitState *tex = mat->getTechnique(0)->getPass(0)->getTextureUnitState(0);
                 tex->setAlphaOperation(Ogre::LBX_SOURCE1, Ogre::LBS_MANUAL, Ogre::LBS_CURRENT, fadeAmt);
             }

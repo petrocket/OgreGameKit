@@ -49,6 +49,9 @@ public:
     Ogre::Real getMoveSpeed();
     void setMoveSpeed(Ogre::Real moveSpeed);
     
+    Ogre::Vector3 getPosition();
+    void setPosition(Ogre::Vector3 position);
+    
     // tightness (3rd person only)
     Ogre::Real getTightness();
     void setTightness(Ogre::Real tightness);

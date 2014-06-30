@@ -80,7 +80,7 @@ void OGKTerrain::setup(Ogre::SceneManager *sceneMgr, Ogre::Light *light)
     img.load("ETterrain.png", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
     mTerrainGroup->defineTerrain(0, 0, &img);
 
-    mTerrainGroup->loadAllTerrains(true);
+    mTerrainGroup->loadAllTerrains(false);
 
     mTerrainGroup->freeTemporaryResources();
 }
