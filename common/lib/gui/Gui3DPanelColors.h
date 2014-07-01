@@ -85,6 +85,8 @@ struct PanelColors
         progressbarLoadingBarGradientType = panelGradientType;
 
 
+        checkboxCheckedSymbol = 'x';
+        
         // Init border sizes
         size_t defaultBorderSize = 0;
         

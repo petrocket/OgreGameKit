@@ -52,6 +52,10 @@ public:
     /** \brief Return the Gui3D Panel colors of the Gui3D that created it
     */
     PanelColors* getPanelColors();
+    
+    bool isVisible();
+    
+    void setVisible(bool visible);
 
 protected:
     Gorilla::Layer* mGUILayer;

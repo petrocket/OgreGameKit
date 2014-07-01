@@ -29,26 +29,38 @@
 namespace Gui3D
 {
 
-Container::Container(Gui3D* gui)
-                     : mGui3D(gui), mGUILayer(NULL)
-{
-}
+    Container::Container(Gui3D* gui)
+                         : mGui3D(gui), mGUILayer(NULL)
+    {
+    }
 
 
-Container::~Container()
-{
-}
+    Container::~Container()
+    {
+    }
 
 
-Gorilla::Layer* Container::getGUILayer()
-{
-    return mGUILayer;
-}
+    Gorilla::Layer* Container::getGUILayer()
+    {
+        return mGUILayer;
+    }
 
 
-PanelColors* Container::getPanelColors()
-{
-    return mGui3D->getPanelColors();
-}
+    PanelColors* Container::getPanelColors()
+    {
+        return mGui3D->getPanelColors();
+    }
+
+    bool Container::isVisible()
+    {
+        return mGUILayer ? mGUILayer->isVisible() : false;
+    }
+    
+    void Container::setVisible(bool visible)
+    {
+        if(mGUILayer) {
+            mGUILayer->setVisible(visible);
+        }
+    }
 
 }

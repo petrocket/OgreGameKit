@@ -114,7 +114,6 @@ bool OGKGame::renderOneFrame(double timeSinceLastFrame)
 ////////////////////////////////////////////////////////////////////////////////
 void OGKGame::setup()
 {
-    // @TODO Load from .scene file instead?
     Ogre::MaterialManager::getSingleton().setDefaultTextureFiltering(Ogre::TFO_ANISOTROPIC);
     Ogre::MaterialManager::getSingleton().setDefaultAnisotropy(7);
 
@@ -127,36 +126,6 @@ void OGKGame::setup()
     mGameSceneManager->addScene(secondScene,"ingame");
     
     mGameSceneManager->setActiveScene("menu");
-    
-    /*
-	mSceneManager->setSkyBox(true, "OGK/DefaultSkyBox");
-
-    Ogre::Vector3 lightDir(0.55,-0.3,0.75);
-    lightDir.normalise();
-    Ogre::Light *light = mSceneManager->createLight("Light");
-    light->setType(Ogre::Light::LT_DIRECTIONAL);
-    light->setDirection(lightDir);
-    light->setDiffuseColour(Ogre::ColourValue::White);
-    
-    mSceneManager->setAmbientLight(Ogre::ColourValue(0.1,0.15,0.4));
-    Ogre::ColourValue fogColour(184.0/255.0, 223.0/255.0, 251.0/255.0);
-    mSceneManager->setFog(Ogre::FOG_LINEAR, fogColour, 0.0, 1000, 4000);
-    mRenderWindow->getViewport(0)->setBackgroundColour(fogColour);
-    
-    mTerrain = OGRE_NEW OGKTerrain();
-    mTerrain->setup(mSceneManager, light);
-    
-    playBackgroundMusic("media/audio/background.mp3");
-    
-    mPlayer = OGRE_NEW OGKPlayer(mSceneManager);
-    mPlayer->setEnabled(true);
-    
-    mCamera->setTarget(mPlayer->getSceneNode());
-    mCamera->loadFromConfig();
-     */
-//    if(mCamera->getMode() == OGKCamera::THIRD_PERSON_INDIRECT) {
-//        OGKInputManager::getSingletonPtr()->setMouseVisible(true);
-//    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -225,10 +194,6 @@ void OGKGame::start()
 ////////////////////////////////////////////////////////////////////////////////
 void OGKGame::update(double timeSinceLastFrame)
 {
-    //mPlayer->update(timeSinceLastFrame);
-
-    //mCamera->update(timeSinceLastFrame);
-
     mGameSceneManager->update(timeSinceLastFrame);
     
     if(mFPS) {

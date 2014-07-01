@@ -150,11 +150,18 @@ void OGKInGameScene::onEnterTransitionDidFinish()
 {
     OGKScene::onEnterTransitionDidFinish();
     
+    // @TODO Load from .scene file instead?
+    
     Ogre::SceneNode *node = OGRE_NEW Ogre::SceneNode(mSceneManager);
     node->attachObject(mScreen);
     mOverlay->add3D(node);
     mOverlay->hide();
     
+//    mPlayer = OGRE_NEW OGKPlayer(mSceneManager);
+//    mPlayer->setEnabled(true);
+//    
+//    mCamera->setTarget(mPlayer->getSceneNode());
+//    mCamera->setMode(OGKCamera::THIRD_PERSON);
     mCamera->setMode(OGKCamera::FREE);
     
     mPanel->showInternalMousePointer();
@@ -184,7 +191,9 @@ void OGKInGameScene::update(Ogre::Real elapsedTime)
 {
     OGKScene::update(elapsedTime);
     
-    if(mTerrain) mTerrain->update();    
+    if(mTerrain) mTerrain->update();
+    
+    //mPlayer->update(elapsedTime);
 }
 
 bool OGKInGameScene::keyPressed(const OIS::KeyEvent &keyEventRef)

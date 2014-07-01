@@ -72,6 +72,8 @@ namespace Gorilla
 #endif
  };
  
+#pragma mark - Colours
+    
  namespace Colours
  {
   enum Colour
@@ -214,6 +216,8 @@ namespace Gorilla
   VerticalAlign_Bottom
  };
  
+#pragma mark - Buffer
+    
  /*! enum. buffer<T>
      desc.
          Internal container class that is similar to std::vector
@@ -343,6 +347,8 @@ namespace Gorilla
   Ogre::Real kerning;
  };
  
+#pragma mark - Glyph
+    
  /*! struct. Glyph
      desc.
          Texture and size information about a single character loaded from a TextureAtlas.
@@ -377,6 +383,8 @@ namespace Gorilla
    
  };
 
+#pragma mark - Sprite
+    
  /*! class. Sprite
      desc.
          Portions of a texture from a TextureAtlas.
@@ -395,6 +403,8 @@ namespace Gorilla
    
  };
  
+#pragma mark - Silverback
+    
  /* class. Silverback
     desc.
         Main singleton class for Gorilla
@@ -483,6 +493,8 @@ namespace Gorilla
    
  };
  
+#pragma mark - GlyphData
+    
  /*! class. GlyphData
      desc.
          Collection of glyphs of the same size.
@@ -524,6 +536,8 @@ namespace Gorilla
    
  };
  
+#pragma mark - TextureAtlas
+    
  /*! class. TextureAtlas
      desc.
           The TextureAtlas file represents a .gorilla file which contains all the needed information that
@@ -738,6 +752,8 @@ namespace Gorilla
     
   };
   
+#pragma mark - LayerContainer
+    
   class LayerContainer
   {
     
@@ -879,7 +895,8 @@ namespace Gorilla
     
   };
   
-  
+#pragma mark - Screen
+    
 class Screen : public LayerContainer, public Ogre::RenderQueueListener, public Ogre::GeneralAllocatedObject
   {
    public:
@@ -995,6 +1012,8 @@ class Screen : public LayerContainer, public Ogre::RenderQueueListener, public O
     
   };
   
+#pragma mark - ScreenRenderable
+    
   class ScreenRenderable : public LayerContainer, public Ogre::SimpleRenderable
   {
    
@@ -1030,6 +1049,8 @@ class Screen : public LayerContainer, public Ogre::RenderQueueListener, public O
     
   };
     
+#pragma mark - ScreenRenderable2D
+    
     class ScreenRenderable2D : public LayerContainer, public Ogre::Rectangle2D
     {
         
@@ -1047,6 +1068,8 @@ class Screen : public LayerContainer, public Ogre::RenderQueueListener, public O
         Ogre::Real mInvHeight;
     };
   
+#pragma mark - Layer
+    
   /*! class. Layer
       desc.
           Text
@@ -1424,6 +1447,8 @@ class Screen : public LayerContainer, public Ogre::RenderQueueListener, public O
     
   };
   
+#pragma mark - Rectangle
+    
   /*! class. Rectangle
       desc.
           Single rectangle with an optional border.
@@ -1980,6 +2005,8 @@ class Screen : public LayerContainer, public Ogre::RenderQueueListener, public O
     buffer<Vertex>     mVertices;
   };
   
+#pragma mark - Polygon
+    
   /*! class. Polygon
       desc.
           A regular n-sided polygon.
@@ -2299,6 +2326,8 @@ class Screen : public LayerContainer, public Ogre::RenderQueueListener, public O
     
   };
   
+#pragma mark - LineList
+    
   class LineList : public Ogre::GeneralAllocatedObject
   {
    
@@ -2366,6 +2395,8 @@ class Screen : public LayerContainer, public Ogre::RenderQueueListener, public O
     buffer<Vertex>        mVertices;
   };
   
+#pragma mark - QuadList
+    
   /*! class. QuadList
       desc.
           "ManualObject" like class to quickly draw rectangles, gradients, sprites and borders.
@@ -2499,6 +2530,8 @@ class Screen : public LayerContainer, public Ogre::RenderQueueListener, public O
     
   };
   
+#pragma mark - Caption
+    
   /* class. Caption
      desc.
          A single line piece of text
@@ -2851,6 +2884,8 @@ class Screen : public LayerContainer, public Ogre::RenderQueueListener, public O
 
   };
   
+#pragma mark - MarkupText
+    
   /* class. Caption
      desc.
          A multi-line collection of text formatted by a light markup language, that can

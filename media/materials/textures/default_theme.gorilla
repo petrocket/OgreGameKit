@@ -572,7 +572,7 @@ kerning_58 121 -2
 
 [Sprites]
 panelBackground 0 512 394 394
-
+logo_badge 282 284 230 92 
 mousepointer 54 464 15 22
 
 buttonInactive 1 284 200 30

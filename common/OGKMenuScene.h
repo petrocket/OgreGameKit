@@ -14,7 +14,9 @@
 #include "OGKCamera.h"
 
 #include "Gui3D.h"
+#include "Gui3DCaption.h"
 #include "Gui3DButton.h"
+#include "Gui3DCheckboxText.h"
 #include "Gui3DScreenPanel.h"
 #include "Gui3DScreenRenderable2DPanel.h"
 
@@ -46,13 +48,26 @@ public:
 #endif
     
 private:
-    Gui3D::Gui3D *mGUI;
-    Gui3D::ScreenRenderable2DPanel *mPanel;
-    Gui3D::Button *mButton;
-    Gorilla::Layer *mMouseLayer;
-    Gorilla::Rectangle *mMouseCursor;
-    
     bool buttonPressed(Gui3D::PanelElement *e);
+    bool stateChanged(Gui3D::PanelElement *e);
+
+    void _createMainMenu();
+    void _createLogo();
+    void _createSettingsMenu();
+
+    Gui3D::Gui3D *mGUI;
+    
+    // Main Menu
+    Gui3D::ScreenRenderable2DPanel *mMainPanel;
+    Gui3D::Button *mPlayButton;
+    Gui3D::Button *mQuitButton;
+    Gui3D::Button *mSettingsButton;
+    
+    // Settings
+    Gui3D::ScreenRenderable2DPanel *mSettingsPanel;
+    Gui3D::Button *mBackButton;
+    Gui3D::Caption *mFullScreenCaption;
+    Gui3D::CheckboxText *mFullScreenCheckbox;
 };
 
 #endif /* defined(__OgreGameKit__OGKMenuScene__) */
