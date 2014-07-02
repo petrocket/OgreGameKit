@@ -39,21 +39,32 @@ Ogre::MaterialPtr OGKTerrainMaterial::Profile::generate(const Ogre::Terrain* ter
     const Ogre::String& matName = terrain->getMaterialName();
     
     Ogre::MaterialPtr mat = Ogre::MaterialManager::getSingleton().getByName(matName);
-    if (!mat.isNull())
+    if (!mat.isNull()) {
         Ogre::MaterialManager::getSingleton().remove(matName);
+    }
     
     // Set Ogre material
-    mat = Ogre::MaterialManager::getSingleton().getByName(((OGKTerrainMaterial*)getParent())->mMaterialName);
+    Ogre::String parentMatName = ((OGKTerrainMaterial*)getParent())->mMaterialName;
+    if(Ogre::MaterialManager::getSingleton().resourceExists(parentMatName)) {
+        mat = Ogre::MaterialManager::getSingleton().getByName(parentMatName);
+        if(!mat.isNull()) {
+            // clone the material or else when we delete the terrain
+            // it will delete our material. this way it deletes the clone.
+            mat = mat->clone(matName);
+        }
+    }
     
 #ifndef OGRE_IS_IOS
-    // Get default pass
-    Ogre::Pass *p = mat->getTechnique(0)->getPass(0);
-    
-    // Add terrain's global normalmap to renderpass so the fragment program can find it.
-    Ogre::TextureUnitState *tu = p->createTextureUnitState(matName+"/nm");
-	
-    Ogre::TexturePtr nmtx = terrain->getTerrainNormalMap();
-    tu->_setTexturePtr(nmtx);
+    if(!mat.isNull()) {
+        // Get default pass
+        Ogre::Pass *p = mat->getTechnique(0)->getPass(0);
+        
+        // Add terrain's global normalmap to renderpass so the fragment program can find it.
+        Ogre::TextureUnitState *tu = p->createTextureUnitState(matName+"/nm");
+        
+        Ogre::TexturePtr nmtx = terrain->getTerrainNormalMap();
+        tu->_setTexturePtr(nmtx);
+    }
 #endif
     return mat;
 };

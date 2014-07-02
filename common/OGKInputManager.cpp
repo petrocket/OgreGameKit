@@ -146,6 +146,13 @@ void OGKInputManager::capture( void ) {
     }
 }
 
+void OGKInputManager::reset()
+{
+    OIS::InputManager::destroyInputSystem(mInputSystem);
+    mInputSystem = NULL;
+    initialise(mRenderWindow, false);
+}
+
 void OGKInputManager::addKeyListener( OIS::KeyListener *keyListener, const std::string& instanceName ) {
     if( mKeyboard ) {
         // Check for duplicate items

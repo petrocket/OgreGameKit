@@ -53,12 +53,15 @@ namespace Gui3D
 
     bool Container::isVisible()
     {
-        return mGUILayer ? mGUILayer->isVisible() : false;
+        if(mGUILayer != NULL) {
+            return mGUILayer->isVisible();
+        }
+        return false;
     }
     
     void Container::setVisible(bool visible)
     {
-        if(mGUILayer) {
+        if(mGUILayer != NULL) {
             mGUILayer->setVisible(visible);
         }
     }

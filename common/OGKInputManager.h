@@ -28,6 +28,7 @@ public:
     virtual ~OGKInputManager( void );
     
     void initialise( Ogre::RenderWindow *renderWindow, bool showMouseCursor = false );
+    void reset();
     void capture( void );
     
     void addKeyListener( OIS::KeyListener *keyListener, const std::string& instanceName );

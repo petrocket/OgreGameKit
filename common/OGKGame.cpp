@@ -34,13 +34,11 @@ OGKGame::OGKGame() :
     mConfig(NULL),
     mFPS(NULL),
     mLog(NULL),
-    mPlayer(NULL),
     mRenderWindow(NULL),
     mRoot(NULL),
     mSceneManager(NULL),
     mShutdown(FALSE),
     mStartTime(0),
-    mTerrain(NULL),
     mTimer(NULL),
     mTimeSinceLastFrame(0)
 {
@@ -72,12 +70,6 @@ OGKGame::~OGKGame()
 Ogre::ConfigFile* OGKGame::getGameConfig()
 {
     return mConfig;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-OGKTerrain *OGKGame::getTerrain()
-{
-    return mTerrain;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -116,8 +108,6 @@ void OGKGame::setup()
 {
     Ogre::MaterialManager::getSingleton().setDefaultTextureFiltering(Ogre::TFO_ANISOTROPIC);
     Ogre::MaterialManager::getSingleton().setDefaultAnisotropy(7);
-
-//    _initRTTTest();
 
     OGKMenuScene *firstScene = OGRE_NEW OGKMenuScene("menu");
     mGameSceneManager->addScene(firstScene,"menu");
@@ -204,8 +194,6 @@ void OGKGame::update(double timeSinceLastFrame)
         Ogre::Root::getSingletonPtr()->getRenderSystem()->_getBatchCount() << "\n";
         mFPS->text(s.str());
     }
-
-    if(mTerrain) mTerrain->update();
 }
 
 #pragma mark - Input
@@ -228,24 +216,24 @@ bool OGKGame::keyPressed(const OIS::KeyEvent &keyEventRef)
                 OGKConsole::getSingletonPtr()->setVisible(true);
             }
             break;
-        case OIS::KC_C:
-        {
-            if(mCamera->getMode() == OGKCamera::FREE) {
-                mCamera->setMode(OGKCamera::THIRD_PERSON_INDIRECT);
-                if(mPlayer) mPlayer->setEnabled(true);
-                
-                // show the mouse
-                OGKInputManager::getSingletonPtr()->setMouseVisible(true);
-            }
-            else {
-                mCamera->setMode(OGKCamera::FREE);
-                if(mPlayer) mPlayer->setEnabled(false);
-                OGKInputManager::getSingletonPtr()->setMouseVisible(false);
-            }
-            break;
-        }
+//        case OIS::KC_C:
+//        {
+//            if(mCamera->getMode() == OGKCamera::FREE) {
+//                mCamera->setMode(OGKCamera::THIRD_PERSON_INDIRECT);
+//                if(mPlayer) mPlayer->setEnabled(true);
+//                
+//                // show the mouse
+//                OGKInputManager::getSingletonPtr()->setMouseVisible(true);
+//            }
+//            else {
+//                mCamera->setMode(OGKCamera::FREE);
+//                if(mPlayer) mPlayer->setEnabled(false);
+//                OGKInputManager::getSingletonPtr()->setMouseVisible(false);
+//            }
+//            break;
+//        }
 //        case OIS::KC_ESCAPE: mShutdown = true; break;
-        case OIS::KC_R: _loadGameConfig(); break;
+//        case OIS::KC_R: _loadGameConfig(); break;
         case OIS::KC_M:
         {
             static int mode = 0;
@@ -315,52 +303,12 @@ bool OGKGame::touchCancelled(const OIS:: MultiTouchEvent &evt)
 ////////////////////////////////////////////////////////////////////////////////
 bool OGKGame::mouseMoved(const OIS::MouseEvent &evt)
 {
-    if(mCamera && mCamera->getMode() == OGKCamera::THIRD_PERSON_INDIRECT && mTerrain) {
-        if(evt.state.buttonDown(OIS::MB_Left)) {
-            Ogre::Real x = (float)evt.state.X.abs / (float)evt.state.width;
-            Ogre::Real y = (float)evt.state.Y.abs / (float)evt.state.height;
-            
-            //const OIS::MouseState &mouseState = OGKInputManager::getSingletonPtr()->getMouse()->getMouseState();
-            
-//            mLog->logMessage("click abs " +
-//                               Ogre::StringConverter::toString(evt.state.X.abs) + " " +
-//                               Ogre::StringConverter::toString(evt.state.Y.abs) + " rel " +
-//                               Ogre::StringConverter::toString(x) + " " +
-//                               Ogre::StringConverter::toString(y));
-            // set the player destination
-            Ogre::Ray ray = mCamera->getCamera()->getCameraToViewportRay(x,y);
-            TerrainGroup::RayResult rayResult=mTerrain->mTerrainGroup->rayIntersects(ray);
-            if(rayResult.hit) {
-                mPlayer->setDestination(rayResult.position);
-            }
-        }
-    }
 	return true;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 bool OGKGame::mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
 {
-    if(mCamera && mCamera->getMode() == OGKCamera::THIRD_PERSON_INDIRECT && mTerrain) {
-        
-        Ogre::Real x = (float)evt.state.X.abs / (float)evt.state.width;
-        Ogre::Real y = (float)evt.state.Y.abs / (float)evt.state.height;
-        
-        //const OIS::MouseState &mouseState = OGKInputManager::getSingletonPtr()->getMouse()->getMouseState();
-        
-//        mLog->logMessage("click abs " +
-//                           Ogre::StringConverter::toString(evt.state.X.abs) + " " +
-//                           Ogre::StringConverter::toString(evt.state.Y.abs) + " rel " +
-//                           Ogre::StringConverter::toString(x) + " " +
-//                           Ogre::StringConverter::toString(y));
-        // set the player destination
-        Ogre::Ray ray = mCamera->getCamera()->getCameraToViewportRay(x,y);
-        TerrainGroup::RayResult rayResult=mTerrain->mTerrainGroup->rayIntersects(ray);
-        if(rayResult.hit) {
-            mPlayer->setDestination(rayResult.position);
-        }
-    }
-    
 	return true;
 }
 
@@ -409,16 +357,16 @@ bool OGKGame::_init(Ogre::String wndTitle)
     mRoot->getRenderSystem()->setConfigOption("macAPI","cocoa");
 #endif
 	mRenderWindow = mRoot->initialise(true, wndTitle);
+	mRenderWindow->setActive(true);
     
 	mSceneManager = mRoot->createSceneManager(ST_GENERIC, "SceneManager");
+    mSceneManager->addRenderQueueListener(mOverlaySystem);
     
 	// INPUT
     _initInput();
     
     // CAMERA (after input)
     mCamera = OGRE_NEW OGKCamera(mSceneManager, mRenderWindow);
-    
-    mSceneManager->addRenderQueueListener(mOverlaySystem);
     
     // RESOURCES
     _initResources();
@@ -428,16 +376,14 @@ bool OGKGame::_init(Ogre::String wndTitle)
     Gorilla::Silverback::getSingletonPtr()->loadAtlas("dejavu");
     mOverlayScreen = Gorilla::Silverback::getSingletonPtr()->createScreen(mRenderWindow->getViewport(0), "dejavu");
     
-    // OVERLAYS
-    _initOverlays();
+    // OVERLAYS (fps)
+    //_initOverlays();
     
     // CONSOLE
     _initConsole();
 
 	mTimer = OGRE_NEW Ogre::Timer();
 	mTimer->reset();
-    
-	mRenderWindow->setActive(true);
     
     mGameSceneManager = OGRE_NEW OGKSceneManager();
     
@@ -513,80 +459,6 @@ void OGKGame::_initResources()
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 }
 
-void OGKGame::_initRTTTest()
-{
-    Ogre::TextureManager *mgr = Ogre::TextureManager::getSingletonPtr();
-    Ogre::TexturePtr tex = mgr->createManual("RTTTex",
-                                           Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-                                           Ogre::TEX_TYPE_2D,
-                                           mRenderWindow->getWidth(),
-                                           mRenderWindow->getHeight(),
-                                           0,
-                                           Ogre::PF_R8G8B8,
-                                           Ogre::TU_RENDERTARGET);
-    
-    Ogre::RenderTexture *rt = tex->getBuffer()->getRenderTarget();
-    rt->setAutoUpdated(true);
-//    mRenderTexture->addListener(this);
-    
-    Ogre::Camera *rttCam = mSceneManager->createCamera("RTTCam");
-    rttCam->setNearClipDistance(1);
-    rttCam->setFarClipDistance(11000);
-    
-    Ogre::SceneNode *camNode = mSceneManager->getRootSceneNode()->createChildSceneNode();
-    camNode->attachObject(rttCam);
-    
-    Ogre::Viewport *vp = rt->addViewport(rttCam);
-    rttCam->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
-	vp->setBackgroundColour(Ogre::ColourValue(0.0f, 0.0f, 0.0f, 0.5f));
-    vp->setClearEveryFrame(true);
-    vp->setSkiesEnabled(true);
-    vp->setOverlaysEnabled(true);
-    vp->setCamera(rttCam);
-
-    
-//    Gorilla::Screen *screen = Gorilla::Silverback::getSingletonPtr()->createScreen(mCamera->getCamera()->getViewport(), "dejavu");
-
-//    mCamera->getCamera()->setPosition(0,0,0);
-
-    Ogre::SceneNode *rn = mSceneManager->getRootSceneNode()->createChildSceneNode("ScreenRenderableNode");
-#define USE_SCREENRENDERABLE2D 1
-#ifdef USE_SCREENRENDERABLE2D
-    Gorilla::ScreenRenderable2D *sr = Gorilla::Silverback::getSingletonPtr()->createScreenRenderable2D(vp,"dejavu");
-    rn->attachObject(sr);
-    Gorilla::Layer *layer = sr->createLayer();
-#else
-    Gorilla::Screen *screen = Gorilla::Silverback::getSingletonPtr()->createScreen(vp, "dejavu");
-    rn->attachObject(screen);
-    Gorilla::Layer *layer = screen->createLayer();
-#endif
-    
-    Gorilla::Rectangle *r = layer->createRectangle(0,0,1000,100);
-    r->background_colour(Ogre::ColourValue::Red);
-    
-    //Gorilla::Caption *c = layer->createCaption(24, 16, 0, "it works");
-    
-        // Rect
-    Ogre::Rectangle2D *rect = OGRE_NEW Ogre::Rectangle2D(true);
-    rect->setCorners(0.0f,0.0f,1.f,-1.f);
-    rect->setBoundingBox(Ogre::AxisAlignedBox::BOX_INFINITE);
-    rect->setRenderQueueGroup(RENDER_QUEUE_OVERLAY + 1);
-    
-    // Scene node
-    Ogre::SceneNode *node = mSceneManager->getRootSceneNode()->createChildSceneNode("RTTNode");
-    node->attachObject(rect);
-        
-    // Material
-    Ogre::MaterialManager *matMgr = Ogre::MaterialManager::getSingletonPtr();
-    Ogre::MaterialPtr mat = matMgr->create("RTTMat",
-                                        Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
-    mat->setDepthCheckEnabled(false);
-    mat->setDepthWriteEnabled(false);
-    mat->getTechnique(0)->getPass(0)->setLightingEnabled(false);
-    mat->getTechnique(0)->getPass(0)->createTextureUnitState("RTTTex");
-    rect->setMaterial("RTTMat");
-}
-
 ////////////////////////////////////////////////////////////////////////////////
 void OGKGame::_initOverlays()
 {
@@ -609,10 +481,6 @@ void OGKGame::_loadGameConfig()
         mCamera->loadFromConfig();
     }
 
-    // PLAYER
-    if(mPlayer) {
-        mPlayer->loadFromConfig();
-    }
     
     // @TODO audio volumes
 

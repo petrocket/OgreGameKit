@@ -17,6 +17,7 @@
 #include "Gui3DCaption.h"
 #include "Gui3DButton.h"
 #include "Gui3DCheckboxText.h"
+#include "Gui3DCombobox.h"
 #include "Gui3DScreenPanel.h"
 #include "Gui3DScreenRenderable2DPanel.h"
 
@@ -65,9 +66,12 @@ private:
     
     // Settings
     Gui3D::ScreenRenderable2DPanel *mSettingsPanel;
+    Gui3D::Caption *mSettingsCaption;
     Gui3D::Button *mBackButton;
     Gui3D::Caption *mFullScreenCaption;
     Gui3D::CheckboxText *mFullScreenCheckbox;
+    Gui3D::Caption *mResolutionCaption;
+    Gui3D::Combobox *mResolutionCombobox;
 };
 
 #endif /* defined(__OgreGameKit__OGKMenuScene__) */

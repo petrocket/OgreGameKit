@@ -25,7 +25,18 @@ OGKTerrain::OGKTerrain() :
 
 OGKTerrain::~OGKTerrain()
 {
+    if(mTerrainGroup) {
+//        mTerrainGroup->removeAllTerrains();
+        OGRE_DELETE mTerrainGroup;
+        mTerrainGroup = NULL;
+    }
     
+    if(mTerrainGlobals) {
+        OGRE_DELETE mTerrainGlobals;
+        mTerrainGlobals = NULL;
+    }
+    
+//    if(mTerrainGlobals->getDefaultMaterialGenerator())
 }
 
 void OGKTerrain::configureTerrainDefaults(Ogre::SceneManager *sceneMgr, Ogre::Light *light)

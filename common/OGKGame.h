@@ -14,27 +14,21 @@
 #include <OgreOverlaySystem.h>
 
 // input
-#include <OISEvents.h>
-#include <OISInputManager.h>
-#include <OISKeyboard.h>
-#include <OISMouse.h>
+//#include <OISEvents.h>
+//#include <OISInputManager.h>
+//#include <OISKeyboard.h>
+//#include <OISMouse.h>
+#include "OGKInputManager.h"
 
 // defines
 #include "OGKStaticPluginLoader.h"
 
-#include "OGKInputManager.h"
 
 // camera
 #include "OGKCamera.h"
 
 // audio
 #include "OGKAudio.h"
-
-// terrain
-#include "OGKTerrain.h"
-
-// player
-#include "OGKPlayer.h"
 
 // scene
 #include "OGKScene.h"
@@ -61,7 +55,6 @@ public:
 	bool isOgreToBeShutDown()const{return mShutdown;}
     
     Ogre::ConfigFile* getGameConfig();
-    OGKTerrain *getTerrain();
     
 	bool keyPressed(const OIS::KeyEvent &keyEventRef);
 	bool keyReleased(const OIS::KeyEvent &keyEventRef);
@@ -115,11 +108,6 @@ private:
     void _initOverlays();
     void _loadGameConfig();
     
-    void _initRTTTest();
-    
-    // terrain
-    OGKTerrain *mTerrain;
-    
     // fps
     Gorilla::Screen*  mOverlayScreen;
     Gorilla::Caption* mFPS;
@@ -127,9 +115,7 @@ private:
 	double                      mTimeSinceLastFrame;
 	double                      mStartTime;
 	bool                        mShutdown;
-
-    OGKPlayer*                  mPlayer;
-        
+    
 #ifdef OGRE_STATIC_LIB
     Ogre::StaticPluginLoader    mStaticPluginLoader;
 #endif

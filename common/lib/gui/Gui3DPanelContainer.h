@@ -65,6 +65,10 @@ public:
     
     ~PanelContainer();
 
+    Gorilla::Rectangle* getBackground() { return mBackground; }
+    
+    PanelElement* getFocusedElement() { return mFocusedPanelElement; }
+    
     /** \brief Give the focus to an element of this panel.
         note.
             If the element isn't contained by this panel, nothing will happened.

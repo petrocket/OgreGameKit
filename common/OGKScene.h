@@ -37,7 +37,7 @@ public:
     virtual void onEnter();
     virtual void onEnterTransitionDidFinish();
     
-    virtual void update(double timeSinceLastFrame);
+    virtual void update(Ogre::Real elapsedTime);
 
     virtual void onExit();
     virtual void onExitTransitionDidStart();

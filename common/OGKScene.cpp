@@ -62,9 +62,9 @@ void OGKScene::onEnterTransitionDidFinish()
     mouseMoved(evt);
 }
 
-void OGKScene::update(double timeSinceLastFrame)
+void OGKScene::update(Ogre::Real elapsedTime)
 {
-    if(mCamera) mCamera->update(timeSinceLastFrame);
+    if(mCamera) mCamera->update(elapsedTime);
 }
 
 void OGKScene::onExit()

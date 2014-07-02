@@ -18,10 +18,13 @@ public:
         transparent = Gorilla::rgb(0,0,0,0);
         
         // Panel
-        panelBackgroundSpriteName = "panelBackground";
+//        panelBackgroundSpriteName = "panelBackground";
         panelCursorSpriteName = "mousepointer";
         panelCursorSpriteSizeX = 15;
         panelCursorSpriteSizeY = 22;
+        panelGradientType = Gorilla::Gradient_NorthSouth;
+        panelGradientColorStart = Gorilla::rgb(255, 255, 255, 15);
+        panelGradientColorEnd = Gorilla::rgb(255, 255, 255, 45);
         
         // Button
 //        buttonInactiveSpriteName = "buttonInactive";
@@ -81,6 +84,26 @@ public:
         checkboxNotOveredGradientType = Gorilla::Gradient_NorthSouth;
         checkboxNotOveredGradientStart = Gorilla::rgb(255, 255, 255, 15);
         checkboxNotOveredGradientEnd = Gorilla::rgb(255, 255, 255, 5);
+        
+        // Combobox
+        comboboxTextSize = 14;
+        comboboxBackgroundGradientType = Gorilla::Gradient_NorthSouth;
+        comboboxBackgroundGradientStart = Gorilla::rgb(255, 255, 255, 15);
+        comboboxBackgroundGradientEnd = Gorilla::rgb(255, 255, 255, 5);
+        
+        comboboxOveredElement = Gorilla::rgb(255, 255, 255, 10);
+        comboboxNotOveredElement = Gorilla::rgb(255, 255, 255, 5);
+        comboboxSelectedElement = Gorilla::rgb(255, 255, 255, 15);
+        
+        comboboxButtonPreviousOveredSpriteName = "comboboxpreviouselementbuttonovered";
+        comboboxButtonPreviousNotOveredSpriteName = "comboboxpreviouselementbuttonnotovered";
+        comboboxButtonPreviousInactiveSpriteName = "comboboxpreviouselementbuttoninactive";
+        comboboxButtonPreviousClickedSpriteName = "comboboxpreviouselementbuttonnotovered";
+        
+        comboboxButtonNextOveredSpriteName = "comboboxnextelementbuttonovered";
+        comboboxButtonNextNotOveredSpriteName = "comboboxnextelementbuttonnotovered";
+        comboboxButtonNextInactiveSpriteName = "comboboxnextelementbuttoninactive";
+        comboboxButtonNextClickedSpriteName = "comboboxnextelementbuttonovered";
     }
 };
 
@@ -114,7 +137,6 @@ bool OGKMenuScene::buttonPressed(Gui3D::PanelElement *e)
     else if(e == mSettingsButton) {
         mMainPanel->setVisible(false);
         mSettingsPanel->setVisible(true);
-        
     }
     else {
         return true;
@@ -185,12 +207,12 @@ bool OGKMenuScene::stateChanged(Gui3D::PanelElement *e)
         if(mFullScreenCheckbox->getChecked() &&
            !OGKGame::getSingletonPtr()->mRenderWindow->isFullScreen()) {
             OGKGame::getSingletonPtr()->mRenderWindow->setFullscreen(true, width, height);
-            OGKInputManager::getSingletonPtr()->setMouseVisible(false);
+            OGKInputManager::getSingletonPtr()->reset();
         }
         else if(!mFullScreenCheckbox->getChecked() &&
            OGKGame::getSingletonPtr()->mRenderWindow->isFullScreen()) {
             OGKGame::getSingletonPtr()->mRenderWindow->setFullscreen(false, width, height);
-            OGKInputManager::getSingletonPtr()->setMouseVisible(false);
+            OGKInputManager::getSingletonPtr()->reset();
         }
     }
 }
@@ -309,17 +331,28 @@ void OGKMenuScene::_createSettingsMenu()
     
     Ogre::Real centerX = vp->getActualWidth() / 2 ;
     Ogre::Real centerY = vp->getActualHeight() / 2 ;
+
+    mSettingsCaption = mSettingsPanel->makeCaption(centerX - 150, centerY - 80,
+                                                   300, 40, "SETTINGS");
+    mSettingsCaption->getCaption()->align(Gorilla::TextAlign_Centre);
+    mSettingsCaption->getCaption()->font(24);
     
-    mFullScreenCaption = mSettingsPanel->makeCaption(centerX - 150, centerY, 150, 30, "Full screen");
+    Ogre::Real fieldY = centerY;
+    mFullScreenCaption = mSettingsPanel->makeCaption(centerX - 150, fieldY, 150, 30, "Full screen");
     
-    mFullScreenCheckbox = (Gui3D::CheckboxText *)mSettingsPanel->makeCheckbox(centerX + 10, centerY, 30, 30);
+    mFullScreenCheckbox = (Gui3D::CheckboxText *)mSettingsPanel->makeCheckbox(centerX + 10, fieldY, 20, 20);
     mFullScreenCheckbox->setSelecteStateChangedCallback(this, &OGKMenuScene::stateChanged);
     mFullScreenCheckbox->setChecked(OGKGame::getSingletonPtr()->mRenderWindow->isFullScreen());
     
+    fieldY += 40.0;
+    
     Ogre::StringVector renderDevices;
-    Ogre::StringVector resolutions;
+    std::vector<Ogre::String> resolutions;
     
     // store available rendering devices and available resolutions
+    mResolutionCaption = mSettingsPanel->makeCaption(centerX - 150, fieldY,
+                                                     150, 40, "Resolution");
+    
     Ogre::ConfigOptionMap& CurrentRendererOptions = Ogre::Root::getSingletonPtr()->getRenderSystem()->getConfigOptions();
     Ogre::ConfigOptionMap::iterator configItr = CurrentRendererOptions.begin();
     while( configItr != CurrentRendererOptions.end() ) {
@@ -331,12 +364,17 @@ void OGKMenuScene::_createSettingsMenu()
         if( (configItr)->first == "Video Mode" )
         {
             // Store Available Resolutions
-            resolutions = ((configItr)->second.possibleValues);
+            Ogre::StringVector values = ((configItr)->second.possibleValues);
+            for(Ogre::StringVector::iterator vi = values.begin(); vi != values.end(); vi++) {
+                resolutions.push_back(*vi);
+            }
         }
         configItr++;
     }
     
     // make a combo box of resolutions
+    mResolutionCombobox = mSettingsPanel->makeCombobox(centerX + 10, fieldY,
+                                                       150, 120, resolutions, 3);
     
     mSettingsPanel->setVisible(false);
 }

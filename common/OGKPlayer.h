@@ -18,6 +18,8 @@
 #include <OISKeyboard.h>
 #include <OISMouse.h>
 
+class OGKInGameScene;
+
 #ifdef OGRE_IS_IOS
 #include <OISMultiTouch.h>
 class OGKPlayer : public OIS::KeyListener, OIS::MultiTouchListener
@@ -76,6 +78,8 @@ private:
     Ogre::Real mMoveSpeed;
     Ogre::Real mRotateSpeed;
     Ogre::SceneNode *mSceneNode;
+    
+    OGKInGameScene *mScene;
 };
 
 #endif /* defined(__OgreGameKit__OGKPlayer__) */
