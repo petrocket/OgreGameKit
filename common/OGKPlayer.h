@@ -41,6 +41,7 @@ public:
     };
     
     void attack(Ogre::Vector3 position);
+    void attack(Ogre::Entity *entity);
     
     bool getEnabled();
     Ogre::Vector3 getDestination();
@@ -48,6 +49,15 @@ public:
     Ogre::Real getRotateSpeed();
     Ogre::SceneNode *getSceneNode();
 
+    inline Ogre::Real getHealth() { return mHealth; }
+    inline Ogre::Real getMaxHealth() { return mMaxHealth; }
+    
+    inline bool isAlive() { return mHealth >= 0.001; }
+    
+    void setHealth(Ogre::Real amount, Ogre::Real maxAmount);
+    void heal(Ogre::Real amount);
+    void damage(Ogre::Real amount);
+    
 	bool keyPressed(const OIS::KeyEvent &keyEventRef);
 	bool keyReleased(const OIS::KeyEvent &keyEventRef);
     
@@ -76,6 +86,10 @@ public:
 private:
     Ogre::Vector3 mDestination;
     bool mEnabled;
+    
+    Ogre::Real mHealth;
+    Ogre::Real mMaxHealth;
+    
     MovingState mMovingState;
     Ogre::Real mMoveSpeed;
     Ogre::Real mRotateSpeed;

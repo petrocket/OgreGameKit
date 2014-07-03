@@ -575,6 +575,10 @@ panelBackground 0 512 394 394
 logo_badge 282 284 230 92 
 mousepointer 54 464 15 22
 
+heart_full 411 387 32 32
+heart_half_full 445 387 32 32
+heart_empty 479 387 32 32
+
 buttonInactive 1 284 200 30
 buttonNotOvered 1 315 200 29
 buttonOvered 1 345 200 29

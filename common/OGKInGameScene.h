@@ -38,7 +38,9 @@ public:
     void onExit();
     void onExitTransitionDidStart();
     
+    inline Gui3D::Gui3D *getGUI() { return mGUI; }
     inline OGKTerrain *getTerrain() { return mTerrain; }
+    inline OGKPlayer *getPlayer() { return mPlayer; }
     
     virtual void update(Ogre::Real elapsedTime);
     
@@ -59,14 +61,18 @@ public:
 private:
     bool buttonPressed(Gui3D::PanelElement *e);
     void interactWithNPC(OGKNPC *npc);
-
+    OGKNPC *getNPC(Ogre::Entity *entity);
+    
     void _initLoadingPanel();
     void _initMenuPanel();
     void _initHUDPanel();
     void _initDialogPanel();
     
+    void _updateHUD();
+    
     // player
     OGKPlayer *mPlayer;
+    Ogre::Real mLastHealth;
     
     std::vector<OGKNPC*> mNPCs;
     
@@ -86,6 +92,9 @@ private:
 
     Gui3D::ScreenRenderable2DPanel *mHUDPanel;
     Gui3D::Button *mPauseButton;
+    Gorilla::Rectangle *mHeart1;
+    Gorilla::Rectangle *mHeart2;
+    Gorilla::Rectangle *mHeart3;
     
     Gui3D::ScreenRenderable2DPanel *mDialogPanel;
     Gui3D::Caption *mDialogCaption;

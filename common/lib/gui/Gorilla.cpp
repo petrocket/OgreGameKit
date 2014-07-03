@@ -1270,6 +1270,12 @@ namespace Gorilla
         }
     }
     
+    void ScreenRenderable2D::setViewport(Ogre::Viewport *viewport)
+    {
+        mInvWidth = 1.0 / (Ogre::Real)viewport->getActualWidth();
+        mInvHeight = 1.0 / (Ogre::Real)viewport->getActualHeight();
+    }
+    
     void ScreenRenderable2D::_transform(buffer<Vertex>& vertices, size_t begin, size_t end)
     {
 //        Ogre::Real mInvWidth = 1.0 / 1024.0;

@@ -73,6 +73,11 @@ void OGKPlayer::attack(Ogre::Vector3 position)
     // @TODO
 }
 
+void OGKPlayer::attack(Ogre::Entity *entity)
+{
+    // @TODO
+}
+
 bool OGKPlayer::keyPressed(const OIS::KeyEvent &keyEventRef)
 {
     return TRUE;
@@ -146,7 +151,10 @@ void OGKPlayer::update(Ogre::Real elapsedTime)
 {
     bool moving = false;
     
-    if(mMovingState == USER_CONTROLLED) {
+    if(!isAlive()) {
+        // do nothing
+    }
+    else if(mMovingState == USER_CONTROLLED) {
         Ogre::Vector3 translateVector(0,0,0);
         Ogre::Real rotateAmount = 0;
         Ogre::Real moveScale = mMoveSpeed   * (float)elapsedTime;
@@ -283,6 +291,30 @@ bool OGKPlayer::getEnabled()
 void OGKPlayer::setEnabled(bool enabled)
 {
     mEnabled = enabled;
+}
+
+void OGKPlayer::setHealth(Ogre::Real amount, Ogre::Real maxAmount)
+{
+    mHealth = amount;
+    mMaxHealth = maxAmount;
+}
+
+void OGKPlayer::heal(Ogre::Real amount)
+{
+    mHealth += amount;
+    mHealth = MAX(0,MIN(mMaxHealth,mHealth));
+}
+
+void OGKPlayer::damage(Ogre::Real amount)
+{
+    bool justDied = (mHealth > 0.001) && (mHealth - amount <= 0.001);
+    
+    mHealth -= amount;
+    mHealth = MAX(0,MIN(mMaxHealth,mHealth));
+    
+    if(justDied) {
+        mSceneNode->roll(Ogre::Radian(Ogre::Degree(90.0)));
+    }
 }
 
 Ogre::Vector3 OGKPlayer::getDestination()

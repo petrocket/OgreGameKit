@@ -13,6 +13,7 @@
 // scenes
 #include "OGKMenuScene.h"
 #include "OGKInGameScene.h"
+#include "OGKCutScene.h"
 
 #ifdef INCLUDE_RTSHADER_SYSTEM
 #include "OGKShaderGenerator.h"
@@ -111,9 +112,12 @@ void OGKGame::setup()
 
     OGKMenuScene *firstScene = OGRE_NEW OGKMenuScene("menu");
     mGameSceneManager->addScene(firstScene,"menu");
+
+    OGKCutScene *secondScene = OGRE_NEW OGKCutScene("cutscene","ingame");
+    mGameSceneManager->addScene(secondScene,"cutscene");
     
-    OGKInGameScene *secondScene = OGRE_NEW OGKInGameScene("ingame");
-    mGameSceneManager->addScene(secondScene,"ingame");
+    OGKInGameScene *thirdScene = OGRE_NEW OGKInGameScene("ingame");
+    mGameSceneManager->addScene(thirdScene,"ingame");
     
     mGameSceneManager->setActiveScene("menu");
 }
@@ -216,48 +220,8 @@ bool OGKGame::keyPressed(const OIS::KeyEvent &keyEventRef)
                 OGKConsole::getSingletonPtr()->setVisible(true);
             }
             break;
-//        case OIS::KC_C:
-//        {
-//            if(mCamera->getMode() == OGKCamera::FREE) {
-//                mCamera->setMode(OGKCamera::THIRD_PERSON_INDIRECT);
-//                if(mPlayer) mPlayer->setEnabled(true);
-//                
-//                // show the mouse
-//                OGKInputManager::getSingletonPtr()->setMouseVisible(true);
-//            }
-//            else {
-//                mCamera->setMode(OGKCamera::FREE);
-//                if(mPlayer) mPlayer->setEnabled(false);
-//                OGKInputManager::getSingletonPtr()->setMouseVisible(false);
-//            }
-//            break;
-//        }
-//        case OIS::KC_ESCAPE: mShutdown = true; break;
-//        case OIS::KC_R: _loadGameConfig(); break;
-        case OIS::KC_M:
-        {
-            static int mode = 0;
-            
-            if(mode == 2)
-            {
-                mCamera->getCamera()->setPolygonMode(PM_SOLID);
-                mode = 0;
-            }
-            else if(mode == 0)
-            {
-                mCamera->getCamera()->setPolygonMode(PM_WIREFRAME);
-                mode = 1;
-            }
-            else if(mode == 1)
-            {
-                mCamera->getCamera()->setPolygonMode(PM_POINTS);
-                mode = 2;
-            }
-            break;
-        }
-        case OIS::KC_P:
-            mRenderWindow->writeContentsToTimestampedFile("OGK_", ".png");
-            break;
+
+
         default:
             break;
     }

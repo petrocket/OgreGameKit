@@ -33,7 +33,11 @@ public:
     ~OGKScene();
     
     virtual void init();
+    
+    bool isRunning();
+    
     virtual void loadFromFile(const Ogre::String& name);
+    virtual void saveToFile(const Ogre::String& name);
     
     virtual void onEnter();
     virtual void onEnterTransitionDidFinish();
@@ -42,8 +46,6 @@ public:
 
     virtual void onExit();
     virtual void onExitTransitionDidStart();
-
-    bool isRunning();
     
     // INPUT
 	bool keyPressed(const OIS::KeyEvent &keyEventRef);

@@ -8,106 +8,7 @@
 
 #include "OGKMenuScene.h"
 #include "OGKGame.h"
-
-// DEFAULT THEME
-class Gui3DTheme : public Gui3D::PanelColors
-{
-public:
-    inline Gui3DTheme():Gui3D::PanelColors()
-    {
-        transparent = Gorilla::rgb(0,0,0,0);
-        
-        // Panel
-//        panelBackgroundSpriteName = "panelBackground";
-        panelCursorSpriteName = "mousepointer";
-        panelCursorSpriteSizeX = 15;
-        panelCursorSpriteSizeY = 22;
-        panelGradientType = Gorilla::Gradient_NorthSouth;
-        panelGradientColorStart = Gorilla::rgb(255, 255, 255, 15);
-        panelGradientColorEnd = Gorilla::rgb(255, 255, 255, 45);
-        
-        // Button
-//        buttonInactiveSpriteName = "buttonInactive";
-//        buttonOveredSpriteName = "buttonOvered";
-//        buttonNotOveredSpriteName = "buttonNotOvered";
-//        buttonClickedSpriteName = "buttonClicked";
-        
-        buttonBackgroundClickedGradientType = Gorilla::Gradient_NorthSouth;
-        buttonBackgroundClickedGradientStart = Gorilla::rgb(255, 255, 255, 200);
-        buttonBackgroundClickedGradientEnd = Gorilla::rgb(255, 255, 255, 170);
-        
-        buttonBackgroundOveredGradientType = Gorilla::Gradient_NorthSouth;
-        buttonBackgroundOveredGradientStart = Gorilla::rgb(255, 255, 255, 128);
-        buttonBackgroundOveredGradientEnd = Gorilla::rgb(255, 255, 255, 100);
-        
-        buttonBackgroundNotOveredGradientType = Gorilla::Gradient_NorthSouth;
-        buttonBackgroundNotOveredGradientStart = Gorilla::rgb(255, 255, 255, 80);
-        buttonBackgroundNotOveredGradientEnd = Gorilla::rgb(255, 255, 255, 50);
-        
-        buttonBackgroundInactiveGradientType = Gorilla::Gradient_NorthSouth;
-        buttonBackgroundInactiveGradientStart = Gorilla::rgb(255, 255, 255, 15);
-        buttonBackgroundInactiveGradientEnd = Gorilla::rgb(255, 255, 255, 5);
-        
-        buttonText = Gorilla::rgb(255, 255, 255, 255);
-        buttonTextInactive = Gorilla::rgb(255, 255, 255, 70);
-        buttonTextSize = 14;
-        
-        // @TODO add other button styles
-        
-        // Caption
-        captionBackgroundGradientType = Gorilla::Gradient_NorthSouth;
-        captionBackgroundGradientStart = transparent;
-        captionBackgroundGradientEnd = transparent;
-        
-        captionBorder = transparent;
-        captionText = Ogre::ColourValue::White;
-        captionTextSize = 14;
-        captionBorderSize = 0;
-        
-        // Checkbox
-        checkboxTextSize = 14;
-        checkboxCheckedSymbol = 'x';
-        checkboxBorderSize = 0;
-        
-        checkboxSelectedOveredGradientType = Gorilla::Gradient_NorthSouth;
-        checkboxSelectedOveredGradientStart = Gorilla::rgb(255, 255, 255, 200);
-        checkboxSelectedOveredGradientEnd = Gorilla::rgb(255, 255, 255, 170);
-        
-        checkboxOveredGradientType = Gorilla::Gradient_NorthSouth;
-        checkboxOveredGradientStart = Gorilla::rgb(255, 255, 255, 128);
-        checkboxOveredGradientEnd = Gorilla::rgb(255, 255, 255, 100);
-        
-        checkboxSelectedNotOveredGradientType = Gorilla::Gradient_NorthSouth;
-        checkboxSelectedNotOveredGradientStart = Gorilla::rgb(255, 255, 255, 80);
-        checkboxSelectedNotOveredGradientEnd = Gorilla::rgb(255, 255, 255, 50);
-        
-        checkboxNotOveredGradientType = Gorilla::Gradient_NorthSouth;
-        checkboxNotOveredGradientStart = Gorilla::rgb(255, 255, 255, 15);
-        checkboxNotOveredGradientEnd = Gorilla::rgb(255, 255, 255, 5);
-        
-        // Combobox
-        comboboxTextSize = 14;
-        comboboxBackgroundGradientType = Gorilla::Gradient_NorthSouth;
-        comboboxBackgroundGradientStart = Gorilla::rgb(255, 255, 255, 15);
-        comboboxBackgroundGradientEnd = Gorilla::rgb(255, 255, 255, 5);
-        
-        comboboxOveredElement = Gorilla::rgb(255, 255, 255, 10);
-        comboboxNotOveredElement = Gorilla::rgb(255, 255, 255, 5);
-        comboboxSelectedElement = Gorilla::rgb(255, 255, 255, 15);
-        
-        comboboxButtonPreviousOveredSpriteName = "comboboxpreviouselementbuttonovered";
-        comboboxButtonPreviousNotOveredSpriteName = "comboboxpreviouselementbuttonnotovered";
-        comboboxButtonPreviousInactiveSpriteName = "comboboxpreviouselementbuttoninactive";
-        comboboxButtonPreviousClickedSpriteName = "comboboxpreviouselementbuttonnotovered";
-        
-        comboboxButtonNextOveredSpriteName = "comboboxnextelementbuttonovered";
-        comboboxButtonNextNotOveredSpriteName = "comboboxnextelementbuttonnotovered";
-        comboboxButtonNextInactiveSpriteName = "comboboxnextelementbuttoninactive";
-        comboboxButtonNextClickedSpriteName = "comboboxnextelementbuttonovered";
-    }
-};
-
-static Gui3DTheme gui3DTheme;
+#include "OGKGUIThemes.h"
 
 OGKMenuScene::OGKMenuScene(const Ogre::String& name):OGKScene(name),
     mGUI(NULL),
@@ -132,7 +33,7 @@ bool OGKMenuScene::buttonPressed(Gui3D::PanelElement *e)
         mSettingsPanel->setVisible(false);
     }
     else if(e == mPlayButton) {
-        OGKGame::getSingletonPtr()->mGameSceneManager->setActiveScene("ingame", 500);
+        OGKGame::getSingletonPtr()->mGameSceneManager->setActiveScene("cutscene", 500);
     }
     else if(e == mSettingsButton) {
         mMainPanel->setVisible(false);
@@ -148,7 +49,7 @@ bool OGKMenuScene::buttonPressed(Gui3D::PanelElement *e)
 void OGKMenuScene::init()
 {
     // don't call OGKScene init (it's constructor already does that)
-    mGUI = OGRE_NEW Gui3D::Gui3D(&gui3DTheme);
+    mGUI = OGRE_NEW Gui3D::Gui3D(&defaultGUITheme);
 }
 
 void OGKMenuScene::onEnter()
@@ -204,16 +105,48 @@ bool OGKMenuScene::stateChanged(Gui3D::PanelElement *e)
     if(e == mFullScreenCheckbox) {
         Ogre::Real width = OGKGame::getSingletonPtr()->mRenderWindow->getWidth();
         Ogre::Real height = OGKGame::getSingletonPtr()->mRenderWindow->getHeight();
+
+        bool reset = false;
+        
         if(mFullScreenCheckbox->getChecked() &&
            !OGKGame::getSingletonPtr()->mRenderWindow->isFullScreen()) {
+
+//            OGKLOG("Going Fullscreen width: " + Ogre::StringConverter::toString(width) +
+//                   " height: " + Ogre::StringConverter::toString(height));
+
             OGKGame::getSingletonPtr()->mRenderWindow->setFullscreen(true, width, height);
-            OGKInputManager::getSingletonPtr()->reset();
+            reset = true;
         }
         else if(!mFullScreenCheckbox->getChecked() &&
            OGKGame::getSingletonPtr()->mRenderWindow->isFullScreen()) {
+
+//            OGKLOG("Going Windowed width: " + Ogre::StringConverter::toString(width) +
+//                   " height: " + Ogre::StringConverter::toString(height));
+            
             OGKGame::getSingletonPtr()->mRenderWindow->setFullscreen(false, width, height);
-            OGKInputManager::getSingletonPtr()->reset();
+            reset = true;
         }
+        
+        if(reset) {
+            OGKInputManager::getSingletonPtr()->reset();
+            
+            // refresh mouse extents
+            width = OGKGame::getSingletonPtr()->mRenderWindow->getWidth();
+            height = OGKGame::getSingletonPtr()->mRenderWindow->getHeight();
+            
+            OGKInputManager::getSingletonPtr()->setWindowExtents(width,height);
+
+            onExitTransitionDidStart();
+            onExit();
+            onEnter();
+            onEnterTransitionDidFinish();
+        }
+        
+//        OGKLOG("RenderWindow width " + Ogre::StringConverter::toString(width) +
+//               " height " + Ogre::StringConverter::toString(height));
+//        OGKLOG("Viewport width " + Ogre::StringConverter::toString(mCamera->getCamera()->getViewport()->getActualWidth()) +
+//               " height " + Ogre::StringConverter::toString(mCamera->getCamera()->getViewport()->getActualHeight()));
+        
     }
 }
 
@@ -250,6 +183,7 @@ bool OGKMenuScene::mouseMoved(const OIS::MouseEvent &evt)
     if(mSettingsPanel) {
         mSettingsPanel->injectMouseMoved(evt.state.X.abs, evt.state.Y.abs);
     }
+    
     return false;
 }
 

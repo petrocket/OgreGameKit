@@ -7,64 +7,8 @@
 //
 
 #include "OGKInGameScene.h"
-
 #include "OGKGame.h"
-
-// DEFAULT THEME
-class Gui3DHUDTheme : public Gui3D::PanelColors
-{
-public:
-    inline Gui3DHUDTheme():Gui3D::PanelColors()
-    {
-        transparent = Gorilla::rgb(0,0,0,0);
-        
-        // Panel
-        panelBackgroundSpriteName = "panelBackground";
-        panelCursorSpriteName = "mousepointer";
-        panelCursorSpriteSizeX = 12;
-        panelCursorSpriteSizeY = 18;
-        
-        // Button
-        //        buttonInactiveSpriteName = "buttonInactive";
-        //        buttonOveredSpriteName = "buttonOvered";
-        //        buttonNotOveredSpriteName = "buttonNotOvered";
-        //        buttonClickedSpriteName = "buttonClicked";
-        
-        buttonBackgroundClickedGradientType = Gorilla::Gradient_NorthSouth;
-        buttonBackgroundClickedGradientStart = Gorilla::rgb(255, 255, 255, 200);
-        buttonBackgroundClickedGradientEnd = Gorilla::rgb(255, 255, 255, 170);
-        
-        buttonBackgroundOveredGradientType = Gorilla::Gradient_NorthSouth;
-        buttonBackgroundOveredGradientStart = Gorilla::rgb(255, 255, 255, 128);
-        buttonBackgroundOveredGradientEnd = Gorilla::rgb(255, 255, 255, 100);
-        
-        buttonBackgroundNotOveredGradientType = Gorilla::Gradient_NorthSouth;
-        buttonBackgroundNotOveredGradientStart = Gorilla::rgb(255, 255, 255, 80);
-        buttonBackgroundNotOveredGradientEnd = Gorilla::rgb(255, 255, 255, 50);
-        
-        buttonBackgroundInactiveGradientType = Gorilla::Gradient_NorthSouth;
-        buttonBackgroundInactiveGradientStart = Gorilla::rgb(255, 255, 255, 15);
-        buttonBackgroundInactiveGradientEnd = Gorilla::rgb(255, 255, 255, 5);
-        
-        buttonText = Gorilla::rgb(255, 255, 255, 255);
-        buttonTextInactive = Gorilla::rgb(255, 255, 255, 70);
-        buttonTextSize = 14;
-        
-        // @TODO add other button styles
-        
-        // Caption
-        captionBackgroundGradientType = Gorilla::Gradient_NorthSouth;
-        captionBackgroundGradientStart = transparent;
-        captionBackgroundGradientEnd = transparent;
-        
-        captionBorder = transparent;
-        captionText = Ogre::ColourValue::White;
-        captionTextSize = 14;
-        captionBorderSize = 0;
-    }
-};
-
-static Gui3DHUDTheme gui3DHUDTheme;
+#include "OGKGUIThemes.h"
 
 OGKInGameScene::OGKInGameScene(const Ogre::String& name):OGKScene(name),
     mGUI(NULL),
@@ -95,6 +39,10 @@ bool OGKInGameScene::buttonPressed(Gui3D::PanelElement *e)
     else if(e == mCloseDialogButton) {
         mDialogPanel->setVisible(false);
         mHUDPanel->setVisible(true);
+        
+        if(!mPlayer->isAlive()) {
+            OGKGame::getSingletonPtr()->mGameSceneManager->setActiveScene("menu", 500);            
+        }
         return false;
     }
     else if(e == mResumeButton) {
@@ -109,7 +57,7 @@ void OGKInGameScene::init()
     // don't call OGKScene init (it's constructor already does that)
 //    OGKScene::init();
     
-    mGUI = OGRE_NEW Gui3D::Gui3D(&gui3DHUDTheme);
+    mGUI = OGRE_NEW Gui3D::Gui3D(&defaultGUITheme);
 }
 
 void OGKInGameScene::onEnter()
@@ -132,7 +80,7 @@ void OGKInGameScene::onEnter()
     
     mLoadingPanel->setVisible(true);
     
-    // terrain
+    // light
     Ogre::Vector3 lightDir(0.55,-0.3,0.75);
     lightDir.normalise();
     mLight = mSceneManager->createLight("Light");
@@ -173,12 +121,19 @@ void OGKInGameScene::onEnterTransitionDidFinish()
     mTerrain->setup(mSceneManager, mLight);
     
     mPlayer = OGRE_NEW OGKPlayer(mSceneManager);
+    mPlayer->setHealth(100,100);
 
     Ogre::SceneManager::MovableObjectIterator ii = mSceneManager->getMovableObjectIterator("Entity");
     while(ii.hasMoreElements()) {
         Ogre::Entity *entity =  static_cast<Ogre::Entity*>(ii.getNext());
         if(Ogre::StringUtil::startsWith(entity->getName(), "npc")) {
-            mNPCs.push_back(OGRE_NEW OGKNPC(entity, entity->getParentSceneNode()));
+            OGKNPC *npc =OGRE_NEW OGKNPC(entity, entity->getParentSceneNode());
+            mNPCs.push_back(npc);
+        }
+        else if(Ogre::StringUtil::startsWith(entity->getName(), "enemy")) {
+            OGKNPC *npc =OGRE_NEW OGKNPC(entity, entity->getParentSceneNode());
+            npc->setIsEnemy(true);
+            mNPCs.push_back(npc);
         }
     }
     
@@ -247,9 +202,11 @@ void OGKInGameScene::update(Ogre::Real elapsedTime)
             mNPCs[i]->update(elapsedTime);
         }
     }
+    
     // update the player before the camera yo or camera snap ain't perfect
     if(mPlayer) {
         mPlayer->update(elapsedTime);
+        _updateHUD();
     }
     
     OGKScene::update(elapsedTime);
@@ -267,6 +224,44 @@ bool OGKInGameScene::keyPressed(const OIS::KeyEvent &keyEventRef)
                 mHUDPanel->setVisible(false);
             }
             return false;
+        case OIS::KC_C:
+            if(mMenuPanel && !mMenuPanel->isVisible()) {
+                if(mCamera->getMode() == OGKCamera::FREE) {
+                    mCamera->setMode(OGKCamera::THIRD_PERSON_INDIRECT);
+                    mHUDPanel->showInternalMousePointer();
+                    if(mPlayer) mPlayer->setEnabled(true);
+                }
+                else {
+                    mCamera->setMode(OGKCamera::FREE);
+                    mHUDPanel->hideInternalMousePointer();
+                    if(mPlayer) mPlayer->setEnabled(false);
+                }
+            }
+            return false;
+        case OIS::KC_M:
+        {
+            static int mode = 0;
+            
+            if(mode == 2)
+            {
+                mCamera->getCamera()->setPolygonMode(Ogre::PM_SOLID);
+                mode = 0;
+            }
+            else if(mode == 0)
+            {
+                mCamera->getCamera()->setPolygonMode(Ogre::PM_WIREFRAME);
+                mode = 1;
+            }
+            else if(mode == 1)
+            {
+                mCamera->getCamera()->setPolygonMode(Ogre::PM_POINTS);
+                mode = 2;
+            }
+            return false;
+        }
+        case OIS::KC_P:
+            OGKGame::getSingletonPtr()->mRenderWindow->writeContentsToTimestampedFile("OGK_", ".png");
+            break;
         default:
             break;
     }
@@ -352,15 +347,19 @@ bool OGKInGameScene::mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID
         Ogre::RaySceneQueryResult& sceneResult = query->execute();
         if(sceneResult.size()) {
             Ogre::RaySceneQueryResult::iterator itr = sceneResult.begin();
-            if(itr->movable) {
-                if(itr->movable != mPlayer->mEntity) {
-                    // is this an npc?
-                    for(int i = 0; i < mNPCs.size(); i++) {
-                        if(itr->movable == mNPCs[i]->mEntity) {
-                            checkTerrain = false;
-                            interactWithNPC(mNPCs[i]);
-                            break;
+            for(;itr != sceneResult.end(); itr++) {
+                if(itr->movable && itr->movable != mPlayer->mEntity) {
+                    OGKNPC *npc = getNPC((Ogre::Entity *)itr->movable);
+                    if(npc) {
+                        if(npc->isEnemy()) {
+                            mPlayer->attack(npc->mEntity);
+                            npc->damage(10.0);
                         }
+                        else {
+                            interactWithNPC(npc);
+                        }
+                        checkTerrain = false;
+                        break;
                     }
                 }
             }
@@ -403,6 +402,17 @@ bool OGKInGameScene::mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonI
 
 #pragma mark - Private
 
+OGKNPC *OGKInGameScene::getNPC(Ogre::Entity *entity)
+{
+    // is this an npc?
+    for(int i = 0; i < mNPCs.size(); i++) {
+        if(entity == mNPCs[i]->mEntity) {
+            return mNPCs[i];
+        }
+    }
+    return NULL;
+}
+
 void OGKInGameScene::interactWithNPC(OGKNPC *npc)
 {
     mDialogCaption->getCaption()->text("Hi! I'm an NPC!");
@@ -431,6 +441,7 @@ void OGKInGameScene::_initLoadingPanel()
                                                    300, 20, "LOADING...");
     mLoadingCaption->getCaption()->align(Gorilla::TextAlign_Centre);
     mLoadingCaption->getCaption()->font(14);
+    mLoadingCaption->getCaption()->colour(Ogre::ColourValue(1,1,1,0.4));
 }
 
 void OGKInGameScene::_initMenuPanel()
@@ -479,6 +490,14 @@ void OGKInGameScene::_initHUDPanel()
     mHUDPanel->showInternalMousePointer();
     mHUDPanel->setVisible(false);
     
+    Ogre::Real top = vp->getActualHeight() - 40;
+    mHeart1 = mHUDPanel->getGUILayer()->createRectangle(10, top, 32, 32);
+    mHeart2 = mHUDPanel->getGUILayer()->createRectangle(50, top, 32, 32);
+    mHeart3 = mHUDPanel->getGUILayer()->createRectangle(90, top, 32, 32);
+    mHeart1->background_image("heart_full");
+    mHeart2->background_image("heart_full");
+    mHeart3->background_image("heart_full");
+    
     mPauseButton = mHUDPanel->makeButton(5, 5, 200, 30, "PAUSE");
     mPauseButton->setPressedCallback(this, &OGKInGameScene::buttonPressed);
 }
@@ -512,4 +531,32 @@ void OGKInGameScene::_initDialogPanel()
                                                   height - 80,
                                                   180, 40, "OK");
     mCloseDialogButton->setPressedCallback(this, &OGKInGameScene::buttonPressed);
+}
+
+void OGKInGameScene::_updateHUD()
+{
+    if(mPlayer && mHUDPanel &&
+       mHUDPanel->isVisible() &&
+       mLastHealth != mPlayer->getHealth() &&
+       mPlayer->getMaxHealth() > 0.001) {
+        
+        bool justDied = mLastHealth > 0.001 && !mPlayer->isAlive();
+        
+        Ogre::Real health = MAX(0.0,MIN(1.0,mPlayer->getHealth() / mPlayer->getMaxHealth()));
+        health *= 6.0;
+        health = MAX(0.0, MIN(6.0,health)); // paranoia
+        
+        int fullAmount = (int)ceil(health);
+        
+        mHeart3->background_image(fullAmount > 5 ? "heart_full" : (fullAmount > 4 ? "heart_half_full" : "heart_empty"));
+        mHeart2->background_image(fullAmount > 3 ? "heart_full" : (fullAmount > 2 ? "heart_half_full" : "heart_empty"));
+        mHeart1->background_image(fullAmount > 1 ? "heart_full" : (fullAmount > 0 ? "heart_half_full" : "heart_empty"));
+        
+        mLastHealth = mPlayer->getHealth();
+        
+        if(justDied) {
+            mDialogPanel->setVisible(true);
+            mDialogCaption->text("GAME OVER");
+        }
+    }
 }

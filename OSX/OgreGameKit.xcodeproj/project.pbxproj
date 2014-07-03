@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		FA1279211964B0B200A7F7DD /* OGKNPC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA12791F1964B0B200A7F7DD /* OGKNPC.cpp */; };
+		FA1279281965A20500A7F7DD /* OGKBadge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA1279261965A20500A7F7DD /* OGKBadge.cpp */; };
+		FA12792B1965D04100A7F7DD /* OGKCutScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA1279291965D04100A7F7DD /* OGKCutScene.cpp */; };
 		FA35946E193E64120050AB5C /* OGKGame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA35946A193E64120050AB5C /* OGKGame.cpp */; };
 		FA359471193E641D0050AB5C /* OGKAppDelgate.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA359470193E641D0050AB5C /* OGKAppDelgate.mm */; };
 		FA35A6C9195486DD0071F577 /* OGKOSXWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA35A6C8195486DD0071F577 /* OGKOSXWindow.mm */; };
@@ -75,6 +77,11 @@
 		FA1279201964B0B200A7F7DD /* OGKNPC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKNPC.h; path = ../../common/OGKNPC.h; sourceTree = "<group>"; };
 		FA1279241964F54A00A7F7DD /* level1.scene */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = level1.scene; sourceTree = "<group>"; };
 		FA1279251964F58A00A7F7DD /* level2.scene */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = level2.scene; sourceTree = "<group>"; };
+		FA1279261965A20500A7F7DD /* OGKBadge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OGKBadge.cpp; path = ../../common/OGKBadge.cpp; sourceTree = "<group>"; };
+		FA1279271965A20500A7F7DD /* OGKBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKBadge.h; path = ../../common/OGKBadge.h; sourceTree = "<group>"; };
+		FA1279291965D04100A7F7DD /* OGKCutScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OGKCutScene.cpp; path = ../../common/OGKCutScene.cpp; sourceTree = "<group>"; };
+		FA12792A1965D04100A7F7DD /* OGKCutScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKCutScene.h; path = ../../common/OGKCutScene.h; sourceTree = "<group>"; };
+		FA12792C1965D2D500A7F7DD /* OGKGUIThemes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKGUIThemes.h; path = ../../common/OGKGUIThemes.h; sourceTree = "<group>"; };
 		FA35946A193E64120050AB5C /* OGKGame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OGKGame.cpp; path = ../../common/OGKGame.cpp; sourceTree = "<group>"; };
 		FA35946B193E64120050AB5C /* OGKGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKGame.h; path = ../../common/OGKGame.h; sourceTree = "<group>"; };
 		FA35946C193E64120050AB5C /* OGKShaderGeneratorListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKShaderGeneratorListener.h; path = ../../common/OGKShaderGeneratorListener.h; sourceTree = "<group>"; };
@@ -376,12 +383,17 @@
 			children = (
 				FA35A6CD1959C8FF0071F577 /* lib */,
 				FACF1A091942495900F099AA /* OGKAudio.h */,
+				FA1279261965A20500A7F7DD /* OGKBadge.cpp */,
+				FA1279271965A20500A7F7DD /* OGKBadge.h */,
 				FAB8BF1819531C8000DA2B26 /* OGKCamera.cpp */,
 				FAB8BF1919531C8000DA2B26 /* OGKCamera.h */,
 				FA35A6D41959C9390071F577 /* OGKConsole.cpp */,
 				FA35A6D51959C9390071F577 /* OGKConsole.h */,
+				FA1279291965D04100A7F7DD /* OGKCutScene.cpp */,
+				FA12792A1965D04100A7F7DD /* OGKCutScene.h */,
 				FA35946A193E64120050AB5C /* OGKGame.cpp */,
 				FA35946B193E64120050AB5C /* OGKGame.h */,
+				FA12792C1965D2D500A7F7DD /* OGKGUIThemes.h */,
 				FA35A6E3195A19930071F577 /* OGKInGameScene.cpp */,
 				FA35A6E4195A19930071F577 /* OGKInGameScene.h */,
 				FAB8BF24195327BE00DA2B26 /* OGKInputManager.cpp */,
@@ -969,6 +981,7 @@
 				FA35A7341960FA960071F577 /* DotSceneLoader.cpp in Sources */,
 				FAB8BF2F1953C71800DA2B26 /* OGKPlayer.cpp in Sources */,
 				FA7769BB193E4B02005F4810 /* main.mm in Sources */,
+				FA1279281965A20500A7F7DD /* OGKBadge.cpp in Sources */,
 				FA35A71C195A45D50071F577 /* Gui3DCheckboxSprite.cpp in Sources */,
 				FACF19E51940DD7D00F099AA /* OGKTerrain.cpp in Sources */,
 				FA35A72A195A45D50071F577 /* Gui3DScrollBar.cpp in Sources */,
@@ -983,6 +996,7 @@
 				FA35A718195A45D50071F577 /* Gui3D.cpp in Sources */,
 				FA35A6DC195A141F0071F577 /* OGKSceneManager.cpp in Sources */,
 				FA35A728195A45D50071F577 /* Gui3DProgressBar.cpp in Sources */,
+				FA12792B1965D04100A7F7DD /* OGKCutScene.cpp in Sources */,
 				FA35A724195A45D50071F577 /* Gui3DMultipleElementsSelector.cpp in Sources */,
 				FA35A725195A45D50071F577 /* Gui3DPanel.cpp in Sources */,
 				FA35A6E5195A19930071F577 /* OGKInGameScene.cpp in Sources */,

@@ -303,6 +303,8 @@ void OGKInputManager::setWindowExtents( int width, int height ) {
     const OIS::MouseState &mouseState = mMouse->getMouseState();
     mouseState.width  = width;
     mouseState.height = height;
+    Ogre::LogManager::getSingletonPtr()->getDefaultLog()->logMessage("Mouse State width: " + Ogre::StringConverter::toString(width) +
+           " height: " + Ogre::StringConverter::toString(height));
 #endif
 }
 

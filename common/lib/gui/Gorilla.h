@@ -1061,6 +1061,7 @@ class Screen : public LayerContainer, public Ogre::RenderQueueListener, public O
         
         void frameStarted();
         void renderOnce();
+        void setViewport(Ogre::Viewport *viewport);
         void _transform(buffer<Vertex>& vertices, size_t begin, size_t end);
         
     protected:

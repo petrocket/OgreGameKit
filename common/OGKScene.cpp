@@ -30,7 +30,6 @@ OGKScene::~OGKScene()
 void OGKScene::init()
 {
     mSceneManager =  Ogre::Root::getSingletonPtr()->createSceneManager(Ogre::ST_GENERIC, "SceneManager" + mSceneName);
-    
     mSceneManager->addRenderQueueListener(OGKGame::getSingletonPtr()->mOverlaySystem);
     
     mOverlay = Ogre::OverlayManager::getSingletonPtr()->create("SceneOverlay" + mSceneName);
@@ -48,6 +47,13 @@ void OGKScene::loadFromFile(const Ogre::String& name)
     if(!loader->parseDotScene(name, "General", mSceneManager)) {
         OGKLOG("Failed to parse dot scene file " + name);
     }
+    
+    OGRE_DELETE loader;
+}
+
+void OGKScene::saveToFile(const Ogre::String& name)
+{
+    // @TODO
 }
 
 void OGKScene::onEnter()
