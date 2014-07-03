@@ -40,6 +40,8 @@ public:
         AT_DESTINATION
     };
     
+    void attack(Ogre::Vector3 position);
+    
     bool getEnabled();
     Ogre::Vector3 getDestination();
     Ogre::Real getMoveSpeed();
@@ -68,12 +70,12 @@ public:
     void setDestination(Ogre::Vector3 destination);
     void setMoveSpeed(Ogre::Real speed);
     void setRotateSpeed(Ogre::Real speed);
-
     
+    Ogre::Entity *mEntity;
+
 private:
     Ogre::Vector3 mDestination;
     bool mEnabled;
-    Ogre::Entity *mEntity;
     MovingState mMovingState;
     Ogre::Real mMoveSpeed;
     Ogre::Real mRotateSpeed;

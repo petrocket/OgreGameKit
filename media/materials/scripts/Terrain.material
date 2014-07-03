@@ -23,8 +23,8 @@ material TerrainMaterial
 		param_named_auto attenuation light_attenuation 0
               
 		param_named exponent float 63
-        param_named splatScaleX float 96
-		param_named splatScaleZ float 96
+        param_named splatScaleX float 256
+		param_named splatScaleZ float 256
       }
       
 		texture_unit 0
@@ -108,8 +108,8 @@ material TerrainMaterial
       
       fragment_program_ref Terrain/Programs/TerrainFPMobile
       {
-        param_named splatScaleX float 48
-		param_named splatScaleZ float 48
+        param_named splatScaleX float 256
+		param_named splatScaleZ float 256
         param_named_auto fogColour fog_colour
       }
 

@@ -9,6 +9,7 @@
 #include "OGKScene.h"
 #include "OGKCamera.h"
 #include "OGKGame.h"
+#include "DotSceneLoader.h"
 
 OGKScene::OGKScene(const Ogre::String& name) :
     mCamera(NULL),
@@ -38,6 +39,15 @@ void OGKScene::init()
 bool OGKScene::isRunning()
 {
     return mRunning;
+}
+
+void OGKScene::loadFromFile(const Ogre::String& name)
+{
+    // does this resource exist?
+    DotSceneLoader *loader = OGRE_NEW DotSceneLoader();
+    if(!loader->parseDotScene(name, "General", mSceneManager)) {
+        OGKLOG("Failed to parse dot scene file " + name);
+    }
 }
 
 void OGKScene::onEnter()

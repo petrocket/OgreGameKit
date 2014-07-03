@@ -33,6 +33,7 @@ public:
     ~OGKScene();
     
     virtual void init();
+    virtual void loadFromFile(const Ogre::String& name);
     
     virtual void onEnter();
     virtual void onEnterTransitionDidFinish();

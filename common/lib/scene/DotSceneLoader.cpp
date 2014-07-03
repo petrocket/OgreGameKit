@@ -24,7 +24,7 @@ DotSceneLoader::~DotSceneLoader()
     OGRE_DELETE mTerrainGlobalOptions;
 }
 
-void DotSceneLoader::parseDotScene(const Ogre::String &SceneName, const Ogre::String &groupName, Ogre::SceneManager *yourSceneMgr, Ogre::SceneNode *pAttachNode, const Ogre::String &sPrependNode)
+bool DotSceneLoader::parseDotScene(const Ogre::String &SceneName, const Ogre::String &groupName, Ogre::SceneManager *yourSceneMgr, Ogre::SceneNode *pAttachNode, const Ogre::String &sPrependNode)
 {
     // set up shared object values
     m_sGroupName = groupName;
@@ -36,6 +36,10 @@ void DotSceneLoader::parseDotScene(const Ogre::String &SceneName, const Ogre::St
     rapidxml::xml_document<> XMLDoc;    // character type defaults to char
     
     rapidxml::xml_node<>* XMLRoot;
+    
+    if(!Ogre::ResourceGroupManager::getSingleton().resourceExists(groupName, SceneName)) {
+        return false;
+    }
     
     Ogre::DataStreamPtr stream = Ogre::ResourceGroupManager::getSingleton().openResource(SceneName, groupName );
     char* scene = strdup(stream->getAsString().c_str());
@@ -49,7 +53,7 @@ void DotSceneLoader::parseDotScene(const Ogre::String &SceneName, const Ogre::St
     {
         Ogre::LogManager::getSingleton().logMessage( "[DotSceneLoader] Error: Invalid .scene File. Missing <scene>" );
         delete scene;
-        return;
+        return false;
     }
     
     // figure out where to attach any nodes we create
@@ -61,6 +65,7 @@ void DotSceneLoader::parseDotScene(const Ogre::String &SceneName, const Ogre::St
     processScene(XMLRoot);
     
     delete scene;
+    return true;
 }
 
 void DotSceneLoader::processScene(rapidxml::xml_node<>* XMLRoot)

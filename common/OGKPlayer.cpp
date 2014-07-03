@@ -23,6 +23,7 @@ OGKPlayer::OGKPlayer(Ogre::SceneManager *sceneManager) :
     mEntity = sceneManager->createEntity("Player", "Player.mesh");
     mSceneNode = sceneManager->getRootSceneNode()->createChildSceneNode();
     mSceneNode->attachObject(mEntity);
+    mSceneNode->scale(5.0,5.0,5.0);
     
     OGKSceneManager *gameSceneManager = OGKGame::getSingletonPtr()->mGameSceneManager;
     mScene = (OGKInGameScene *)gameSceneManager->getScene("ingame");
@@ -65,6 +66,11 @@ OGKPlayer::~OGKPlayer()
 #else
     OGKInputManager::getSingletonPtr()->removeMouseListener("OGKPlayerListener");
 #endif
+}
+
+void OGKPlayer::attack(Ogre::Vector3 position)
+{
+    // @TODO
 }
 
 bool OGKPlayer::keyPressed(const OIS::KeyEvent &keyEventRef)
@@ -254,14 +260,13 @@ void OGKPlayer::update(Ogre::Real elapsedTime)
             }
         }        
     }
-
     
     if(mEntity) {
         OIS::Keyboard *keyboard = OGKInputManager::getSingletonPtr()->getKeyboard();
         
         if(mEntity->hasAnimationState("Walk")) {
             mEntity->getAnimationState("Walk")->setEnabled(moving);
-            mEntity->getAnimationState("Walk")->addTime(elapsedTime * 0.001);
+            mEntity->getAnimationState("Walk")->addTime(elapsedTime * 0.15 * mMoveSpeed);
         }
         if(mEntity->hasAnimationState("Idle")) {
             mEntity->getAnimationState("Idle")->setEnabled(!moving);

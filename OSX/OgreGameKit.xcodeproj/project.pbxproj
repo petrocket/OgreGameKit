@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA1279211964B0B200A7F7DD /* OGKNPC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA12791F1964B0B200A7F7DD /* OGKNPC.cpp */; };
 		FA35946E193E64120050AB5C /* OGKGame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA35946A193E64120050AB5C /* OGKGame.cpp */; };
 		FA359471193E641D0050AB5C /* OGKAppDelgate.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA359470193E641D0050AB5C /* OGKAppDelgate.mm */; };
 		FA35A6C9195486DD0071F577 /* OGKOSXWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA35A6C8195486DD0071F577 /* OGKOSXWindow.mm */; };
@@ -70,6 +71,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FA12791F1964B0B200A7F7DD /* OGKNPC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OGKNPC.cpp; path = ../../common/OGKNPC.cpp; sourceTree = "<group>"; };
+		FA1279201964B0B200A7F7DD /* OGKNPC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKNPC.h; path = ../../common/OGKNPC.h; sourceTree = "<group>"; };
+		FA1279241964F54A00A7F7DD /* level1.scene */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = level1.scene; sourceTree = "<group>"; };
+		FA1279251964F58A00A7F7DD /* level2.scene */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = level2.scene; sourceTree = "<group>"; };
 		FA35946A193E64120050AB5C /* OGKGame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OGKGame.cpp; path = ../../common/OGKGame.cpp; sourceTree = "<group>"; };
 		FA35946B193E64120050AB5C /* OGKGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKGame.h; path = ../../common/OGKGame.h; sourceTree = "<group>"; };
 		FA35946C193E64120050AB5C /* OGKShaderGeneratorListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKShaderGeneratorListener.h; path = ../../common/OGKShaderGeneratorListener.h; sourceTree = "<group>"; };
@@ -357,6 +362,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FA1279221964F54A00A7F7DD /* levels */ = {
+			isa = PBXGroup;
+			children = (
+				FA1279241964F54A00A7F7DD /* level1.scene */,
+				FA1279251964F58A00A7F7DD /* level2.scene */,
+			);
+			path = levels;
+			sourceTree = "<group>";
+		};
 		FA359416193E62E30050AB5C /* common */ = {
 			isa = PBXGroup;
 			children = (
@@ -374,6 +388,8 @@
 				FAB8BF25195327BE00DA2B26 /* OGKInputManager.h */,
 				FA35A6E0195A18E10071F577 /* OGKMenuScene.cpp */,
 				FA35A6E1195A18E10071F577 /* OGKMenuScene.h */,
+				FA12791F1964B0B200A7F7DD /* OGKNPC.cpp */,
+				FA1279201964B0B200A7F7DD /* OGKNPC.h */,
 				FAB8BF2D1953C71800DA2B26 /* OGKPlayer.cpp */,
 				FAB8BF2E1953C71800DA2B26 /* OGKPlayer.h */,
 				FA35A6D71959F7CA0071F577 /* OGKScene.cpp */,
@@ -506,6 +522,7 @@
 			isa = PBXGroup;
 			children = (
 				FA35A73F1961A88A0071F577 /* audio */,
+				FA1279221964F54A00A7F7DD /* levels */,
 				FA35A7421961A88A0071F577 /* materials */,
 				FA35A7A01961A88A0071F577 /* models */,
 				FA35A7A71961A88A0071F577 /* packs */,
@@ -973,6 +990,7 @@
 				FACF1A2619424ADF00F099AA /* CDXMacOSXSupport.mm in Sources */,
 				FA35A71E195A45D50071F577 /* Gui3DClock.cpp in Sources */,
 				FA35A72B195A45D50071F577 /* Gui3DStringCursorEdit.cpp in Sources */,
+				FA1279211964B0B200A7F7DD /* OGKNPC.cpp in Sources */,
 				FA35A6E2195A18E10071F577 /* OGKMenuScene.cpp in Sources */,
 				FA35A726195A45D50071F577 /* Gui3DPanelContainer.cpp in Sources */,
 				FA35946E193E64120050AB5C /* OGKGame.cpp in Sources */,

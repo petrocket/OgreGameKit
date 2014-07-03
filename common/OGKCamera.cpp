@@ -358,6 +358,9 @@ void OGKCamera::update(Ogre::Real elapsedTime)
         mCameraNode->translate(translateVector);
     }
     else if(mMode == OGKCamera::THIRD_PERSON_INDIRECT && mTargetNode) {
+        mTargetNode->_update(true,true);
+        mCameraNode->_update(true,true);
+        
         if(mEdgeBuffer < 1.0) {
             // get the target's screen position
             Ogre::Vector3 coords = mCamera->getProjectionMatrix() * mCamera->getViewMatrix() * mTargetNode->getPosition();

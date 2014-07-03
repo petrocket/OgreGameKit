@@ -132,7 +132,7 @@ bool OGKMenuScene::buttonPressed(Gui3D::PanelElement *e)
         mSettingsPanel->setVisible(false);
     }
     else if(e == mPlayButton) {
-        OGKGame::getSingletonPtr()->mGameSceneManager->setActiveScene("ingame", 2000);
+        OGKGame::getSingletonPtr()->mGameSceneManager->setActiveScene("ingame", 500);
     }
     else if(e == mSettingsButton) {
         mMainPanel->setVisible(false);
@@ -325,7 +325,8 @@ void OGKMenuScene::_createSettingsMenu()
                                                          "default_theme",
                                                          "SettingsMenu");
     mSettingsPanel->showInternalMousePointer();
-    
+    mSettingsPanel->setVisible(false);
+
     mBackButton = mSettingsPanel->makeButton(5, 5, 120, 30, "BACK");
     mBackButton->setPressedCallback(this, &OGKMenuScene::buttonPressed);
     
@@ -376,7 +377,7 @@ void OGKMenuScene::_createSettingsMenu()
     mResolutionCombobox = mSettingsPanel->makeCombobox(centerX + 10, fieldY,
                                                        150, 120, resolutions, 3);
     
-    mSettingsPanel->setVisible(false);
+    // @TODO audio controls
 }
 
 

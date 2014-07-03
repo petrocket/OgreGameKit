@@ -16,6 +16,9 @@
 // player
 #include "OGKPlayer.h"
 
+// npc
+#include "OGKNPC.h"
+
 // terrain
 #include "OGKTerrain.h"
 
@@ -55,6 +58,7 @@ public:
     
 private:
     bool buttonPressed(Gui3D::PanelElement *e);
+    void interactWithNPC(OGKNPC *npc);
 
     void _initLoadingPanel();
     void _initMenuPanel();
@@ -63,6 +67,8 @@ private:
     
     // player
     OGKPlayer *mPlayer;
+    
+    std::vector<OGKNPC*> mNPCs;
     
     // terrain
     OGKTerrain *mTerrain;
