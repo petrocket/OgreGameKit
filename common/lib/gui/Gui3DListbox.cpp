@@ -126,6 +126,30 @@ void Listbox::injectMousePressed(const OIS::MouseEvent& evt,
         }
     }
 }
+    
+void Listbox::injectTouchPressed(const OIS::MultiTouchEvent& evt)
+{
+    VerticalSelector::injectTouchPressed(evt);
+    
+    // Actualize selected elements if the overed element is set
+    if (mActualOveredElement >= 0)
+    {
+        // AddedMode is set when the user has control button down
+        if (!addedMode)
+        {
+            for (size_t i=0; i < mValues.size(); i++)
+                mSelectedElements[i] = false;
+        }
+        
+        mSelectedElements[mActualOveredElement + mNumTopVisibleElement] =
+        !mSelectedElements[mActualOveredElement + mNumTopVisibleElement];
+        
+        // The selected element can't be overed
+        mActualOveredElement = MULTIPLE_ELEMENT_SELECTOR_NO_ELEMENT;
+        _actualize();
+        callCallback();
+    }
+}
 
 
 bool Listbox::isOver(const Ogre::Vector2& pos)

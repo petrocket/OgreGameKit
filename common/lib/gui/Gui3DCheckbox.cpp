@@ -75,6 +75,10 @@ void Checkbox::injectMousePressed(const OIS::MouseEvent& evt,
     }
 }
 
+void Checkbox::injectTouchPressed(const OIS::MultiTouchEvent& evt)
+{
+    setChecked(!mChecked);
+}
 
 void Checkbox::injectMouseReleased(const OIS::MouseEvent& evt, 
     OIS::MouseButtonID id)

@@ -59,12 +59,12 @@ OGKPlayer::~OGKPlayer()
 {
     mSceneNode->detachAllObjects();
     
-    OGKInputManager::getSingletonPtr()->removeKeyListener( "OGKPlayerListener");
+    OGKInputManager::getSingletonPtr()->removeKeyListener(this);
     
 #ifdef OGRE_IS_IOS
-    OGKInputManager::getSingletonPtr()->removeMultiTouchListener("OGKPlayerListener");
+    OGKInputManager::getSingletonPtr()->removeMultiTouchListener(this);
 #else
-    OGKInputManager::getSingletonPtr()->removeMouseListener("OGKPlayerListener");
+    OGKInputManager::getSingletonPtr()->removeMouseListener(this);
 #endif
 }
 

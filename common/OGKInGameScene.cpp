@@ -41,7 +41,7 @@ bool OGKInGameScene::buttonPressed(Gui3D::PanelElement *e)
         mHUDPanel->setVisible(true);
         
         if(!mPlayer->isAlive()) {
-            OGKGame::getSingletonPtr()->mGameSceneManager->setActiveScene("menu", 500);            
+            OGKGame::getSingletonPtr()->mGameSceneManager->setActiveScene("menu", 500);
         }
         return false;
     }
@@ -99,7 +99,11 @@ void OGKInGameScene::onEnter()
     playBackgroundMusic("media/audio/background.mp3");
     
     OGKInputManager::getSingletonPtr()->addKeyListener(this, "ingameScene");
+#ifdef OGRE_IS_IOS
+    OGKInputManager::getSingletonPtr()->addMultiTouchListener(this, "ingameScene");
+#else
     OGKInputManager::getSingletonPtr()->addMouseListener(this, "ingameScene");
+#endif
 
     Ogre::CompositorInstance *inst = Ogre::CompositorManager::getSingleton().addCompositor(vp, "Bloom");
     if(!inst) {
@@ -178,8 +182,12 @@ void OGKInGameScene::onExitTransitionDidStart()
     
     if(mMenuPanel) mMenuPanel->hideInternalMousePointer();
     
-    OGKInputManager::getSingletonPtr()->removeKeyListener("ingameScene");
-    OGKInputManager::getSingletonPtr()->removeMouseListener("ingameScene");
+    OGKInputManager::getSingletonPtr()->removeKeyListener(this);
+#ifdef OGRE_IS_IOS
+    OGKInputManager::getSingletonPtr()->removeMultiTouchListener(this);
+#else
+    OGKInputManager::getSingletonPtr()->removeMouseListener(this);
+#endif
 }
 
 void OGKInGameScene::update(Ogre::Real elapsedTime)

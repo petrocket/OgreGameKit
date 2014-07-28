@@ -14,15 +14,10 @@
 #include <OgreOverlaySystem.h>
 
 // input
-//#include <OISEvents.h>
-//#include <OISInputManager.h>
-//#include <OISKeyboard.h>
-//#include <OISMouse.h>
 #include "OGKInputManager.h"
 
 // defines
 #include "OGKStaticPluginLoader.h"
-
 
 // camera
 #include "OGKCamera.h"

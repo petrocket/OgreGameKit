@@ -303,8 +303,14 @@ bool OGKGame::_init(Ogre::String wndTitle)
     pluginsPath = mResourcePath + "plugins.cfg";
 #endif
     
+#ifdef OGRE_IS_IOS
+    Ogre::Vector2 screenSize = getScreenSize();
+    Ogre::String suffix= "-" + Ogre::StringConverter::toString(screenSize.x);
+    OGKLOG("Loading ogre" + suffix + ".cfg");
+    mRoot = new Ogre::Root(pluginsPath, mResourcePath + "ogre" + suffix + ".cfg");
+#else
     mRoot = new Ogre::Root(pluginsPath, mResourcePath + "ogre.cfg");
-
+#endif
     // create overlay system BEFORE initializing resources (for fonts)
     mOverlaySystem = new Ogre::OverlaySystem();
 
@@ -320,7 +326,16 @@ bool OGKGame::_init(Ogre::String wndTitle)
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     mRoot->getRenderSystem()->setConfigOption("macAPI","cocoa");
 #endif
+    
+//#ifdef OGRE_IS_IOS
+//    mRoot->initialise(false);
+//    NameValuePairList misc;
+//    misc["FSAA"] = "2";
+//    misc["contentScalingFactor"] = "2";
+//    mRenderWindow = mRoot->createRenderWindow("OGRE GAME KIT", 1136, 640, true, &misc);
+//#else
 	mRenderWindow = mRoot->initialise(true, wndTitle);
+//#endif
 	mRenderWindow->setActive(true);
     
 	mSceneManager = mRoot->createSceneManager(ST_GENERIC, "SceneManager");

@@ -176,7 +176,11 @@ void TextZone::injectMouseReleased(const OIS::MouseEvent& evt,
 {
 }
 
-
+void TextZone::injectTouchPressed(const OIS::MultiTouchEvent& evt)
+{
+    
+}
+    
 void TextZone::injectTimeAndMousePosition(double time, const Ogre::Vector2& pos)
 {
     if (mHasFocus)

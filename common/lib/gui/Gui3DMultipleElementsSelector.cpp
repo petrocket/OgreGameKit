@@ -76,6 +76,19 @@ void MultipleElementsSelector::injectMousePressed(const OIS::MouseEvent& evt,
     }
 }
 
+void MultipleElementsSelector::injectTouchPressed(const OIS::MultiTouchEvent& evt)
+{
+    if (mActualOveredElement == MULTIPLE_ELEMENT_SELECTOR_PREVIOUS_ELEMENT_BUTTON)
+    {
+        mPreviousElementsButton->injectTouchPressed(evt);
+        return;
+    }
+    else if (mActualOveredElement == MULTIPLE_ELEMENT_SELECTOR_NEXT_ELEMENT_BUTTON)
+    {
+        mNextElementsButton->injectTouchPressed(evt);
+        return;
+    }
+}
 
 void MultipleElementsSelector::injectMouseReleased(const OIS::MouseEvent& evt, 
     OIS::MouseButtonID id)

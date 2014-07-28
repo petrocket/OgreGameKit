@@ -70,6 +70,8 @@ public:
     void injectMouseReleased(const OIS::MouseEvent& evt, 
                              OIS::MouseButtonID id);
 
+    void injectTouchPressed(const OIS::MultiTouchEvent& evt);
+    
     Ogre::String getValue();
 
     Ogre::Vector2 getPosition();

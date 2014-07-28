@@ -96,6 +96,20 @@ void Combobox::injectMousePressed(const OIS::MouseEvent& evt,
     }
 }
 
+void Combobox::injectTouchPressed(const OIS::MultiTouchEvent& evt)
+{
+    VerticalSelector::injectTouchPressed(evt);
+    
+    // Actualize the selected element if the overed element is set
+    if (mActualOveredElement >= 0)
+    {
+        mActualSelectedElement = mActualOveredElement + mNumTopVisibleElement;
+        // The selected element can't be overed
+        mActualOveredElement = MULTIPLE_ELEMENT_SELECTOR_NO_ELEMENT;
+        _actualize();
+        callCallback();
+    }
+}
 
 bool Combobox::isOver(const Ogre::Vector2& pos)
 {

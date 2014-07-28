@@ -13,6 +13,10 @@
 #include "OGKOSXWindowInterface.h"
 #endif
 
+#ifdef OGRE_IS_IOS
+#include "OISUtils.h"
+#endif
+
 OGKInputManager *OGKInputManager::mInputManager;
 
 OGKInputManager::OGKInputManager( void ) :
@@ -84,6 +88,11 @@ void OGKInputManager::initialise( Ogre::RenderWindow *renderWindow, bool showMou
 #ifdef OGRE_IS_IOS
         mMouse = static_cast<OIS::MultiTouch*>( mInputSystem->createInputObject(OIS::OISMultiTouch, true));
         mMouse->setEventCallback( this );
+
+        Ogre::Vector2 screenSize = getScreenSize();
+        
+        // Set mouse region
+        this->setWindowExtents( screenSize.x, screenSize.y );
 #else
         mKeyboard = static_cast<OIS::Keyboard*>( mInputSystem->createInputObject( OIS::OISKeyboard, true ) );
         mKeyboard->setEventCallback( this );
@@ -99,6 +108,7 @@ void OGKInputManager::initialise( Ogre::RenderWindow *renderWindow, bool showMou
         // Set mouse region
         this->setWindowExtents( width, height );
 #endif
+
         
 #ifdef OIS_APPLE_PLATFORM
         if(showMouseCursor) {
@@ -253,10 +263,7 @@ void OGKInputManager::removeKeyListener( OIS::KeyListener *keyListener ) {
 }
 
 #ifdef OGRE_IS_IOS
-void OGKInputManager::removeMouseListener( OIS::MultiTouchListener *mouseListener )
-#else
-void OGKInputManager::removeMouseListener( OIS::MouseListener *mouseListener )
-#endif
+void OGKInputManager::removeMultiTouchListener( OIS::MultiTouchListener *mouseListener )
 {
     itMouseListener    = mMouseListeners.begin();
     itMouseListenerEnd = mMouseListeners.end();
@@ -267,6 +274,20 @@ void OGKInputManager::removeMouseListener( OIS::MouseListener *mouseListener )
         }
     }
 }
+#else
+void OGKInputManager::removeMouseListener( OIS::MouseListener *mouseListener )
+{
+    itMouseListener    = mMouseListeners.begin();
+    itMouseListenerEnd = mMouseListeners.end();
+    for(; itMouseListener != itMouseListenerEnd; ++itMouseListener ) {
+        if( itMouseListener->second == mouseListener ) {
+            mMouseListeners.erase( itMouseListener );
+            break;
+        }
+    }
+}
+#endif
+
 
 void OGKInputManager::removeJoystickListener( OIS::JoyStickListener *joystickListener ) {
     itJoystickListener    = mJoystickListeners.begin();
@@ -303,9 +324,16 @@ void OGKInputManager::setWindowExtents( int width, int height ) {
     const OIS::MouseState &mouseState = mMouse->getMouseState();
     mouseState.width  = width;
     mouseState.height = height;
-    Ogre::LogManager::getSingletonPtr()->getDefaultLog()->logMessage("Mouse State width: " + Ogre::StringConverter::toString(width) +
-           " height: " + Ogre::StringConverter::toString(height));
+#else
+    std::vector<OIS::MultiTouchState> states = mMouse->getMultiTouchStates();
+    for(int i = 0; i < states.size(); i++) {
+        const OIS::MultiTouchState &multiTouchState = states[i];
+        multiTouchState.width = width;
+        multiTouchState.height = height;
+    }
 #endif
+    Ogre::LogManager::getSingletonPtr()->getDefaultLog()->logMessage("Window Extents w: " + Ogre::StringConverter::toString(width) +
+                                                                     " h: " + Ogre::StringConverter::toString(height));
 }
 
 #ifdef OGRE_IS_IOS
@@ -380,8 +408,33 @@ bool OGKInputManager::touchPressed(const OIS:: MultiTouchEvent &e)
 {
     itMouseListener    = mMouseListeners.begin();
     itMouseListenerEnd = mMouseListeners.end();
+    
+    Ogre::Vector2 screenSize = getScreenSize();
+    OIS::MultiTouchState s;
+    s.X.abs = e.state.X.abs * getScreenScale();
+    s.Y.abs = e.state.Y.abs * getScreenScale();
+    s.width = screenSize.x;
+    s.height = screenSize.y;
+    
+    if(getScreenOrientation() == Ogre::OR_PORTRAIT) {
+        
+    }
+    else {
+        s.X.abs = e.state.Y.abs * getScreenScale();
+        s.Y.abs = e.state.X.abs * getScreenScale();
+        
+        if(getScreenOrientation() == Ogre::OR_LANDSCAPELEFT) {
+            s.X.abs = s.width - s.X.abs;
+        }
+        else if(getScreenOrientation() == Ogre::OR_LANDSCAPERIGHT) {
+            s.Y.abs = s.height - s.Y.abs;
+        }
+    }
+    
+    OIS::MultiTouchEvent m = OIS::MultiTouchEvent(NULL,s);
+    
     for(; itMouseListener != itMouseListenerEnd; ++itMouseListener ) {
-        if(!itMouseListener->second->touchPressed( e ))
+        if(!itMouseListener->second->touchPressed( m ))
 			break;
     }
 	return true;

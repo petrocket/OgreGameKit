@@ -165,6 +165,46 @@ void PanelContainer::injectMousePressed(const OIS::MouseEvent& evt,
         mFocusedPanelElement = NULL;
 }
 
+void PanelContainer::injectTouchPressed(const OIS::MultiTouchEvent& evt)
+{
+    bool found = false;
+    
+    mInternalMousePos = Ogre::Vector2(evt.state.X.abs, evt.state.Y.abs);
+    
+    // Try to find the element that has been clicked
+    for (size_t i=0; i < mPanelElements.size(); i++)
+    {
+        if (mPanelElements[i]->isOver(mInternalMousePos))
+        {
+            if (mFocusedPanelElement != NULL &&
+                mFocusedPanelElement != mPanelElements[i])
+                mFocusedPanelElement->setFocus(false);
+            
+            mFocusedPanelElement = mPanelElements[i];
+            mFocusedPanelElement->setFocus(true);
+            found = true;
+            break;
+        }
+    }
+    
+    // It's a click on the panel.
+    if (!found)
+    {
+        if (mFocusedPanelElement != NULL)
+        {
+            mFocusedPanelElement->setFocus(false);
+            mFocusedPanelElement = NULL;
+        }
+        return;
+    }
+    
+    // Send key to the new focused Elements
+    mFocusedPanelElement->injectKeys(mKeyCodes);
+    mKeyCodes.clear();
+    mFocusedPanelElement->injectTouchPressed(evt);
+    if (!mFocusedPanelElement->getFocus())
+        mFocusedPanelElement = NULL;
+}
 
 void PanelContainer::injectMouseReleased(const OIS::MouseEvent& evt, 
     OIS::MouseButtonID id)

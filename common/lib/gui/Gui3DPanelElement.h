@@ -64,6 +64,10 @@ public:
     virtual void injectMousePressed(const OIS::MouseEvent& evt, 
                                     OIS::MouseButtonID id) = 0;
 
+    /** \brief Inject a touch pressed. The element can loose the focus.
+     */
+    virtual void injectTouchPressed(const OIS::MultiTouchEvent& evt) = 0;
+    
     /** \brief Inject a mouse released. The element can loose the focus.
     */
     virtual void injectMouseReleased(const OIS::MouseEvent& evt, 

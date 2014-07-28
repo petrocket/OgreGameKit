@@ -105,7 +105,21 @@ void Button::injectMouseReleased(const OIS::MouseEvent& evt,
         callCallback();
     }
 }
+
+void Button::injectTouchPressed(const OIS::MultiTouchEvent& evt)
+{
+    if (!mIsActive)
+        return;
     
+    mIsClicked = true;
+    
+    _actualize();
+
+    mIsClicked = false;
+    
+    setFocus(false);
+    callCallback();
+}
 
 bool Button::isOver(const Ogre::Vector2& pos)
 {

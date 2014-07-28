@@ -72,6 +72,8 @@ public:
     void injectMousePressed(const OIS::MouseEvent& evt, 
                             OIS::MouseButtonID id);
     
+    void injectTouchPressed(const OIS::MultiTouchEvent& evt);    
+    
     bool isOver(const Ogre::Vector2& pos);
 
     /** \brief Return the value of the combobox

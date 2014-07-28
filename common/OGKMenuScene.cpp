@@ -13,6 +13,7 @@
 OGKMenuScene::OGKMenuScene(const Ogre::String& name):OGKScene(name),
     mGUI(NULL),
     mMainPanel(NULL),
+    mQuitButton(NULL),
     mSettingsPanel(NULL)
 {
     init();
@@ -33,7 +34,7 @@ bool OGKMenuScene::buttonPressed(Gui3D::PanelElement *e)
         mSettingsPanel->setVisible(false);
     }
     else if(e == mPlayButton) {
-        OGKGame::getSingletonPtr()->mGameSceneManager->setActiveScene("cutscene", 500);
+        OGKGame::getSingletonPtr()->mGameSceneManager->setActiveScene("cutscene", 5500);
     }
     else if(e == mSettingsButton) {
         mMainPanel->setVisible(false);
@@ -73,13 +74,25 @@ void OGKMenuScene::onEnter()
     _createLogo();
 
     OGKInputManager::getSingletonPtr()->addKeyListener(this, "menuScene");
+    
+#ifdef OGRE_IS_IOS
+    OGKInputManager::getSingletonPtr()->addMultiTouchListener(this, "menuScene");
+#else
     OGKInputManager::getSingletonPtr()->addMouseListener(this, "menuScene");
+#endif
 }
 
 void OGKMenuScene::onEnterTransitionDidFinish()
 {
     OGKScene::onEnterTransitionDidFinish();
-    if(mMainPanel) mMainPanel->showInternalMousePointer();
+    
+    if(mMainPanel) {
+#ifdef OGRE_IS_IOS
+        mMainPanel->hideInternalMousePointer();
+#else
+        mMainPanel->showInternalMousePointer();
+#endif
+    }
 }
 
 void OGKMenuScene::onExit()
@@ -96,8 +109,12 @@ void OGKMenuScene::onExitTransitionDidStart()
     
     if(mMainPanel) mMainPanel->hideInternalMousePointer();
     
-    OGKInputManager::getSingletonPtr()->removeKeyListener("menuScene");
-    OGKInputManager::getSingletonPtr()->removeMouseListener("menuScene");
+    OGKInputManager::getSingletonPtr()->removeKeyListener(this);
+#ifdef OGRE_IS_IOS
+    OGKInputManager::getSingletonPtr()->removeMultiTouchListener(this);
+#else
+    OGKInputManager::getSingletonPtr()->removeMouseListener(this);
+#endif
 }
 
 bool OGKMenuScene::stateChanged(Gui3D::PanelElement *e)
@@ -169,8 +186,33 @@ bool OGKMenuScene::keyPressed(const OIS::KeyEvent &keyEventRef)
 }
 
 #ifdef OGRE_IS_IOS
-bool OGKMenuScene::touchMoved(const OIS::MultiTouchEvent &evt) { return true; }
-bool OGKMenuScene::touchPressed(const OIS::MultiTouchEvent &evt)  { return true; }
+bool OGKMenuScene::touchMoved(const OIS::MultiTouchEvent &evt) {
+//    OIS::MouseEvent m = toMouseEvent(evt);
+//    OGKLOG("touchMoved x: " + Ogre::StringConverter::toString(m.state.X.abs) + " y: " + Ogre::StringConverter::toString(m.state.Y.abs) + " width: " + Ogre::StringConverter::toString(m.state.width) + " height: " + Ogre::StringConverter::toString(m.state.height));
+//    OGKLOG("touchMoved x:" + Ogre::StringConverter::toString((int)m.state.X.abs) + " y:" + Ogre::StringConverter::toString((int)m.state.Y.abs));
+//    if(mMainPanel && mMainPanel->isVisible()) {
+//        mMainPanel->injectMouseMoved(m.state.X.abs, m.state.Y.abs);
+//    }
+//    else if(mSettingsPanel && mSettingsPanel->isVisible()) {
+//        mSettingsPanel->injectMouseMoved(m.state.X.abs, m.state.Y.abs);
+//    }
+    return false;
+}
+bool OGKMenuScene::touchPressed(const OIS::MultiTouchEvent &evt)  {
+    //touchMoved(evt);
+    
+    OGKLOG("touchPressed x: " + Ogre::StringConverter::toString(evt.state.X.abs) + " y: " + Ogre::StringConverter::toString(evt.state.Y.abs) + " width: " + Ogre::StringConverter::toString(evt.state.width) + " height: " + Ogre::StringConverter::toString(evt.state.height));
+    //    OGKLOG("touchMoved x:" + Ogre::StringConverter::toString((int)m.state.X.abs) + " y:" +
+    
+    if(mMainPanel && mMainPanel->isVisible()) {
+        mMainPanel->injectTouchPressed(evt);
+    }
+    else if(mSettingsPanel && mSettingsPanel->isVisible()) {
+        mSettingsPanel->injectTouchPressed(evt);
+//        mSettingsPanel->injectMousePressed(toMouseEvent(evt), OIS::MB_Left);
+    }
+    return false;
+}
 bool OGKMenuScene::touchReleased(const OIS::MultiTouchEvent &evt)  { return true; }
 bool OGKMenuScene::touchCancelled(const OIS::MultiTouchEvent &evt)  { return true; }
 #else
@@ -189,6 +231,8 @@ bool OGKMenuScene::mouseMoved(const OIS::MouseEvent &evt)
 
 bool OGKMenuScene::mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
 {
+    OGKLOG("Touch at x: " + Ogre::StringConverter::toString(evt.state.X.abs) + " y: " + Ogre::StringConverter::toString(evt.state.Y.abs) + " width: " + Ogre::StringConverter::toString(evt.state.width) + " height: " + Ogre::StringConverter::toString(evt.state.height));
+    
     if(mMainPanel && mMainPanel->isVisible()) {
         mMainPanel->injectMousePressed(evt, id);
     }
@@ -228,8 +272,10 @@ void OGKMenuScene::_createMainMenu()
                                          200, 40, "PLAY");
     mPlayButton->setPressedCallback(this, &OGKMenuScene::buttonPressed);
 
+#ifndef OGRE_IS_IOS
     mQuitButton = mMainPanel->makeButton(5, 5, 120, 30, "QUIT");
     mQuitButton->setPressedCallback(this, &OGKMenuScene::buttonPressed);
+#endif
 
     mSettingsButton = mMainPanel->makeButton(5, vp->getActualHeight() - 35, 120, 30, "SETTINGS");
     mSettingsButton->setPressedCallback(this, &OGKMenuScene::buttonPressed);
@@ -258,7 +304,11 @@ void OGKMenuScene::_createSettingsMenu()
                                                                        vp->getActualHeight()),
                                                          "default_theme",
                                                          "SettingsMenu");
+#ifdef OGRE_IS_IOS
+    mSettingsPanel->hideInternalMousePointer();
+#else
     mSettingsPanel->showInternalMousePointer();
+#endif
     mSettingsPanel->setVisible(false);
 
     mBackButton = mSettingsPanel->makeButton(5, 5, 120, 30, "BACK");
@@ -268,12 +318,16 @@ void OGKMenuScene::_createSettingsMenu()
     Ogre::Real centerY = vp->getActualHeight() / 2 ;
 
     mSettingsCaption = mSettingsPanel->makeCaption(centerX - 150, centerY - 80,
-                                                   300, 40, "SETTINGS");
+                                                   300, 100, "SETTINGS");
     mSettingsCaption->getCaption()->align(Gorilla::TextAlign_Centre);
+    mSettingsCaption->getCaption()->vertical_align(Gorilla::VerticalAlign_Middle);
     mSettingsCaption->getCaption()->font(24);
+    mSettingsCaption->getCaption()->colour(Ogre::ColourValue::White);
     
     Ogre::Real fieldY = centerY;
-    mFullScreenCaption = mSettingsPanel->makeCaption(centerX - 150, fieldY, 150, 30, "Full screen");
+    mFullScreenCaption = mSettingsPanel->makeCaption(centerX - 150, fieldY, 150, 80, "Full screen");
+    mFullScreenCaption->getCaption()->vertical_align(Gorilla::VerticalAlign_Middle);
+    //mFullScreenCaption->getCaption()->colour(Ogre::ColourValue::White);
     
     mFullScreenCheckbox = (Gui3D::CheckboxText *)mSettingsPanel->makeCheckbox(centerX + 10, fieldY, 20, 20);
     mFullScreenCheckbox->setSelecteStateChangedCallback(this, &OGKMenuScene::stateChanged);
@@ -286,7 +340,7 @@ void OGKMenuScene::_createSettingsMenu()
     
     // store available rendering devices and available resolutions
     mResolutionCaption = mSettingsPanel->makeCaption(centerX - 150, fieldY,
-                                                     150, 40, "Resolution");
+                                                     150, 80, "Resolution");
     
     Ogre::ConfigOptionMap& CurrentRendererOptions = Ogre::Root::getSingletonPtr()->getRenderSystem()->getConfigOptions();
     Ogre::ConfigOptionMap::iterator configItr = CurrentRendererOptions.begin();

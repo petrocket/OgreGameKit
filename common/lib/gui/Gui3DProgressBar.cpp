@@ -104,6 +104,10 @@ void ProgressBar::injectMouseReleased(const OIS::MouseEvent& evt,
 {
 }
 
+void ProgressBar::injectTouchPressed(const OIS::MultiTouchEvent& evt)
+{
+    
+}
 
 bool ProgressBar::isOver(const Ogre::Vector2& pos)
 {

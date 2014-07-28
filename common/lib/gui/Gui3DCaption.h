@@ -66,6 +66,8 @@ public:
 
     void injectMouseReleased(const OIS::MouseEvent& evt, 
                              OIS::MouseButtonID id);
+    
+    void injectTouchPressed(const OIS::MultiTouchEvent& evt);
 
     bool isOver(const Ogre::Vector2& pos);
 

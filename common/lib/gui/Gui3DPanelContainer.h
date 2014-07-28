@@ -84,6 +84,8 @@ public:
 
     void injectMouseReleased(const OIS::MouseEvent& evt, 
                              OIS::MouseButtonID id);
+    
+    void injectTouchPressed(const OIS::MultiTouchEvent& evt);
 
     /** \brief Inject time to have animations with panel elements, such as
     a flash on and off of a cursor in Textzones

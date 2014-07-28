@@ -73,9 +73,11 @@ void OGKScene::onEnter()
 
 void OGKScene::onEnterTransitionDidFinish()
 {
+#ifndef OGRE_IS_IOS
     // get the mouse in the right position
     OIS::MouseEvent evt(NULL, OGKInputManager::getSingletonPtr()->getMouse()->getMouseState());
     mouseMoved(evt);
+#endif
 }
 
 void OGKScene::update(Ogre::Real elapsedTime)

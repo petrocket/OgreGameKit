@@ -55,6 +55,8 @@ public:
     virtual void injectMouseReleased(const OIS::MouseEvent& evt, 
                                      OIS::MouseButtonID id);
 
+    virtual void injectTouchPressed(const OIS::MultiTouchEvent& evt);
+    
     virtual bool isOver(const Ogre::Vector2& pos);
 
     /** \brief Add an item to the container

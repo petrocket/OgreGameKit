@@ -114,6 +114,12 @@ void ScrollBar::injectMouseReleased(const OIS::MouseEvent& evt,
     callCallback();
 }
 
+void ScrollBar::injectTouchPressed(const OIS::MultiTouchEvent& evt)
+{
+    setFocus(false);
+    
+    callCallback();
+}
 
 bool ScrollBar::isOver(const Ogre::Vector2& pos)
 {

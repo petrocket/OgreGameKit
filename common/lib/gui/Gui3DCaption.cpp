@@ -84,6 +84,10 @@ void Caption::injectMousePressed(const OIS::MouseEvent& evt,
 {
 }
 
+void Caption::injectTouchPressed(const OIS::MultiTouchEvent& evt)
+{
+    
+}
 
 void Caption::injectMouseReleased(const OIS::MouseEvent& evt, 
     OIS::MouseButtonID id)

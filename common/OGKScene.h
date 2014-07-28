@@ -10,6 +10,7 @@
 #define __OgreGameKit__OGKScene__
 
 #include <Ogre.h>
+#include "OGKStaticPluginLoader.h"
 #include <OgreOverlaySystem.h>
 
 // input

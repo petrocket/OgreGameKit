@@ -20,6 +20,7 @@
 
 #ifdef OGRE_IS_IOS
 #include <OISMultiTouch.h>
+#include <OISUtils.h>
     class OGKInputManager : public OIS::KeyListener, public OIS::MultiTouchListener, public OIS::JoyStickListener {
 #else
     class OGKInputManager : public OIS::KeyListener, public OIS::MouseListener, public OIS::JoyStickListener {
@@ -48,7 +49,7 @@ public:
 
     void removeMouseListener( const std::string& instanceName );
 #ifdef OGRE_IS_IOS
-    void removeMouseListener( OIS::MultiTouchListener *mouseListener );
+    void removeMultiTouchListener( OIS::MultiTouchListener *mouseListener );
 #else
     void removeMouseListener( OIS::MouseListener *mouseListener );
 #endif

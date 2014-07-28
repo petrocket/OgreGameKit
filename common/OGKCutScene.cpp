@@ -54,7 +54,11 @@ void OGKCutScene::onEnter()
     _createCutScene();
     
     OGKInputManager::getSingletonPtr()->addKeyListener(this, "cutScene");
+#ifdef OGRE_IS_IOS
+    OGKInputManager::getSingletonPtr()->addMultiTouchListener(this, "cutScene");
+#else
     OGKInputManager::getSingletonPtr()->addMouseListener(this, "cutScene");
+#endif
     
     mCurrentCaption = 0;
     mNextCaptionTime = -1;
@@ -89,8 +93,12 @@ void OGKCutScene::onExitTransitionDidStart()
 {
      OGKScene::onExitTransitionDidStart();
     
-    OGKInputManager::getSingletonPtr()->removeKeyListener("cutScene");
-    OGKInputManager::getSingletonPtr()->removeMouseListener("cutScene");
+    OGKInputManager::getSingletonPtr()->removeKeyListener(this);
+#ifdef OGRE_IS_IOS
+    OGKInputManager::getSingletonPtr()->removeMultiTouchListener(this);
+#else
+    OGKInputManager::getSingletonPtr()->removeMouseListener(this);
+#endif
 }
 
 void OGKCutScene::update(Ogre::Real elapsedTime)

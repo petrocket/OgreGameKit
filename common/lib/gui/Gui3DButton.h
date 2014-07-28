@@ -61,6 +61,8 @@ public:
 
     void injectMousePressed(const OIS::MouseEvent& evt, 
         OIS::MouseButtonID id);
+    
+    void injectTouchPressed(const OIS::MultiTouchEvent& evt);
 
     void injectMouseReleased(const OIS::MouseEvent& evt, 
         OIS::MouseButtonID id);

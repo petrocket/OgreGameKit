@@ -68,6 +68,8 @@ public:
     void injectMouseReleased(const OIS::MouseEvent& evt, 
                              OIS::MouseButtonID id);
 
+    void injectTouchPressed(const OIS::MultiTouchEvent& evt);
+    
     void injectKeys(std::vector<OIS::KeyCode>& keys);
     
     bool isOver(const Ogre::Vector2& pos);
