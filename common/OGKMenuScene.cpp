@@ -34,7 +34,7 @@ bool OGKMenuScene::buttonPressed(Gui3D::PanelElement *e)
         mSettingsPanel->setVisible(false);
     }
     else if(e == mPlayButton) {
-        OGKGame::getSingletonPtr()->mGameSceneManager->setActiveScene("cutscene", 5500);
+        OGKGame::getSingletonPtr()->mGameSceneManager->setActiveScene("cutscene", 500);
     }
     else if(e == mSettingsButton) {
         mMainPanel->setVisible(false);
@@ -50,7 +50,7 @@ bool OGKMenuScene::buttonPressed(Gui3D::PanelElement *e)
 void OGKMenuScene::init()
 {
     // don't call OGKScene init (it's constructor already does that)
-    mGUI = OGRE_NEW Gui3D::Gui3D(&defaultGUITheme);
+    mGUI = OGRE_NEW Gui3D::Gui3D(OGKGame::getSingleton().mDefaultGUITheme);
 }
 
 void OGKMenuScene::onEnter()
@@ -186,30 +186,13 @@ bool OGKMenuScene::keyPressed(const OIS::KeyEvent &keyEventRef)
 }
 
 #ifdef OGRE_IS_IOS
-bool OGKMenuScene::touchMoved(const OIS::MultiTouchEvent &evt) {
-//    OIS::MouseEvent m = toMouseEvent(evt);
-//    OGKLOG("touchMoved x: " + Ogre::StringConverter::toString(m.state.X.abs) + " y: " + Ogre::StringConverter::toString(m.state.Y.abs) + " width: " + Ogre::StringConverter::toString(m.state.width) + " height: " + Ogre::StringConverter::toString(m.state.height));
-//    OGKLOG("touchMoved x:" + Ogre::StringConverter::toString((int)m.state.X.abs) + " y:" + Ogre::StringConverter::toString((int)m.state.Y.abs));
-//    if(mMainPanel && mMainPanel->isVisible()) {
-//        mMainPanel->injectMouseMoved(m.state.X.abs, m.state.Y.abs);
-//    }
-//    else if(mSettingsPanel && mSettingsPanel->isVisible()) {
-//        mSettingsPanel->injectMouseMoved(m.state.X.abs, m.state.Y.abs);
-//    }
-    return false;
-}
+bool OGKMenuScene::touchMoved(const OIS::MultiTouchEvent &evt) { return true; }
 bool OGKMenuScene::touchPressed(const OIS::MultiTouchEvent &evt)  {
-    //touchMoved(evt);
-    
-    OGKLOG("touchPressed x: " + Ogre::StringConverter::toString(evt.state.X.abs) + " y: " + Ogre::StringConverter::toString(evt.state.Y.abs) + " width: " + Ogre::StringConverter::toString(evt.state.width) + " height: " + Ogre::StringConverter::toString(evt.state.height));
-    //    OGKLOG("touchMoved x:" + Ogre::StringConverter::toString((int)m.state.X.abs) + " y:" +
-    
     if(mMainPanel && mMainPanel->isVisible()) {
         mMainPanel->injectTouchPressed(evt);
     }
     else if(mSettingsPanel && mSettingsPanel->isVisible()) {
         mSettingsPanel->injectTouchPressed(evt);
-//        mSettingsPanel->injectMousePressed(toMouseEvent(evt), OIS::MB_Left);
     }
     return false;
 }
@@ -320,14 +303,12 @@ void OGKMenuScene::_createSettingsMenu()
     mSettingsCaption = mSettingsPanel->makeCaption(centerX - 150, centerY - 80,
                                                    300, 100, "SETTINGS");
     mSettingsCaption->getCaption()->align(Gorilla::TextAlign_Centre);
-    mSettingsCaption->getCaption()->vertical_align(Gorilla::VerticalAlign_Middle);
     mSettingsCaption->getCaption()->font(24);
     mSettingsCaption->getCaption()->colour(Ogre::ColourValue::White);
     
+#ifndef OGRE_IS_IOS
     Ogre::Real fieldY = centerY;
-    mFullScreenCaption = mSettingsPanel->makeCaption(centerX - 150, fieldY, 150, 80, "Full screen");
-    mFullScreenCaption->getCaption()->vertical_align(Gorilla::VerticalAlign_Middle);
-    //mFullScreenCaption->getCaption()->colour(Ogre::ColourValue::White);
+    mFullScreenCaption = mSettingsPanel->makeCaption(centerX - 150, fieldY, 150, 30, "Full screen");
     
     mFullScreenCheckbox = (Gui3D::CheckboxText *)mSettingsPanel->makeCheckbox(centerX + 10, fieldY, 20, 20);
     mFullScreenCheckbox->setSelecteStateChangedCallback(this, &OGKMenuScene::stateChanged);
@@ -340,7 +321,7 @@ void OGKMenuScene::_createSettingsMenu()
     
     // store available rendering devices and available resolutions
     mResolutionCaption = mSettingsPanel->makeCaption(centerX - 150, fieldY,
-                                                     150, 80, "Resolution");
+                                                     150, 30, "Resolution");
     
     Ogre::ConfigOptionMap& CurrentRendererOptions = Ogre::Root::getSingletonPtr()->getRenderSystem()->getConfigOptions();
     Ogre::ConfigOptionMap::iterator configItr = CurrentRendererOptions.begin();
@@ -350,6 +331,7 @@ void OGKMenuScene::_createSettingsMenu()
             // Store Available Rendering Devices
             renderDevices = ((configItr)->second.possibleValues);
         }
+        
         if( (configItr)->first == "Video Mode" )
         {
             // Store Available Resolutions
@@ -364,6 +346,8 @@ void OGKMenuScene::_createSettingsMenu()
     // make a combo box of resolutions
     mResolutionCombobox = mSettingsPanel->makeCombobox(centerX + 10, fieldY,
                                                        150, 120, resolutions, 3);
+    
+#endif
     
     // @TODO audio controls
 }

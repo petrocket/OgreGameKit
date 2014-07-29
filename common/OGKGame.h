@@ -13,6 +13,8 @@
 #include <Ogre.h>
 #include <OgreOverlaySystem.h>
 
+#include "OGKGUIThemes.h"
+
 // input
 #include "OGKInputManager.h"
 
@@ -85,6 +87,8 @@ public:
 #ifdef OGRE_IS_IOS
     Ogre::OrientationMode       mViewportOrientation;
 #endif
+    
+    OGKDefaultGUITheme          *mDefaultGUITheme;
     
 protected:
     Ogre::String                 mResourcePath;

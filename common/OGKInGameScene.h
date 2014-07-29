@@ -68,6 +68,8 @@ private:
     void _initHUDPanel();
     void _initDialogPanel();
     
+    void _handleClickEvent(Ogre::Real x, Ogre::Real y);
+    
     void _updateHUD();
     
     // player

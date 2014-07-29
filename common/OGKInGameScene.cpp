@@ -57,7 +57,7 @@ void OGKInGameScene::init()
     // don't call OGKScene init (it's constructor already does that)
 //    OGKScene::init();
     
-    mGUI = OGRE_NEW Gui3D::Gui3D(&defaultGUITheme);
+    mGUI = OGRE_NEW Gui3D::Gui3D(OGKGame::getSingleton().mDefaultGUITheme);
 }
 
 void OGKInGameScene::onEnter()
@@ -105,6 +105,7 @@ void OGKInGameScene::onEnter()
     OGKInputManager::getSingletonPtr()->addMouseListener(this, "ingameScene");
 #endif
 
+#ifndef OGRE_IS_IOS
     Ogre::CompositorInstance *inst = Ogre::CompositorManager::getSingleton().addCompositor(vp, "Bloom");
     if(!inst) {
         OGKLOG("Failed to instanciate bloom compositor");
@@ -112,6 +113,7 @@ void OGKInGameScene::onEnter()
     else {
         Ogre::CompositorManager::getSingletonPtr()->setCompositorEnabled(vp,"Bloom",true);
     }
+#endif
 }
 
 void OGKInGameScene::onEnterTransitionDidFinish()
@@ -280,7 +282,38 @@ bool OGKInGameScene::keyPressed(const OIS::KeyEvent &keyEventRef)
 
 #ifdef OGRE_IS_IOS
 bool OGKInGameScene::touchMoved(const OIS::MultiTouchEvent &evt) { return true; }
-bool OGKInGameScene::touchPressed(const OIS::MultiTouchEvent &evt)  { return true; }
+bool OGKInGameScene::touchPressed(const OIS::MultiTouchEvent &evt)  {
+    
+    if(mMenuPanel && mMenuPanel->isVisible()) {
+        mMenuPanel->injectTouchPressed(evt);
+    }
+    else {
+        if(mDialogPanel && mDialogPanel->isVisible()) {
+            mDialogPanel->injectTouchPressed(evt);
+        }
+        if(mHUDPanel && mHUDPanel->isVisible() && !mDialogPanel->getFocusedElement()) {
+            mHUDPanel->injectTouchPressed(evt);
+        }
+    }
+
+    if(mMenuPanel->isVisible()) {
+        // @TODO
+    }
+    else if(mDialogPanel->isVisible()) {
+        // @TODO
+    }
+    else if(mCamera && mCamera->getMode() == OGKCamera::THIRD_PERSON_INDIRECT && mTerrain &&
+            !mHUDPanel->getFocusedElement()) {
+        
+        Ogre::Real x = (float)evt.state.X.abs / (float)evt.state.width;
+        Ogre::Real y = (float)evt.state.Y.abs / (float)evt.state.height;
+        
+        _handleClickEvent(x,y);
+    }
+    
+    return false;
+}
+    
 bool OGKInGameScene::touchReleased(const OIS::MultiTouchEvent &evt)  { return true; }
 bool OGKInGameScene::touchCancelled(const OIS::MultiTouchEvent &evt)  { return true; }
 #else
@@ -345,48 +378,9 @@ bool OGKInGameScene::mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID
         Ogre::Real x = (float)evt.state.X.abs / (float)evt.state.width;
         Ogre::Real y = (float)evt.state.Y.abs / (float)evt.state.height;
         
-        // set the player destination
-        Ogre::Ray ray = mCamera->getCamera()->getCameraToViewportRay(x,y);
-        
-        bool checkTerrain = true;
-        
-        // does it intersect an entity?
-        Ogre::RaySceneQuery *query = mSceneManager->createRayQuery(ray);
-        Ogre::RaySceneQueryResult& sceneResult = query->execute();
-        if(sceneResult.size()) {
-            Ogre::RaySceneQueryResult::iterator itr = sceneResult.begin();
-            for(;itr != sceneResult.end(); itr++) {
-                if(itr->movable && itr->movable != mPlayer->mEntity) {
-                    OGKNPC *npc = getNPC((Ogre::Entity *)itr->movable);
-                    if(npc) {
-                        if(npc->isEnemy()) {
-                            mPlayer->attack(npc->mEntity);
-                            npc->damage(10.0);
-                        }
-                        else {
-                            interactWithNPC(npc);
-                        }
-                        checkTerrain = false;
-                        break;
-                    }
-                }
-            }
-        }
-        mSceneManager->destroyQuery(query);
-        
-        if(checkTerrain) {
-            Ogre::TerrainGroup::RayResult rayResult=mTerrain->mTerrainGroup->rayIntersects(ray);
-            if(rayResult.hit) {
-                // attack if SHIFT is down
-                if(OGKInputManager::getSingletonPtr()->getKeyboard()->isKeyDown(OIS::KC_LSHIFT)) {
-                    mPlayer->attack(rayResult.position);
-                }
-                else {
-                    mPlayer->setDestination(rayResult.position);
-                }
-            }
-        }
+        _handleClickEvent(x,y);
     }
+    
     return false;
 }
 
@@ -419,6 +413,55 @@ OGKNPC *OGKInGameScene::getNPC(Ogre::Entity *entity)
         }
     }
     return NULL;
+}
+
+void OGKInGameScene::_handleClickEvent(Ogre::Real x, Ogre::Real y)
+{
+    // set the player destination
+    Ogre::Ray ray = mCamera->getCamera()->getCameraToViewportRay(x,y);
+    
+    bool checkTerrain = true;
+    
+    // does it intersect an entity?
+    Ogre::RaySceneQuery *query = mSceneManager->createRayQuery(ray);
+    Ogre::RaySceneQueryResult& sceneResult = query->execute();
+    if(sceneResult.size()) {
+        Ogre::RaySceneQueryResult::iterator itr = sceneResult.begin();
+        for(;itr != sceneResult.end(); itr++) {
+            if(itr->movable && itr->movable != mPlayer->mEntity) {
+                OGKNPC *npc = getNPC((Ogre::Entity *)itr->movable);
+                if(npc) {
+                    if(npc->isEnemy()) {
+                        mPlayer->attack(npc->mEntity);
+                        npc->damage(10.0);
+                    }
+                    else {
+                        interactWithNPC(npc);
+                    }
+                    checkTerrain = false;
+                    break;
+                }
+            }
+        }
+    }
+    mSceneManager->destroyQuery(query);
+    
+    if(checkTerrain) {
+        Ogre::TerrainGroup::RayResult rayResult=mTerrain->mTerrainGroup->rayIntersects(ray);
+        if(rayResult.hit) {
+            // attack if SHIFT is down
+#ifndef OGRE_IS_IOS
+            if(OGKInputManager::getSingletonPtr()->getKeyboard()->isKeyDown(OIS::KC_LSHIFT)) {
+                mPlayer->attack(rayResult.position);
+            }
+            else {
+#endif
+                mPlayer->setDestination(rayResult.position);
+#ifndef OGRE_IS_IOS
+            }
+#endif
+        }
+    }
 }
 
 void OGKInGameScene::interactWithNPC(OGKNPC *npc)
@@ -467,7 +510,11 @@ void OGKInGameScene::_initMenuPanel()
                                                         "MenuPanel");
     mMenuPanel->getBackground()->background_image(NULL);
     mMenuPanel->getBackground()->background_colour(Gorilla::rgb(0,0,0,10));
+#ifdef OGRE_IS_IOS
+    mMenuPanel->hideInternalMousePointer();
+#else
     mMenuPanel->showInternalMousePointer();
+#endif
     mMenuPanel->setVisible(false);
     
     mMenuButton = mMenuPanel->makeButton(mMenuPanel->getBackground()->width() / 2 - 100,
@@ -495,7 +542,11 @@ void OGKInGameScene::_initHUDPanel()
                                                          "HUDPanel");
     mHUDPanel->getBackground()->background_image(NULL);
     mHUDPanel->getBackground()->background_colour(Gorilla::rgb(0,0,0,0));
+#ifdef OGRE_IS_IOS
+    mHUDPanel->hideInternalMousePointer();
+#else
     mHUDPanel->showInternalMousePointer();
+#endif
     mHUDPanel->setVisible(false);
     
     Ogre::Real top = vp->getActualHeight() - 40;
@@ -526,7 +577,12 @@ void OGKInGameScene::_initDialogPanel()
                                                         Ogre::Vector2(width,height),
                                                         "default_theme",
                                                         "DialogPanel");
+    
+#ifdef OGRE_IS_IOS
+    mDialogPanel->hideInternalMousePointer();
+#else
     mDialogPanel->showInternalMousePointer();
+#endif
     mDialogPanel->setVisible(false);
     mDialogPanel->getBackground()->background_image(NULL);
     mDialogPanel->getBackground()->background_colour(Gorilla::rgb(0,0,0,80));

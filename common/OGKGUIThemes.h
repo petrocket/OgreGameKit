@@ -110,6 +110,4 @@ public:
     }
 };
 
-static OGKDefaultGUITheme defaultGUITheme;
-
 #endif

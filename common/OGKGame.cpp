@@ -50,6 +50,8 @@ OGKGame::OGKGame() :
 #else
     mResourcePath = "";
 #endif
+    
+    mDefaultGUITheme = OGRE_NEW OGKDefaultGUITheme();
 }
 
 ////////////////////////////////////////////////////////////////////////////////

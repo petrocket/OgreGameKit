@@ -44,7 +44,7 @@ Ogre::Vector2 getScreenSize()
     size.width *= getScreenScale();
     size.height *= getScreenScale();
     
-    OGKLOG("Screen bounds w: " + Ogre::StringConverter::toString(size.width) + " h: " + Ogre::StringConverter::toString(size.height));
+//    OGKLOG("Screen bounds w: " + Ogre::StringConverter::toString(size.width) + " h: " + Ogre::StringConverter::toString(size.height));
     if(UIInterfaceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation)) {
         return Ogre::Vector2(size.width,size.height);
     }

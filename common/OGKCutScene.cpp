@@ -32,7 +32,7 @@ OGKCutScene::~OGKCutScene()
 void OGKCutScene::init()
 {
     // don't call OGKScene init (it's constructor already does that)
-    mGUI = OGRE_NEW Gui3D::Gui3D(&defaultGUITheme);
+    mGUI = OGRE_NEW Gui3D::Gui3D(OGKGame::getSingleton().mDefaultGUITheme);
 }
 
 void OGKCutScene::onEnter()
