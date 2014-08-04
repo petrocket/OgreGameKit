@@ -51,6 +51,7 @@ private:
     Ogre::MaterialPtr mTransitionMaterial;
     Ogre::Real mTransitionTime;
     Ogre::Real mTransitionTimeRemaining;
+    Ogre::TextureUnitState *mTransitionTextureUnitState;
 };
 
 #endif /* defined(__OgreGameKit__OGKSceneManager__) */

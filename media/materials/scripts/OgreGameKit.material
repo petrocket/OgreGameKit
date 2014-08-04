@@ -15,3 +15,37 @@ material OGK/DefaultSkyBox
 		}
 	}
 }
+
+fragment_program OGK/TransitionFP glsles
+{
+	source StdQuad_ps.glsles
+    profile glsles
+}
+
+material OGK/SceneTransitionMaterial
+{
+
+    technique
+    {
+        pass
+        {
+   			lighting off
+            scene_blend alpha_blend
+            
+            vertex_program_ref Ogre/Compositor/StdQuad_vp
+            {
+                param_named_auto worldViewProj worldviewproj_matrix
+            }
+
+            fragment_program_ref OGK/TransitionFP
+            {		
+                param_named quadAlpha float 1.0
+            }
+
+            texture_unit 0
+            {
+                tex_address_mode clamp
+            }
+        }
+    }
+}

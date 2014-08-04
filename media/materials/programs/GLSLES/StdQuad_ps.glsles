@@ -1,0 +1,16 @@
+#version 100
+precision mediump int;
+precision mediump float;
+precision lowp sampler2D;
+
+uniform sampler2D tex0;
+uniform float quadAlpha;
+
+varying vec2 uv;
+
+void main()
+{
+	gl_FragColor = texture2D(tex0, uv);
+    gl_FragColor.a = quadAlpha;
+}
+

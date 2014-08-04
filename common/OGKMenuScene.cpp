@@ -34,7 +34,7 @@ bool OGKMenuScene::buttonPressed(Gui3D::PanelElement *e)
         mSettingsPanel->setVisible(false);
     }
     else if(e == mPlayButton) {
-        OGKGame::getSingletonPtr()->mGameSceneManager->setActiveScene("cutscene", 500);
+        OGKGame::getSingletonPtr()->mGameSceneManager->setActiveScene("cutscene", 10000);
     }
     else if(e == mSettingsButton) {
         mMainPanel->setVisible(false);
@@ -107,7 +107,10 @@ void OGKMenuScene::onExitTransitionDidStart()
 {
     OGKScene::onExitTransitionDidStart();
     
-    if(mMainPanel) mMainPanel->hideInternalMousePointer();
+    if(mMainPanel) {
+        mMainPanel->hideInternalMousePointer();
+        mMainPanel->setVisible(false);
+    }
     
     OGKInputManager::getSingletonPtr()->removeKeyListener(this);
 #ifdef OGRE_IS_IOS
@@ -115,6 +118,7 @@ void OGKMenuScene::onExitTransitionDidStart()
 #else
     OGKInputManager::getSingletonPtr()->removeMouseListener(this);
 #endif
+    
 }
 
 bool OGKMenuScene::stateChanged(Gui3D::PanelElement *e)

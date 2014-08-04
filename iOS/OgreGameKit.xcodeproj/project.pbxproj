@@ -70,6 +70,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FA0813D6198DB62100F92861 /* StdQuad_ps.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = StdQuad_ps.glsles; sourceTree = "<group>"; };
 		FA5D76BF1983F6A60078CC43 /* Gorilla.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Gorilla.cpp; sourceTree = "<group>"; };
 		FA5D76C01983F6A60078CC43 /* Gorilla.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Gorilla.h; sourceTree = "<group>"; };
 		FA5D76C11983F6A60078CC43 /* Gui3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Gui3D.cpp; sourceTree = "<group>"; };
@@ -611,6 +612,7 @@
 				FA8D689F198736650080C223 /* hdr_downscale3x3brightpass.glsles */,
 				FA8D68A0198736650080C223 /* hdr_finalToneMapping.glsles */,
 				FA8D68A1198736650080C223 /* hdrFp.glsles */,
+				FA0813D6198DB62100F92861 /* StdQuad_ps.glsles */,
 				FA8D68A2198736650080C223 /* StdQuad_Tex2_vp.glsles */,
 				FA8D68A3198736650080C223 /* StdQuad_Tex2a_vp.glsles */,
 				FA8D68A4198736650080C223 /* StdQuad_Tex3_vp.glsles */,

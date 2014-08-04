@@ -35,7 +35,7 @@ OGKCamera::OGKCamera(
     mCamera->setFixedYawAxis(true);
 
     Ogre::Viewport *vp = renderWindow->addViewport(mCamera,numCameras);
-
+    vp->setBackgroundColour(Ogre::ColourValue::Black);
 	mCamera->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
 	mCamera->setNearClipDistance(1);
     mCamera->setFarClipDistance(11000);
@@ -150,7 +150,7 @@ void OGKCamera::setEnabled(bool enabled)
         renderWindow->removeAllViewports();
         
         Ogre::Viewport *vp = renderWindow->addViewport(mCamera);
-
+        vp->setBackgroundColour(Ogre::ColourValue::Black);
         mCamera->setAspectRatio(Ogre::Real(vp->getActualWidth()) /
                                 Ogre::Real(vp->getActualHeight()));
         mCamera->setNearClipDistance(1);

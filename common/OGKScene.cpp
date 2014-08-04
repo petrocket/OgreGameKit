@@ -11,6 +11,10 @@
 #include "OGKGame.h"
 #include "DotSceneLoader.h"
 
+#ifdef INCLUDE_RTSHADER_SYSTEM
+#include "OgreRTShaderSystem.h"
+#endif
+
 OGKScene::OGKScene(const Ogre::String& name) :
     mCamera(NULL),
     mRunning(false),
@@ -24,6 +28,10 @@ OGKScene::OGKScene(const Ogre::String& name) :
 
 OGKScene::~OGKScene()
 {
+#ifdef INCLUDE_RTSHADER_SYSTEM
+    Ogre::RTShader::ShaderGenerator::getSingletonPtr()->removeSceneManager(mSceneManager);
+#endif
+    
     Ogre::Root::getSingletonPtr()->destroySceneManager(mSceneManager);
 }
 
@@ -32,7 +40,12 @@ void OGKScene::init()
     mSceneManager =  Ogre::Root::getSingletonPtr()->createSceneManager(Ogre::ST_GENERIC, "SceneManager" + mSceneName);
     mSceneManager->addRenderQueueListener(OGKGame::getSingletonPtr()->mOverlaySystem);
     
+#ifdef INCLUDE_RTSHADER_SYSTEM
+    Ogre::RTShader::ShaderGenerator::getSingletonPtr()->addSceneManager(mSceneManager);
+#endif
+    
     mOverlay = Ogre::OverlayManager::getSingletonPtr()->create("SceneOverlay" + mSceneName);
+    mOverlay->setZOrder(100);
 }
 
 bool OGKScene::isRunning()

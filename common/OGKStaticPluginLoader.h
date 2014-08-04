@@ -37,7 +37,7 @@
 #    define OGRE_STATIC_GLES 1
 #    ifdef OGRE_USE_GLES2
 #      define OGRE_STATIC_GLES2 1
-#      define INCLUDE_RTSHADER_SYSTEM
+//#      define INCLUDE_RTSHADER_SYSTEM
 #      undef OGRE_STATIC_GLES
 #    endif
 #    ifdef __OBJC__

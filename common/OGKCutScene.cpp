@@ -45,6 +45,7 @@ void OGKCutScene::onEnter()
     
     // create the gui
     Ogre::Viewport *vp = mCamera->getCamera()->getViewport();
+    vp->setBackgroundColour(Ogre::ColourValue::Black);
     mScreen = mGUI->createScreenRenderable2D(vp, "default_theme","cutScene");
     Ogre::SceneNode *node = OGRE_NEW Ogre::SceneNode(mSceneManager);
     node->attachObject(mScreen);
@@ -167,8 +168,8 @@ void OGKCutScene::_createCutScene()
                                                              "default_theme",
                                                              "SettingsMenu");
     mScreenPanel->hideInternalMousePointer();
-    mScreenPanel->setVisible(true);
-    mScreenPanel->getBackground()->background_colour(Gorilla::Colours::Black);
+    //mScreenPanel->setVisible(true);
+    //mScreenPanel->getBackground()->background_colour(Gorilla::Colours::Black);
     
     Ogre::Real margin = 50.0;
     Ogre::Real width = vp->getActualWidth()  - margin * 2 ;

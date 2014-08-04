@@ -31,6 +31,10 @@
 
 #include "Gorilla.h"
 
+#ifdef INCLUDE_RTSHADER_SYSTEM
+#include "OgreRTShaderSystem.h"
+#endif
+
 #pragma warning ( disable : 4244 )
 
 #if OGRE_VERSION < 67584 // 1.8.0
@@ -546,6 +550,9 @@ namespace Gorilla
         m2DPass = m2DMaterial->getTechnique(0)->getPass(0);
         m2DPass->getTextureUnitState(0)->setTextureName(mTexture->getName());
         
+#ifdef INCLUDE_RTSHADER_SYSTEM
+        Ogre::RTShader::ShaderGenerator::getSingletonPtr()->invalidateMaterial(Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME, matName);
+#endif
     }
     
     void  TextureAtlas::_create3DMaterial()
@@ -559,6 +566,10 @@ namespace Gorilla
         
         m3DPass = m3DMaterial->getTechnique(0)->getPass(0);
         m3DPass->getTextureUnitState(0)->setTextureName(mTexture->getName());
+        
+#ifdef INCLUDE_RTSHADER_SYSTEM
+        Ogre::RTShader::ShaderGenerator::getSingletonPtr()->invalidateMaterial(Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME, matName);
+#endif
         
     }
     

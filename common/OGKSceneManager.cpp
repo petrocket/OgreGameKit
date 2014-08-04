@@ -10,6 +10,10 @@
 #include "OGKScene.h"
 #include "OGKGame.h"
 
+#ifdef INCLUDE_RTSHADER_SYSTEM
+#include "OgreRTShaderSystem.h"
+#endif
+
 const Ogre::String kTransitionTextureName = "OGKTransitionTexture";
 const Ogre::String kTransitionMaterialName = "OGKTransitionMaterial";
 const Ogre::String kTransitionNodeName = "OGKTransitionNode";
@@ -21,9 +25,11 @@ OGKSceneManager::OGKSceneManager() :
     mPanel(NULL),
     mPreviousScene(NULL),
     mRenderTexture(NULL),
-    mTransitionTimeRemaining(0)
+    mTransitionTimeRemaining(0),
+    mTransitionTextureUnitState(NULL)
 {
     mOverlay = Ogre::OverlayManager::getSingletonPtr()->create(kTransitionOverlayName);
+    mOverlay->setZOrder(1000);
 }
 
 OGKSceneManager::~OGKSceneManager()
@@ -119,6 +125,7 @@ void OGKSceneManager::setActiveScene(const Ogre::String name, Ogre::Real transit
             mRenderTexture->removeAllViewports();
             Ogre::Viewport *vp = mRenderTexture->addViewport(cam);
             if(vp) {
+                //OGKLOG("Preparing rtt viewport");
                 vp->setClearEveryFrame(true);
                 vp->setBackgroundColour(bg);
                 vp->setOverlaysEnabled(true);
@@ -126,7 +133,10 @@ void OGKSceneManager::setActiveScene(const Ogre::String name, Ogre::Real transit
             }
         }
 
-        if(mOverlay) mOverlay->show();
+        if(mOverlay) {
+            //OGKLOG("Showing Overlay");
+            mOverlay->show();
+        }
     }
     else {
         if(mPreviousScene) mPreviousScene->onExit();
@@ -147,12 +157,31 @@ void OGKSceneManager::update(Ogre::Real timeElapsed)
         else if(mPreviousScene) {
             mPreviousScene->update(timeElapsed);
             
-            if(mRenderTexture) mRenderTexture->update();
+            if(mRenderTexture) {
+                //OGKLOG("updating render texture");
+                mRenderTexture->update();
+            }
             
-            if(!mTransitionMaterial.isNull()) {
+            if(mTransitionTextureUnitState) {
                 Ogre::Real fadeAmt = MIN(1.0,MAX(0.0,mTransitionTimeRemaining) / mTransitionTime);
-                Ogre::TextureUnitState *tex = mTransitionMaterial->getTechnique(0)->getPass(0)->getTextureUnitState(0);
-                tex->setAlphaOperation(Ogre::LBX_SOURCE1, Ogre::LBS_MANUAL, Ogre::LBS_CURRENT, fadeAmt);
+                //OGKLOG("updating fade amt " +  Ogre::StringConverter::toString(fadeAmt) );
+                
+#ifdef OGRE_IS_IOS
+                // Retrieve the shader parameters
+                Ogre::GpuProgramParametersSharedPtr pParams = mTransitionMaterial->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
+                if ( !pParams.isNull() ) {
+                    if ( pParams->_findNamedConstantDefinition( "quadAlpha" ) ) {
+                        pParams->setNamedConstant( "quadAlpha", fadeAmt );
+                    }
+                }
+#else
+                mTransitionTextureUnitState->setAlphaOperation(Ogre::LBX_SOURCE1, Ogre::LBS_MANUAL, Ogre::LBS_CURRENT, fadeAmt);
+#endif
+                //mPanel->setMaterialName( kTransitionMaterialName );
+                
+#ifdef INCLUDE_RTSHADER_SYSTEM
+                Ogre::RTShader::ShaderGenerator::getSingletonPtr()->invalidateMaterial(Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME, kTransitionMaterialName);
+#endif
             }
         }
     }
@@ -164,6 +193,7 @@ void OGKSceneManager::_initRTT()
 {
     if(mTransitionTexture.isNull()) {
         Ogre::TextureManager *mgr = Ogre::TextureManager::getSingletonPtr();
+        
         mTransitionTexture = mgr->createManual(kTransitionTextureName,
                                                Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
                                                Ogre::TEX_TYPE_2D,
@@ -172,8 +202,8 @@ void OGKSceneManager::_initRTT()
                                                0,
                                                Ogre::PF_R8G8B8A8,
                                                Ogre::TU_RENDERTARGET);
-        
     }
+    
     if(!mRenderTexture) {
         mRenderTexture = mTransitionTexture->getBuffer()->getRenderTarget();
         mRenderTexture->setAutoUpdated(false);
@@ -182,16 +212,35 @@ void OGKSceneManager::_initRTT()
     
     if(!mPanel) {
         Ogre::MaterialManager *mgr = Ogre::MaterialManager::getSingletonPtr();
+        
+#ifdef OGRE_IS_IOS
+        mTransitionMaterial = mgr->getByName("OGK/SceneTransitionMaterial");
+#else
         mTransitionMaterial = mgr->create(kTransitionMaterialName,
-                                            Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+                                          Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
         mTransitionMaterial->getTechnique(0)->getPass(0)->setLightingEnabled(false);
         mTransitionMaterial->getTechnique(0)->getPass(0)->setSceneBlending(Ogre::SBT_TRANSPARENT_ALPHA);
         mTransitionMaterial->getTechnique(0)->getPass(0)->createTextureUnitState(kTransitionTextureName);
         
+#endif
+        mTransitionTextureUnitState = mTransitionMaterial->getTechnique(0)->getPass(0)->getTextureUnitState(0);
+        
+#ifdef OGRE_IS_IOS
+        mTransitionTextureUnitState->setTexture(mTransitionTexture);
+#endif
+        
         mPanel = static_cast<Ogre::PanelOverlayElement*>(Ogre::OverlayManager::getSingleton().createOverlayElement( "Panel", kTransitionOverlayPanelName));
+        mPanel->setMetricsMode(Ogre::GMM_RELATIVE);
         mPanel->setPosition(0.0, 0.0);
         mPanel->setDimensions(1.0, 1.0);
+#ifdef OGRE_IS_IOS
+        mPanel->setMaterialName( "OGK/SceneTransitionMaterial" );
+#else
         mPanel->setMaterialName( kTransitionMaterialName );
+#endif
+//        mPanel->setMaterialName( "OGK/Debug/Yellow" );
+//        mPanel->setMaterialName( "BaseWhiteNoLighting" );
         mOverlay->add2D(mPanel);
+        mOverlay->show();
     }
 }

@@ -15,7 +15,7 @@
 
 static OGKShaderGeneratorListener *mMaterialMgrListener = NULL;
 
-void initShaderGenerator(Ogre::SceneManager *sceneMgr)
+bool initShaderGenerator(Ogre::SceneManager *sceneMgr)
 {
     Ogre::RTShader::ShaderGenerator* mShaderGenerator = NULL;
     

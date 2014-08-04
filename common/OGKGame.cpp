@@ -144,10 +144,6 @@ void OGKGame::start()
     
     mStartTime = mTimer->getMillisecondsCPU();
     
-#ifdef INCLUDE_RTSHADER_SYSTEM
-    initShaderGenerator(mSceneManager);
-#endif
-    
 	setup();
 
     mRenderWindow->resetStatistics();
@@ -353,15 +349,15 @@ bool OGKGame::_init(Ogre::String wndTitle)
     _initResources();
     
     // GUI
-    OGRE_NEW Gorilla::Silverback();
-    Gorilla::Silverback::getSingletonPtr()->loadAtlas("dejavu");
-    mOverlayScreen = Gorilla::Silverback::getSingletonPtr()->createScreen(mRenderWindow->getViewport(0), "dejavu");
+//    OGRE_NEW Gorilla::Silverback();
+//    Gorilla::Silverback::getSingletonPtr()->loadAtlas("dejavu");
+//    mOverlayScreen = Gorilla::Silverback::getSingletonPtr()->createScreen(mRenderWindow->getViewport(0), "dejavu");
     
     // OVERLAYS (fps)
     //_initOverlays();
     
     // CONSOLE
-    _initConsole();
+//    _initConsole();
 
 	mTimer = OGRE_NEW Ogre::Timer();
 	mTimer->reset();
@@ -436,7 +432,17 @@ void OGKGame::_initResources()
             Ogre::ResourceGroupManager::getSingleton().addResourceLocation(archName, typeName, secName);
         }
     }
-	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
+	
+#ifndef OGRE_IS_IOS
+    Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
+#endif
+    
+#ifdef INCLUDE_RTSHADER_SYSTEM
+    if(!initShaderGenerator(mSceneManager)) {
+        mLog->logMessage("Failed to init Shader Generator");
+    }
+#endif
+    
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 }
 
