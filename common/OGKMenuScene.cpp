@@ -109,7 +109,6 @@ void OGKMenuScene::onExitTransitionDidStart()
     
     if(mMainPanel) {
         mMainPanel->hideInternalMousePointer();
-        mMainPanel->setVisible(false);
     }
     
     OGKInputManager::getSingletonPtr()->removeKeyListener(this);

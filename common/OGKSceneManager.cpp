@@ -60,6 +60,8 @@ OGKScene *OGKSceneManager::getScene(const Ogre::String name)
 
 void OGKSceneManager::preRenderTargetUpdate(const Ogre::RenderTargetEvent& evt)
 {
+    if(mOverlay) mOverlay->hide();
+    
     if(mActiveScene) {
         mActiveScene->mSceneNode->setVisible(false);
         if(mActiveScene->mOverlay) {
@@ -76,6 +78,8 @@ void OGKSceneManager::preRenderTargetUpdate(const Ogre::RenderTargetEvent& evt)
 
 void OGKSceneManager::postRenderTargetUpdate(const Ogre::RenderTargetEvent& evt)
 {
+    if(mOverlay) mOverlay->show();
+    
     if(mActiveScene) {
         mActiveScene->mSceneNode->setVisible(true);
         if(mActiveScene->mOverlay) {
@@ -177,7 +181,6 @@ void OGKSceneManager::update(Ogre::Real timeElapsed)
 #else
                 mTransitionTextureUnitState->setAlphaOperation(Ogre::LBX_SOURCE1, Ogre::LBS_MANUAL, Ogre::LBS_CURRENT, fadeAmt);
 #endif
-                //mPanel->setMaterialName( kTransitionMaterialName );
                 
 #ifdef INCLUDE_RTSHADER_SYSTEM
                 Ogre::RTShader::ShaderGenerator::getSingletonPtr()->invalidateMaterial(Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME, kTransitionMaterialName);
@@ -215,6 +218,9 @@ void OGKSceneManager::_initRTT()
         
 #ifdef OGRE_IS_IOS
         mTransitionMaterial = mgr->getByName("OGK/SceneTransitionMaterial");
+        
+        //mTransitionMaterial->getTechnique(0)->getPass(0)->removeAllTextureUnitStates();
+        //Ogre::TextureUnitState* state = mTransitionMaterial->getTechnique(0)->getPass(0)->createTextureUnitState();
 #else
         mTransitionMaterial = mgr->create(kTransitionMaterialName,
                                           Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
@@ -226,6 +232,9 @@ void OGKSceneManager::_initRTT()
         mTransitionTextureUnitState = mTransitionMaterial->getTechnique(0)->getPass(0)->getTextureUnitState(0);
         
 #ifdef OGRE_IS_IOS
+//        mTransitionTextureUnitState->setTextureFiltering( Ogre::FO_ANISOTROPIC, Ogre::FO_ANISOTROPIC, Ogre::FO_LINEAR );
+//        mTransitionTextureUnitState->setTextureAnisotropy( 8 );
+//        mTransitionTextureUnitState->setTextureName( kTransitionTextureName );
         mTransitionTextureUnitState->setTexture(mTransitionTexture);
 #endif
         
