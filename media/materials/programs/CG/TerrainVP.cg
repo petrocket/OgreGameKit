@@ -9,10 +9,10 @@
 	    
 	    uniform float4 ambient,
 	    uniform float4x4 worldViewProj,
-	    uniform float morphFactor
+	    uniform float lodMorph
 	    )
     {
-	    position.y = position.y + (delta.x * morphFactor);
+	    position.y = position.y + (delta.x * lodMorph);
 	    oPosition = mul(worldViewProj, position);
 	    oUv = uv;
 	    oColor = ambient;

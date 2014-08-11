@@ -80,7 +80,11 @@ bool OGKGame::renderOneFrame()
 {
     // NOTE: OSX uses NSDate via it's OGKAppDelegate instead of this
     // because the Ogre timer doesn't seem to report correct time always
-    double current_time = mTimer->getMillisecondsCPU();
+    
+    // getMillisecondsCPU does not work well on iOS - use getMilliseconds instead
+//    double current_time = mTimer->getMillisecondsCPU();
+    
+    double current_time = mTimer->getMilliseconds();
     mTimeSinceLastFrame = current_time - mStartTime;
     mStartTime = current_time;
     
@@ -110,7 +114,7 @@ bool OGKGame::renderOneFrame(double timeSinceLastFrame)
 void OGKGame::setup()
 {
     Ogre::MaterialManager::getSingleton().setDefaultTextureFiltering(Ogre::TFO_ANISOTROPIC);
-    Ogre::MaterialManager::getSingleton().setDefaultAnisotropy(7);
+//    Ogre::MaterialManager::getSingleton().setDefaultAnisotropy(7);
 
     OGKMenuScene *firstScene = OGRE_NEW OGKMenuScene("menu");
     mGameSceneManager->addScene(firstScene,"menu");
@@ -348,16 +352,19 @@ bool OGKGame::_init(Ogre::String wndTitle)
     // RESOURCES
     _initResources();
     
+#ifndef OGRE_IS_IOS
     // GUI
-//    OGRE_NEW Gorilla::Silverback();
-//    Gorilla::Silverback::getSingletonPtr()->loadAtlas("dejavu");
-//    mOverlayScreen = Gorilla::Silverback::getSingletonPtr()->createScreen(mRenderWindow->getViewport(0), "dejavu");
-    
+    OGRE_NEW Gorilla::Silverback();
+    Gorilla::Silverback::getSingletonPtr()->loadAtlas("dejavu");
+    mOverlayScreen = Gorilla::Silverback::getSingletonPtr()->createScreen(mRenderWindow->getViewport(0), "dejavu");
+#endif
     // OVERLAYS (fps)
     //_initOverlays();
     
+#ifndef OGRE_IS_IOS
     // CONSOLE
-//    _initConsole();
+    _initConsole();
+#endif
 
 	mTimer = OGRE_NEW Ogre::Timer();
 	mTimer->reset();
@@ -433,9 +440,9 @@ void OGKGame::_initResources()
         }
     }
 	
-#ifndef OGRE_IS_IOS
+//#ifndef OGRE_IS_IOS
     Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
-#endif
+//#endif
     
 #ifdef INCLUDE_RTSHADER_SYSTEM
     if(!initShaderGenerator(mSceneManager)) {

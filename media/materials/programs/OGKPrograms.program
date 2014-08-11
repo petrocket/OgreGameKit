@@ -1,0 +1,26 @@
+////////////////////////////////////////////////////////////////////////////////
+// MOBILE
+vertex_program OGK/SkyboxVPGLSLES glsles
+{
+	source OGKSkyboxVP.glsles
+    profile glsles
+}
+fragment_program OGK/SkyboxFPGLSLES glsles
+{
+	source OGKSkyboxFP.glsles
+    profile glsles
+    default_params {
+        param_named skyboxtex int 0
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// UNIFIED
+vertex_program OGK/SkyboxVP unified
+{
+    delegate OGK/SkyboxVPGLSLES
+}
+fragment_program OGK/SkyboxFP unified
+{
+    delegate OGK/SkyboxFPGLSLES
+}

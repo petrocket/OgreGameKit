@@ -54,7 +54,7 @@ Ogre::MaterialPtr OGKTerrainMaterial::Profile::generate(const Ogre::Terrain* ter
         }
     }
     
-#ifndef OGRE_IS_IOS
+//#ifndef OGRE_IS_IOS
     if(!mat.isNull()) {
         // Get default pass
         Ogre::Pass *p = mat->getTechnique(0)->getPass(0);
@@ -65,7 +65,7 @@ Ogre::MaterialPtr OGKTerrainMaterial::Profile::generate(const Ogre::Terrain* ter
         Ogre::TexturePtr nmtx = terrain->getTerrainNormalMap();
         tu->_setTexturePtr(nmtx);
     }
-#endif
+//#endif
     return mat;
 };
 
@@ -89,8 +89,13 @@ void OGKTerrainMaterial::Profile::updateParamsForCompositeMap(const Ogre::Materi
 
 void OGKTerrainMaterial::Profile::requestOptions(Ogre::Terrain* terrain)
 {
+//#ifdef OGRE_IS_IOS
+//    terrain->_setMorphRequired(false);
+//    terrain->_setNormalMapRequired(false);
+//#else
     terrain->_setMorphRequired(true);
     terrain->_setNormalMapRequired(true); // enable global normal map
+//#endif
     terrain->_setLightMapRequired(false);
     terrain->_setCompositeMapRequired(false);
 };

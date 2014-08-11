@@ -4,14 +4,19 @@ vertex_program Terrain/Programs/TerrainVPMobile glsles
 {
 	source TerrainVPMobile.glsles
     profile glsles
+	default_params
+	{
+		param_named_auto worldViewProj worldviewproj_matrix
+	}    
 }
 fragment_program Terrain/Programs/TerrainFPMobile glsles
 {
 	source TerrainFPMobile.glsles
     profile glsles
     default_params {
-		param_named lightMap int 0
-		param_named splat1 int 1
+        param_named globalNormal int 0
+		param_named lightMap int 1
+		param_named splat1 int 2
     }
 }
 

@@ -3,14 +3,15 @@
 precision mediump int;
 precision highp float;
 
+uniform vec4 ambient;
 uniform float splatScaleX;
 uniform float splatScaleZ;
 uniform vec3 fogColour;
 
+uniform sampler2D globalNormal;
 uniform sampler2D lightMap;
 uniform sampler2D splat1;
 
-varying vec4 oColor0;
 varying vec2 uv;
 varying float fogVal;
 
@@ -25,8 +26,9 @@ void main()
     vec4 diffuse = texture2D(splat1, localTexCoord);
     vec4 lit = texture2D(lightMap, globalTexCoord);
 
-//    gl_FragColor = mix(diffuse * lit + (oColor0 * (1.0 - lit.x)), vec4(fogColour.r, fogColour.g,fogColour.b,1.0), 0.0);
-    gl_FragColor.rgb = mix((diffuse * lit + (oColor0 * (1.0 - lit.x))).rgb,fogColour, fogVal);
+//    gl_FragColor = mix(diffuse * lit + (ambient * (1.0 - lit.x)), vec4(fogColour.r, fogColour.g,fogColour.b,1.0), 0.0);
+    gl_FragColor.rgb = mix((diffuse * lit + (ambient * (1.0 - lit.x))).rgb,fogColour, fogVal);
     gl_FragColor.a = 1.0;
+//    gl_FragColor.r = 1.0;
 }
 

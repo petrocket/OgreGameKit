@@ -34,7 +34,7 @@ bool OGKMenuScene::buttonPressed(Gui3D::PanelElement *e)
         mSettingsPanel->setVisible(false);
     }
     else if(e == mPlayButton) {
-        OGKGame::getSingletonPtr()->mGameSceneManager->setActiveScene("cutscene", 10000);
+        OGKGame::getSingletonPtr()->mGameSceneManager->setActiveScene("ingame", 500);
     }
     else if(e == mSettingsButton) {
         mMainPanel->setVisible(false);
@@ -253,9 +253,17 @@ void OGKMenuScene::_createMainMenu()
                                                      "MainMenu");
     mMainPanel->hideInternalMousePointer();
     
-    mPlayButton = mMainPanel->makeButton(vp->getActualWidth() / 2 - 100,
-                                         vp->getActualHeight() / 2 - 20,
-                                         200, 40, "PLAY");
+#ifndef OGRE_IS_IOS
+    Ogre::Real buttonWidth = 200;
+    Ogre::Real buttonHeight = 40;
+#else
+    Ogre::Real buttonWidth = 300;
+    Ogre::Real buttonHeight = 60;
+#endif
+    
+    mPlayButton = mMainPanel->makeButton(vp->getActualWidth() / 2 - buttonWidth / 2,
+                                         vp->getActualHeight() / 2 - buttonHeight / 2,
+                                         buttonWidth, buttonHeight, "PLAY");
     mPlayButton->setPressedCallback(this, &OGKMenuScene::buttonPressed);
 
 #ifndef OGRE_IS_IOS
@@ -263,7 +271,11 @@ void OGKMenuScene::_createMainMenu()
     mQuitButton->setPressedCallback(this, &OGKMenuScene::buttonPressed);
 #endif
 
-    mSettingsButton = mMainPanel->makeButton(5, vp->getActualHeight() - 35, 120, 30, "SETTINGS");
+    mSettingsButton = mMainPanel->makeButton(5,
+                                             vp->getActualHeight() - buttonHeight - 5,
+                                             buttonWidth,
+                                             buttonHeight,
+                                             "SETTINGS");
     mSettingsButton->setPressedCallback(this, &OGKMenuScene::buttonPressed);
 }
 

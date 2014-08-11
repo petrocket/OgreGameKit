@@ -13,3 +13,22 @@ material OGK/Debug/Yellow
       }
    }
 }
+
+material OGK/Debug/Gray
+{
+   technique
+   {
+      pass
+      {
+        vertex_program_ref OGK/ColorVP
+        {
+            param_named_auto worldViewProj worldviewproj_matrix
+        }
+
+        fragment_program_ref OGK/ColorFP
+        {		
+            param_named diffuseColor float3 0.5 0.5 0.5
+        }
+      }
+   }
+}

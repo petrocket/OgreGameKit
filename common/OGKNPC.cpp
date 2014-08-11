@@ -16,6 +16,7 @@
 OGKNPC::OGKNPC(Ogre::SceneManager *sceneManager)
 {
     mEntity = sceneManager->createEntity("NPC", "NPC.mesh");
+    
     mSceneNode = sceneManager->getRootSceneNode()->createChildSceneNode();
     mSceneNode->attachObject(mEntity);
     mSceneNode->scale(5.0,5.0,5.0);
@@ -163,6 +164,19 @@ void OGKNPC::_init()
     
     // set bar colours
     setIsEnemy(mIsEnemy);
+    
+#ifdef OGRE_IS_IOS
+    mEntity->setMaterialName("OGK/Debug/Gray");
+#endif
+    
+    if(mEntity->hasAnimationState("Walk")) {
+        mEntity->getAnimationState("Walk")->setLoop(true);
+        mEntity->getAnimationState("Walk")->setEnabled(false);
+    }
+    if(mEntity->hasAnimationState("Idle")) {
+        mEntity->getAnimationState("Idle")->setLoop(true);
+        mEntity->getAnimationState("Idle")->setEnabled(true);
+    }
     
     snapToTerrain();
 }

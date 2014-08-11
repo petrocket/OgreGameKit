@@ -1,0 +1,13 @@
+#version 100
+
+precision mediump int;
+precision mediump float;
+
+uniform mat4 worldViewProj;
+
+attribute vec4 position;
+
+void main()
+{
+    gl_Position = worldViewProj * position;
+}

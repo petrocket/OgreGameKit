@@ -56,6 +56,7 @@
 		FA7769D6193E4B02005F4810 /* ogre.cfg in Resources */ = {isa = PBXBuildFile; fileRef = FA7769D5193E4B02005F4810 /* ogre.cfg */; };
 		FA7769D8193E4B02005F4810 /* plugins.cfg in Resources */ = {isa = PBXBuildFile; fileRef = FA7769D7193E4B02005F4810 /* plugins.cfg */; };
 		FA7769DA193E4B02005F4810 /* resources.cfg in Resources */ = {isa = PBXBuildFile; fileRef = FA7769D9193E4B02005F4810 /* resources.cfg */; };
+		FAA1BF92199931BB005829DD /* OGKTerrainGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA1BF90199931BB005829DD /* OGKTerrainGenerator.cpp */; };
 		FAB8BF1A19531C8000DA2B26 /* OGKCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAB8BF1819531C8000DA2B26 /* OGKCamera.cpp */; };
 		FAB8BF26195327BE00DA2B26 /* OGKInputManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAB8BF24195327BE00DA2B26 /* OGKInputManager.cpp */; };
 		FAB8BF2F1953C71800DA2B26 /* OGKPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAB8BF2D1953C71800DA2B26 /* OGKPlayer.cpp */; };
@@ -320,6 +321,8 @@
 		FA7769D5193E4B02005F4810 /* ogre.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = ogre.cfg; sourceTree = "<group>"; };
 		FA7769D7193E4B02005F4810 /* plugins.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = plugins.cfg; sourceTree = "<group>"; };
 		FA7769D9193E4B02005F4810 /* resources.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = resources.cfg; sourceTree = "<group>"; };
+		FAA1BF90199931BB005829DD /* OGKTerrainGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OGKTerrainGenerator.cpp; path = ../../common/OGKTerrainGenerator.cpp; sourceTree = "<group>"; };
+		FAA1BF91199931BB005829DD /* OGKTerrainGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKTerrainGenerator.h; path = ../../common/OGKTerrainGenerator.h; sourceTree = "<group>"; };
 		FAB8BF1819531C8000DA2B26 /* OGKCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OGKCamera.cpp; path = ../../common/OGKCamera.cpp; sourceTree = "<group>"; };
 		FAB8BF1919531C8000DA2B26 /* OGKCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKCamera.h; path = ../../common/OGKCamera.h; sourceTree = "<group>"; };
 		FAB8BF24195327BE00DA2B26 /* OGKInputManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OGKInputManager.cpp; path = ../../common/OGKInputManager.cpp; sourceTree = "<group>"; };
@@ -413,6 +416,8 @@
 				FA35946D193E64120050AB5C /* OGKStaticPluginLoader.h */,
 				FACF19E31940DD7D00F099AA /* OGKTerrain.cpp */,
 				FACF19E41940DD7D00F099AA /* OGKTerrain.h */,
+				FAA1BF90199931BB005829DD /* OGKTerrainGenerator.cpp */,
+				FAA1BF91199931BB005829DD /* OGKTerrainGenerator.h */,
 				FACF1A2C19425DEF00F099AA /* OGKTerrainMaterial.cpp */,
 				FACF1A2D19425DEF00F099AA /* OGKTerrainMaterial.h */,
 			);
@@ -981,6 +986,7 @@
 				FA35A7341960FA960071F577 /* DotSceneLoader.cpp in Sources */,
 				FAB8BF2F1953C71800DA2B26 /* OGKPlayer.cpp in Sources */,
 				FA7769BB193E4B02005F4810 /* main.mm in Sources */,
+				FAA1BF92199931BB005829DD /* OGKTerrainGenerator.cpp in Sources */,
 				FA1279281965A20500A7F7DD /* OGKBadge.cpp in Sources */,
 				FA35A71C195A45D50071F577 /* Gui3DCheckboxSprite.cpp in Sources */,
 				FACF19E51940DD7D00F099AA /* OGKTerrain.cpp in Sources */,

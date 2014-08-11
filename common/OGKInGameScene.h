@@ -93,6 +93,9 @@ private:
     Gui3D::Button *mResumeButton;
 
     Gui3D::ScreenRenderable2DPanel *mHUDPanel;
+#if OGRE_IS_IOS
+    Gui3D::Button *mCamModeButton;
+#endif
     Gui3D::Button *mPauseButton;
     Gorilla::Rectangle *mHeart1;
     Gorilla::Rectangle *mHeart2;

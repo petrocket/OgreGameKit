@@ -3,29 +3,27 @@
 precision mediump int;
 precision mediump float;
 
-uniform vec4 ambient;
 uniform mat4 worldViewProj;
-uniform float morphFactor;
+uniform float lodMorph;
 uniform vec4 fogParams;
 
-attribute vec4 position;
+attribute vec4 vertex;
+attribute vec4 normal;
 attribute vec2 uv0;
 attribute float delta;
 
-varying vec4 oColor;
 varying vec2 uv;
 varying float fogVal;
 
 void main()
 {
-    vec4 pos = position;
-    pos.y = position.y + (delta * morphFactor);
+    vec4 pos = vertex;
+    //pos.y = position.y + (delta * lodMorph);
 
     uv = uv0;
-    oColor = ambient;
 
-    gl_Position = worldViewProj * pos;
+    gl_Position = worldViewProj * vertex;
     
     // fog
-    fogVal = clamp((gl_Position.z - fogParams.y) * fogParams.w, 0.0, 1.0);    
+    fogVal = clamp((gl_Position.z - fogParams.y) * fogParams.w, 0.0, 1.0);
 }

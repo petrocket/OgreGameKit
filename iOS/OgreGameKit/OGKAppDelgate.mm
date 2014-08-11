@@ -31,24 +31,34 @@
         std::cerr << "An exception has occurred: " <<
         e.getFullDescription().c_str() << std::endl;
     }
-    
-    mDate = [[NSDate alloc] init];
-    self.lastFrameTime = -[mDate timeIntervalSinceNow];
-    
-    mDisplayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(renderOneFrame)];
-    [mDisplayLink setFrameInterval:self.lastFrameTime];
-    [mDisplayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     [pool release];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     Ogre::Root::getSingleton().saveConfig();
+    
+    Ogre::Root::getSingleton().queueEndRendering();
+    
+    if (mDisplayLink) {
+        [mDate release];
+        mDate = nil;
+        
+        [mDisplayLink invalidate];
+        mDisplayLink = nil;
+    }
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    mDate = [[NSDate alloc] init];
+    self.lastFrameTime = -[mDate timeIntervalSinceNow];
+    
+    mDisplayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(renderOneFrame)];
+    [mDisplayLink setFrameInterval:self.lastFrameTime];
+    [mDisplayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

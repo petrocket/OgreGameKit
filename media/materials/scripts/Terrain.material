@@ -7,8 +7,8 @@ material TerrainMaterial
     {
       vertex_program_ref Terrain/Programs/TerrainVP
       {
-		param_named_auto morphFactor custom 77
 		param_named_auto worldViewProj worldviewproj_matrix
+		param_named_auto lodMorph custom 1001
 		param_named_auto ambient ambient_light_colour
       }
       
@@ -98,28 +98,37 @@ material TerrainMaterial
   {
     pass
     {
+        depth_bias 1 1
+        iteration_depth_bias 1
       vertex_program_ref Terrain/Programs/TerrainVPMobile
       {
-		param_named_auto morphFactor custom 77
 		param_named_auto worldViewProj worldviewproj_matrix
-		param_named_auto ambient ambient_light_colour
+		param_named_auto lodMorph custom 1001
         param_named_auto fogParams fog_params
       }
       
       fragment_program_ref Terrain/Programs/TerrainFPMobile
       {
-        param_named splatScaleX float 256
-		param_named splatScaleZ float 256
+		param_named_auto ambient ambient_light_colour
         param_named_auto fogColour fog_colour
+        param_named splatScaleX float 128.0
+		param_named splatScaleZ float 128.0
       }
 
       texture_unit 0
 	  {
-			texture ETlightmap.png
+            // normal map
+            tex_address_mode clamp
 	  }
       texture_unit 1
+	  {
+            // light map
+			texture ETlightmap.png
+            tex_address_mode clamp
+	  }
+      texture_unit 2
       {
-			texture splatting1_low_res.png
+			texture splatting1_medium_res.png
 	  }
 
     } // pass

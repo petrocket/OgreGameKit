@@ -1,0 +1,14 @@
+#version 100
+
+precision lowp int;
+precision lowp float;
+precision lowp samplerCube;
+
+uniform sampler2D skyboxtex;
+
+varying vec2 oUv;
+
+void main()
+{
+    gl_FragColor = texture2D(skyboxtex,oUv.xy);
+}

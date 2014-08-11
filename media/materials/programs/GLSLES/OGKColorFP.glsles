@@ -1,0 +1,13 @@
+#version 100
+
+precision mediump int;
+precision mediump float;
+
+uniform vec3 diffuseColor;
+
+void main()
+{
+    gl_FragColor.rgb = diffuseColor;
+    gl_FragColor.a = 1.0;
+}
+

@@ -1,0 +1,17 @@
+#version 100
+
+precision lowp int;
+precision lowp float;
+
+uniform mat4 worldViewProj;
+
+attribute vec4 position;
+attribute vec3 uv;
+
+varying vec3 oUv;
+
+void main()
+{
+    gl_Position = worldViewProj * position;
+    oUv = uv;
+}

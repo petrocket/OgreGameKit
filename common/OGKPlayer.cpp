@@ -21,6 +21,11 @@ OGKPlayer::OGKPlayer(Ogre::SceneManager *sceneManager) :
     mSceneNode(NULL)
 {
     mEntity = sceneManager->createEntity("Player", "Player.mesh");
+    
+#ifdef OGRE_IS_IOS
+    mEntity->setMaterialName("OGK/Debug/Gray");
+#endif
+    
     mSceneNode = sceneManager->getRootSceneNode()->createChildSceneNode();
     mSceneNode->attachObject(mEntity);
     mSceneNode->scale(5.0,5.0,5.0);

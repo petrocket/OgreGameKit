@@ -1,0 +1,23 @@
+////////////////////////////////////////////////////////////////////////////////
+// MOBILE
+vertex_program OGK/ColorVPGLSLES glsles
+{
+	source OGKColorVP.glsles
+    profile glsles
+}
+fragment_program OGK/ColorFPGLSLES glsles
+{
+	source OGKColorFP.glsles
+    profile glsles
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// UNIFIED
+vertex_program OGK/ColorVP unified
+{
+    delegate OGK/ColorVPGLSLES
+}
+fragment_program OGK/ColorFP unified
+{
+    delegate OGK/ColorFPGLSLES
+}

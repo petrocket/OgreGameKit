@@ -49,6 +49,20 @@ bool OGKInGameScene::buttonPressed(Gui3D::PanelElement *e)
         mMenuPanel->setVisible(false);
         mHUDPanel->setVisible(true);
     }
+#ifdef OGRE_IS_IOS
+    else if(e == mCamModeButton) {
+        if(mCamModeButton->getCaption()->text().compare("FREE CAM") == 0) {
+            mCamera->setMode(OGKCamera::FREE);
+            if(mPlayer) mPlayer->setEnabled(false);
+            mCamModeButton->getCaption()->text("3RD PERSON");
+        }
+        else {
+            mCamera->setMode(OGKCamera::THIRD_PERSON_INDIRECT);
+            if(mPlayer) mPlayer->setEnabled(true);
+            mCamModeButton->getCaption()->text("FREE CAM");
+        }
+    }
+#endif
     return true;
 }
 
@@ -64,7 +78,7 @@ void OGKInGameScene::onEnter()
 {
     OGKScene::onEnter();
     
-	//mSceneManager->setSkyBox(true, "OGK/DefaultSkyBox");
+	mSceneManager->setSkyBox(true, "OGK/DefaultSkyBox");
     
     Ogre::Viewport *vp = mCamera->getCamera()->getViewport();
     mScreen = mGUI->createScreenRenderable2D(vp, "default_theme","ingame");
@@ -81,7 +95,7 @@ void OGKInGameScene::onEnter()
     mLoadingPanel->setVisible(true);
     
     // light
-    Ogre::Vector3 lightDir(0.55,-0.3,0.75);
+    Ogre::Vector3 lightDir(1,-1,1);
     lightDir.normalise();
     mLight = mSceneManager->createLight("Light");
     mLight->setType(Ogre::Light::LT_DIRECTIONAL);
@@ -95,8 +109,6 @@ void OGKInGameScene::onEnter()
     mCamera->setTarget(NULL);
     mCamera->setMode(OGKCamera::FIXED);
     mCamera->setPosition(Ogre::Vector3(0,1000,0));
-
-    playBackgroundMusic("media/audio/background.mp3");
     
     OGKInputManager::getSingletonPtr()->addKeyListener(this, "ingameScene");
 #ifdef OGRE_IS_IOS
@@ -145,6 +157,7 @@ void OGKInGameScene::onEnterTransitionDidFinish()
     
     mCamera->setTarget(mPlayer->getSceneNode());
     mCamera->setMode(OGKCamera::THIRD_PERSON_INDIRECT);
+    mCamera->setTargetOffset(Ogre::Vector3(15,30,15));
 }
 
 void OGKInGameScene::onExit()
@@ -194,12 +207,17 @@ void OGKInGameScene::onExitTransitionDidStart()
 
 void OGKInGameScene::update(Ogre::Real elapsedTime)
 {
+    bool isLoading = mLoadingPanel->isVisible();
+    
     if(mTerrain) {
-        mTerrain->update();
+        mTerrain->update(elapsedTime);
         
-        if(mLoadingPanel->isVisible()) {
+        if(isLoading) {
             Ogre::Terrain *terrain = mTerrain->mTerrainGroup->getTerrain(0, 0);
-            if(terrain->isLoaded()) {
+            if(terrain->isLoaded() &&
+               !mTerrain->mTerrainGroup->isDerivedDataUpdateInProgress()) {
+                playBackgroundMusic("media/audio/background.mp3");
+                
                 mLoadingPanel->setVisible(false);
                 mHUDPanel->setVisible(true);
                 if(mPlayer) mPlayer->setEnabled(true);
@@ -207,16 +225,18 @@ void OGKInGameScene::update(Ogre::Real elapsedTime)
         }
     }
     
-    if(mNPCs.size()) {
-        for(int i = 0; i < mNPCs.size(); i++) {
-            mNPCs[i]->update(elapsedTime);
+    if(!isLoading) {
+        if(mNPCs.size()) {
+            for(int i = 0; i < mNPCs.size(); i++) {
+                mNPCs[i]->update(elapsedTime);
+            }
         }
-    }
-    
-    // update the player before the camera yo or camera snap ain't perfect
-    if(mPlayer) {
-        mPlayer->update(elapsedTime);
-        _updateHUD();
+        
+        // update the player before the camera yo or camera snap ain't perfect
+        if(mPlayer) {
+            mPlayer->update(elapsedTime);
+            _updateHUD();
+        }
     }
     
     OGKScene::update(elapsedTime);
@@ -240,11 +260,13 @@ bool OGKInGameScene::keyPressed(const OIS::KeyEvent &keyEventRef)
                     mCamera->setMode(OGKCamera::THIRD_PERSON_INDIRECT);
                     mHUDPanel->showInternalMousePointer();
                     if(mPlayer) mPlayer->setEnabled(true);
+                    if(mTerrain) mTerrain->setMode(OGKTerrain::MODE_NORMAL);
                 }
                 else {
                     mCamera->setMode(OGKCamera::FREE);
                     mHUDPanel->hideInternalMousePointer();
                     if(mPlayer) mPlayer->setEnabled(false);
+                    if(mTerrain) mTerrain->setMode(OGKTerrain::MODE_EDIT_HEIGHT);
                 }
             }
             return false;
@@ -375,10 +397,12 @@ bool OGKInGameScene::mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID
     else if(mCamera && mCamera->getMode() == OGKCamera::THIRD_PERSON_INDIRECT && mTerrain &&
        !mHUDPanel->getFocusedElement()) {
         
-        Ogre::Real x = (float)evt.state.X.abs / (float)evt.state.width;
-        Ogre::Real y = (float)evt.state.Y.abs / (float)evt.state.height;
-        
-        _handleClickEvent(x,y);
+        if(evt.state.buttonDown(OIS::MB_Left)) {
+            Ogre::Real x = (float)evt.state.X.abs / (float)evt.state.width;
+            Ogre::Real y = (float)evt.state.Y.abs / (float)evt.state.height;
+            
+            _handleClickEvent(x,y);
+        }
     }
     
     return false;
@@ -517,13 +541,21 @@ void OGKInGameScene::_initMenuPanel()
 #endif
     mMenuPanel->setVisible(false);
     
-    mMenuButton = mMenuPanel->makeButton(mMenuPanel->getBackground()->width() / 2 - 100,
-                                         mMenuPanel->getBackground()->height() / 2 - 50,
-                                         200, 40, "MENU");
+#ifdef OGRE_IS_IOS
+    Ogre::Real buttonHeight = 60.0;
+    Ogre::Real buttonWidth = 400.0;
+#else
+    Ogre::Real buttonHeight = 40.0;
+    Ogre::Real buttonWidth = 200.0;
+#endif
+    
+    mMenuButton = mMenuPanel->makeButton(mMenuPanel->getBackground()->width() / 2 - buttonWidth / 2,
+                                         mMenuPanel->getBackground()->height() / 2 - buttonHeight - 10,
+                                         buttonWidth, buttonHeight, "MENU");
     mMenuButton->setPressedCallback(this, &OGKInGameScene::buttonPressed);
-    mResumeButton = mMenuPanel->makeButton(mMenuPanel->getBackground()->width() / 2 - 100,
+    mResumeButton = mMenuPanel->makeButton(mMenuPanel->getBackground()->width() / 2 - buttonWidth / 2,
                                            mMenuPanel->getBackground()->height() / 2 + 10,
-                                           200, 40, "RESUME");
+                                           buttonWidth, buttonHeight, "RESUME");
     mResumeButton->setPressedCallback(this, &OGKInGameScene::buttonPressed);
 }
 
@@ -542,12 +574,15 @@ void OGKInGameScene::_initHUDPanel()
                                                          "HUDPanel");
     mHUDPanel->getBackground()->background_image(NULL);
     mHUDPanel->getBackground()->background_colour(Gorilla::rgb(0,0,0,0));
+    mHUDPanel->setVisible(false);
+
 #ifdef OGRE_IS_IOS
     mHUDPanel->hideInternalMousePointer();
+    Ogre::Real buttonHeight = 50.0;
 #else
     mHUDPanel->showInternalMousePointer();
+    Ogre::Real buttonHeight = 30.0;
 #endif
-    mHUDPanel->setVisible(false);
     
     Ogre::Real top = vp->getActualHeight() - 40;
     mHeart1 = mHUDPanel->getGUILayer()->createRectangle(10, top, 32, 32);
@@ -557,8 +592,14 @@ void OGKInGameScene::_initHUDPanel()
     mHeart2->background_image("heart_full");
     mHeart3->background_image("heart_full");
     
-    mPauseButton = mHUDPanel->makeButton(5, 5, 200, 30, "PAUSE");
+    mPauseButton = mHUDPanel->makeButton(5, 5, 200, buttonHeight, "PAUSE");
     mPauseButton->setPressedCallback(this, &OGKInGameScene::buttonPressed);
+    
+#ifdef OGRE_IS_IOS
+    Ogre::Real right = vp->getActualWidth() - 200 - 5;
+    mCamModeButton = mHUDPanel->makeButton(right, 5, 200, buttonHeight, "FREE CAM");
+    mCamModeButton->setPressedCallback(this, &OGKInGameScene::buttonPressed);
+#endif
 }
 
 void OGKInGameScene::_initDialogPanel()

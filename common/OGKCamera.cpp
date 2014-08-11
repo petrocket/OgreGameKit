@@ -37,15 +37,20 @@ OGKCamera::OGKCamera(
     Ogre::Viewport *vp = renderWindow->addViewport(mCamera,numCameras);
     vp->setBackgroundColour(Ogre::ColourValue::Black);
 	mCamera->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
+    
 	mCamera->setNearClipDistance(1);
-    mCamera->setFarClipDistance(11000);
+    if (OGKGame::getSingleton().mRoot->getRenderSystem()->getCapabilities()->hasCapability(Ogre::RSC_INFINITE_FAR_PLANE)) {
+        mCamera->setFarClipDistance(0);
+    }
+    else {
+        mCamera->setFarClipDistance(11000);
+    }
     
 	vp->setCamera(mCamera);
     
     mCameraNode = sceneManager->getRootSceneNode()->createChildSceneNode(mCameraName + "Node");
     mCameraNode->attachObject(mCamera);
-    mCameraNode->setFixedYawAxis(true);
-    
+    mCameraNode->setFixedYawAxis(true);    
     
     OGKInputManager::getSingletonPtr()->addKeyListener(this, mCameraName + "Listener");
     
@@ -154,7 +159,13 @@ void OGKCamera::setEnabled(bool enabled)
         mCamera->setAspectRatio(Ogre::Real(vp->getActualWidth()) /
                                 Ogre::Real(vp->getActualHeight()));
         mCamera->setNearClipDistance(1);
-        mCamera->setFarClipDistance(11000);
+        
+        if (OGKGame::getSingleton().mRoot->getRenderSystem()->getCapabilities()->hasCapability(Ogre::RSC_INFINITE_FAR_PLANE)) {
+            mCamera->setFarClipDistance(0);
+        }
+        else {
+            mCamera->setFarClipDistance(11000);
+        }
         
         OGKInputManager::getSingletonPtr()->addKeyListener(this, mCameraName + "Listener");
         
@@ -222,6 +233,11 @@ void OGKCamera::setTarget(Ogre::SceneNode *target)
     mTargetNode = target;
 }
 
+void OGKCamera::setTargetOffset(Ogre::Vector3 offset)
+{
+    mTargetOffset = offset;
+}
+
 Ogre::Real OGKCamera::getTightness()
 {
     return mTightness;
@@ -257,14 +273,14 @@ bool OGKCamera::touchMoved(const OIS::MultiTouchEvent &evt)
             case Ogre::OR_LANDSCAPELEFT:
                 origTransX = state.X.rel;
                 origTransY = state.Y.rel;
-                state.X.rel = -origTransY;
-                state.Y.rel = origTransX;
+                state.X.rel = origTransY;
+                state.Y.rel = -origTransX;
                 break;
 
             case Ogre::OR_LANDSCAPERIGHT:
                 origTransX = state.X.rel;
                 origTransY = state.Y.rel;
-                state.X.rel = origTransY;
+                state.X.rel = -origTransY;
                 state.Y.rel = origTransX;
                 break;
 
@@ -274,8 +290,8 @@ bool OGKCamera::touchMoved(const OIS::MultiTouchEvent &evt)
                 break;
         }
 
-        mCamera->yaw(Ogre::Degree(state.X.rel * -0.1));
-        mCamera->pitch(Ogre::Degree(state.Y.rel * -0.1));
+        mCameraNode->yaw(Ogre::Degree(state.X.rel * -0.1),Ogre::SceneNode::TS_WORLD);
+        mCameraNode->pitch(Ogre::Degree(state.Y.rel * -0.1));
     }
     return TRUE;
 }
