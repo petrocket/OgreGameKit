@@ -214,7 +214,7 @@ void OGKInGameScene::update(Ogre::Real elapsedTime)
         
         if(isLoading) {
             Ogre::Terrain *terrain = mTerrain->mTerrainGroup->getTerrain(0, 0);
-            if(terrain->isLoaded() &&
+            if(terrain && terrain->isLoaded() &&
                !mTerrain->mTerrainGroup->isDerivedDataUpdateInProgress()) {
                 playBackgroundMusic("media/audio/background.mp3");
                 

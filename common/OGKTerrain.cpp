@@ -13,6 +13,14 @@
 
 #include "OGKTerrainMaterial.h"
 
+// max range for a int16
+#define TERRAIN_PAGE_MIN_X (-0x7FFF)
+#define TERRAIN_PAGE_MIN_Y (-0x7FFF)
+#define TERRAIN_PAGE_MAX_X 0x7FFF
+#define TERRAIN_PAGE_MAX_Y 0x7FFF
+
+#define HOLD_LOD_DISTANCE 3000.0
+
 OGKTerrain::OGKTerrain() :
     mBrushSizeTerrainSpace(0.02),
     mHeightUpdateRate(1.0 / 20.0), // update terrain at max 20fps
@@ -30,6 +38,13 @@ OGKTerrain::OGKTerrain() :
 
 OGKTerrain::~OGKTerrain()
 {
+    if (mTerrainPaging) {
+        OGRE_DELETE mTerrainPaging;
+        mTerrainPaging = 0;
+        OGRE_DELETE mPageManager;
+        mPageManager = 0;
+    }
+    
     if(mTerrainGroup) {
         OGRE_DELETE mTerrainGroup;
         mTerrainGroup = NULL;
@@ -51,9 +66,9 @@ void OGKTerrain::configureTerrainDefaults(Ogre::SceneManager *sceneMgr, Ogre::Li
     mTerrainGlobals->setCompositeMapSize(256);
     mTerrainGlobals->setLayerBlendMapSize(256);
 #else
-    mTerrainGlobals->setLightMapSize(1024);
-    mTerrainGlobals->setCompositeMapSize(1024);
-    mTerrainGlobals->setLayerBlendMapSize(1024);
+    mTerrainGlobals->setLightMapSize(512);
+    mTerrainGlobals->setCompositeMapSize(512);
+    mTerrainGlobals->setLayerBlendMapSize(512);
 #endif
     mTerrainGlobals->setCompositeMapAmbient(sceneMgr->getAmbientLight());
     mTerrainGlobals->setCompositeMapDiffuse(light->getDiffuseColour());
@@ -90,7 +105,7 @@ void OGKTerrain::configureTerrainDefaults(Ogre::SceneManager *sceneMgr, Ogre::Li
     defaultimp.maxBatchSize = 65;
 #ifdef OGK_USE_TERRAIN_LAYERS
     defaultimp.terrainSize = 513;
-    defaultimp.inputScale = 256;
+    defaultimp.inputScale = 128;
     defaultimp.layerList.resize(1);
     defaultimp.layerList[0].worldSize = 24;
 #ifdef OGRE_IS_IOS
@@ -221,9 +236,28 @@ void OGKTerrain::setup(Ogre::SceneManager *sceneMgr, Ogre::Light *light)
 #endif
     mTerrainGroup->setFilenameConvention(Ogre::String("OGKTerrain"), Ogre::String("dat"));
     mTerrainGroup->setOrigin(Ogre::Vector3::ZERO);
-    
+
+#ifdef OGK_USE_PAGING
+    mTerrainGroup->setAutoUpdateLod( Ogre::TerrainAutoUpdateLodFactory::getAutoUpdateLod(Ogre::BY_DISTANCE) );
+#endif
     configureTerrainDefaults(sceneMgr, light);
     
+#ifdef OGK_USE_PAGING
+    // Paging setup
+    mPageManager = OGRE_NEW Ogre::PageManager();
+    // Since we're not loading any pages from .page files, we need a way just
+    // to say we've loaded them without them actually being loaded
+    mPageManager->setPageProvider(&mPageProvider);
+    mPageManager->addCamera(sceneMgr->getCurrentViewport()->getCamera());
+    mTerrainPaging = OGRE_NEW Ogre::TerrainPaging(mPageManager);
+    Ogre::PagedWorld* world = mPageManager->createWorld();
+    mTerrainPagedWorldSection = mTerrainPaging->createWorldSection(world, mTerrainGroup, 2000, 3000,
+                                       TERRAIN_PAGE_MIN_X, TERRAIN_PAGE_MIN_Y,
+                                       TERRAIN_PAGE_MAX_X, TERRAIN_PAGE_MAX_Y);
+    
+    mTerrainGenerator = OGRE_NEW OGKTerrainGenerator();
+    mTerrainPagedWorldSection->setDefiner( mTerrainGenerator );
+#else
     // Load terrain from heightmap
     Ogre::Image img;
 #ifdef OGK_USE_TERRAIN_LAYERS
@@ -233,21 +267,25 @@ void OGKTerrain::setup(Ogre::SceneManager *sceneMgr, Ogre::Light *light)
 #endif
     mTerrainGroup->defineTerrain(0, 0, &img);
     
-    
 #if OGRE_IS_IOS
     mTerrainGroup->loadAllTerrains(true);
-//    mTerrainGroup->updateDerivedData(true,Ogre::Terrain::DERIVED_DATA_ALL);
     mTerrainGroup->update(true);
 #else
     mTerrainGroup->loadAllTerrains(false);
 #endif
     
+#endif
+    
+    
 #ifdef OGK_USE_TERRAIN_LAYERS
     // blending
-    Ogre::Terrain *t = mTerrainGroup->getTerrainIterator().getNext()->instance;
-    // don't need blend map for layer 0 (not used)
-    //t->getLayerBlendMap(0)->loadImage("blend0", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
-    //t->getLayerBlendMap(1)->loadImage("blend1", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+    Ogre::TerrainGroup::TerrainIterator ti = mTerrainGroup->getTerrainIterator();
+    if(ti.hasMoreElements()) {
+        Ogre::Terrain *t = ti.getNext()->instance;
+        // don't need blend map for layer 0 (not used)
+        //t->getLayerBlendMap(0)->loadImage("blend0", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+        //t->getLayerBlendMap(1)->loadImage("blend1", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+    }
 #endif
 
     mTerrainGroup->freeTemporaryResources();
@@ -323,6 +361,12 @@ void OGKTerrain::update(double timeSinceLastFrame)
                 mHeightUpdateCountDown = 0;
             }
         }
+    }
+#endif
+    
+#ifdef OGK_USE_PAGING
+    if(mTerrainGroup) {
+        mTerrainGroup->autoUpdateLodAll(false, Ogre::Any( Ogre::Real(HOLD_LOD_DISTANCE) ));
     }
 #endif
 }

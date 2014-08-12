@@ -53,10 +53,12 @@ private:
     Ogre::Real mBrushSizeTerrainSpace;
     Ogre::Real mHeightUpdateCountDown;
     Ogre::Real mHeightUpdateRate;
-    OGKTerrainMode mMode;
+    Ogre::uint8     mLayerEdit;
     Ogre::SceneNode *mMarkerSceneNode;
     Ogre::Entity    *mMarker;
-    Ogre::uint8     mLayerEdit;
+    OGKTerrainMode mMode;
+    
+    OGKTerrainGenerator *mTerrainGenerator;
     
 #ifdef OGK_USE_PAGING
 	/// This class just pretends to provide prcedural page content to avoid page loading
@@ -69,6 +71,7 @@ private:
 		bool unprepareProceduralPage(Ogre::Page* page, Ogre::PagedWorldSection* section) { return true; }
 	};
 	OGKTerrainPageProvider mPageProvider;
+    Ogre::TerrainPagedWorldSection *mTerrainPagedWorldSection;
 #endif
 };
 
