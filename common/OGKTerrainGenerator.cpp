@@ -56,22 +56,35 @@ OGKTerrainGenerator::~OGKTerrainGenerator()
 
 void OGKTerrainGenerator::define( Ogre::TerrainGroup* terrainGroup, long x, long y )
 {
-	Ogre::uint16 terrainSize = terrainGroup->getTerrainSize();
-	float* heightMap = OGRE_ALLOC_T(float, terrainSize*terrainSize, Ogre::MEMCATEGORY_GEOMETRY);
     
-	Ogre::Vector2 worldOffset( Ogre::Real(x*(terrainSize-1)), Ogre::Real(y*(terrainSize-1)) );
-	worldOffset += mOriginPoint;
-    
-	Ogre::Vector2 revisedValuePoint;
-	for( Ogre::uint16 i=0; i<terrainSize; i++ ) {
-		for( Ogre::uint16 j=0; j<terrainSize; j++ ) {
-			revisedValuePoint = (worldOffset + Ogre::Vector2(j,i)) / mCycle;
-			heightMap[i*terrainSize + j] = produceSingleHeight( revisedValuePoint ) * mHeightScale;
-		}
+    // first check if we have already generated the terrain
+    // Load terrain from heightmap
+    Ogre::Image img;
+    Ogre::String filename = terrainGroup->generateFilename(x,y);
+    if (Ogre::ResourceGroupManager::getSingleton().resourceExists(terrainGroup->getResourceGroup(), filename)) {
+        terrainGroup->defineTerrain(x, y);
+        //    img.load(generatedFilename, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+        //    terrainGroup->defineTerrain(x, y, &img);
     }
-    
-	terrainGroup->defineTerrain(x,y,heightMap);
-	OGRE_FREE(heightMap, Ogre::MEMCATEGORY_GEOMETRY);
+    else {
+        Ogre::uint16 terrainSize = terrainGroup->getTerrainSize();
+        
+        float* heightMap = OGRE_ALLOC_T(float, terrainSize*terrainSize, Ogre::MEMCATEGORY_GEOMETRY);
+        
+        Ogre::Vector2 worldOffset( Ogre::Real(x*(terrainSize-1)), Ogre::Real(y*(terrainSize-1)) );
+        worldOffset += mOriginPoint;
+        
+        Ogre::Vector2 revisedValuePoint;
+        for( Ogre::uint16 i=0; i<terrainSize; i++ ) {
+            for( Ogre::uint16 j=0; j<terrainSize; j++ ) {
+                revisedValuePoint = (worldOffset + Ogre::Vector2(j,i)) / mCycle;
+                heightMap[i*terrainSize + j] = produceSingleHeight( revisedValuePoint ) * mHeightScale;
+            }
+        }
+        
+        terrainGroup->defineTerrain(x,y,heightMap);
+        OGRE_FREE(heightMap, Ogre::MEMCATEGORY_GEOMETRY);
+    }
 }
 
 Ogre::Real OGKTerrainGenerator::produceSingleHeight(const Ogre::Vector2& vec2)

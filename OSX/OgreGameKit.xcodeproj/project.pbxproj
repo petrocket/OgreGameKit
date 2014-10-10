@@ -46,6 +46,9 @@
 		FA35A7341960FA960071F577 /* DotSceneLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA35A7321960FA960071F577 /* DotSceneLoader.cpp */; };
 		FA35A73C1960FB240071F577 /* license.txt in Resources */ = {isa = PBXBuildFile; fileRef = FA35A7361960FB240071F577 /* license.txt */; };
 		FA35A73D1960FB240071F577 /* manual.html in Resources */ = {isa = PBXBuildFile; fileRef = FA35A7371960FB240071F577 /* manual.html */; };
+		FA3FBD0F19E74EA200A9121A /* MainMenuScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA3FBD0D19E74EA200A9121A /* MainMenuScene.cpp */; };
+		FA3FBD1219E754BB00A9121A /* SinglePlayerScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA3FBD1019E754BB00A9121A /* SinglePlayerScene.cpp */; };
+		FA5DBE1019DE4CCD00E85EDC /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5DBE0F19DE4CCD00E85EDC /* Game.cpp */; };
 		FA7769AA193E4B02005F4810 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA7769A9193E4B02005F4810 /* Carbon.framework */; };
 		FA7769AC193E4B02005F4810 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA7769AB193E4B02005F4810 /* Cocoa.framework */; };
 		FA7769AE193E4B02005F4810 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA7769AD193E4B02005F4810 /* IOKit.framework */; };
@@ -308,6 +311,12 @@
 		FA35A7DB1961A88A0071F577 /* SGXLib_TextureAtlas.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_TextureAtlas.glsl; sourceTree = "<group>"; };
 		FA35A7DC1961A88A0071F577 /* SGXLib_TextureAtlas.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_TextureAtlas.glsles; sourceTree = "<group>"; };
 		FA35A7DD1961A88A0071F577 /* SGXLib_TextureAtlas.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_TextureAtlas.hlsl; sourceTree = "<group>"; };
+		FA3FBD0D19E74EA200A9121A /* MainMenuScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MainMenuScene.cpp; path = ../../game/MainMenuScene.cpp; sourceTree = "<group>"; };
+		FA3FBD0E19E74EA200A9121A /* MainMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainMenuScene.h; path = ../../game/MainMenuScene.h; sourceTree = "<group>"; };
+		FA3FBD1019E754BB00A9121A /* SinglePlayerScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SinglePlayerScene.cpp; path = ../../game/SinglePlayerScene.cpp; sourceTree = "<group>"; };
+		FA3FBD1119E754BB00A9121A /* SinglePlayerScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SinglePlayerScene.h; path = ../../game/SinglePlayerScene.h; sourceTree = "<group>"; };
+		FA5DBE0E19DE4CB500E85EDC /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Game.h; path = ../../game/Game.h; sourceTree = "<group>"; };
+		FA5DBE0F19DE4CCD00E85EDC /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Game.cpp; path = ../../game/Game.cpp; sourceTree = "<group>"; };
 		FA7769A6193E4B02005F4810 /* OgreGameKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OgreGameKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA7769A9193E4B02005F4810 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		FA7769AB193E4B02005F4810 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -790,6 +799,27 @@
 			path = materials;
 			sourceTree = "<group>";
 		};
+		FA5DBE0D19DE4B6900E85EDC /* game */ = {
+			isa = PBXGroup;
+			children = (
+				FA5DBE1119DE4E2E00E85EDC /* Scenes */,
+				FA5DBE0E19DE4CB500E85EDC /* Game.h */,
+				FA5DBE0F19DE4CCD00E85EDC /* Game.cpp */,
+			);
+			name = game;
+			sourceTree = "<group>";
+		};
+		FA5DBE1119DE4E2E00E85EDC /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				FA3FBD0D19E74EA200A9121A /* MainMenuScene.cpp */,
+				FA3FBD0E19E74EA200A9121A /* MainMenuScene.h */,
+				FA3FBD1019E754BB00A9121A /* SinglePlayerScene.cpp */,
+				FA3FBD1119E754BB00A9121A /* SinglePlayerScene.h */,
+			);
+			name = Scenes;
+			sourceTree = "<group>";
+		};
 		FA77699C193E4B02005F4810 = {
 			isa = PBXGroup;
 			children = (
@@ -825,6 +855,7 @@
 		FA7769B3193E4B02005F4810 /* OgreGameKit */ = {
 			isa = PBXGroup;
 			children = (
+				FA5DBE0D19DE4B6900E85EDC /* game */,
 				FA359416193E62E30050AB5C /* common */,
 				FA35941C193E637C0050AB5C /* osx */,
 				FA7769BA193E4B02005F4810 /* main.mm */,
@@ -983,9 +1014,11 @@
 				FA35A722195A45D50071F577 /* Gui3DInlineSelector.cpp in Sources */,
 				FA35A71A195A45D50071F577 /* Gui3DCaption.cpp in Sources */,
 				FACF1A1C1942499900F099AA /* SimpleAudioEngine.m in Sources */,
+				FA5DBE1019DE4CCD00E85EDC /* Game.cpp in Sources */,
 				FA35A7341960FA960071F577 /* DotSceneLoader.cpp in Sources */,
 				FAB8BF2F1953C71800DA2B26 /* OGKPlayer.cpp in Sources */,
 				FA7769BB193E4B02005F4810 /* main.mm in Sources */,
+				FA3FBD0F19E74EA200A9121A /* MainMenuScene.cpp in Sources */,
 				FAA1BF92199931BB005829DD /* OGKTerrainGenerator.cpp in Sources */,
 				FA1279281965A20500A7F7DD /* OGKBadge.cpp in Sources */,
 				FA35A71C195A45D50071F577 /* Gui3DCheckboxSprite.cpp in Sources */,
@@ -1007,6 +1040,7 @@
 				FA35A725195A45D50071F577 /* Gui3DPanel.cpp in Sources */,
 				FA35A6E5195A19930071F577 /* OGKInGameScene.cpp in Sources */,
 				FAB8BF26195327BE00DA2B26 /* OGKInputManager.cpp in Sources */,
+				FA3FBD1219E754BB00A9121A /* SinglePlayerScene.cpp in Sources */,
 				FACF1A2619424ADF00F099AA /* CDXMacOSXSupport.mm in Sources */,
 				FA35A71E195A45D50071F577 /* Gui3DClock.cpp in Sources */,
 				FA35A72B195A45D50071F577 /* Gui3DStringCursorEdit.cpp in Sources */,

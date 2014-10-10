@@ -18,37 +18,10 @@ OGKPlayer::OGKPlayer(Ogre::SceneManager *sceneManager) :
     mMoveSpeed(1.0),
     mMovingState(OGKPlayer::NONE),
     mRotateSpeed(1.0),
-    mSceneNode(NULL)
+    mSceneManager(sceneManager),
+    mSceneNode(NULL),
+    mScene(NULL)
 {
-    mEntity = sceneManager->createEntity("Player", "Player.mesh");
-    
-#ifdef OGRE_IS_IOS
-    mEntity->setMaterialName("OGK/Debug/Gray");
-#endif
-    
-    mSceneNode = sceneManager->getRootSceneNode()->createChildSceneNode();
-    mSceneNode->attachObject(mEntity);
-    mSceneNode->scale(5.0,5.0,5.0);
-    
-    OGKSceneManager *gameSceneManager = OGKGame::getSingletonPtr()->mGameSceneManager;
-    mScene = (OGKInGameScene *)gameSceneManager->getScene("ingame");
-    if(mScene) {
-        OGKTerrain *terrain = mScene->getTerrain();
-        if(terrain) {
-            float height = terrain->mTerrainGroup->getHeightAtWorldPosition(0, 1000.0, 0);
-            mSceneNode->setPosition(Ogre::Vector3(0,height,0));
-        }
-    }
-    
-    if(mEntity->hasAnimationState("Walk")) {
-        mEntity->getAnimationState("Walk")->setLoop(true);
-        mEntity->getAnimationState("Walk")->setEnabled(false);
-    }
-    if(mEntity->hasAnimationState("Idle")) {
-        mEntity->getAnimationState("Idle")->setLoop(true);
-        mEntity->getAnimationState("Idle")->setEnabled(true);
-    }
-    
     OGKInputManager::getSingletonPtr()->addKeyListener(this, "OGKPlayerListener");
     
 #ifdef OGRE_IS_IOS
@@ -57,7 +30,7 @@ OGKPlayer::OGKPlayer(Ogre::SceneManager *sceneManager) :
     OGKInputManager::getSingletonPtr()->addMouseListener(this, "OGKPlayerListener");
 #endif
     
-    loadFromConfig();
+    init();
 }
 
 OGKPlayer::~OGKPlayer()
@@ -81,6 +54,40 @@ void OGKPlayer::attack(Ogre::Vector3 position)
 void OGKPlayer::attack(Ogre::Entity *entity)
 {
     // @TODO
+}
+
+void OGKPlayer::init()
+{
+    mEntity = mSceneManager->createEntity("Player", "Player.mesh");
+    
+#ifdef OGRE_IS_IOS
+    mEntity->setMaterialName("OGK/Debug/Gray");
+#endif
+    
+    mSceneNode = mSceneManager->getRootSceneNode()->createChildSceneNode();
+    mSceneNode->attachObject(mEntity);
+    mSceneNode->scale(5.0,5.0,5.0);
+    
+    //    OGKSceneManager *gameSceneManager = OGKGame::getSingletonPtr()->mGameSceneManager;
+    //    mScene = (OGKInGameScene *)gameSceneManager->getScene("ingame");
+    //    if(mScene) {
+    //        OGKTerrain *terrain = mScene->getTerrain();
+    //        if(NULL != terrain) {
+    //            float height = terrain->mTerrainGroup->getHeightAtWorldPosition(0, 1000.0, 0);
+    //            mSceneNode->setPosition(Ogre::Vector3(0,height,0));
+    //        }
+    //    }
+    
+    if(mEntity->hasAnimationState("Walk")) {
+        mEntity->getAnimationState("Walk")->setLoop(true);
+        mEntity->getAnimationState("Walk")->setEnabled(false);
+    }
+    if(mEntity->hasAnimationState("Idle")) {
+        mEntity->getAnimationState("Idle")->setLoop(true);
+        mEntity->getAnimationState("Idle")->setEnabled(true);
+    }
+    
+    loadFromConfig();
 }
 
 bool OGKPlayer::keyPressed(const OIS::KeyEvent &keyEventRef)
@@ -196,15 +203,7 @@ void OGKPlayer::update(Ogre::Real elapsedTime)
             }
             
             // snap to terrain
-            if(mScene) {
-                OGKTerrain *terrain = mScene->getTerrain();
-                if(terrain) {
-                    Ogre::Vector3 pos = mSceneNode->getPosition();
-                    float height = terrain->mTerrainGroup->getHeightAtWorldPosition(pos);
-                    pos.y = height + 0.1f;
-                    mSceneNode->setPosition(pos);
-                }
-            }
+            snapToTerrain();
         }
 #endif
     }
@@ -249,29 +248,11 @@ void OGKPlayer::update(Ogre::Real elapsedTime)
         moving = mMovingState != OGKPlayer::AT_DESTINATION;
         
         if(moving) {
-            // snap to terrain
-            if(mScene) {
-                OGKTerrain *terrain = mScene->getTerrain();
-                if(terrain) {
-                    Ogre::Vector3 pos = mSceneNode->getPosition();
-                    float height = terrain->mTerrainGroup->getHeightAtWorldPosition(pos);
-                    pos.y = height + 0.1f;
-                    mSceneNode->setPosition(pos);
-                }
-            }
+            snapToTerrain();
         }
     }
     else {
-        // snap to terrain
-        if(mScene) {
-            OGKTerrain *terrain = mScene->getTerrain();
-            if(terrain) {
-                Ogre::Vector3 pos = mSceneNode->getPosition();
-                float height = terrain->mTerrainGroup->getHeightAtWorldPosition(pos);
-                pos.y = height + 0.1f;
-                mSceneNode->setPosition(pos);
-            }
-        }        
+        snapToTerrain();
     }
     
     if(mEntity) {
@@ -284,6 +265,19 @@ void OGKPlayer::update(Ogre::Real elapsedTime)
         if(mEntity->hasAnimationState("Idle")) {
             mEntity->getAnimationState("Idle")->setEnabled(!moving);
             mEntity->getAnimationState("Idle")->addTime(elapsedTime * 0.001);
+        }
+    }
+}
+
+void OGKPlayer::snapToTerrain()
+{
+    if(mScene) {
+        OGKTerrain *terrain = mScene->getTerrain();
+        if(terrain) {
+            Ogre::Vector3 pos = mSceneNode->getPosition();
+            float height = terrain->mTerrainGroup->getHeightAtWorldPosition(pos);
+            pos.y = height + 0.1f;
+            mSceneNode->setPosition(pos);
         }
     }
 }

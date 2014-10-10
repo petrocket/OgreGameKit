@@ -231,6 +231,9 @@ void OGKCamera::setMoveSpeed(Ogre::Real moveSpeed)
 void OGKCamera::setTarget(Ogre::SceneNode *target)
 {
     mTargetNode = target;
+    if(!mTargetNode) {
+        mCamera->setAutoTracking(false);
+    }
 }
 
 void OGKCamera::setTargetOffset(Ogre::Vector3 offset)

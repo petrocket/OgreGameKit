@@ -56,12 +56,12 @@ public:
 	bool keyPressed(const OIS::KeyEvent &keyEventRef);
 	bool keyReleased(const OIS::KeyEvent &keyEventRef);
     
-    bool renderOneFrame();
-    bool renderOneFrame(double timeSinceLastFrame);
-    void setup();
-    void shutdown();
-    void start();
-    void update(double timeSinceLastFrame);
+    virtual bool renderOneFrame();
+    virtual bool renderOneFrame(double timeSinceLastFrame);
+    virtual void setup();
+    virtual void shutdown();
+    virtual void start();
+    virtual void update(double timeSinceLastFrame);
     
 #ifdef OGRE_IS_IOS
 	bool touchMoved(const OIS::MultiTouchEvent &evt);

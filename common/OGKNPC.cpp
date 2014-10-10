@@ -108,7 +108,7 @@ void OGKNPC::update(Ogre::Real elapsedTime)
 {
     if(mHealth > 0.001) {
         
-        OGKPlayer *player = mScene->getPlayer();
+        OGKPlayer *player = mScene ? mScene->getPlayer() : NULL;
         if(mIsEnemy && player) {
             Ogre::Vector3 dir = player->getSceneNode()->getPosition() -
                                 mSceneNode->getPosition();
@@ -156,11 +156,11 @@ void OGKNPC::_init()
     mMovingState = OGKNPC::NONE;
     mRotateSpeed = 1.0;
     
-    OGKSceneManager *gameSceneManager = OGKGame::getSingletonPtr()->mGameSceneManager;
-    mScene = (OGKInGameScene *)gameSceneManager->getScene("ingame");
+//    OGKSceneManager *gameSceneManager = OGKGame::getSingletonPtr()->mGameSceneManager;
+//    mScene = (OGKInGameScene *)gameSceneManager->getScene("ingame");
     
     // health bar
-    _initHealthBar();
+    //_initHealthBar();
     
     // set bar colours
     setIsEnemy(mIsEnemy);
@@ -187,7 +187,6 @@ void OGKNPC::_initHealthBar()
         OGKLOG("Can't create NPC health bar becuz scene is null");
         return;
     }
-    
     mBadge = OGRE_NEW OGKBadge(mSceneNode,
                                 mScene->getGUI()->getSilverback(),
                                 mScene->mCamera->getCamera(),

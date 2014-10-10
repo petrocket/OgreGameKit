@@ -52,6 +52,8 @@ public:
     std::vector<Ogre::String> staticObjects;
     std::vector<Ogre::String> dynamicObjects;
     
+    std::vector<Ogre::String> objectNamesToIgnore;
+    
 protected:
     void processScene(rapidxml::xml_node<>* XMLRoot);
     
@@ -92,6 +94,7 @@ protected:
     Ogre::Quaternion parseQuaternion(rapidxml::xml_node<>* XMLNode);
     Ogre::ColourValue parseColour(rapidxml::xml_node<>* XMLNode);
     
+    bool shouldIgnoreObjectNamed(const Ogre::String& name);
     
     Ogre::SceneManager *mSceneMgr;
     Ogre::SceneNode *mAttachNode;

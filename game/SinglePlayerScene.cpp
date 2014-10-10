@@ -1,30 +1,30 @@
 //
-//  OGKInGameScene.cpp
+//  SinglePlayerScene.cpp
 //  OgreGameKit
 //
-//  Created by Alex on 6/24/14.
+//  Created by Alex on 10/9/14.
 //
 //
 
-#include "OGKInGameScene.h"
+// Ogre Game Kit
+#include "SinglePlayerScene.h"
 #include "OGKGame.h"
 #include "OGKGUIThemes.h"
 
-OGKInGameScene::OGKInGameScene(const Ogre::String& name):OGKScene(name),
-    mGUI(NULL),
-    mMenuPanel(NULL),
-    mPlayer(NULL),
-    mTerrain(NULL)
+SinglePlayerScene::SinglePlayerScene(const Ogre::String& name):OGKScene(name),
+mGUI(NULL),
+mMenuPanel(NULL),
+mPlayer(NULL)
 {
     init();
 }
 
-OGKInGameScene::~OGKInGameScene()
+SinglePlayerScene::~SinglePlayerScene()
 {
     
 }
 
-bool OGKInGameScene::buttonPressed(Gui3D::PanelElement *e)
+bool SinglePlayerScene::buttonPressed(Gui3D::PanelElement *e)
 {
     if(e == mPauseButton) {
         mMenuPanel->setVisible(true);
@@ -66,58 +66,48 @@ bool OGKInGameScene::buttonPressed(Gui3D::PanelElement *e)
     return true;
 }
 
-void OGKInGameScene::init()
+void SinglePlayerScene::init()
 {
     // don't call OGKScene init (it's constructor already does that)
-//    OGKScene::init();
-    
     mGUI = OGRE_NEW Gui3D::Gui3D(OGKGame::getSingleton().mDefaultGUITheme);
 }
 
-void OGKInGameScene::onEnter()
+void SinglePlayerScene::onEnter()
 {
     OGKScene::onEnter();
     
-	mSceneManager->setSkyBox(true, "OGK/DefaultSkyBox");
-    
-    Ogre::Viewport *vp = mCamera->getCamera()->getViewport();
-    mScreen = mGUI->createScreenRenderable2D(vp, "default_theme","ingame");
-    Ogre::SceneNode *node = OGRE_NEW Ogre::SceneNode(mSceneManager);
-    node->attachObject(mScreen);
-    mOverlay->add3D(node);
-    mOverlay->show();
-    
-    _initLoadingPanel();
-    _initMenuPanel();
-    _initHUDPanel();
-    _initDialogPanel();
-    
+    _initGUI();
+
+    // we're loading
     mLoadingPanel->setVisible(true);
     
-    // light
-    Ogre::Vector3 lightDir(1,-1,1);
-    lightDir.normalise();
-    mLight = mSceneManager->createLight("Light");
-    mLight->setType(Ogre::Light::LT_DIRECTIONAL);
-    mLight->setDirection(lightDir);
-    mLight->setDiffuseColour(Ogre::ColourValue::White);
+    mPlayer = OGRE_NEW OGKPlayer(mSceneManager);
     
-//    mSceneManager->setAmbientLight(Ogre::ColourValue(0.1,0.15,0.4));
-//    Ogre::ColourValue fogColour(184.0/255.0, 223.0/255.0, 251.0/255.0);
-//    mSceneManager->setFog(Ogre::FOG_LINEAR, fogColour, 0.0, 1000, 4000);
-
+    // light
+//    Ogre::Vector3 lightDir(1,-1,1);
+//    lightDir.normalise();
+//    mLight = mSceneManager->createLight("Light");
+//    mLight->setType(Ogre::Light::LT_DIRECTIONAL);
+//    mLight->setDirection(lightDir);
+//    mLight->setDiffuseColour(Ogre::ColourValue::White);
+    
+    //    mSceneManager->setAmbientLight(Ogre::ColourValue(0.1,0.15,0.4));
+    //    Ogre::ColourValue fogColour(184.0/255.0, 223.0/255.0, 251.0/255.0);
+    //    mSceneManager->setFog(Ogre::FOG_LINEAR, fogColour, 0.0, 1000, 4000);
+    
     mCamera->setTarget(NULL);
     mCamera->setMode(OGKCamera::FIXED);
     mCamera->setPosition(Ogre::Vector3(0,1000,0));
     
-    OGKInputManager::getSingletonPtr()->addKeyListener(this, "ingameScene");
+    OGKInputManager::getSingletonPtr()->addKeyListener(this, mSceneName);
 #ifdef OGRE_IS_IOS
-    OGKInputManager::getSingletonPtr()->addMultiTouchListener(this, "ingameScene");
+    OGKInputManager::getSingletonPtr()->addMultiTouchListener(this, mSceneName);
 #else
-    OGKInputManager::getSingletonPtr()->addMouseListener(this, "ingameScene");
+    OGKInputManager::getSingletonPtr()->addMouseListener(this, mSceneName);
 #endif
-
+    
 #ifndef OGRE_IS_IOS
+    Ogre::Viewport *vp = mCamera->getCamera()->getViewport();    
     Ogre::CompositorInstance *inst = Ogre::CompositorManager::getSingleton().addCompositor(vp, "Bloom");
     if(!inst) {
         OGKLOG("Failed to instanciate bloom compositor");
@@ -128,46 +118,24 @@ void OGKInGameScene::onEnter()
 #endif
 }
 
-void OGKInGameScene::onEnterTransitionDidFinish()
+void SinglePlayerScene::onEnterTransitionDidFinish()
 {
     OGKScene::onEnterTransitionDidFinish();
     
-    loadFromFile("level1.scene");
+    _loadLevel();
     
-    // @TODO Load from .scene file instead?
-    mTerrain = OGRE_NEW OGKTerrain();
-    mTerrain->setup(mSceneManager, mLight);
-    
-    mPlayer = OGRE_NEW OGKPlayer(mSceneManager);
-    mPlayer->setHealth(100,100);
-
-    Ogre::SceneManager::MovableObjectIterator ii = mSceneManager->getMovableObjectIterator("Entity");
-    while(ii.hasMoreElements()) {
-        Ogre::Entity *entity =  static_cast<Ogre::Entity*>(ii.getNext());
-        if(Ogre::StringUtil::startsWith(entity->getName(), "npc")) {
-            OGKNPC *npc =OGRE_NEW OGKNPC(entity, entity->getParentSceneNode());
-            mNPCs.push_back(npc);
-        }
-        else if(Ogre::StringUtil::startsWith(entity->getName(), "enemy")) {
-            OGKNPC *npc =OGRE_NEW OGKNPC(entity, entity->getParentSceneNode());
-            npc->setIsEnemy(true);
-            mNPCs.push_back(npc);
-        }
-    }
-    
-    mCamera->setTarget(mPlayer->getSceneNode());
-    mCamera->setMode(OGKCamera::THIRD_PERSON_INDIRECT);
-    mCamera->setTargetOffset(Ogre::Vector3(15,30,15));
+    // we're loading
+    mLoadingPanel->setVisible(true);
 }
 
-void OGKInGameScene::onExit()
+void SinglePlayerScene::onExit()
 {
     // delete the player first because it might remove some nodes
     if(mPlayer) {
         OGRE_DELETE mPlayer;
         mPlayer = NULL;
     }
-
+    
     if(mNPCs.size()) {
         for(int i = 0; i < mNPCs.size(); i++) {
             OGRE_DELETE mNPCs[i];
@@ -175,21 +143,17 @@ void OGKInGameScene::onExit()
         mNPCs.clear();
     }
     
-    if(mTerrain) {
-        OGRE_DELETE mTerrain;
-        mTerrain = NULL;
-    }
+    if(mCamera) mCamera->setTarget(NULL);
     
     OGKScene::onExit();
     
-    if(mGUI) mGUI->destroyScreenRenderable2D("ingame");
+    if(mGUI) mGUI->destroyScreenRenderable2D(mSceneName);
     
     mScreen = NULL;
     
-    if(mCamera) mCamera->setTarget(NULL);
 }
 
-void OGKInGameScene::onExitTransitionDidStart()
+void SinglePlayerScene::onExitTransitionDidStart()
 {
     OGKScene::onExitTransitionDidStart();
     
@@ -205,28 +169,20 @@ void OGKInGameScene::onExitTransitionDidStart()
 #endif
 }
 
-void OGKInGameScene::update(Ogre::Real elapsedTime)
+void SinglePlayerScene::update(Ogre::Real elapsedTime)
 {
-    bool isLoading = mLoadingPanel->isVisible();
-    
     // don't update while transitioning out
     if(mRunning) {
-        if(mTerrain) {
-            mTerrain->update(elapsedTime);
+        bool isLoading = mLoadingPanel->isVisible();
+        if(isLoading) {
+            // @TODO handle actual loading
+            playBackgroundMusic("media/audio/background.mp3");
             
-            if(isLoading) {
-                Ogre::Terrain *terrain = mTerrain->mTerrainGroup->getTerrain(0, 0);
-                if(terrain && terrain->isLoaded() &&
-                   !mTerrain->mTerrainGroup->isDerivedDataUpdateInProgress()) {
-                    playBackgroundMusic("media/audio/background.mp3");
-                    Ogre::MaterialPtr mat = mTerrain->mTerrainGlobals->getDefaultMaterialGenerator()->getActiveProfile()->generate(terrain);
-                    Ogre::MaterialSerializer().exportMaterial(mat, "Terrain_Generated.material", false, false, "", mat->getName());
-                    
-                    mLoadingPanel->setVisible(false);
-                    mHUDPanel->setVisible(true);
-                    if(mPlayer) mPlayer->setEnabled(true);
-                }
-            }
+            mLoadingPanel->setVisible(false);
+            mHUDPanel->setVisible(true);
+            if(mPlayer) mPlayer->setEnabled(true);
+            
+            isLoading = false;
         }
         
         if(!isLoading) {
@@ -247,7 +203,8 @@ void OGKInGameScene::update(Ogre::Real elapsedTime)
     OGKScene::update(elapsedTime);
 }
 
-bool OGKInGameScene::keyPressed(const OIS::KeyEvent &keyEventRef)
+
+bool SinglePlayerScene::keyPressed(const OIS::KeyEvent &keyEventRef)
 {
     switch (keyEventRef.key) {
         case OIS::KC_ESCAPE:
@@ -265,13 +222,11 @@ bool OGKInGameScene::keyPressed(const OIS::KeyEvent &keyEventRef)
                     mCamera->setMode(OGKCamera::THIRD_PERSON_INDIRECT);
                     mHUDPanel->showInternalMousePointer();
                     if(mPlayer) mPlayer->setEnabled(true);
-                    if(mTerrain) mTerrain->setMode(OGKTerrain::MODE_NORMAL);
                 }
                 else {
                     mCamera->setMode(OGKCamera::FREE);
                     mHUDPanel->hideInternalMousePointer();
                     if(mPlayer) mPlayer->setEnabled(false);
-                    if(mTerrain) mTerrain->setMode(OGKTerrain::MODE_EDIT_HEIGHT);
                 }
             }
             return false;
@@ -298,6 +253,12 @@ bool OGKInGameScene::keyPressed(const OIS::KeyEvent &keyEventRef)
         }
         case OIS::KC_P:
             OGKGame::getSingletonPtr()->mRenderWindow->writeContentsToTimestampedFile("OGK_", ".png");
+            return false;
+            break;
+        case OIS::KC_R:
+            // reload the level
+            _loadLevel();
+            return false;
             break;
         default:
             break;
@@ -306,10 +267,9 @@ bool OGKInGameScene::keyPressed(const OIS::KeyEvent &keyEventRef)
     return true;
 }
 
-
 #ifdef OGRE_IS_IOS
-bool OGKInGameScene::touchMoved(const OIS::MultiTouchEvent &evt) { return true; }
-bool OGKInGameScene::touchPressed(const OIS::MultiTouchEvent &evt)  {
+bool SinglePlayerScene::touchMoved(const OIS::MultiTouchEvent &evt) { return true; }
+bool SinglePlayerScene::touchPressed(const OIS::MultiTouchEvent &evt)  {
     
     if(mMenuPanel && mMenuPanel->isVisible()) {
         mMenuPanel->injectTouchPressed(evt);
@@ -322,14 +282,14 @@ bool OGKInGameScene::touchPressed(const OIS::MultiTouchEvent &evt)  {
             mHUDPanel->injectTouchPressed(evt);
         }
     }
-
+    
     if(mMenuPanel->isVisible()) {
         // @TODO
     }
     else if(mDialogPanel->isVisible()) {
         // @TODO
     }
-    else if(mCamera && mCamera->getMode() == OGKCamera::THIRD_PERSON_INDIRECT && mTerrain &&
+    else if(mCamera && mCamera->getMode() == OGKCamera::THIRD_PERSON_INDIRECT &&
             !mHUDPanel->getFocusedElement()) {
         
         Ogre::Real x = (float)evt.state.X.abs / (float)evt.state.width;
@@ -340,29 +300,30 @@ bool OGKInGameScene::touchPressed(const OIS::MultiTouchEvent &evt)  {
     
     return false;
 }
-    
-bool OGKInGameScene::touchReleased(const OIS::MultiTouchEvent &evt)  { return true; }
-bool OGKInGameScene::touchCancelled(const OIS::MultiTouchEvent &evt)  { return true; }
+
+bool SinglePlayerScene::touchReleased(const OIS::MultiTouchEvent &evt)  { return true; }
+bool SinglePlayerScene::touchCancelled(const OIS::MultiTouchEvent &evt)  { return true; }
 #else
-bool OGKInGameScene::mouseMoved(const OIS::MouseEvent &evt)
+bool SinglePlayerScene::mouseMoved(const OIS::MouseEvent &evt)
 {
     if(mDialogPanel) mDialogPanel->injectMouseMoved(evt.state.X.abs, evt.state.Y.abs);
     if(mMenuPanel) mMenuPanel->injectMouseMoved(evt.state.X.abs, evt.state.Y.abs);
     if(mHUDPanel) mHUDPanel->injectMouseMoved(evt.state.X.abs, evt.state.Y.abs);
-
+    
     if(mMenuPanel->isVisible()) {
         // @TODO
     }
     else if(mDialogPanel->isVisible()) {
         // @TODO
     }
-    else if(mCamera && mCamera->getMode() == OGKCamera::THIRD_PERSON_INDIRECT && mTerrain &&
+    else if(mCamera && mCamera->getMode() == OGKCamera::THIRD_PERSON_INDIRECT &&
             !mHUDPanel->getFocusedElement()) {
         if(evt.state.buttonDown(OIS::MB_Left)) {
             Ogre::Real x = (float)evt.state.X.abs / (float)evt.state.width;
             Ogre::Real y = (float)evt.state.Y.abs / (float)evt.state.height;
-
+            
             // set the player destination
+            /*
             Ogre::Ray ray = mCamera->getCamera()->getCameraToViewportRay(x,y);
             Ogre::TerrainGroup::RayResult rayResult=mTerrain->mTerrainGroup->rayIntersects(ray);
             if(rayResult.hit) {
@@ -374,12 +335,13 @@ bool OGKInGameScene::mouseMoved(const OIS::MouseEvent &evt)
                     mPlayer->setDestination(rayResult.position);
                 }
             }
+             */
         }
     }
     return false;
 }
 
-bool OGKInGameScene::mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
+bool SinglePlayerScene::mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
 {
     if(mMenuPanel && mMenuPanel->isVisible()) {
         mMenuPanel->injectMousePressed(evt, id);
@@ -399,8 +361,8 @@ bool OGKInGameScene::mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID
     else if(mDialogPanel->isVisible()) {
         // @TODO
     }
-    else if(mCamera && mCamera->getMode() == OGKCamera::THIRD_PERSON_INDIRECT && mTerrain &&
-       !mHUDPanel->getFocusedElement()) {
+    else if(mCamera && mCamera->getMode() == OGKCamera::THIRD_PERSON_INDIRECT &&
+            !mHUDPanel->getFocusedElement()) {
         
         if(evt.state.buttonDown(OIS::MB_Left)) {
             Ogre::Real x = (float)evt.state.X.abs / (float)evt.state.width;
@@ -413,7 +375,7 @@ bool OGKInGameScene::mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID
     return false;
 }
 
-bool OGKInGameScene::mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
+bool SinglePlayerScene::mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
 {
     if(mMenuPanel && mMenuPanel->isVisible()) {
         mMenuPanel->injectMouseReleased(evt, id);
@@ -433,7 +395,7 @@ bool OGKInGameScene::mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonI
 
 #pragma mark - Private
 
-OGKNPC *OGKInGameScene::getNPC(Ogre::Entity *entity)
+OGKNPC *SinglePlayerScene::getNPC(Ogre::Entity *entity)
 {
     // is this an npc?
     for(int i = 0; i < mNPCs.size(); i++) {
@@ -444,7 +406,7 @@ OGKNPC *OGKInGameScene::getNPC(Ogre::Entity *entity)
     return NULL;
 }
 
-void OGKInGameScene::_handleClickEvent(Ogre::Real x, Ogre::Real y)
+void SinglePlayerScene::_handleClickEvent(Ogre::Real x, Ogre::Real y)
 {
     // set the player destination
     Ogre::Ray ray = mCamera->getCamera()->getCameraToViewportRay(x,y);
@@ -475,6 +437,7 @@ void OGKInGameScene::_handleClickEvent(Ogre::Real x, Ogre::Real y)
     }
     mSceneManager->destroyQuery(query);
     
+    /*
     if(checkTerrain) {
         Ogre::TerrainGroup::RayResult rayResult=mTerrain->mTerrainGroup->rayIntersects(ray);
         if(rayResult.hit) {
@@ -491,52 +454,68 @@ void OGKInGameScene::_handleClickEvent(Ogre::Real x, Ogre::Real y)
 #endif
         }
     }
+     */
 }
 
-void OGKInGameScene::interactWithNPC(OGKNPC *npc)
+void SinglePlayerScene::interactWithNPC(OGKNPC *npc)
 {
     mDialogCaption->getCaption()->text("Hi! I'm an NPC!");
     mDialogPanel->setVisible(true);
 }
 
-void OGKInGameScene::_initLoadingPanel()
+void SinglePlayerScene::_initGUI()
+{
+    Ogre::Viewport *vp = mCamera->getCamera()->getViewport();
+    mScreen = mGUI->createScreenRenderable2D(vp, "default_theme", mSceneName);
+    Ogre::SceneNode *node = OGRE_NEW Ogre::SceneNode(mSceneManager);
+    node->attachObject(mScreen);
+    mOverlay->add3D(node);
+    mOverlay->show();
+    
+    _initLoadingPanel();
+    _initMenuPanel();
+    _initHUDPanel();
+    _initDialogPanel();
+}
+
+void SinglePlayerScene::_initLoadingPanel()
 {
     Ogre::Viewport *vp = mCamera->getCamera()->getViewport();
     Ogre::Real centerX = vp->getActualWidth() / 2 ;
     Ogre::Real centerY = vp->getActualHeight() / 2 ;
     
     mLoadingPanel  = OGRE_NEW Gui3D::ScreenRenderable2DPanel(mGUI,
-                                                            mScreen,
-                                                            Ogre::Vector2(0,0),
-                                                            Ogre::Vector2(vp->getActualWidth(),
-                                                                          vp->getActualHeight()),
-                                                            "default_theme",
-                                                            "LoadingPanel");
+                                                             mScreen,
+                                                             Ogre::Vector2(0,0),
+                                                             Ogre::Vector2(vp->getActualWidth(),
+                                                                           vp->getActualHeight()),
+                                                             "default_theme",
+                                                             "LoadingPanel");
     mLoadingPanel->getBackground()->background_image(NULL);
     mLoadingPanel->getBackground()->background_colour(Gorilla::Colours::Black);
     mLoadingPanel->hideInternalMousePointer();
     mLoadingPanel->setVisible(false);
     
     mLoadingCaption = mLoadingPanel->makeCaption(centerX - 150, centerY - 10,
-                                                   300, 20, "LOADING...");
+                                                 300, 20, "LOADING...");
     mLoadingCaption->getCaption()->align(Gorilla::TextAlign_Centre);
     mLoadingCaption->getCaption()->font(14);
     mLoadingCaption->getCaption()->colour(Ogre::ColourValue(1,1,1,0.4));
 }
 
-void OGKInGameScene::_initMenuPanel()
+void SinglePlayerScene::_initMenuPanel()
 {
     Ogre::Viewport *vp = mCamera->getCamera()->getViewport();
     Ogre::Real centerX = vp->getActualWidth() / 2 ;
     Ogre::Real centerY = vp->getActualHeight() / 2 ;
-
+    
     mMenuPanel = OGRE_NEW Gui3D::ScreenRenderable2DPanel(mGUI,
-                                                        mScreen,
+                                                         mScreen,
                                                          Ogre::Vector2(0,0),
                                                          Ogre::Vector2(vp->getActualWidth(),
                                                                        vp->getActualHeight()),
-                                                        "default_theme",
-                                                        "MenuPanel");
+                                                         "default_theme",
+                                                         "MenuPanel");
     mMenuPanel->getBackground()->background_image(NULL);
     mMenuPanel->getBackground()->background_colour(Gorilla::rgb(0,0,0,10));
 #ifdef OGRE_IS_IOS
@@ -557,30 +536,30 @@ void OGKInGameScene::_initMenuPanel()
     mMenuButton = mMenuPanel->makeButton(mMenuPanel->getBackground()->width() / 2 - buttonWidth / 2,
                                          mMenuPanel->getBackground()->height() / 2 - buttonHeight - 10,
                                          buttonWidth, buttonHeight, "MENU");
-    mMenuButton->setPressedCallback(this, &OGKInGameScene::buttonPressed);
+    mMenuButton->setPressedCallback(this, &SinglePlayerScene::buttonPressed);
     mResumeButton = mMenuPanel->makeButton(mMenuPanel->getBackground()->width() / 2 - buttonWidth / 2,
                                            mMenuPanel->getBackground()->height() / 2 + 10,
                                            buttonWidth, buttonHeight, "RESUME");
-    mResumeButton->setPressedCallback(this, &OGKInGameScene::buttonPressed);
+    mResumeButton->setPressedCallback(this, &SinglePlayerScene::buttonPressed);
 }
 
-void OGKInGameScene::_initHUDPanel()
+void SinglePlayerScene::_initHUDPanel()
 {
     Ogre::Viewport *vp = mCamera->getCamera()->getViewport();
     Ogre::Real centerX = vp->getActualWidth() / 2 ;
     Ogre::Real centerY = vp->getActualHeight() / 2 ;
     
     mHUDPanel = OGRE_NEW Gui3D::ScreenRenderable2DPanel(mGUI,
-                                                         mScreen,
-                                                         Ogre::Vector2(0,0),
-                                                         Ogre::Vector2(vp->getActualWidth(),
-                                                                       vp->getActualHeight()),
-                                                         "default_theme",
-                                                         "HUDPanel");
+                                                        mScreen,
+                                                        Ogre::Vector2(0,0),
+                                                        Ogre::Vector2(vp->getActualWidth(),
+                                                                      vp->getActualHeight()),
+                                                        "default_theme",
+                                                        "HUDPanel");
     mHUDPanel->getBackground()->background_image(NULL);
     mHUDPanel->getBackground()->background_colour(Gorilla::rgb(0,0,0,0));
     mHUDPanel->setVisible(false);
-
+    
 #ifdef OGRE_IS_IOS
     mHUDPanel->hideInternalMousePointer();
     Ogre::Real buttonHeight = 50.0;
@@ -598,16 +577,16 @@ void OGKInGameScene::_initHUDPanel()
     mHeart3->background_image("heart_full");
     
     mPauseButton = mHUDPanel->makeButton(5, 5, 200, buttonHeight, "PAUSE");
-    mPauseButton->setPressedCallback(this, &OGKInGameScene::buttonPressed);
+    mPauseButton->setPressedCallback(this, &SinglePlayerScene::buttonPressed);
     
 #ifdef OGRE_IS_IOS
     Ogre::Real right = vp->getActualWidth() - 200 - 5;
     mCamModeButton = mHUDPanel->makeButton(right, 5, 200, buttonHeight, "FREE CAM");
-    mCamModeButton->setPressedCallback(this, &OGKInGameScene::buttonPressed);
+    mCamModeButton->setPressedCallback(this, &SinglePlayerScene::buttonPressed);
 #endif
 }
 
-void OGKInGameScene::_initDialogPanel()
+void SinglePlayerScene::_initDialogPanel()
 {
     Ogre::Viewport *vp = mCamera->getCamera()->getViewport();
     Ogre::Real centerX = vp->getActualWidth() / 2 ;
@@ -617,12 +596,12 @@ void OGKInGameScene::_initDialogPanel()
     Ogre::Real height = 140;
     
     mDialogPanel = OGRE_NEW Gui3D::ScreenRenderable2DPanel(mGUI,
-                                                        mScreen,
-                                                        Ogre::Vector2(vp->getActualWidth() / 2 - width / 2,
-                                                                      vp->getActualHeight() - height - 20),
-                                                        Ogre::Vector2(width,height),
-                                                        "default_theme",
-                                                        "DialogPanel");
+                                                           mScreen,
+                                                           Ogre::Vector2(vp->getActualWidth() / 2 - width / 2,
+                                                                         vp->getActualHeight() - height - 20),
+                                                           Ogre::Vector2(width,height),
+                                                           "default_theme",
+                                                           "DialogPanel");
     
 #ifdef OGRE_IS_IOS
     mDialogPanel->hideInternalMousePointer();
@@ -640,10 +619,75 @@ void OGKInGameScene::_initDialogPanel()
     mCloseDialogButton = mDialogPanel->makeButton(width - 200,
                                                   height - 80,
                                                   180, 40, "OK");
-    mCloseDialogButton->setPressedCallback(this, &OGKInGameScene::buttonPressed);
+    mCloseDialogButton->setPressedCallback(this, &SinglePlayerScene::buttonPressed);
 }
 
-void OGKInGameScene::_updateHUD()
+void SinglePlayerScene::_loadLevel()
+{
+    // unload our current level if one is loaded
+    _unloadLevel();
+    
+    // enabling our camera will re-attach it to the scene graph
+    mCamera->setEnabled(true);
+
+    // load .scene file
+    std::vector<Ogre::String> objectsToIgnore;
+    objectsToIgnore.push_back("camera");
+    loadFromFile("scene1.scene", objectsToIgnore);
+    
+    // add player
+    mPlayer->init();
+    mPlayer->setHealth(0, 0);
+    
+    // add npcs
+    Ogre::SceneManager::MovableObjectIterator ii = mSceneManager->getMovableObjectIterator("Entity");
+    while(ii.hasMoreElements()) {
+        Ogre::Entity *entity =  static_cast<Ogre::Entity*>(ii.getNext());
+        if(Ogre::StringUtil::startsWith(entity->getName(), "npc")) {
+            OGKNPC *npc = OGRE_NEW OGKNPC(entity, entity->getParentSceneNode());
+            mNPCs.push_back(npc);
+        }
+        else if(Ogre::StringUtil::startsWith(entity->getName(), "enemy")) {
+            OGKNPC *npc =OGRE_NEW OGKNPC(entity, entity->getParentSceneNode());
+            npc->setIsEnemy(true);
+            mNPCs.push_back(npc);
+        }
+    }
+    
+    // setup camera
+    if(mPlayer->getSceneNode()) {
+        mCamera->setTarget(mPlayer->getSceneNode());
+        mCamera->setMode(OGKCamera::THIRD_PERSON_INDIRECT);
+        mCamera->setTargetOffset(Ogre::Vector3(15,30,15));
+    }
+    
+    mSceneManager->setSkyBox(true, "OGK/DefaultSkyBox");
+    
+    _initGUI();
+    
+    // we're loading
+    //mLoadingPanel->setVisible(true);
+}
+
+void SinglePlayerScene::_unloadLevel()
+{
+    if(mNPCs.size()) {
+        for(int i = 0; i < mNPCs.size(); i++) {
+            OGRE_DELETE mNPCs[i];
+        }
+        mNPCs.clear();
+    }    
+
+    if(mCamera) mCamera->setTarget(NULL);
+    
+    mSceneManager->clearScene();
+    
+    if(mGUI) mGUI->destroyScreenRenderable2D(mSceneName);
+    
+    mScreen = NULL;
+}
+
+void SinglePlayerScene::_updateHUD()
 {
     if(mPlayer && mHUDPanel &&
        mHUDPanel->isVisible() &&

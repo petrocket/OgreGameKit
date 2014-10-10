@@ -6,7 +6,7 @@
 //
 //
 
-#include "OGKGame.h"
+#include "Game.h"
 
 #ifdef __OBJC__
 

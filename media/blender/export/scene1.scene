@@ -1,0 +1,75 @@
+<scene formatVersion="1.0.1" exported_by="alex" previous_export_time="1412969088.298703" export_time="1412970480.92539" >
+  <nodes >
+    <node name="Cube.001" >
+      <position z="3.018077" y="2.387895" x="-4.938464" />
+      <rotation qz="-0.000000" qy="0.000000" qx="0.000000" qw="1.000000" />
+      <scale z="2.063972" y="2.381574" x="1.408759" />
+      <game >
+        <sensors />
+        <actuators />
+      </game>
+      <entity actor="False" ghost="False" velocity_max="0.0" lock_rot_z="False" lock_rot_x="False" lock_rot_y="False" lock_trans_y="False" lock_trans_x="False" damping_trans="0.03999999910593033" lock_trans_z="False" anisotropic_friction="False" friction_z="1.0" friction_y="1.0" friction_x="1.0" mass_radius="1.0" damping_rot="0.10000000149011612" inertia_tensor="0.4000000059604645" meshFile="Cube.001.mesh" mass="1.0" physics_type="STATIC" velocity_min="0.0" name="Cube.001" />
+    </node>
+    <node name="Cube" >
+      <position z="-0.000000" y="1.021199" x="0.000000" />
+      <rotation qz="-0.000000" qy="0.000000" qx="0.000000" qw="1.000000" />
+      <scale z="1.000000" y="1.000000" x="1.000000" />
+      <game >
+        <sensors />
+        <actuators />
+      </game>
+      <entity actor="True" ghost="True" velocity_max="0.0" lock_rot_z="False" lock_rot_x="False" lock_rot_y="False" lock_trans_y="False" lock_trans_x="False" damping_trans="0.02539999969303608" lock_trans_z="False" anisotropic_friction="False" friction_z="1.0" friction_y="1.0" friction_x="1.0" mass_radius="1.0" damping_rot="0.1589999943971634" inertia_tensor="0.4000000059604645" meshFile="Cube.mesh" mass="1.0" physics_type="CHARACTER" velocity_min="0.0" name="Cube" />
+    </node>
+    <node name="Plane" >
+      <position z="-0.000000" y="0.000000" x="0.000000" />
+      <rotation qz="-0.000000" qy="0.000000" qx="0.000000" qw="1.000000" />
+      <scale z="7.894703" y="7.894703" x="7.894703" />
+      <game >
+        <sensors />
+        <actuators />
+      </game>
+      <entity actor="False" ghost="False" velocity_max="0.0" lock_rot_z="False" lock_rot_x="False" lock_rot_y="False" lock_trans_y="False" lock_trans_x="False" damping_trans="0.03999999910593033" lock_trans_z="False" anisotropic_friction="False" friction_z="1.0" friction_y="1.0" friction_x="1.0" mass_radius="1.0" damping_rot="0.10000000149011612" inertia_tensor="0.4000000059604645" meshFile="Terrain.mesh" mass="1.0" physics_type="STATIC" velocity_min="0.0" name="Terrain" >
+        <user_data value="1.0" type="float" name="isTerrain" />
+      </entity>
+    </node>
+    <node name="Sun" >
+      <position z="-7.284606" y="6.789950" x="7.971186" />
+      <rotation qz="-0.272171" qy="0.755880" qx="0.169076" qw="0.570947" />
+      <scale z="1.000000" y="1.000000" x="1.000000" />
+      <game >
+        <sensors />
+        <actuators />
+      </game>
+      <light shadow="true" powerScale="1.0" type="directional" name="Sun" >
+        <position z="-7.284606" y="6.789950" x="7.971186" />
+        <lightAttenuation range="5000" quadratic="0.0" constant="1.0" linear="0.03333335240683057" />
+        <direction z="0.605" y="-0.795" x="0.055" />
+        <colourDiffuse r="1.0" g="1.0" b="1.0" />
+        <colourSpecular r="1.0" g="1.0" b="1.0" />
+        <colourShadow r="1.0" g="1.0" b="1.0" />
+      </light>
+    </node>
+    <node name="Camera" >
+      <position z="6.507640" y="5.343665" x="7.481132" />
+      <rotation qz="-0.212922" qy="0.334251" qx="0.481707" qw="0.781600" />
+      <scale z="1.000000" y="1.000000" x="1.000000" />
+      <game >
+        <sensors />
+        <actuators />
+      </game>
+      <camera fov="0.5033799435163735" projectionType="perspective" name="Camera" >
+        <clipping near="0.10000000149011612" farPlaneDist="100.0" far="100.0" nearPlaneDist="0.10000000149011612" />
+      </camera>
+    </node>
+  </nodes>
+  <externals >
+    <item type="material" >
+      <file name="/Users/alex/Documents/workspace/ogre/1.9.x/OgreGameKit/media/blender/export/Material.material" />
+    </item>
+  </externals>
+  <environment >
+    <colourDiffuse r="0.05087608844041824" g="0.05087608844041824" b="0.05087608844041824" />
+    <colourBackground r="0.05087608844041824" g="0.05087608844041824" b="0.05087608844041824" />
+    <colourAmbient r="0.0" g="0.0" b="0.0" />
+  </environment>
+</scene>

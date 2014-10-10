@@ -24,8 +24,8 @@ static Ogre::OSXCocoaWindow *ogkWindow = 0;
 {
     @autoreleasepool {
         try {
-            new OGKGame();
-            OGKGame::getSingleton().start();
+            new Game();
+            Game::getSingleton().start();
 #ifdef USE_CVDISPLAY_LINK
             Ogre::RenderWindow *rw =OGKGame::getSingleton().m_pRenderWnd;
             ogkWindow = static_cast<Ogre::OSXCocoaWindow *>(rw);
@@ -107,7 +107,7 @@ static CVReturn OGKDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTim
     
     [ctx makeCurrentContext];
     
-    if(!OGKGame::getSingletonPtr()->renderOneFrame()) {
+    if(!Game::getSingletonPtr()->renderOneFrame()) {
 	    [NSApp terminate:self];
     }
     
@@ -137,7 +137,7 @@ static CVReturn OGKDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTim
     // calculating using OGRE timers gives incorrect results
     double elapsedTime = [self.lastFrameStart timeIntervalSinceNow] * -1000.0;
     self.lastFrameStart = NSDate.date;
-    if(!OGKGame::getSingletonPtr()->renderOneFrame(elapsedTime)) {
+    if(!Game::getSingletonPtr()->renderOneFrame(elapsedTime)) {
 	    [NSApp terminate:self];
     }
 }

@@ -33,7 +33,10 @@ OGKTerrain::OGKTerrain() :
     mTerrainGroup(NULL),
     mWorldSize(2000.0)
 {
-    
+#ifdef OGRE_IS_IOS
+    // add documents folder for loading generated terrain
+    Ogre::ResourceGroupManager::getSingleton().addResourceLocation(macBundlePath() + "/../Documents", "FileSystem", "General");
+#endif
 }
 
 OGKTerrain::~OGKTerrain()
@@ -88,6 +91,7 @@ void OGKTerrain::configureTerrainDefaults(Ogre::SceneManager *sceneMgr, Ogre::Li
     matProfile->setLayerNormalMappingEnabled(true);
 #endif
     
+
     //mTerrainGlobals->setSkirtSize(1.0);
     //mTerrainGlobals->setUseVertexCompressionWhenAvailable(false);
     
@@ -298,6 +302,8 @@ void OGKTerrain::setup(Ogre::SceneManager *sceneMgr, Ogre::Light *light)
     mMarkerSceneNode->setScale(0.05,0.05,0.05);
     mMarker->setVisible(false);
 #endif
+    
+    mTerrainsImported = true;
 }
 
 void OGKTerrain::setMode(OGKTerrainMode mode)
@@ -309,57 +315,58 @@ void OGKTerrain::update(double timeSinceLastFrame)
 {
 #ifndef OGRE_IS_IOS
     if(mTerrainGroup &&
-       !mTerrainGroup->isDerivedDataUpdateInProgress() &&
-       mTerrainsImported) {
-        OGKGame::getSingleton().mLog->logMessage("Saving terrain...");
-        mTerrainGroup->saveAllTerrains(true);
-        mTerrainsImported = false;
-        OGKGame::getSingleton().mLog->logMessage("Done Saving terrain...");
+        !mTerrainGroup->isDerivedDataUpdateInProgress()) {        
+        Ogre::Terrain *terrain = mTerrainGroup->getTerrain(0, 0);
+        if(terrain && terrain->isLoaded() && mTerrainsImported) {
+            OGKGame::getSingleton().mLog->logMessage("Saving terrain...");
+            mTerrainGroup->saveAllTerrains(true);
+            mTerrainsImported = false;
+            OGKGame::getSingleton().mLog->logMessage("Done Saving terrain...");
+        }
     }
-    else {
-        if(mMode != MODE_NORMAL) {
-            // EDIT MODE
-            OIS::Mouse *mouse = OGKInputManager::getSingletonPtr()->getMouse();
-            if(mouse) {
-                OIS::MouseState state = mouse->getMouseState();
-                
-                Ogre::Real x = (float)state.X.abs / (float)state.width;
-                Ogre::Real y = (float)state.Y.abs / (float)state.height;
-                
-                OGKScene *scene = OGKGame::getSingletonPtr()->mGameSceneManager->getActiveScene();
-                if(scene && scene->mCamera) {
-                    Ogre::Ray ray = scene->mCamera->getCamera()->getCameraToViewportRay(x, y);
-                    Ogre::TerrainGroup::RayResult rayResult = mTerrainGroup->rayIntersects(ray);
-                    if (rayResult.hit) {
-                        mMarker->setVisible(true);
-                        mMarkerSceneNode->setPosition(rayResult.position);
-                        
-                        // figure out which terrains this affects
-                        Ogre::TerrainGroup::TerrainList terrainList;
-                        Ogre::Real brushSizeWorldSpace = mWorldSize * mBrushSizeTerrainSpace;
-                        Ogre::Sphere sphere(rayResult.position, brushSizeWorldSpace);
-                        mTerrainGroup->sphereIntersects(sphere, &terrainList);
-                        
-                        for (Ogre::TerrainGroup::TerrainList::iterator ti = terrainList.begin();
-                             ti != terrainList.end(); ++ti)
-                            modifyTerrain(*ti, rayResult.position, timeSinceLastFrame);
-                    }
-                    else {
-                        mMarker->setVisible(false);
-                    }
+
+    if(mMode != MODE_NORMAL) {
+        // EDIT MODE
+        OIS::Mouse *mouse = OGKInputManager::getSingletonPtr()->getMouse();
+        if(mouse) {
+            OIS::MouseState state = mouse->getMouseState();
+            
+            Ogre::Real x = (float)state.X.abs / (float)state.width;
+            Ogre::Real y = (float)state.Y.abs / (float)state.height;
+            
+            OGKScene *scene = OGKGame::getSingletonPtr()->mGameSceneManager->getActiveScene();
+            if(scene && scene->mCamera) {
+                Ogre::Ray ray = scene->mCamera->getCamera()->getCameraToViewportRay(x, y);
+                Ogre::TerrainGroup::RayResult rayResult = mTerrainGroup->rayIntersects(ray);
+                if (rayResult.hit) {
+                    mMarker->setVisible(true);
+                    mMarkerSceneNode->setPosition(rayResult.position);
+                    
+                    // figure out which terrains this affects
+                    Ogre::TerrainGroup::TerrainList terrainList;
+                    Ogre::Real brushSizeWorldSpace = mWorldSize * mBrushSizeTerrainSpace;
+                    Ogre::Sphere sphere(rayResult.position, brushSizeWorldSpace);
+                    mTerrainGroup->sphereIntersects(sphere, &terrainList);
+                    
+                    for (Ogre::TerrainGroup::TerrainList::iterator ti = terrainList.begin();
+                         ti != terrainList.end(); ++ti)
+                        modifyTerrain(*ti, rayResult.position, timeSinceLastFrame);
+                }
+                else {
+                    mMarker->setVisible(false);
                 }
             }
         }
-        else {
-            mMarker->setVisible(false);
-        }
-        
-        if(mHeightUpdateCountDown > 0) {
-            mHeightUpdateCountDown -= timeSinceLastFrame;
-            if(mHeightUpdateCountDown <= 0) {
-                mTerrainGroup->update();
-                mHeightUpdateCountDown = 0;
-            }
+    }
+    else {
+        mMarker->setVisible(false);
+    }
+    
+    if(mHeightUpdateCountDown > 0) {
+        mHeightUpdateCountDown -= timeSinceLastFrame;
+        if(mHeightUpdateCountDown <= 0) {
+            mTerrainGroup->update();
+            mHeightUpdateCountDown = 0;
         }
     }
 #endif

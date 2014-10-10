@@ -113,19 +113,18 @@ bool OGKGame::renderOneFrame(double timeSinceLastFrame)
 ////////////////////////////////////////////////////////////////////////////////
 void OGKGame::setup()
 {
-    Ogre::MaterialManager::getSingleton().setDefaultTextureFiltering(Ogre::TFO_ANISOTROPIC);
-//    Ogre::MaterialManager::getSingleton().setDefaultAnisotropy(7);
-
-    OGKMenuScene *firstScene = OGRE_NEW OGKMenuScene("menu");
-    mGameSceneManager->addScene(firstScene,"menu");
-
-    OGKCutScene *secondScene = OGRE_NEW OGKCutScene("cutscene","ingame");
-    mGameSceneManager->addScene(secondScene,"cutscene");
+    // for subclasses to set up their scenes etc.
     
-    OGKInGameScene *thirdScene = OGRE_NEW OGKInGameScene("ingame");
-    mGameSceneManager->addScene(thirdScene,"ingame");
-    
-    mGameSceneManager->setActiveScene("menu");
+//    OGKMenuScene *firstScene = OGRE_NEW OGKMenuScene("menu");
+//    mGameSceneManager->addScene(firstScene,"menu");
+//
+//    OGKCutScene *secondScene = OGRE_NEW OGKCutScene("cutscene","ingame");
+//    mGameSceneManager->addScene(secondScene,"cutscene");
+//    
+//    OGKInGameScene *thirdScene = OGRE_NEW OGKInGameScene("ingame");
+//    mGameSceneManager->addScene(thirdScene,"ingame");
+//    
+//    mGameSceneManager->setActiveScene("menu");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -357,11 +356,10 @@ bool OGKGame::_init(Ogre::String wndTitle)
     OGRE_NEW Gorilla::Silverback();
     Gorilla::Silverback::getSingletonPtr()->loadAtlas("dejavu");
     mOverlayScreen = Gorilla::Silverback::getSingletonPtr()->createScreen(mRenderWindow->getViewport(0), "dejavu");
-#endif
+
     // OVERLAYS (fps)
     //_initOverlays();
     
-#ifndef OGRE_IS_IOS
     // CONSOLE
     _initConsole();
 #endif
@@ -439,10 +437,18 @@ void OGKGame::_initResources()
             Ogre::ResourceGroupManager::getSingleton().addResourceLocation(archName, typeName, secName);
         }
     }
-	
-//#ifndef OGRE_IS_IOS
+    
+#ifdef OGRE_IS_IOS
+    // add documents folder for loading generated stuff like terrain
+    Ogre::ResourceGroupManager::getSingleton().addResourceLocation(macBundlePath() + "/../Documents", "FileSystem", "General");
+#endif
+
     Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
-//#endif
+    
+    Ogre::MaterialManager::getSingleton().setDefaultTextureFiltering(Ogre::TFO_ANISOTROPIC);
+#ifndef OGRE_IS_IOS
+    Ogre::MaterialManager::getSingleton().setDefaultAnisotropy(7);
+#endif
     
 #ifdef INCLUDE_RTSHADER_SYSTEM
     if(!initShaderGenerator(mSceneManager)) {
@@ -456,7 +462,6 @@ void OGKGame::_initResources()
 ////////////////////////////////////////////////////////////////////////////////
 void OGKGame::_initOverlays()
 {
-    
     Gorilla::Layer *overlayLayer = mOverlayScreen->createLayer(14);
     mFPS = overlayLayer->createCaption(14,10,10,Ogre::StringUtil::BLANK);
 }
@@ -475,8 +480,5 @@ void OGKGame::_loadGameConfig()
         mCamera->loadFromConfig();
     }
 
-    
-    // @TODO audio volumes
-
-    
+    // @TODO audio volumes    
 }

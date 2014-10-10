@@ -38,6 +38,8 @@ public:
     bool isRunning();
     
     virtual void loadFromFile(const Ogre::String& name);
+    virtual void loadFromFile(const Ogre::String& name,
+                              const std::vector<Ogre::String>& objectsToIgnore);
     virtual void saveToFile(const Ogre::String& name);
     
     virtual void onEnter();

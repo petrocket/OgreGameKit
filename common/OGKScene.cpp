@@ -55,8 +55,14 @@ bool OGKScene::isRunning()
 
 void OGKScene::loadFromFile(const Ogre::String& name)
 {
+    loadFromFile(name, std::vector<Ogre::String>());
+}
+
+void OGKScene::loadFromFile(const Ogre::String& name, const std::vector<Ogre::String>& objectsToIgnore)
+{
     // does this resource exist?
     DotSceneLoader *loader = OGRE_NEW DotSceneLoader();
+    loader->objectNamesToIgnore = objectsToIgnore;
     if(!loader->parseDotScene(name, "General", mSceneManager)) {
         OGKLOG("Failed to parse dot scene file " + name);
     }
@@ -82,6 +88,8 @@ void OGKScene::onEnter()
     else {
         mCamera->setEnabled(true);
     }
+    
+    mRunning = true;
 }
 
 void OGKScene::onEnterTransitionDidFinish()
@@ -112,7 +120,7 @@ void OGKScene::onExit()
 
 void OGKScene::onExitTransitionDidStart()
 {
-    
+    mRunning = false;
 }
 
 bool OGKScene::keyPressed(const OIS::KeyEvent &keyEventRef) { return true; }

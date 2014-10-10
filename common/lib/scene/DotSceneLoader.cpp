@@ -118,14 +118,18 @@ void DotSceneLoader::processScene(rapidxml::xml_node<>* XMLRoot)
     //    processLight(pElement);
     
     // Process camera (?)
-    pElement = XMLRoot->first_node("camera");
-    if(pElement)
-        processCamera(pElement);
+    if(!shouldIgnoreObjectNamed("camera")) {
+        pElement = XMLRoot->first_node("camera");
+        if(pElement)
+            processCamera(pElement);
+    }
     
     // Process terrain (?)
-    pElement = XMLRoot->first_node("terrain");
-    if(pElement)
-        processTerrain(pElement);
+    if(!shouldIgnoreObjectNamed("terrain")) {
+        pElement = XMLRoot->first_node("terrain");
+        if(pElement)
+            processTerrain(pElement);
+    }
 }
 
 void DotSceneLoader::processNodes(rapidxml::xml_node<>* XMLNode)
@@ -175,19 +179,25 @@ void DotSceneLoader::processEnvironment(rapidxml::xml_node<>* XMLNode)
     rapidxml::xml_node<>* pElement;
     
     // Process camera (?)
-    pElement = XMLNode->first_node("camera");
-    if(pElement)
-        processCamera(pElement);
+    if(!shouldIgnoreObjectNamed("terrain")) {
+        pElement = XMLNode->first_node("camera");
+        if(pElement)
+            processCamera(pElement);
+    }
     
     // Process fog (?)
-    pElement = XMLNode->first_node("fog");
-    if(pElement)
-        processFog(pElement);
+    if(!shouldIgnoreObjectNamed("fog")) {
+        pElement = XMLNode->first_node("fog");
+        if(pElement)
+            processFog(pElement);
+    }
     
     // Process skyBox (?)
-    pElement = XMLNode->first_node("skyBox");
-    if(pElement)
-        processSkyBox(pElement);
+    if(!shouldIgnoreObjectNamed("skyBox")) {
+        pElement = XMLNode->first_node("skyBox");
+        if(pElement)
+            processSkyBox(pElement);
+    }
     
     // Process skyDome (?)
     pElement = XMLNode->first_node("skyDome");
@@ -526,19 +536,23 @@ void DotSceneLoader::processNode(rapidxml::xml_node<>* XMLNode, Ogre::SceneNode 
     }
     
     // Process light (*)
-    //pElement = XMLNode->first_node("light");
-    //while(pElement)
-    //{
-    //    processLight(pElement, pNode);
-    //    pElement = pElement->next_sibling("light");
-    //}
+    if(!shouldIgnoreObjectNamed("light")) {
+        pElement = XMLNode->first_node("light");
+        while(pElement)
+        {
+            processLight(pElement, pNode);
+            pElement = pElement->next_sibling("light");
+        }
+    }
     
     // Process camera (*)
-    pElement = XMLNode->first_node("camera");
-    while(pElement)
-    {
-        processCamera(pElement, pNode);
-        pElement = pElement->next_sibling("camera");
+    if(!shouldIgnoreObjectNamed("camera")) {
+        pElement = XMLNode->first_node("camera");
+        while(pElement)
+        {
+            processCamera(pElement, pNode);
+            pElement = pElement->next_sibling("camera");
+        }
     }
     
     // Process particleSystem (*)
@@ -656,8 +670,10 @@ void DotSceneLoader::processEntity(rapidxml::xml_node<>* XMLNode, Ogre::SceneNod
     Ogre::String id = getAttrib(XMLNode, "id");
     Ogre::String meshFile = getAttrib(XMLNode, "meshFile");
     Ogre::String materialFile = getAttrib(XMLNode, "materialFile");
-    bool isStatic = getAttribBool(XMLNode, "static", false);;
+    bool isStatic = getAttribBool(XMLNode, "static", false);
     bool castShadows = getAttribBool(XMLNode, "castShadows", true);
+    bool isActor = getAttribBool(XMLNode, "actor", false);
+    bool isGhost = getAttribBool(XMLNode, "ghost", false);
     
     // TEMP: Maintain a list of static and dynamic objects
     if(isStatic)
@@ -692,6 +708,13 @@ void DotSceneLoader::processEntity(rapidxml::xml_node<>* XMLNode, Ogre::SceneNod
     catch(Ogre::Exception &/*e*/)
     {
         Ogre::LogManager::getSingleton().logMessage("[DotSceneLoader] Error loading an entity!");
+    }
+    
+    // @TODO actor/ghosts don't need meshes loaded?
+    if(pEntity) {
+        if(isActor || isGhost) {
+            pEntity->setVisible(false);
+        }
     }
     
     // Process userDataReference (?)
@@ -905,7 +928,9 @@ bool DotSceneLoader::getAttribBool(rapidxml::xml_node<>* XMLNode, const Ogre::St
     if(!XMLNode->first_attribute(attrib.c_str()))
         return defaultValue;
     
-    if(Ogre::String(XMLNode->first_attribute(attrib.c_str())->value()) == "true")
+    if(Ogre::String(XMLNode->first_attribute(attrib.c_str())->value()) == "true" ||
+       Ogre::String(XMLNode->first_attribute(attrib.c_str())->value()) == "True" ||
+       Ogre::String(XMLNode->first_attribute(attrib.c_str())->value()) == "TRUE")
         return true;
     
     return false;
@@ -1003,4 +1028,12 @@ void DotSceneLoader::processUserDataReference(rapidxml::xml_node<>* XMLNode, Ogr
 {
     Ogre::String str = XMLNode->first_attribute("id")->value();
     pEntity->setUserAny(Ogre::Any(str));
+}
+
+bool DotSceneLoader::shouldIgnoreObjectNamed(const Ogre::String& name)
+{
+    return objectNamesToIgnore.size() &&
+        std::find(objectNamesToIgnore.begin(),
+                  objectNamesToIgnore.end(), name)
+        != objectNamesToIgnore.end();
 }

@@ -52,6 +52,8 @@ public:
     inline Ogre::Real getHealth() { return mHealth; }
     inline Ogre::Real getMaxHealth() { return mMaxHealth; }
     
+    void init();
+    
     inline bool isAlive() { return mHealth >= 0.001; }
     
     void setHealth(Ogre::Real amount, Ogre::Real maxAmount);
@@ -81,6 +83,7 @@ public:
     void setMoveSpeed(Ogre::Real speed);
     void setRotateSpeed(Ogre::Real speed);
     
+    void snapToTerrain();
     Ogre::Entity *mEntity;
 
 private:
@@ -94,6 +97,7 @@ private:
     Ogre::Real mMoveSpeed;
     Ogre::Real mRotateSpeed;
     Ogre::SceneNode *mSceneNode;
+    Ogre::SceneManager *mSceneManager;
     
     OGKInGameScene *mScene;
 };
