@@ -20,6 +20,9 @@
 #include "Gui3DButton.h"
 #include "Gui3DScreenRenderable2DPanel.h"
 
+// Collision
+#include "OgreRay.h"
+
 class SinglePlayerScene : public OGKScene
 {
 public:
@@ -52,6 +55,9 @@ public:
     bool mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonID id);
 #endif
     
+protected:
+    Ogre::MovableObject *getTerrainObject();
+
 private:
     bool buttonPressed(Gui3D::PanelElement *e);
     void interactWithNPC(OGKNPC *npc);
@@ -74,6 +80,7 @@ private:
     std::vector<OGKNPC*> mNPCs;
     
     Ogre::Light *mLight;
+    Ogre::MovableObject *mTerrainObject;
     
     // Gui3D
     Gui3D::Gui3D *mGUI;

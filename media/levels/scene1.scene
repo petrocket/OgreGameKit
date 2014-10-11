@@ -1,4 +1,4 @@
-<scene formatVersion="1.0.1" exported_by="alex" previous_export_time="1412972545.307546" export_time="1412973203.809293" >
+<scene formatVersion="1.0.1" exported_by="alex" previous_export_time="1412976531.43817" export_time="1412983561.560366" >
   <nodes >
     <node name="Cube.001" >
       <position z="3.018077" y="2.387895" x="-4.938464" />
@@ -23,7 +23,7 @@
     <node name="Plane" >
       <position z="-0.000000" y="0.000000" x="0.000000" />
       <rotation qz="-0.000000" qy="0.000000" qx="0.000000" qw="1.000000" />
-      <scale z="7.894703" y="7.894703" x="7.894703" />
+      <scale z="14.893931" y="7.894703" x="10.754416" />
       <game >
         <sensors />
         <actuators />
@@ -33,20 +33,19 @@
       </entity>
     </node>
     <node name="Sun" >
-      <position z="-7.284606" y="6.789950" x="7.971186" />
-      <rotation qz="-0.272171" qy="0.755880" qx="0.169076" qw="0.570947" />
+      <position z="-7.284606" y="10.199961" x="7.971186" />
+      <rotation qz="-0.493119" qy="0.766093" qx="0.360661" qw="0.199649" />
       <scale z="1.000000" y="1.000000" x="1.000000" />
       <game >
         <sensors />
         <actuators />
       </game>
-      <light shadow="true" powerScale="1.0" type="directional" name="Sun" >
-        <position z="-7.284606" y="6.789950" x="7.971186" />
+      <light powerScale="0.5" type="directional" name="Sun" >
+        <position z="-7.284606" y="10.199961" x="7.971186" />
         <lightAttenuation range="5000" quadratic="0.0" constant="1.0" linear="0.03333335240683057" />
-        <direction z="0.605" y="-0.795" x="0.055" />
-        <colourDiffuse r="1.0" g="1.0" b="1.0" />
-        <colourSpecular r="1.0" g="1.0" b="1.0" />
-        <colourShadow r="1.0" g="1.0" b="1.0" />
+        <direction z="0.9" y="-0.254" x="-0.356" />
+        <colourDiffuse r="1.0" g="0.048928141593933105" b="0.0" />
+        <colourSpecular r="1.0" g="0.048928141593933105" b="0.0" />
       </light>
     </node>
     <node name="Camera" >

@@ -48,6 +48,7 @@
 		FA35A73D1960FB240071F577 /* manual.html in Resources */ = {isa = PBXBuildFile; fileRef = FA35A7371960FB240071F577 /* manual.html */; };
 		FA3FBD0F19E74EA200A9121A /* MainMenuScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA3FBD0D19E74EA200A9121A /* MainMenuScene.cpp */; };
 		FA3FBD1219E754BB00A9121A /* SinglePlayerScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA3FBD1019E754BB00A9121A /* SinglePlayerScene.cpp */; };
+		FA3FBD1619E8AE0F00A9121A /* OgreRay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA3FBD1419E8AE0F00A9121A /* OgreRay.cpp */; };
 		FA5DBE1019DE4CCD00E85EDC /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5DBE0F19DE4CCD00E85EDC /* Game.cpp */; };
 		FA7769AA193E4B02005F4810 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA7769A9193E4B02005F4810 /* Carbon.framework */; };
 		FA7769AC193E4B02005F4810 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA7769AB193E4B02005F4810 /* Cocoa.framework */; };
@@ -315,6 +316,8 @@
 		FA3FBD0E19E74EA200A9121A /* MainMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainMenuScene.h; path = ../../game/MainMenuScene.h; sourceTree = "<group>"; };
 		FA3FBD1019E754BB00A9121A /* SinglePlayerScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SinglePlayerScene.cpp; path = ../../game/SinglePlayerScene.cpp; sourceTree = "<group>"; };
 		FA3FBD1119E754BB00A9121A /* SinglePlayerScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SinglePlayerScene.h; path = ../../game/SinglePlayerScene.h; sourceTree = "<group>"; };
+		FA3FBD1419E8AE0F00A9121A /* OgreRay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OgreRay.cpp; path = ../../common/lib/collision/OgreRay.cpp; sourceTree = "<group>"; };
+		FA3FBD1519E8AE0F00A9121A /* OgreRay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OgreRay.h; path = ../../common/lib/collision/OgreRay.h; sourceTree = "<group>"; };
 		FA5DBE0E19DE4CB500E85EDC /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Game.h; path = ../../game/Game.h; sourceTree = "<group>"; };
 		FA5DBE0F19DE4CCD00E85EDC /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Game.cpp; path = ../../game/Game.cpp; sourceTree = "<group>"; };
 		FA7769A6193E4B02005F4810 /* OgreGameKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OgreGameKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -451,6 +454,7 @@
 		FA35A6CD1959C8FF0071F577 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				FA3FBD1319E8AD8700A9121A /* collision */,
 				FA35A6CE1959C9050071F577 /* gui */,
 				FA35A7311960FA880071F577 /* scene */,
 				FA35A7351960FB240071F577 /* xml */,
@@ -799,6 +803,15 @@
 			path = materials;
 			sourceTree = "<group>";
 		};
+		FA3FBD1319E8AD8700A9121A /* collision */ = {
+			isa = PBXGroup;
+			children = (
+				FA3FBD1419E8AE0F00A9121A /* OgreRay.cpp */,
+				FA3FBD1519E8AE0F00A9121A /* OgreRay.h */,
+			);
+			name = collision;
+			sourceTree = "<group>";
+		};
 		FA5DBE0D19DE4B6900E85EDC /* game */ = {
 			isa = PBXGroup;
 			children = (
@@ -1016,6 +1029,7 @@
 				FACF1A1C1942499900F099AA /* SimpleAudioEngine.m in Sources */,
 				FA5DBE1019DE4CCD00E85EDC /* Game.cpp in Sources */,
 				FA35A7341960FA960071F577 /* DotSceneLoader.cpp in Sources */,
+				FA3FBD1619E8AE0F00A9121A /* OgreRay.cpp in Sources */,
 				FAB8BF2F1953C71800DA2B26 /* OGKPlayer.cpp in Sources */,
 				FA7769BB193E4B02005F4810 /* main.mm in Sources */,
 				FA3FBD0F19E74EA200A9121A /* MainMenuScene.cpp in Sources */,

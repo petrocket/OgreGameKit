@@ -18,6 +18,7 @@
 #include <OISMouse.h>
 
 class OGKCamera;
+class OgreRay;
 
 // GUI
 #include "Gui3D.h"
@@ -79,8 +80,14 @@ public:
     Ogre::Overlay *mOverlay;
     Ogre::OverlaySystem *mOverlaySystem;
     
+    virtual bool rayIntersects(const Ogre::Ray& ray, Ogre::Vector3& hitLocation, Ogre::MovableObject *hitObject, bool terrainOnly = false);
+    
 protected:
     bool mRunning;
+    
+    virtual Ogre::MovableObject *getTerrainObject();
+    
+    OgreRay *mCollisionRay;
 };
 
 #endif /* defined(__OgreGameKit__OGKScene__) */

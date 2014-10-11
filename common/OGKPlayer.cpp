@@ -10,7 +10,7 @@
 #include "OGKGame.h"
 #include "OGKInputManager.h"
 #include "OGKTerrain.h"
-#include "OGKInGameScene.h"
+#include "OGKScene.h"
 
 OGKPlayer::OGKPlayer(Ogre::SceneManager *sceneManager) :
     mEnabled(true),
@@ -68,8 +68,9 @@ void OGKPlayer::init()
     mSceneNode->attachObject(mEntity);
     mSceneNode->scale(5.0,5.0,5.0);
     
-    //    OGKSceneManager *gameSceneManager = OGKGame::getSingletonPtr()->mGameSceneManager;
-    //    mScene = (OGKInGameScene *)gameSceneManager->getScene("ingame");
+    OGKSceneManager *gameSceneManager = OGKGame::getSingletonPtr()->mGameSceneManager;
+    mScene = gameSceneManager->getActiveScene();
+    
     //    if(mScene) {
     //        OGKTerrain *terrain = mScene->getTerrain();
     //        if(NULL != terrain) {
@@ -77,6 +78,8 @@ void OGKPlayer::init()
     //            mSceneNode->setPosition(Ogre::Vector3(0,height,0));
     //        }
     //    }
+    
+    snapToTerrain();
     
     if(mEntity->hasAnimationState("Walk")) {
         mEntity->getAnimationState("Walk")->setLoop(true);
@@ -272,6 +275,18 @@ void OGKPlayer::update(Ogre::Real elapsedTime)
 void OGKPlayer::snapToTerrain()
 {
     if(mScene) {
+        Ogre::Vector3 pos = mSceneNode->getPosition();
+        Ogre::Ray ray(pos + Ogre::Vector3(0,100.f,0), Ogre::Vector3::NEGATIVE_UNIT_Y);
+        Ogre::Vector3 hitLocation = Ogre::Vector3::ZERO;
+        Ogre::MovableObject *hitObject = NULL;
+        bool terrainOnly = true;
+        
+        // terrain only
+        if(mScene->rayIntersects(ray, hitLocation, hitObject, terrainOnly)) {
+            pos.y = hitLocation.y + 0.1f;
+            mSceneNode->setPosition(pos);
+        }
+/*
         OGKTerrain *terrain = mScene->getTerrain();
         if(terrain) {
             Ogre::Vector3 pos = mSceneNode->getPosition();
@@ -279,6 +294,7 @@ void OGKPlayer::snapToTerrain()
             pos.y = height + 0.1f;
             mSceneNode->setPosition(pos);
         }
+ */
     }
 }
 

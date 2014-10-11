@@ -339,6 +339,7 @@ void DotSceneLoader::processLight(rapidxml::xml_node<>* XMLNode, Ogre::SceneNode
         pLight->setDirection(parseVector3(pElement));
     
     pElement = XMLNode->first_node("directionVector");
+    if(!pElement) pElement = XMLNode->first_node("direction");
     if(pElement)
     {
         pLight->setDirection(parseVector3(pElement));

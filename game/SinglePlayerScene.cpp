@@ -14,7 +14,8 @@
 SinglePlayerScene::SinglePlayerScene(const Ogre::String& name):OGKScene(name),
 mGUI(NULL),
 mMenuPanel(NULL),
-mPlayer(NULL)
+mPlayer(NULL),
+mTerrainObject(NULL)
 {
     init();
 }
@@ -323,19 +324,23 @@ bool SinglePlayerScene::mouseMoved(const OIS::MouseEvent &evt)
             Ogre::Real y = (float)evt.state.Y.abs / (float)evt.state.height;
             
             // set the player destination
-            /*
+            Ogre::Vector3 hitLocation = Ogre::Vector3::ZERO;
+            Ogre::MovableObject *hitObject = NULL;
+            bool terrainOnly = true;
+            
             Ogre::Ray ray = mCamera->getCamera()->getCameraToViewportRay(x,y);
-            Ogre::TerrainGroup::RayResult rayResult=mTerrain->mTerrainGroup->rayIntersects(ray);
-            if(rayResult.hit) {
-                // attack if SHIFT is down
+            if(rayIntersects(ray, hitLocation, hitObject, terrainOnly)) {
+#ifndef OGRE_IS_IOS
                 if(OGKInputManager::getSingletonPtr()->getKeyboard()->isKeyDown(OIS::KC_LSHIFT)) {
-                    mPlayer->attack(rayResult.position);
+                    mPlayer->attack(hitLocation);
                 }
                 else {
-                    mPlayer->setDestination(rayResult.position);
+#endif
+                    mPlayer->setDestination(hitLocation);
+#ifndef OGRE_IS_IOS
                 }
+#endif
             }
-             */
         }
     }
     return false;
@@ -393,6 +398,13 @@ bool SinglePlayerScene::mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButt
 }
 #endif
 
+#pragma mark - Protected
+
+Ogre::MovableObject *SinglePlayerScene::getTerrainObject()
+{
+    return mTerrainObject;
+}
+
 #pragma mark - Private
 
 OGKNPC *SinglePlayerScene::getNPC(Ogre::Entity *entity)
@@ -437,8 +449,26 @@ void SinglePlayerScene::_handleClickEvent(Ogre::Real x, Ogre::Real y)
     }
     mSceneManager->destroyQuery(query);
     
-    /*
     if(checkTerrain) {
+        Ogre::Vector3 hitLocation = Ogre::Vector3::ZERO;
+        Ogre::MovableObject *hitObject = NULL;
+        bool terrainOnly = true;
+        
+        // terrain only
+        if(rayIntersects(ray, hitLocation, hitObject, terrainOnly)) {
+#ifndef OGRE_IS_IOS
+            if(OGKInputManager::getSingletonPtr()->getKeyboard()->isKeyDown(OIS::KC_LSHIFT)) {
+                mPlayer->attack(hitLocation);
+            }
+            else {
+#endif
+                mPlayer->setDestination(hitLocation);
+#ifndef OGRE_IS_IOS
+            }
+#endif
+        }
+        
+        /*
         Ogre::TerrainGroup::RayResult rayResult=mTerrain->mTerrainGroup->rayIntersects(ray);
         if(rayResult.hit) {
             // attack if SHIFT is down
@@ -453,8 +483,8 @@ void SinglePlayerScene::_handleClickEvent(Ogre::Real x, Ogre::Real y)
             }
 #endif
         }
+         */
     }
-     */
 }
 
 void SinglePlayerScene::interactWithNPC(OGKNPC *npc)
@@ -635,9 +665,7 @@ void SinglePlayerScene::_loadLevel()
     objectsToIgnore.push_back("camera");
     loadFromFile("scene1.scene", objectsToIgnore);
     
-    // add player
-    mPlayer->init();
-    mPlayer->setHealth(0, 0);
+
     
     // add npcs
     Ogre::SceneManager::MovableObjectIterator ii = mSceneManager->getMovableObjectIterator("Entity");
@@ -652,7 +680,15 @@ void SinglePlayerScene::_loadLevel()
             npc->setIsEnemy(true);
             mNPCs.push_back(npc);
         }
+        else if(Ogre::StringUtil::startsWith(entity->getName(), "terrain")) {
+            mTerrainObject = entity;
+        }
+
     }
+    
+    // add player AFTER getting terrain object
+    mPlayer->init();
+    mPlayer->setHealth(100, 100);
     
     // setup camera
     if(mPlayer->getSceneNode()) {

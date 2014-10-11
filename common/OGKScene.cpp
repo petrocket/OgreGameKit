@@ -9,7 +9,12 @@
 #include "OGKScene.h"
 #include "OGKCamera.h"
 #include "OGKGame.h"
+
+// dot scene loader
 #include "DotSceneLoader.h"
+
+// collision
+#include "OgreRay.h"
 
 #ifdef INCLUDE_RTSHADER_SYSTEM
 #include "OgreRTShaderSystem.h"
@@ -17,6 +22,7 @@
 
 OGKScene::OGKScene(const Ogre::String& name) :
     mCamera(NULL),
+    mCollisionRay(NULL),
     mRunning(false),
     mScreen(NULL),
     mSceneName(name),
@@ -33,6 +39,12 @@ OGKScene::~OGKScene()
 #endif
     
     Ogre::Root::getSingletonPtr()->destroySceneManager(mSceneManager);
+}
+
+Ogre::MovableObject *OGKScene::getTerrainObject()
+{
+    // for subclasses
+    return NULL;
 }
 
 void OGKScene::init()
@@ -136,4 +148,21 @@ bool OGKScene::mouseMoved(const OIS::MouseEvent &evt)  { return true; }
 bool OGKScene::mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID id)  { return true; }
 bool OGKScene::mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonID id)  { return true; }
 #endif
+
+bool OGKScene::rayIntersects(const Ogre::Ray& ray, Ogre::Vector3& hitLocation, Ogre::MovableObject *hitObject, bool terrainOnly)
+{
+    if(!mCollisionRay) {
+        mCollisionRay = OGRE_NEW OgreRay(mSceneManager);
+    }
+    
+    if(terrainOnly) {
+        hitObject = getTerrainObject();
+        return hitObject ? mCollisionRay->RaycastObject( ray.getOrigin(), ray.getDirection(), hitLocation, hitObject) : false;
+    }
+    else {
+        return mCollisionRay->RaycastFromPoint( ray.getOrigin(), ray.getDirection(), hitLocation, hitObject);
+
+    }
+}
+
 

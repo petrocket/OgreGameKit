@@ -18,7 +18,7 @@
 #include <OISKeyboard.h>
 #include <OISMouse.h>
 
-class OGKInGameScene;
+class OGKScene;
 
 #ifdef OGRE_IS_IOS
 #include <OISMultiTouch.h>
@@ -99,7 +99,8 @@ private:
     Ogre::SceneNode *mSceneNode;
     Ogre::SceneManager *mSceneManager;
     
-    OGKInGameScene *mScene;
+    //OGKInGameScene *mScene;
+    OGKScene *mScene;
 };
 
 #endif /* defined(__OgreGameKit__OGKPlayer__) */
