@@ -1,8 +1,15 @@
 #include "DotSceneLoader.h"
+
+// Ogre
 #include <Ogre.h>
+
+
 #include <Terrain/OgreTerrain.h>
 #include <Terrain/OgreTerrainGroup.h>
 #include <Terrain/OgreTerrainMaterialGeneratorA.h>
+
+// Ogre Game Kit
+#include "OGKGame.h"
 
 #pragma warning(disable:4390)
 #pragma warning(disable:4305)
@@ -671,6 +678,7 @@ void DotSceneLoader::processEntity(rapidxml::xml_node<>* XMLNode, Ogre::SceneNod
     Ogre::String id = getAttrib(XMLNode, "id");
     Ogre::String meshFile = getAttrib(XMLNode, "meshFile");
     Ogre::String materialFile = getAttrib(XMLNode, "materialFile");
+    Ogre::String physicsType = getAttrib(XMLNode, "physics_type");
     bool isStatic = getAttribBool(XMLNode, "static", false);
     bool castShadows = getAttribBool(XMLNode, "castShadows", true);
     bool isActor = getAttribBool(XMLNode, "actor", false);
@@ -705,25 +713,31 @@ void DotSceneLoader::processEntity(rapidxml::xml_node<>* XMLNode, Ogre::SceneNod
         
         if(!materialFile.empty())
             pEntity->setMaterialName(materialFile);
+        
+        // @TODO actor/ghosts don't need meshes loaded?
+        if(isActor || isGhost) {
+            pEntity->setVisible(false);
+        }
+        
+        pEntity->getUserObjectBindings().setUserAny("actor", Ogre::Any(isActor));
+        pEntity->getUserObjectBindings().setUserAny("ghost", Ogre::Any(isGhost));
+        pEntity->getUserObjectBindings().setUserAny("physicsType", Ogre::Any(physicsType));
     }
     catch(Ogre::Exception &/*e*/)
     {
         Ogre::LogManager::getSingleton().logMessage("[DotSceneLoader] Error loading an entity!");
     }
     
-    // @TODO actor/ghosts don't need meshes loaded?
-    if(pEntity) {
-        if(isActor || isGhost) {
-            pEntity->setVisible(false);
-        }
-    }
-    
     // Process userDataReference (?)
     pElement = XMLNode->first_node("userDataReference");
     if(pElement)
         processUserDataReference(pElement, pEntity);
-    
-    
+
+    pElement = XMLNode->first_node("user_data");
+    while(pElement) {
+        processUserData(pElement, pEntity);
+        pElement = pElement->next_sibling("user_data");
+    }
 }
 
 void DotSceneLoader::processParticleSystem(rapidxml::xml_node<>* XMLNode, Ogre::SceneNode *pParent)
@@ -1029,6 +1043,14 @@ void DotSceneLoader::processUserDataReference(rapidxml::xml_node<>* XMLNode, Ogr
 {
     Ogre::String str = XMLNode->first_attribute("id")->value();
     pEntity->setUserAny(Ogre::Any(str));
+}
+
+void DotSceneLoader::processUserData(rapidxml::xml_node<>* XMLNode, Ogre::Entity *pEntity)
+{
+    Ogre::String name = XMLNode->first_attribute("name")->value();
+    Ogre::String value = XMLNode->first_attribute("value")->value();
+    OGKLOG("USERDATA " + name + " : " + value);
+    pEntity->getUserObjectBindings().setUserAny(name, Ogre::Any(value));
 }
 
 bool DotSceneLoader::shouldIgnoreObjectNamed(const Ogre::String& name)

@@ -665,25 +665,41 @@ void SinglePlayerScene::_loadLevel()
     objectsToIgnore.push_back("camera");
     loadFromFile("scene1.scene", objectsToIgnore);
     
-
-    
     // add npcs
+    Ogre::Vector3 spawnPoint = Ogre::Vector3::ZERO;
+    
     Ogre::SceneManager::MovableObjectIterator ii = mSceneManager->getMovableObjectIterator("Entity");
     while(ii.hasMoreElements()) {
         Ogre::Entity *entity =  static_cast<Ogre::Entity*>(ii.getNext());
-        if(Ogre::StringUtil::startsWith(entity->getName(), "npc")) {
-            OGKNPC *npc = OGRE_NEW OGKNPC(entity, entity->getParentSceneNode());
+        Ogre::String entityType = "";
+        if(!entity->getUserObjectBindings().getUserAny("type").isEmpty()) {
+            entityType = Ogre::any_cast< Ogre::String >(entity->getUserObjectBindings().getUserAny("type"));
+        }
+        
+        if(entityType == "player_spawn") {
+            entity->setVisible(false);
+            Ogre::SceneNode *node = entity->getParentSceneNode();
+            if(node) spawnPoint = node->_getDerivedPosition();
+        }
+        else if(entityType == "npc_spawn") {
+            entity->setVisible(false);
+            Ogre::String npcType = "friendly";
+            if(!entity->getUserObjectBindings().getUserAny("npc_type").isEmpty()) {
+                npcType = Ogre::any_cast< Ogre::String >(entity->getUserObjectBindings().getUserAny("npc_type"));
+            }
+            Ogre::Entity *npcEnt = mSceneManager->createEntity("NPC" + Ogre::StringConverter::toString(mNPCs.size()), "NPC.mesh");
+            
+            Ogre::SceneNode *sceneNode = mSceneManager->getRootSceneNode()->createChildSceneNode();
+            sceneNode->attachObject(npcEnt);
+            sceneNode->scale(5.0,5.0,5.0);
+            
+            OGKNPC *npc = OGRE_NEW OGKNPC(npcEnt, sceneNode);
+            npc->setIsEnemy(npcType == "enemy");
             mNPCs.push_back(npc);
         }
-        else if(Ogre::StringUtil::startsWith(entity->getName(), "enemy")) {
-            OGKNPC *npc =OGRE_NEW OGKNPC(entity, entity->getParentSceneNode());
-            npc->setIsEnemy(true);
-            mNPCs.push_back(npc);
-        }
-        else if(Ogre::StringUtil::startsWith(entity->getName(), "terrain")) {
+        else if(entityType == "terrain") {
             mTerrainObject = entity;
         }
-
     }
     
     // add player AFTER getting terrain object
@@ -692,6 +708,7 @@ void SinglePlayerScene::_loadLevel()
     
     // setup camera
     if(mPlayer->getSceneNode()) {
+        mPlayer->getSceneNode()->setPosition(spawnPoint);
         mCamera->setTarget(mPlayer->getSceneNode());
         mCamera->setMode(OGKCamera::THIRD_PERSON_INDIRECT);
         mCamera->setTargetOffset(Ogre::Vector3(15,30,15));
@@ -717,6 +734,9 @@ void SinglePlayerScene::_unloadLevel()
     if(mCamera) mCamera->setTarget(NULL);
     
     mSceneManager->clearScene();
+
+    // re-create our root scene node
+    mSceneNode = mSceneManager->getRootSceneNode()->createChildSceneNode("OGKScene" + mSceneName);
     
     if(mGUI) mGUI->destroyScreenRenderable2D(mSceneName);
     

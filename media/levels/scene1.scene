@@ -1,63 +1,80 @@
-<scene formatVersion="1.0.1" exported_by="alex" previous_export_time="1412976531.43817" export_time="1412983561.560366" >
+<scene formatVersion="1.0.1" export_time="1413158069.373403" previous_export_time="1413157730.962246" exported_by="alex" >
   <nodes >
-    <node name="Cube.001" >
-      <position z="3.018077" y="2.387895" x="-4.938464" />
-      <rotation qz="-0.000000" qy="0.000000" qx="0.000000" qw="1.000000" />
-      <scale z="2.063972" y="2.381574" x="1.408759" />
+    <node name="NPC" >
+      <position x="46.686432" y="0.111093" z="14.122744" />
+      <rotation qx="0.000000" qy="0.000000" qz="-0.000000" qw="1.000000" />
+      <scale x="1.000000" y="1.000000" z="1.000000" />
       <game >
         <sensors />
         <actuators />
       </game>
-      <entity actor="False" ghost="False" velocity_max="0.0" lock_rot_z="False" lock_rot_x="False" lock_rot_y="False" lock_trans_y="False" lock_trans_x="False" damping_trans="0.03999999910593033" lock_trans_z="False" anisotropic_friction="False" friction_z="1.0" friction_y="1.0" friction_x="1.0" mass_radius="1.0" damping_rot="0.10000000149011612" inertia_tensor="0.4000000059604645" meshFile="Cube.001.mesh" mass="1.0" physics_type="STATIC" velocity_min="0.0" name="Cube.001" />
+      <entity meshFile="NPC.mesh" ghost="True" mass_radius="1.0" name="NPC" anisotropic_friction="False" velocity_min="0.0" actor="False" damping_trans="0.02539999969303608" velocity_max="0.0" mass="1.0" damping_rot="0.1589999943971634" lock_rot_y="False" lock_rot_x="False" lock_rot_z="False" lock_trans_z="False" inertia_tensor="0.4000000059604645" lock_trans_x="False" lock_trans_y="False" physics_type="CHARACTER" friction_x="1.0" friction_y="1.0" friction_z="1.0" >
+        <user_data name="type" type="str" value="npc_spawn" />
+        <user_data name="npc_type" type="str" value="friendly" />
+      </entity>
     </node>
-    <node name="Cube" >
-      <position z="-0.000000" y="1.021199" x="0.000000" />
-      <rotation qz="-0.000000" qy="0.000000" qx="0.000000" qw="1.000000" />
-      <scale z="1.000000" y="1.000000" x="1.000000" />
+    <node name="House" >
+      <position x="41.787609" y="-0.574979" z="34.081165" />
+      <rotation qx="0.000000" qy="0.000000" qz="-0.000000" qw="1.000000" />
+      <scale x="1.408759" y="2.381574" z="2.063972" />
       <game >
         <sensors />
         <actuators />
       </game>
-      <entity actor="True" ghost="True" velocity_max="0.0" lock_rot_z="False" lock_rot_x="False" lock_rot_y="False" lock_trans_y="False" lock_trans_x="False" damping_trans="0.02539999969303608" lock_trans_z="False" anisotropic_friction="False" friction_z="1.0" friction_y="1.0" friction_x="1.0" mass_radius="1.0" damping_rot="0.1589999943971634" inertia_tensor="0.4000000059604645" meshFile="Cube.mesh" mass="1.0" physics_type="CHARACTER" velocity_min="0.0" name="Cube" />
+      <entity meshFile="House.mesh" ghost="False" mass_radius="1.0" name="House" anisotropic_friction="False" velocity_min="0.0" actor="False" damping_trans="0.03999999910593033" velocity_max="0.0" mass="1.0" damping_rot="0.10000000149011612" lock_rot_y="False" lock_rot_x="False" lock_rot_z="False" lock_trans_z="False" inertia_tensor="0.4000000059604645" lock_trans_x="False" lock_trans_y="False" physics_type="STATIC" friction_x="1.0" friction_y="1.0" friction_z="1.0" >
+        <user_data name="type" type="str" value="static" />
+      </entity>
     </node>
-    <node name="Plane" >
-      <position z="-0.000000" y="0.000000" x="0.000000" />
-      <rotation qz="-0.000000" qy="0.000000" qx="0.000000" qw="1.000000" />
-      <scale z="14.893931" y="7.894703" x="10.754416" />
+    <node name="PlayerSpawn" >
+      <position x="46.686432" y="-0.493932" z="30.852346" />
+      <rotation qx="0.000000" qy="0.000000" qz="-0.000000" qw="1.000000" />
+      <scale x="1.000000" y="1.000000" z="1.000000" />
       <game >
         <sensors />
         <actuators />
       </game>
-      <entity actor="False" ghost="False" velocity_max="0.0" lock_rot_z="False" lock_rot_x="False" lock_rot_y="False" lock_trans_y="False" lock_trans_x="False" damping_trans="0.03999999910593033" lock_trans_z="False" anisotropic_friction="False" friction_z="1.0" friction_y="1.0" friction_x="1.0" mass_radius="1.0" damping_rot="0.10000000149011612" inertia_tensor="0.4000000059604645" meshFile="Terrain.mesh" mass="1.0" physics_type="STATIC" velocity_min="0.0" name="Terrain" >
-        <user_data value="1.0" type="float" name="isTerrain" />
+      <entity meshFile="PlayerSpawn.mesh" ghost="True" mass_radius="1.0" name="PlayerSpawn" anisotropic_friction="False" velocity_min="0.0" actor="False" damping_trans="0.02539999969303608" velocity_max="0.0" mass="1.0" damping_rot="0.1589999943971634" lock_rot_y="False" lock_rot_x="False" lock_rot_z="False" lock_trans_z="False" inertia_tensor="0.4000000059604645" lock_trans_x="False" lock_trans_y="False" physics_type="CHARACTER" friction_x="1.0" friction_y="1.0" friction_z="1.0" >
+        <user_data name="type" type="str" value="player_spawn" />
+      </entity>
+    </node>
+    <node name="terrain" >
+      <position x="0.000000" y="0.000000" z="-0.000000" />
+      <rotation qx="0.000000" qy="0.000000" qz="-0.000000" qw="1.000000" />
+      <scale x="125.727394" y="7.894703" z="174.121521" />
+      <game >
+        <sensors />
+        <actuators />
+      </game>
+      <entity meshFile="terrain.mesh" ghost="False" mass_radius="1.0" name="terrain" anisotropic_friction="False" velocity_min="0.0" actor="False" damping_trans="0.03999999910593033" velocity_max="0.0" mass="1.0" damping_rot="0.10000000149011612" lock_rot_y="False" lock_rot_x="False" lock_rot_z="False" lock_trans_z="False" inertia_tensor="0.4000000059604645" lock_trans_x="False" lock_trans_y="False" physics_type="STATIC" friction_x="1.0" friction_y="1.0" friction_z="1.0" >
+        <user_data name="type" type="str" value="terrain" />
       </entity>
     </node>
     <node name="Sun" >
-      <position z="-7.284606" y="10.199961" x="7.971186" />
-      <rotation qz="-0.493119" qy="0.766093" qx="0.360661" qw="0.199649" />
-      <scale z="1.000000" y="1.000000" x="1.000000" />
+      <position x="7.971186" y="10.199961" z="-7.284606" />
+      <rotation qx="0.360661" qy="0.766093" qz="-0.493119" qw="0.199649" />
+      <scale x="1.000000" y="1.000000" z="1.000000" />
       <game >
         <sensors />
         <actuators />
       </game>
-      <light powerScale="0.5" type="directional" name="Sun" >
-        <position z="-7.284606" y="10.199961" x="7.971186" />
-        <lightAttenuation range="5000" quadratic="0.0" constant="1.0" linear="0.03333335240683057" />
-        <direction z="0.9" y="-0.254" x="-0.356" />
-        <colourDiffuse r="1.0" g="0.048928141593933105" b="0.0" />
-        <colourSpecular r="1.0" g="0.048928141593933105" b="0.0" />
+      <light powerScale="0.5" name="Sun" type="directional" >
+        <position x="7.971186" y="10.199961" z="-7.284606" />
+        <lightAttenuation quadratic="0.0" range="5000" linear="0.03333335240683057" constant="1.0" />
+        <direction x="-0.356" y="-0.254" z="0.9" />
+        <colourDiffuse r="1.0" b="0.0" g="0.048928141593933105" />
+        <colourSpecular r="1.0" b="0.0" g="0.048928141593933105" />
       </light>
     </node>
     <node name="Camera" >
-      <position z="6.507640" y="5.343665" x="7.481132" />
-      <rotation qz="-0.212922" qy="0.334251" qx="0.481707" qw="0.781600" />
-      <scale z="1.000000" y="1.000000" x="1.000000" />
+      <position x="7.481132" y="5.343665" z="6.507640" />
+      <rotation qx="0.481707" qy="0.334251" qz="-0.212922" qw="0.781600" />
+      <scale x="1.000000" y="1.000000" z="1.000000" />
       <game >
         <sensors />
         <actuators />
       </game>
-      <camera fov="0.5033799435163735" projectionType="perspective" name="Camera" >
-        <clipping near="0.10000000149011612" farPlaneDist="100.0" far="100.0" nearPlaneDist="0.10000000149011612" />
+      <camera projectionType="perspective" fov="0.5033799435163735" name="Camera" >
+        <clipping nearPlaneDist="0.10000000149011612" far="100.0" farPlaneDist="100.0" near="0.10000000149011612" />
       </camera>
     </node>
   </nodes>
@@ -67,8 +84,8 @@
     </item>
   </externals>
   <environment >
-    <colourDiffuse r="0.05087608844041824" g="0.05087608844041824" b="0.05087608844041824" />
-    <colourBackground r="0.05087608844041824" g="0.05087608844041824" b="0.05087608844041824" />
-    <colourAmbient r="0.0" g="0.0" b="0.0" />
+    <colourAmbient r="0.0" b="0.0" g="0.0" />
+    <colourBackground r="0.05087608844041824" b="0.05087608844041824" g="0.05087608844041824" />
+    <colourDiffuse r="0.05087608844041824" b="0.05087608844041824" g="0.05087608844041824" />
   </environment>
 </scene>

@@ -12,7 +12,7 @@
 #include <Ogre.h>
 #include "OGKBadge.h"
 
-class OGKInGameScene;
+class OGKScene;
 
 class OGKNPC
 {
@@ -67,7 +67,7 @@ private:
     Ogre::Real mRotateSpeed;
     Ogre::SceneNode *mSceneNode;
     
-    OGKInGameScene *mScene;
+    OGKScene *mScene;
 };
 
 #endif /* defined(__OgreGameKit__OGKNPC__) */

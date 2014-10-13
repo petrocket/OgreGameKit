@@ -8,12 +8,13 @@
 
 #include "OGKNPC.h"
 #include "OGKGame.h"
-#include "OGKInGameScene.h"
+#include "OGKScene.h"
 #include "OGKPlayer.h"
 #include "Gui3D.h"
 #include "Gorilla.h"
 
-OGKNPC::OGKNPC(Ogre::SceneManager *sceneManager)
+OGKNPC::OGKNPC(Ogre::SceneManager *sceneManager) :
+    mScene(NULL)
 {
     mEntity = sceneManager->createEntity("NPC", "NPC.mesh");
     
@@ -26,7 +27,8 @@ OGKNPC::OGKNPC(Ogre::SceneManager *sceneManager)
 
 OGKNPC::OGKNPC(Ogre::Entity *entity, Ogre::SceneNode *sceneNode) :
     mEntity(entity),
-    mSceneNode(sceneNode)
+    mSceneNode(sceneNode),
+    mScene(NULL)
 {    
     _init();
 }
@@ -94,6 +96,18 @@ void OGKNPC::setIsEnemy(bool isEnemy)
 void OGKNPC::snapToTerrain()
 {
     if(mScene) {
+        Ogre::Vector3 pos = mSceneNode->getPosition();
+        Ogre::Ray ray(pos + Ogre::Vector3(0,100.f,0), Ogre::Vector3::NEGATIVE_UNIT_Y);
+        Ogre::Vector3 hitLocation = Ogre::Vector3::ZERO;
+        Ogre::MovableObject *hitObject = NULL;
+        bool terrainOnly = true;
+        
+        // terrain only
+        if(mScene->rayIntersects(ray, hitLocation, hitObject, terrainOnly)) {
+            pos.y = hitLocation.y + 0.1f;
+            mSceneNode->setPosition(pos);
+        }
+        /*
         OGKTerrain *terrain = mScene->getTerrain();
         if(terrain) {
             Ogre::Vector3 pos = mSceneNode->getPosition();
@@ -101,6 +115,7 @@ void OGKNPC::snapToTerrain()
             pos.y = height + 0.1f;
             mSceneNode->setPosition(pos);
         }
+         */
     }
 }
 
@@ -108,6 +123,7 @@ void OGKNPC::update(Ogre::Real elapsedTime)
 {
     if(mHealth > 0.001) {
         
+        /*
         OGKPlayer *player = mScene ? mScene->getPlayer() : NULL;
         if(mIsEnemy && player) {
             Ogre::Vector3 dir = player->getSceneNode()->getPosition() -
@@ -136,6 +152,7 @@ void OGKNPC::update(Ogre::Real elapsedTime)
                 }
             }
         }
+         */
         
         mAttackCooldown -= elapsedTime;
         
@@ -156,8 +173,8 @@ void OGKNPC::_init()
     mMovingState = OGKNPC::NONE;
     mRotateSpeed = 1.0;
     
-//    OGKSceneManager *gameSceneManager = OGKGame::getSingletonPtr()->mGameSceneManager;
-//    mScene = (OGKInGameScene *)gameSceneManager->getScene("ingame");
+    OGKSceneManager *gameSceneManager = OGKGame::getSingletonPtr()->mGameSceneManager;
+    mScene = gameSceneManager->getActiveScene();
     
     // health bar
     //_initHealthBar();
@@ -187,6 +204,7 @@ void OGKNPC::_initHealthBar()
         OGKLOG("Can't create NPC health bar becuz scene is null");
         return;
     }
+    /*
     mBadge = OGRE_NEW OGKBadge(mSceneNode,
                                 mScene->getGUI()->getSilverback(),
                                 mScene->mCamera->getCamera(),
@@ -196,6 +214,7 @@ void OGKNPC::_initHealthBar()
     mBadge->setHealthBarColour(Ogre::ColourValue(0.5,0,0,1));
     mBadge->setHealthBarBorderColour(Ogre::ColourValue(0.25,0,0,1));
     mBadge->setCaption("");
+     */
 }
 
 void OGKNPC::_updateHealthBar()

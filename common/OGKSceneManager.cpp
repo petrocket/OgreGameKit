@@ -69,7 +69,9 @@ void OGKSceneManager::preRenderTargetUpdate(const Ogre::RenderTargetEvent& evt)
         }
     }
     if(mPreviousScene) {
-        mPreviousScene->mSceneNode->setVisible(true);
+        if(mPreviousScene->mSceneNode) {
+            mPreviousScene->mSceneNode->setVisible(true);
+        }
         if(mPreviousScene->mOverlay) {
             mPreviousScene->mOverlay->show();
         }
