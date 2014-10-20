@@ -317,8 +317,6 @@ void DotSceneLoader::processLight(rapidxml::xml_node<>* XMLNode, Ogre::SceneNode
     
     // Create the light
     Ogre::Light *pLight = mSceneMgr->createLight(name);
-    if(pParent)
-        pParent->attachObject(pLight);
     
     Ogre::String sValue = getAttrib(XMLNode, "type");
     if(sValue == "point")
@@ -337,7 +335,7 @@ void DotSceneLoader::processLight(rapidxml::xml_node<>* XMLNode, Ogre::SceneNode
     
     // Process position (?)
     pElement = XMLNode->first_node("position");
-    if(pElement)
+    if(pElement && pLight->getType() != Ogre::Light::LT_DIRECTIONAL)
         pLight->setPosition(parseVector3(pElement));
     
     // Process normal (?)
@@ -351,6 +349,8 @@ void DotSceneLoader::processLight(rapidxml::xml_node<>* XMLNode, Ogre::SceneNode
     {
         pLight->setDirection(parseVector3(pElement));
         mLightDirection = parseVector3(pElement);
+        
+        OGKLOG("light direction " + Ogre::StringConverter::toString(mLightDirection));
     }
     
     // Process colourDiffuse (?)
@@ -365,6 +365,9 @@ void DotSceneLoader::processLight(rapidxml::xml_node<>* XMLNode, Ogre::SceneNode
     
     if(sValue != "directional")
     {
+        if(pParent)
+            pParent->attachObject(pLight);
+        
         // Process lightRange (?)
         pElement = XMLNode->first_node("lightRange");
         if(pElement)
