@@ -1,80 +1,81 @@
-<scene formatVersion="1.0.1" exported_by="alex" export_time="1413773374.331461" previous_export_time="1413770012.732079" >
+<scene export_time="1414370679.655022" previous_export_time="1413773374.331461" exported_by="alex" formatVersion="1.0.1" >
   <nodes >
     <node name="NPCSpawn" >
-      <position z="14.122744" y="0.111093" x="46.686432" />
-      <rotation qy="0.000000" qx="0.000000" qz="-0.000000" qw="1.000000" />
-      <scale z="1.000000" y="1.000000" x="1.000000" />
+      <position x="46.686432" y="0.111093" z="14.122744" />
+      <rotation qw="1.000000" qz="-0.000000" qx="0.000000" qy="0.000000" />
+      <scale x="1.000000" y="1.000000" z="1.000000" />
       <game >
         <sensors />
         <actuators />
       </game>
-      <entity mass="1.0" actor="False" friction_z="1.0" lock_rot_x="False" lock_rot_y="False" lock_rot_z="False" lock_trans_z="False" name="NPCSpawn" ghost="True" mass_radius="1.0" lock_trans_y="False" lock_trans_x="False" friction_x="1.0" meshFile="NPCSpawn.mesh" anisotropic_friction="False" damping_trans="0.02539999969303608" velocity_min="0.0" friction_y="1.0" velocity_max="0.0" damping_rot="0.1589999943971634" inertia_tensor="0.4000000059604645" physics_type="CHARACTER" >
-        <user_data name="type" type="str" value="npc_spawn" />
-        <user_data name="npc_type" type="str" value="friendly" />
+      <entity damping_trans="0.02539999969303608" anisotropic_friction="False" lock_rot_y="False" name="NPCSpawn" lock_trans_x="False" lock_trans_y="False" lock_trans_z="False" actor="False" friction_z="1.0" friction_x="1.0" friction_y="1.0" lock_rot_z="False" damping_rot="0.1589999943971634" lock_rot_x="False" velocity_max="0.0" inertia_tensor="0.4000000059604645" ghost="True" mass="1.0" physics_type="CHARACTER" meshFile="NPCSpawn.mesh" mass_radius="1.0" velocity_min="0.0" >
+        <user_data type="str" name="type" value="npc_spawn" />
+        <user_data type="str" name="npc_type" value="friendly" />
       </entity>
     </node>
     <node name="House" >
-      <position z="34.081165" y="-0.574979" x="41.787609" />
-      <rotation qy="0.000000" qx="0.000000" qz="-0.000000" qw="1.000000" />
-      <scale z="2.063972" y="2.381574" x="1.408759" />
+      <position x="41.787609" y="-0.574979" z="34.081165" />
+      <rotation qw="1.000000" qz="-0.000000" qx="0.000000" qy="0.000000" />
+      <scale x="1.408759" y="2.381574" z="2.063972" />
       <game >
         <sensors />
         <actuators />
       </game>
-      <entity mass="1.0" actor="False" friction_z="1.0" lock_rot_x="False" lock_rot_y="False" lock_rot_z="False" lock_trans_z="False" name="House" ghost="False" mass_radius="1.0" lock_trans_y="False" lock_trans_x="False" friction_x="1.0" meshFile="House.mesh" anisotropic_friction="False" damping_trans="0.03999999910593033" velocity_min="0.0" friction_y="1.0" velocity_max="0.0" damping_rot="0.10000000149011612" inertia_tensor="0.4000000059604645" physics_type="STATIC" >
-        <user_data name="type" type="str" value="static" />
+      <entity damping_trans="0.03999999910593033" anisotropic_friction="False" lock_rot_y="False" name="House" lock_trans_x="False" lock_trans_y="False" lock_trans_z="False" actor="False" friction_z="1.0" friction_x="1.0" friction_y="1.0" lock_rot_z="False" damping_rot="0.10000000149011612" lock_rot_x="False" velocity_max="0.0" inertia_tensor="0.4000000059604645" ghost="False" mass="1.0" physics_type="STATIC" meshFile="House.mesh" mass_radius="1.0" velocity_min="0.0" >
+        <user_data type="str" name="type" value="static" />
       </entity>
     </node>
     <node name="PlayerSpawn" >
-      <position z="30.852346" y="-0.493932" x="46.686432" />
-      <rotation qy="0.000000" qx="0.000000" qz="-0.000000" qw="1.000000" />
-      <scale z="1.000000" y="1.000000" x="1.000000" />
+      <position x="46.686432" y="-0.493932" z="30.852346" />
+      <rotation qw="1.000000" qz="-0.000000" qx="0.000000" qy="0.000000" />
+      <scale x="1.000000" y="1.000000" z="1.000000" />
       <game >
         <sensors />
         <actuators />
       </game>
-      <entity mass="1.0" actor="False" friction_z="1.0" lock_rot_x="False" lock_rot_y="False" lock_rot_z="False" lock_trans_z="False" name="PlayerSpawn" ghost="True" mass_radius="1.0" lock_trans_y="False" lock_trans_x="False" friction_x="1.0" meshFile="PlayerSpawn.mesh" anisotropic_friction="False" damping_trans="0.02539999969303608" velocity_min="0.0" friction_y="1.0" velocity_max="0.0" damping_rot="0.1589999943971634" inertia_tensor="0.4000000059604645" physics_type="CHARACTER" >
-        <user_data name="type" type="str" value="player_spawn" />
+      <entity damping_trans="0.02539999969303608" anisotropic_friction="False" lock_rot_y="False" name="PlayerSpawn" lock_trans_x="False" lock_trans_y="False" lock_trans_z="False" actor="False" friction_z="1.0" friction_x="1.0" friction_y="1.0" lock_rot_z="False" damping_rot="0.1589999943971634" lock_rot_x="False" velocity_max="0.0" inertia_tensor="0.4000000059604645" ghost="True" mass="1.0" physics_type="CHARACTER" meshFile="PlayerSpawn.mesh" mass_radius="1.0" velocity_min="0.0" >
+        <user_data type="str" name="type" value="player_spawn" />
       </entity>
     </node>
     <node name="terrain" >
-      <position z="-0.000000" y="0.000000" x="0.000000" />
-      <rotation qy="0.000000" qx="0.000000" qz="-0.000000" qw="1.000000" />
-      <scale z="174.121521" y="7.894703" x="125.727394" />
+      <position x="0.000000" y="0.000000" z="-0.000000" />
+      <rotation qw="1.000000" qz="-0.000000" qx="0.000000" qy="0.000000" />
+      <scale x="125.727394" y="7.894703" z="174.121521" />
       <game >
         <sensors />
         <actuators />
       </game>
-      <entity mass="1.0" actor="False" friction_z="1.0" lock_rot_x="False" lock_rot_y="False" lock_rot_z="False" lock_trans_z="False" name="terrain" ghost="False" mass_radius="1.0" lock_trans_y="False" lock_trans_x="False" friction_x="1.0" meshFile="terrain.mesh" anisotropic_friction="False" damping_trans="0.03999999910593033" velocity_min="0.0" friction_y="1.0" velocity_max="0.0" damping_rot="0.10000000149011612" inertia_tensor="0.4000000059604645" physics_type="STATIC" >
-        <user_data name="type" type="str" value="terrain" />
+      <entity damping_trans="0.03999999910593033" anisotropic_friction="False" lock_rot_y="False" name="terrain" lock_trans_x="False" lock_trans_y="False" lock_trans_z="False" actor="False" friction_z="1.0" friction_x="1.0" friction_y="1.0" lock_rot_z="False" damping_rot="0.10000000149011612" lock_rot_x="False" velocity_max="0.0" inertia_tensor="0.4000000059604645" ghost="False" mass="1.0" physics_type="STATIC" meshFile="terrain.mesh" mass_radius="1.0" velocity_min="0.0" >
+        <user_data type="str" name="type" value="terrain" />
       </entity>
     </node>
     <node name="Sun" >
-      <position z="188.505783" y="38.354767" x="121.967957" />
-      <rotation qy="-0.146447" qx="0.353554" qz="-0.353554" qw="0.853553" />
-      <scale z="1.000000" y="1.000000" x="1.000000" />
+      <position x="174.882690" y="38.354767" z="129.078476" />
+      <rotation qw="0.761078" qz="-0.439409" qx="0.413232" qy="-0.238579" />
+      <scale x="1.000000" y="1.000000" z="1.000000" />
       <game >
         <sensors />
         <actuators />
       </game>
-      <light name="Sun" type="directional" powerScale="0.5" >
-        <position z="188.505783" y="38.354767" x="121.967957" />
-        <lightAttenuation constant="1.0" linear="0.0033333333333333335" range="5000" quadratic="0.0" />
-        <direction z="-0.5" y="-0.5" x="-0.707" />
-        <colourDiffuse r="1.0" g="1.0" b="1.0" />
-        <colourSpecular r="1.0" g="1.0" b="1.0" />
+      <light powerScale="1.0" shadow="true" name="Sun" type="directional" >
+        <position x="174.882690" y="38.354767" z="129.078476" />
+        <lightAttenuation quadratic="0.0" constant="1.0" linear="0.0033333333333333335" range="5000" />
+        <direction x="-0.866" y="-0.272" z="-0.419" />
+        <colourDiffuse r="1.0" b="1.0" g="1.0" />
+        <colourSpecular r="1.0" b="1.0" g="1.0" />
+        <colourShadow r="1.0" b="1.0" g="1.0" />
       </light>
     </node>
     <node name="Camera" >
-      <position z="6.507640" y="5.343665" x="7.481132" />
-      <rotation qy="0.334251" qx="0.481707" qz="-0.212922" qw="0.781600" />
-      <scale z="1.000000" y="1.000000" x="1.000000" />
+      <position x="36.058540" y="62.200439" z="132.671707" />
+      <rotation qw="0.842244" qz="-0.035427" qx="0.535996" qy="0.045582" />
+      <scale x="1.000000" y="1.000000" z="1.000000" />
       <game >
         <sensors />
         <actuators />
       </game>
-      <camera fov="0.5033799435163735" name="Camera" projectionType="perspective" >
-        <clipping farPlaneDist="100.0" far="100.0" near="0.10000000149011612" nearPlaneDist="0.10000000149011612" />
+      <camera projectionType="perspective" name="Camera" fov="0.5033799435163735" >
+        <clipping farPlaneDist="2000.0" nearPlaneDist="0.10000000149011612" far="2000.0" near="0.10000000149011612" />
       </camera>
     </node>
   </nodes>
@@ -83,12 +84,15 @@
       <file name="/Users/alex/Documents/workspace/ogre/1.9.x/OgreGameKit/media/levels/Material.material" />
     </item>
     <item type="material" >
-      <file name="/Users/alex/Documents/workspace/ogre/1.9.x/OgreGameKit/media/levels/TerrainMaterial.material" />
+      <file name="/Users/alex/Documents/workspace/ogre/1.9.x/OgreGameKit/media/levels/HouseMaterial.material" />
+    </item>
+    <item type="material" >
+      <file name="/Users/alex/Documents/workspace/ogre/1.9.x/OgreGameKit/media/levels/Terrain_Lightmap.material" />
     </item>
   </externals>
   <environment >
-    <colourBackground r="0.05087608844041824" g="0.05087608844041824" b="0.05087608844041824" />
-    <colourAmbient r="0.0" g="0.0" b="0.0" />
-    <colourDiffuse r="0.05087608844041824" g="0.05087608844041824" b="0.05087608844041824" />
+    <colourAmbient r="0.0" b="0.0" g="0.0" />
+    <colourDiffuse r="0.05087608844041824" b="0.05087608844041824" g="0.05087608844041824" />
+    <colourBackground r="0.05087608844041824" b="0.05087608844041824" g="0.05087608844041824" />
   </environment>
 </scene>

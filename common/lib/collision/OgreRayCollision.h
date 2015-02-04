@@ -1,5 +1,5 @@
 //
-//  OgreRay.h
+//  OgreRayCollision.h
 //  OgreGameKit
 //
 //  Created by Alex on 10/10/14.
@@ -11,13 +11,13 @@
 
 #include <Ogre.h>
 
-class OgreRay
+class OgreRayCollision
 {
 private:
     Ogre::RaySceneQuery* m_raySceneQuery;//!< Ray query
     
 public:
-    OgreRay( Ogre::SceneManager* sceneMgr );
+    OgreRayCollision( Ogre::SceneManager* sceneMgr );
     
     bool RaycastFromPoint( const Ogre::Vector3& point,
                            const Ogre::Vector3& normal,

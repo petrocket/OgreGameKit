@@ -3,7 +3,7 @@
 // Ogre
 #include <Ogre.h>
 
-
+#include <Paging/OgrePaging.h>
 #include <Terrain/OgreTerrain.h>
 #include <Terrain/OgreTerrainGroup.h>
 #include <Terrain/OgreTerrainMaterialGeneratorA.h>

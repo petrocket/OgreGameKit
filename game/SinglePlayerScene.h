@@ -21,7 +21,7 @@
 #include "Gui3DScreenRenderable2DPanel.h"
 
 // Collision
-#include "OgreRay.h"
+#include "OgreRayCollision.h"
 
 class SinglePlayerScene : public OGKScene
 {

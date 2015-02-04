@@ -1,12 +1,12 @@
 //
-//  OgreRay.cpp
+//  OgreRayCollision.cpp
 //  OgreGameKit
 //
 //  Created by Alex on 10/10/14.
 //
 //
 
-#include "OgreRay.h"
+#include "OgreRayCollision.h"
 
 #include "OGKGame.h"
 
@@ -15,7 +15,7 @@
                                                                               * @param[in] sceneMgr	Scene manager
                                                                               * @return[NONE]
                                                                               */
-OgreRay::OgreRay( Ogre::SceneManager* sceneMgr ) :
+OgreRayCollision::OgreRayCollision( Ogre::SceneManager* sceneMgr ) :
     mSavedCollisionObject(NULL)
 {
     m_raySceneQuery = sceneMgr->createRayQuery(Ogre::Ray(), Ogre::SceneManager::WORLD_GEOMETRY_TYPE_MASK);
@@ -32,7 +32,7 @@ OgreRay::OgreRay( Ogre::SceneManager* sceneMgr ) :
                                                                               * @param[out] result	Result ( ONLY if return TRUE )
                                                                               * @return TRUE if somethings found => {result} NOT EMPTY
                                                                               */
-bool OgreRay::RaycastFromPoint( const Ogre::Vector3& point, const Ogre::Vector3& normal, Ogre::Vector3& result,
+bool OgreRayCollision::RaycastFromPoint( const Ogre::Vector3& point, const Ogre::Vector3& normal, Ogre::Vector3& result,
                                Ogre::MovableObject *resultObject)
 {
     // create the ray to test
@@ -144,7 +144,7 @@ bool OgreRay::RaycastFromPoint( const Ogre::Vector3& point, const Ogre::Vector3&
     return false;
 }
 
-bool OgreRay::RaycastObject( const Ogre::Vector3& point,
+bool OgreRayCollision::RaycastObject( const Ogre::Vector3& point,
                    const Ogre::Vector3& normal,
                    Ogre::Vector3& result,
                    Ogre::MovableObject *object,
@@ -257,7 +257,7 @@ bool OgreRay::RaycastObject( const Ogre::Vector3& point,
     return false;
 }
 
-void OgreRay::GetMeshInformation( const Ogre::Entity* entity, size_t& vertex_count, Ogre::Vector3*& vertices, size_t& index_count, unsigned long*& indices, const Ogre::Vector3& position, const Ogre::Quaternion& orient, const Ogre::Vector3& scale )
+void OgreRayCollision::GetMeshInformation( const Ogre::Entity* entity, size_t& vertex_count, Ogre::Vector3*& vertices, size_t& index_count, unsigned long*& indices, const Ogre::Vector3& position, const Ogre::Quaternion& orient, const Ogre::Vector3& scale )
 {
     bool added_shared = false;
     size_t current_offset = 0;
@@ -380,7 +380,7 @@ void OgreRay::GetMeshInformation( const Ogre::Entity* entity, size_t& vertex_cou
 
 // Get the mesh information for the given mesh.
 // Code found in Wiki: www.ogre3d.org/wiki/index.php/RetrieveVertexData
-void OgreRay::GetMeshInformation( const Ogre::MeshPtr mesh, size_t &vertex_count, Ogre::Vector3*& vertices,  size_t& index_count, unsigned long*& indices, const Ogre::Vector3& position, const Ogre::Quaternion& orient, const Ogre::Vector3& scale )
+void OgreRayCollision::GetMeshInformation( const Ogre::MeshPtr mesh, size_t &vertex_count, Ogre::Vector3*& vertices,  size_t& index_count, unsigned long*& indices, const Ogre::Vector3& position, const Ogre::Quaternion& orient, const Ogre::Vector3& scale )
 {
     bool added_shared = false;
     size_t current_offset = 0;
@@ -488,7 +488,7 @@ void OgreRay::GetMeshInformation( const Ogre::MeshPtr mesh, size_t &vertex_count
 }
 
 
-void OgreRay::GetMeshInformation( const Ogre::ManualObject* manual, size_t& vertex_count, Ogre::Vector3*& vertices, size_t& index_count, unsigned long*& indices, const Ogre::Vector3& position, const Ogre::Quaternion& orient, const Ogre::Vector3& scale )
+void OgreRayCollision::GetMeshInformation( const Ogre::ManualObject* manual, size_t& vertex_count, Ogre::Vector3*& vertices, size_t& index_count, unsigned long*& indices, const Ogre::Vector3& position, const Ogre::Quaternion& orient, const Ogre::Vector3& scale )
 {
     std::vector<Ogre::Vector3> returnVertices;
     std::vector<unsigned long> returnIndices;
@@ -577,7 +577,7 @@ void OgreRay::GetMeshInformation( const Ogre::ManualObject* manual, size_t& vert
 #pragma mark - Private
 
 //-----------------------------------------------------------------------
-std::pair<bool, Ogre::Real> OgreRay::intersects(const Ogre::Ray& ray, const Ogre::Vector3& a,
+std::pair<bool, Ogre::Real> OgreRayCollision::intersects(const Ogre::Ray& ray, const Ogre::Vector3& a,
                                                 const Ogre::Vector3& b, const Ogre::Vector3& c, const Ogre::Vector3& normal,
                                                 bool positiveSide, bool negativeSide)
 {

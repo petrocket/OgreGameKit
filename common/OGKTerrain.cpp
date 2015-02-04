@@ -10,6 +10,7 @@
 #include "OGKGame.h"
 #include "OGKInputManager.h"
 #include <OgreTerrainMaterialGeneratorA.h>
+#include "macUtils.h"
 
 #include "OGKTerrainMaterial.h"
 
@@ -35,7 +36,7 @@ OGKTerrain::OGKTerrain() :
 {
 #ifdef OGRE_IS_IOS
     // add documents folder for loading generated terrain
-    Ogre::ResourceGroupManager::getSingleton().addResourceLocation(macBundlePath() + "/../Documents", "FileSystem", "General");
+    Ogre::ResourceGroupManager::getSingleton().addResourceLocation(Ogre::iOSDocumentsDirectory() + "/../Documents", "FileSystem", "General");
 #endif
 }
 

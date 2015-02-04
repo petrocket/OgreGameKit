@@ -10,29 +10,29 @@
 	<string>OgreGameKit</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>59A7EAA0-5811-49A8-BDFD-1ED7A74254BF</key>
-		<string>ssh://github.com/petrocket/OgreGameKit.git</string>
+		<key>8F8D2A05150769C2B358F7A32A6308B4D4E6979C</key>
+		<string>github.com:petrocket/OgreGameKit.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>OSX/OgreGameKit/OgreGameKit.xcodeproj/project.xcworkspace</string>
+	<string>OSX/OgreGameKit.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>59A7EAA0-5811-49A8-BDFD-1ED7A74254BF</key>
-		<string>../../../..</string>
+		<key>8F8D2A05150769C2B358F7A32A6308B4D4E6979C</key>
+		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://github.com/petrocket/OgreGameKit.git</string>
+	<string>github.com:petrocket/OgreGameKit.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>59A7EAA0-5811-49A8-BDFD-1ED7A74254BF</string>
+	<string>8F8D2A05150769C2B358F7A32A6308B4D4E6979C</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>59A7EAA0-5811-49A8-BDFD-1ED7A74254BF</string>
+			<string>8F8D2A05150769C2B358F7A32A6308B4D4E6979C</string>
 			<key>IDESourceControlWCCName</key>
 			<string>OgreGameKit</string>
 		</dict>

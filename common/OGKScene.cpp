@@ -14,7 +14,7 @@
 #include "DotSceneLoader.h"
 
 // collision
-#include "OgreRay.h"
+#include "OgreRayCollision.h"
 
 #ifdef INCLUDE_RTSHADER_SYSTEM
 #include "OgreRTShaderSystem.h"
@@ -152,7 +152,7 @@ bool OGKScene::mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonID id) 
 bool OGKScene::rayIntersects(const Ogre::Ray& ray, Ogre::Vector3& hitLocation, Ogre::MovableObject *hitObject, bool terrainOnly)
 {
     if(!mCollisionRay) {
-        mCollisionRay = OGRE_NEW OgreRay(mSceneManager);
+        mCollisionRay = OGRE_NEW OgreRayCollision(mSceneManager);
     }
     
     if(terrainOnly) {

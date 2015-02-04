@@ -23,8 +23,8 @@
     self.startTime = 0;
     
     try {
-        new OGKGame();
-        OGKGame::getSingleton().start();
+        new Game();
+        Game::getSingleton().start();
         Ogre::Root::getSingleton().getRenderSystem()->_initRenderTargets();
 		Ogre::Root::getSingleton().clearEventTimes();
     } catch( Ogre::Exception& e ) {
@@ -69,7 +69,7 @@
 
 - (void)renderOneFrame
 {
-    if(!OGKGame::getSingletonPtr()->renderOneFrame()) {
+    if(!Game::getSingletonPtr()->renderOneFrame()) {
 	    [self terminate];
     }
 }

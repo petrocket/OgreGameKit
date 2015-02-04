@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA1C2DB91A82674200D935D5 /* OGKTerrainGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA1C2DB71A82674200D935D5 /* OGKTerrainGenerator.cpp */; };
+		FA1C2DBE1A82677E00D935D5 /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA1C2DBC1A82677E00D935D5 /* Game.cpp */; };
+		FA1C2DC31A82678500D935D5 /* MainMenuScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA1C2DBF1A82678500D935D5 /* MainMenuScene.cpp */; };
+		FA1C2DC41A82678500D935D5 /* SinglePlayerScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA1C2DC11A82678500D935D5 /* SinglePlayerScene.cpp */; };
+		FA1C2DCB1A82692D00D935D5 /* OgreRayCollision.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA1C2DC91A82692D00D935D5 /* OgreRayCollision.cpp */; };
 		FA5D77001983F6A60078CC43 /* Gorilla.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D76BF1983F6A60078CC43 /* Gorilla.cpp */; };
 		FA5D77011983F6A60078CC43 /* Gui3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D76C11983F6A60078CC43 /* Gui3D.cpp */; };
 		FA5D77021983F6A60078CC43 /* Gui3DButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D76C31983F6A60078CC43 /* Gui3DButton.cpp */; };
@@ -77,6 +82,16 @@
 		FA0813D71990299D00F92861 /* OGKDebug.program */ = {isa = PBXFileReference; lastKnownFileType = text; path = OGKDebug.program; sourceTree = "<group>"; };
 		FA0813D819902A4F00F92861 /* OGKColorFP.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = OGKColorFP.glsles; sourceTree = "<group>"; };
 		FA0813D919902A4F00F92861 /* OGKColorVP.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = OGKColorVP.glsles; sourceTree = "<group>"; };
+		FA1C2DB71A82674200D935D5 /* OGKTerrainGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OGKTerrainGenerator.cpp; path = ../../common/OGKTerrainGenerator.cpp; sourceTree = "<group>"; };
+		FA1C2DB81A82674200D935D5 /* OGKTerrainGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKTerrainGenerator.h; path = ../../common/OGKTerrainGenerator.h; sourceTree = "<group>"; };
+		FA1C2DBC1A82677E00D935D5 /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Game.cpp; path = ../../game/Game.cpp; sourceTree = "<group>"; };
+		FA1C2DBD1A82677E00D935D5 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Game.h; path = ../../game/Game.h; sourceTree = "<group>"; };
+		FA1C2DBF1A82678500D935D5 /* MainMenuScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MainMenuScene.cpp; path = ../../game/MainMenuScene.cpp; sourceTree = "<group>"; };
+		FA1C2DC01A82678500D935D5 /* MainMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainMenuScene.h; path = ../../game/MainMenuScene.h; sourceTree = "<group>"; };
+		FA1C2DC11A82678500D935D5 /* SinglePlayerScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SinglePlayerScene.cpp; path = ../../game/SinglePlayerScene.cpp; sourceTree = "<group>"; };
+		FA1C2DC21A82678500D935D5 /* SinglePlayerScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SinglePlayerScene.h; path = ../../game/SinglePlayerScene.h; sourceTree = "<group>"; };
+		FA1C2DC91A82692D00D935D5 /* OgreRayCollision.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreRayCollision.cpp; sourceTree = "<group>"; };
+		FA1C2DCA1A82692D00D935D5 /* OgreRayCollision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreRayCollision.h; sourceTree = "<group>"; };
 		FA5D76BF1983F6A60078CC43 /* Gorilla.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Gorilla.cpp; sourceTree = "<group>"; };
 		FA5D76C01983F6A60078CC43 /* Gorilla.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Gorilla.h; sourceTree = "<group>"; };
 		FA5D76C11983F6A60078CC43 /* Gui3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Gui3D.cpp; sourceTree = "<group>"; };
@@ -339,8 +354,8 @@
 		FA8D6920198736650080C223 /* SGXLib_TextureAtlas.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_TextureAtlas.glsl; sourceTree = "<group>"; };
 		FA8D6921198736650080C223 /* SGXLib_TextureAtlas.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_TextureAtlas.glsles; sourceTree = "<group>"; };
 		FA8D6922198736650080C223 /* SGXLib_TextureAtlas.hlsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SGXLib_TextureAtlas.hlsl; sourceTree = "<group>"; };
-		FA935457199517900010C0E4 /* OgreTerrainVP.glsles */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = OgreTerrainVP.glsles; path = ../media/materials/programs/GLSLES/OgreTerrainVP.glsles; sourceTree = "<group>"; };
-		FA935459199517DC0010C0E4 /* OgreTerrainFP.glsles */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = OgreTerrainFP.glsles; path = ../media/materials/programs/GLSLES/OgreTerrainFP.glsles; sourceTree = "<group>"; };
+		FA935457199517900010C0E4 /* OgreTerrainVP.glsles */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OgreTerrainVP.glsles; sourceTree = "<group>"; };
+		FA935459199517DC0010C0E4 /* OgreTerrainFP.glsles */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OgreTerrainFP.glsles; sourceTree = "<group>"; };
 		FAB8BF271953626A00DA2B26 /* OGKCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OGKCamera.cpp; path = ../../common/OGKCamera.cpp; sourceTree = "<group>"; };
 		FAB8BF281953626A00DA2B26 /* OGKCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKCamera.h; path = ../../common/OGKCamera.h; sourceTree = "<group>"; };
 		FAB8BF291953626A00DA2B26 /* OGKInputManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OGKInputManager.cpp; path = ../../common/OGKInputManager.cpp; sourceTree = "<group>"; };
@@ -365,7 +380,7 @@
 		FACF1A051942220300F099AA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		FACF1A271942574300F099AA /* OGKTerrainMaterial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OGKTerrainMaterial.cpp; path = ../../common/OGKTerrainMaterial.cpp; sourceTree = "<group>"; };
 		FACF1A281942574300F099AA /* OGKTerrainMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGKTerrainMaterial.h; path = ../../common/OGKTerrainMaterial.h; sourceTree = "<group>"; };
-		FAEA574A19951D030034C74D /* OgreTerrainFPSimple.glsles */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = OgreTerrainFPSimple.glsles; path = ../media/materials/programs/GLSLES/OgreTerrainFPSimple.glsles; sourceTree = "<group>"; };
+		FAEA574A19951D030034C74D /* OgreTerrainFPSimple.glsles */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OgreTerrainFPSimple.glsles; sourceTree = "<group>"; };
 		FAEFED90199561E400307BC7 /* OGKPrograms.program */ = {isa = PBXFileReference; lastKnownFileType = text; path = OGKPrograms.program; sourceTree = "<group>"; };
 		FAEFED911995623F00307BC7 /* OGKSkyboxVP.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = OGKSkyboxVP.glsles; sourceTree = "<group>"; };
 		FAEFED921995628200307BC7 /* OGKSkyboxFP.glsles */ = {isa = PBXFileReference; lastKnownFileType = text; path = OGKSkyboxFP.glsles; sourceTree = "<group>"; };
@@ -405,9 +420,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FA1C2DBA1A82675A00D935D5 /* game */ = {
+			isa = PBXGroup;
+			children = (
+				FA1C2DBC1A82677E00D935D5 /* Game.cpp */,
+				FA1C2DBD1A82677E00D935D5 /* Game.h */,
+				FA1C2DBB1A82675F00D935D5 /* scenes */,
+			);
+			name = game;
+			sourceTree = "<group>";
+		};
+		FA1C2DBB1A82675F00D935D5 /* scenes */ = {
+			isa = PBXGroup;
+			children = (
+				FA1C2DBF1A82678500D935D5 /* MainMenuScene.cpp */,
+				FA1C2DC01A82678500D935D5 /* MainMenuScene.h */,
+				FA1C2DC11A82678500D935D5 /* SinglePlayerScene.cpp */,
+				FA1C2DC21A82678500D935D5 /* SinglePlayerScene.h */,
+			);
+			name = scenes;
+			sourceTree = "<group>";
+		};
+		FA1C2DC51A82690000D935D5 /* collision */ = {
+			isa = PBXGroup;
+			children = (
+				FA1C2DC91A82692D00D935D5 /* OgreRayCollision.cpp */,
+				FA1C2DCA1A82692D00D935D5 /* OgreRayCollision.h */,
+			);
+			name = collision;
+			path = ../../common/lib/collision;
+			sourceTree = "<group>";
+		};
 		FA5D76BD1983F6820078CC43 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				FA1C2DC51A82690000D935D5 /* collision */,
 				FA5D76BE1983F6A60078CC43 /* gui */,
 				FA5D76F61983F6A60078CC43 /* scene */,
 				FA5D76F91983F6A60078CC43 /* xml */,
@@ -609,10 +656,10 @@
 			isa = PBXGroup;
 			children = (
 				FA8D6890198736650080C223 /* Bloom2_ps20.glsles */,
-				FA8D6891198736650080C223 /* Blur0_vs.glsles */,
-				FA8D6892198736650080C223 /* Blur1_vs.glsles */,
 				FA8D6893198736650080C223 /* Blur_ps.glsles */,
 				FA8D6894198736650080C223 /* Blur_vs.glsles */,
+				FA8D6891198736650080C223 /* Blur0_vs.glsles */,
+				FA8D6892198736650080C223 /* Blur1_vs.glsles */,
 				FA8D6895198736650080C223 /* BlurH_ps20.glsles */,
 				FA8D6896198736650080C223 /* BlurV_ps20.glsles */,
 				FA8D6897198736650080C223 /* BrightBloom2_ps20.glsles */,
@@ -630,6 +677,9 @@
 				FA0813D919902A4F00F92861 /* OGKColorVP.glsles */,
 				FAEFED921995628200307BC7 /* OGKSkyboxFP.glsles */,
 				FAEFED911995623F00307BC7 /* OGKSkyboxVP.glsles */,
+				FA935459199517DC0010C0E4 /* OgreTerrainFP.glsles */,
+				FAEA574A19951D030034C74D /* OgreTerrainFPSimple.glsles */,
+				FA935457199517900010C0E4 /* OgreTerrainVP.glsles */,
 				FA0813D6198DB62100F92861 /* StdQuad_ps.glsles */,
 				FA8D68A2198736650080C223 /* StdQuad_Tex2_vp.glsles */,
 				FA8D68A3198736650080C223 /* StdQuad_Tex2a_vp.glsles */,
@@ -842,9 +892,6 @@
 		FAF72693192C38E900CBCD29 = {
 			isa = PBXGroup;
 			children = (
-				FAEA574A19951D030034C74D /* OgreTerrainFPSimple.glsles */,
-				FA935459199517DC0010C0E4 /* OgreTerrainFP.glsles */,
-				FA935457199517900010C0E4 /* OgreTerrainVP.glsles */,
 				FAF726AA192C38E900CBCD29 /* OgreGameKit */,
 				FAF7269F192C38E900CBCD29 /* Frameworks */,
 				FAF7269E192C38E900CBCD29 /* Products */,
@@ -877,6 +924,7 @@
 		FAF726AA192C38E900CBCD29 /* OgreGameKit */ = {
 			isa = PBXGroup;
 			children = (
+				FA1C2DBA1A82675A00D935D5 /* game */,
 				FAF7270D192C3AB000CBCD29 /* common */,
 				FAF7270C192C3A8D00CBCD29 /* ios */,
 				FAF726B1192C38E900CBCD29 /* main.mm */,
@@ -961,6 +1009,8 @@
 				FA77699B193E2F45005F4810 /* OGKStaticPluginLoader.h */,
 				FACF19EA1940EE8600F099AA /* OGKTerrain.cpp */,
 				FACF19EB1940EE8600F099AA /* OGKTerrain.h */,
+				FA1C2DB71A82674200D935D5 /* OGKTerrainGenerator.cpp */,
+				FA1C2DB81A82674200D935D5 /* OGKTerrainGenerator.h */,
 				FACF1A271942574300F099AA /* OGKTerrainMaterial.cpp */,
 				FACF1A281942574300F099AA /* OGKTerrainMaterial.h */,
 			);
@@ -1053,6 +1103,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA5D77361983F6E30078CC43 /* OGKScene.cpp in Sources */,
+				FA1C2DCB1A82692D00D935D5 /* OgreRayCollision.cpp in Sources */,
 				FA5D77121983F6A70078CC43 /* Gui3DScreenPanel.cpp in Sources */,
 				FA5D77331983F6E30078CC43 /* OGKMenuScene.cpp in Sources */,
 				FAB8BF2C1953626A00DA2B26 /* OGKInputManager.cpp in Sources */,
@@ -1063,6 +1114,7 @@
 				FACF19FF1942214500F099AA /* CocosDenshion.m in Sources */,
 				FA5D773B198403F10078CC43 /* OISUtils.mm in Sources */,
 				FAF726B2192C38E900CBCD29 /* main.mm in Sources */,
+				FA1C2DC41A82678500D935D5 /* SinglePlayerScene.cpp in Sources */,
 				FAB8BF2B1953626A00DA2B26 /* OGKCamera.cpp in Sources */,
 				FACF19EC1940EE8600F099AA /* OGKTerrain.cpp in Sources */,
 				FA5D77001983F6A60078CC43 /* Gorilla.cpp in Sources */,
@@ -1072,6 +1124,7 @@
 				FA5D77141983F6A70078CC43 /* Gui3DScrollBar.cpp in Sources */,
 				FA5D77341983F6E30078CC43 /* OGKNPC.cpp in Sources */,
 				FA5D77051983F6A60078CC43 /* Gui3DCheckboxSprite.cpp in Sources */,
+				FA1C2DBE1A82677E00D935D5 /* Game.cpp in Sources */,
 				FAF72713192C404400CBCD29 /* OGKGame.cpp in Sources */,
 				FA5D77151983F6A70078CC43 /* Gui3DStringCursorEdit.cpp in Sources */,
 				FA5D77131983F6A70078CC43 /* Gui3DScreenRenderable2DPanel.cpp in Sources */,
@@ -1079,6 +1132,7 @@
 				FA5D77031983F6A60078CC43 /* Gui3DCaption.cpp in Sources */,
 				FA5D77371983F6E30078CC43 /* OGKSceneManager.cpp in Sources */,
 				FA5D770E1983F6A60078CC43 /* Gui3DPanel.cpp in Sources */,
+				FA1C2DC31A82678500D935D5 /* MainMenuScene.cpp in Sources */,
 				FA5D77351983F6E30078CC43 /* OGKPlayer.cpp in Sources */,
 				FA5D770F1983F6A70078CC43 /* Gui3DPanelContainer.cpp in Sources */,
 				FA5D77041983F6A60078CC43 /* Gui3DCheckbox.cpp in Sources */,
@@ -1089,6 +1143,7 @@
 				FA5D77061983F6A60078CC43 /* Gui3DCheckboxText.cpp in Sources */,
 				FA5D77101983F6A70078CC43 /* Gui3DPanelElement.cpp in Sources */,
 				FA5D770D1983F6A60078CC43 /* Gui3DMultipleElementsSelector.cpp in Sources */,
+				FA1C2DB91A82674200D935D5 /* OGKTerrainGenerator.cpp in Sources */,
 				FA5D770A1983F6A60078CC43 /* Gui3DDebugPanelColors.cpp in Sources */,
 				FACF1A291942574300F099AA /* OGKTerrainMaterial.cpp in Sources */,
 				FA5D772F1983F6E30078CC43 /* OGKBadge.cpp in Sources */,
@@ -1172,6 +1227,7 @@
 		FAF7270A192C38E900CBCD29 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++98";
@@ -1188,6 +1244,7 @@
 					"\"$(OGRE_SDK_ROOT)/include/OGRE/Plugins/PCZSceneManager\"",
 					"\"$(OGRE_SDK_ROOT)/include/OGRE/Plugins/OctreeSceneManager\"",
 					"\"$(OGRE_SDK_ROOT)/include/OGRE/Plugins/OctreeZone\"",
+					"\"$(OGRE_SDK_ROOT)/include/OGRE/Paging\"",
 					"\"$(OGRE_SDK_ROOT)/include/OGRE/Terrain\"",
 				);
 				OGRE_SDK_ROOT = "/Users/alex/Documents/workspace/ogre/1.9.x/1.9.0-ios-sdk";
@@ -1207,6 +1264,7 @@
 					"-lFreeImage",
 					"-lzzip",
 					"-lz",
+					"-lOgrePagingStatic",
 					"-lOgreTerrainStatic",
 				);
 				VALID_ARCHS = "arm64 armv7";
@@ -1216,6 +1274,7 @@
 		FAF7270B192C38E900CBCD29 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++98";
@@ -1232,6 +1291,7 @@
 					"\"$(OGRE_SDK_ROOT)/include/OGRE/Plugins/PCZSceneManager\"",
 					"\"$(OGRE_SDK_ROOT)/include/OGRE/Plugins/OctreeSceneManager\"",
 					"\"$(OGRE_SDK_ROOT)/include/OGRE/Plugins/OctreeZone\"",
+					"\"$(OGRE_SDK_ROOT)/include/OGRE/Paging\"",
 					"\"$(OGRE_SDK_ROOT)/include/OGRE/Terrain\"",
 				);
 				OGRE_SDK_ROOT = "/Users/alex/Documents/workspace/ogre/1.9.x/1.9.0-ios-sdk";
@@ -1251,6 +1311,7 @@
 					"-lFreeImage",
 					"-lzzip",
 					"-lz",
+					"-lOgrePagingStatic",
 					"-lOgreTerrainStatic",
 				);
 				VALID_ARCHS = "arm64 armv7";

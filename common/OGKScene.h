@@ -18,7 +18,7 @@
 #include <OISMouse.h>
 
 class OGKCamera;
-class OgreRay;
+class OgreRayCollision;
 
 // GUI
 #include "Gui3D.h"
@@ -87,7 +87,7 @@ protected:
     
     virtual Ogre::MovableObject *getTerrainObject();
     
-    OgreRay *mCollisionRay;
+    OgreRayCollision *mCollisionRay;
 };
 
 #endif /* defined(__OgreGameKit__OGKScene__) */

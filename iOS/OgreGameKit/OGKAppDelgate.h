@@ -6,7 +6,7 @@
 //
 //
 
-#include "OGKGame.h"
+#include "Game.h"
 
 @interface OGKAppDelegate : NSObject <UIApplicationDelegate>
 {
