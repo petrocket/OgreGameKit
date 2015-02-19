@@ -1,6 +1,5 @@
-material TerrainMaterial 
+material TerrainMaterial
 {
-
   technique
   {
     pass

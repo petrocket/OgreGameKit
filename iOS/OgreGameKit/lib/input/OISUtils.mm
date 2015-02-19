@@ -49,7 +49,7 @@ Ogre::Vector2 getScreenSize()
         return Ogre::Vector2(size.width,size.height);
     }
     else {
-        return Ogre::Vector2(size.height,size.width);
+        return Ogre::Vector2(size.width,size.height);
     }
 }
 

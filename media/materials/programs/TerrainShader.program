@@ -24,12 +24,12 @@ fragment_program Terrain/Programs/TerrainFPMobile glsles
 // UNIFIED
 vertex_program Terrain/Programs/TerrainVP unified
 {
-//    delegate Terrain/Programs/TerrainVPGLSLES
+//    delegate Terrain/Programs/TerrainVPMobile
     delegate Terrain/Programs/TerrainVPCG
 }
 fragment_program Terrain/Programs/TerrainFP unified
 {
-//    delegate Terrain/Programs/TerrainFPGLSLES
+//    delegate Terrain/Programs/TerrainFPMobile
     delegate Terrain/Programs/TerrainFPCG
 }
 

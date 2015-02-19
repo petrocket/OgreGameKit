@@ -1,5 +1,51 @@
 ////////////////////////////////////////////////////////////////////////////////
 // MOBILE
+
+////////////////////////////////////////////////////////////////////////////////
+// OGK/Generic
+
+vertex_program OGK/GenericVP/GLSLES glsles
+{
+    source OGKGenericVP.glsles
+    profile glsles
+    default_params {
+        param_named_auto worldViewProj worldviewproj_matrix
+    }
+}
+
+fragment_program OGK/GenericFP/GLSLES glsles
+{
+    source OGKGenericFP.glsles
+    profile glsles
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// OGK/Lightmap
+
+vertex_program OGK/LightmapVP/GLSLES glsles
+{
+    source OGKLightmapVP.glsles
+    profile glsles
+    default_params {
+        param_named_auto worldViewProj worldviewproj_matrix
+        param_named_auto textureMat texture_matrix 0
+    }
+}
+
+fragment_program OGK/LightmapFP/GLSLES glsles
+{
+    source OGKLightmapFP.glsles
+    profile glsles
+
+    default_params {
+        param_named diffuse_tex int 0
+        param_named lightmap_tex int 1
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// OGK/Skybox
+
 vertex_program OGK/SkyboxVPGLSLES glsles
 {
 	source OGKSkyboxVP.glsles
@@ -16,6 +62,36 @@ fragment_program OGK/SkyboxFPGLSLES glsles
 
 ////////////////////////////////////////////////////////////////////////////////
 // UNIFIED
+
+////////////////////////////////////////////////////////////////////////////////
+// OGK/Generic
+
+vertex_program OGK/GenericVP unified
+{
+    delegate OGK/GenericVP/GLSLES
+}
+
+fragment_program OGK/GenericFP unified
+{
+    delegate OGK/GenericFP/GLSLES
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// OGK/Lightmap
+
+vertex_program OGK/LightmapVP unified
+{
+    delegate OGK/LightmapVP/GLSLES
+}
+
+fragment_program OGK/LightmapFP unified
+{
+    delegate OGK/LightmapFP/GLSLES
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// OGK/Skybox
+
 vertex_program OGK/SkyboxVP unified
 {
     delegate OGK/SkyboxVPGLSLES
@@ -24,3 +100,5 @@ fragment_program OGK/SkyboxFP unified
 {
     delegate OGK/SkyboxFPGLSLES
 }
+
+

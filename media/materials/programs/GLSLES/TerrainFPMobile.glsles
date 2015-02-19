@@ -29,6 +29,6 @@ void main()
 //    gl_FragColor = mix(diffuse * lit + (ambient * (1.0 - lit.x)), vec4(fogColour.r, fogColour.g,fogColour.b,1.0), 0.0);
     gl_FragColor.rgb = mix((diffuse * lit + (ambient * (1.0 - lit.x))).rgb,fogColour, fogVal);
     gl_FragColor.a = 1.0;
-//    gl_FragColor.r = 1.0;
+    gl_FragColor.r = 1.0;
 }
 

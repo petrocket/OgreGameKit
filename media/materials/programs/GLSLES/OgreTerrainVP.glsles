@@ -1,0 +1,23 @@
+#version 100
+precision highp int;
+precision highp float;
+attribute vec4 position;
+attribute vec2 uv0;
+attribute vec2 delta;
+uniform mat4 worldMatrix;
+uniform mat4 viewProjMatrix;
+uniform vec2 lodMorph;
+uniform vec4 uvMul_0;
+varying vec4 oPosObj;
+varying vec4 oUVMisc; 
+varying vec4 layerUV0;
+void main(void) {
+    vec4 worldPos = worldMatrix * position;
+    oPosObj = position;
+    float toMorph = -min(0.0, sign(delta.y - lodMorph.y));
+    worldPos.y += delta.x * toMorph * lodMorph.x;
+    layerUV0.xy =  uv0.xy * uvMul_0.r;
+    layerUV0.zw =  uv0.xy * uvMul_0.g;
+    gl_Position = viewProjMatrix * worldPos;
+    oUVMisc.xy = uv0.xy;
+}

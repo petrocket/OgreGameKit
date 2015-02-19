@@ -22,7 +22,6 @@ material OGK/Debug/Gray
       {
         vertex_program_ref OGK/ColorVP
         {
-            param_named_auto worldViewProj worldviewproj_matrix
         }
 
         fragment_program_ref OGK/ColorFP

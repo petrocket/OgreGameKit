@@ -306,7 +306,9 @@ bool OGKGame::_init(Ogre::String wndTitle)
     
 #ifdef OGRE_IS_IOS
     Ogre::Vector2 screenSize = getScreenSize();
-    Ogre::String suffix= "-" + Ogre::StringConverter::toString(screenSize.x);
+    unsigned int height = screenSize.x > screenSize.y ? screenSize.x : screenSize.y;
+    unsigned int width = screenSize.x > screenSize.y ? screenSize.y : screenSize.x;
+    Ogre::String suffix= "-" + Ogre::StringConverter::toString(height);
     OGKLOG("Loading ogre" + suffix + ".cfg");
     mRoot = new Ogre::Root(pluginsPath, mResourcePath + "ogre" + suffix + ".cfg");
 #else
@@ -328,15 +330,15 @@ bool OGKGame::_init(Ogre::String wndTitle)
     mRoot->getRenderSystem()->setConfigOption("macAPI","cocoa");
 #endif
     
-//#ifdef OGRE_IS_IOS
-//    mRoot->initialise(false);
-//    NameValuePairList misc;
-//    misc["FSAA"] = "2";
-//    misc["contentScalingFactor"] = "2";
-//    mRenderWindow = mRoot->createRenderWindow("OGRE GAME KIT", 1136, 640, true, &misc);
-//#else
+#ifdef OGRE_IS_IOS
+    mRoot->initialise(false);
+    NameValuePairList misc;
+    misc["FSAA"] = "0";
+    misc["contentScalingFactor"] = "2";
+    mRenderWindow = mRoot->createRenderWindow("OGRE GAME KIT", height / 2, width / 2, true, &misc);
+#else
 	mRenderWindow = mRoot->initialise(true, wndTitle);
-//#endif
+#endif
 	mRenderWindow->setActive(true);
     
 	mSceneManager = mRoot->createSceneManager(ST_GENERIC, "SceneManager");

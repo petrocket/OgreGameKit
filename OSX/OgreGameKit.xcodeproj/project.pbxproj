@@ -50,6 +50,7 @@
 		FA3FBD0F19E74EA200A9121A /* MainMenuScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA3FBD0D19E74EA200A9121A /* MainMenuScene.cpp */; };
 		FA3FBD1219E754BB00A9121A /* SinglePlayerScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA3FBD1019E754BB00A9121A /* SinglePlayerScene.cpp */; };
 		FA5DBE1019DE4CCD00E85EDC /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5DBE0F19DE4CCD00E85EDC /* Game.cpp */; };
+		FA60B5251A94FF8A007C5DD2 /* scene1.scene in Resources */ = {isa = PBXBuildFile; fileRef = FA60B5241A94FF8A007C5DD2 /* scene1.scene */; };
 		FA7769AA193E4B02005F4810 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA7769A9193E4B02005F4810 /* Carbon.framework */; };
 		FA7769AC193E4B02005F4810 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA7769AB193E4B02005F4810 /* Cocoa.framework */; };
 		FA7769AE193E4B02005F4810 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA7769AD193E4B02005F4810 /* IOKit.framework */; };
@@ -320,6 +321,7 @@
 		FA3FBD1119E754BB00A9121A /* SinglePlayerScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SinglePlayerScene.h; path = ../../game/SinglePlayerScene.h; sourceTree = "<group>"; };
 		FA5DBE0E19DE4CB500E85EDC /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Game.h; path = ../../game/Game.h; sourceTree = "<group>"; };
 		FA5DBE0F19DE4CCD00E85EDC /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Game.cpp; path = ../../game/Game.cpp; sourceTree = "<group>"; };
+		FA60B5241A94FF8A007C5DD2 /* scene1.scene */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = scene1.scene; sourceTree = "<group>"; };
 		FA7769A6193E4B02005F4810 /* OgreGameKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OgreGameKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA7769A9193E4B02005F4810 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		FA7769AB193E4B02005F4810 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -389,6 +391,7 @@
 			children = (
 				FA1279241964F54A00A7F7DD /* level1.scene */,
 				FA1279251964F58A00A7F7DD /* level2.scene */,
+				FA60B5241A94FF8A007C5DD2 /* scene1.scene */,
 			);
 			path = levels;
 			sourceTree = "<group>";
@@ -992,6 +995,7 @@
 				FA35A73D1960FB240071F577 /* manual.html in Resources */,
 				FA7769DA193E4B02005F4810 /* resources.cfg in Resources */,
 				FA7769D8193E4B02005F4810 /* plugins.cfg in Resources */,
+				FA60B5251A94FF8A007C5DD2 /* scene1.scene in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

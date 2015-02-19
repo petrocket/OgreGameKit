@@ -1,0 +1,18 @@
+#version 100
+
+precision highp int;
+precision highp float;
+
+uniform sampler2D diffuse_tex;
+uniform sampler2D lightmap_tex;
+
+varying vec2 uv;
+
+void main()
+{
+    vec4 diffuse = texture2D(diffuse_tex, uv);
+    vec4 lightmap = texture2D(lightmap_tex, uv);
+
+    gl_FragColor = diffuse;
+}
+

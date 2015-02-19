@@ -144,11 +144,15 @@ void SinglePlayerScene::onExit()
         mNPCs.clear();
     }
     
-    if(mCamera) mCamera->setTarget(NULL);
+    if(mCamera) {
+        mCamera->setTarget(NULL);
+    }
     
     OGKScene::onExit();
     
-    if(mGUI) mGUI->destroyScreenRenderable2D(mSceneName);
+    if(mGUI) {
+        mGUI->destroyScreenRenderable2D(mSceneName);
+    }
     
     mScreen = NULL;
     
@@ -269,7 +273,27 @@ bool SinglePlayerScene::keyPressed(const OIS::KeyEvent &keyEventRef)
 }
 
 #ifdef OGRE_IS_IOS
-bool SinglePlayerScene::touchMoved(const OIS::MultiTouchEvent &evt) { return true; }
+bool SinglePlayerScene::touchMoved(const OIS::MultiTouchEvent &evt) {
+    
+    if(mMenuPanel->isVisible()) {
+        // @TODO
+    }
+    else if(mDialogPanel->isVisible()) {
+        // @TODO
+    }
+    else if(mCamera && mCamera->getMode() == OGKCamera::THIRD_PERSON_INDIRECT &&
+       !mHUDPanel->getFocusedElement()) {
+        
+        Ogre::Real x = (float)evt.state.X.abs / (float)evt.state.width;
+        Ogre::Real y = (float)evt.state.Y.abs / (float)evt.state.height;
+        
+        _handleClickEvent(x,y);
+        return false;
+    }
+    
+    return true;
+}
+
 bool SinglePlayerScene::touchPressed(const OIS::MultiTouchEvent &evt)  {
     
     if(mMenuPanel && mMenuPanel->isVisible()) {
@@ -278,6 +302,7 @@ bool SinglePlayerScene::touchPressed(const OIS::MultiTouchEvent &evt)  {
     else {
         if(mDialogPanel && mDialogPanel->isVisible()) {
             mDialogPanel->injectTouchPressed(evt);
+            return false;
         }
         if(mHUDPanel && mHUDPanel->isVisible() && !mDialogPanel->getFocusedElement()) {
             mHUDPanel->injectTouchPressed(evt);
@@ -297,9 +322,10 @@ bool SinglePlayerScene::touchPressed(const OIS::MultiTouchEvent &evt)  {
         Ogre::Real y = (float)evt.state.Y.abs / (float)evt.state.height;
         
         _handleClickEvent(x,y);
+        return false;
     }
     
-    return false;
+    return true;
 }
 
 bool SinglePlayerScene::touchReleased(const OIS::MultiTouchEvent &evt)  { return true; }

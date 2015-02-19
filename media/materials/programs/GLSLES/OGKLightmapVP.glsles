@@ -4,10 +4,15 @@ precision highp int;
 precision highp float;
 
 uniform mat4 worldViewProj;
+uniform mat4 textureMat;
 
 attribute vec4 position;
+attribute vec2 uv;
+
+varying vec2 oUV;
 
 void main()
 {
+    oUV = (textureMat * vec4(uv, 0.0, 1.0)).xy;
     gl_Position = worldViewProj * position;
 }

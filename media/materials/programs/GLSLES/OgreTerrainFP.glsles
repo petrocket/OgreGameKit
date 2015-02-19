@@ -1,0 +1,64 @@
+#version 100
+precision highp int;
+precision highp float;
+vec4 expand(vec4 v)
+{
+    return v * 2.0 - 1.0;
+}
+
+vec4 lit(float NdotL, float NdotH, float m) {
+    float amb = 1.0;
+    float diffuse = max(0.0, NdotL);
+    float specular = step(0.0, NdotL) * max(NdotH, 0.0);
+    return vec4(amb, diffuse, specular, 1.0);
+}
+
+varying vec4 oPosObj;
+varying vec4 oUVMisc;
+varying vec4 layerUV0;
+uniform vec4 lightPosObjSpace;
+uniform vec3 lightDiffuseColour;
+uniform vec3 lightSpecularColour;
+uniform vec3 eyePosObjSpace;
+uniform vec4 ambient;
+uniform vec4 scaleBiasSpecular;
+uniform sampler2D globalNormal;
+uniform sampler2D lightMap;
+uniform sampler2D blendTex0;
+uniform sampler2D difftex0;
+uniform sampler2D normtex0;
+void main(void) {
+    float shadow = 1.0;
+    vec2 uv = oUVMisc.xy;
+    gl_FragColor = vec4(0,0,0,1);
+    vec3 normal = expand(texture2D(globalNormal, uv)).rgb;
+    vec3 lightDir = 
+        lightPosObjSpace.xyz - (oPosObj.xyz * lightPosObjSpace.w);
+    vec3 eyeDir = eyePosObjSpace - oPosObj.xyz;
+    vec3 diffuse = vec3(0,0,0);
+    float specular = 0.0;
+    vec4 blendTexVal0 = texture2D(blendTex0, uv);
+    vec3 tangent = vec3	(1, 0, 0);
+    vec3 binormal = normalize(cross(tangent, normal));
+    tangent = normalize(cross(normal, binormal));
+    mat3 TBN = mat3(tangent, binormal, normal);
+    vec4 litRes, litResLayer;
+    vec3 TSlightDir, TSeyeDir, TShalfAngle, TSnormal;
+    float displacement;
+    TSlightDir = normalize(TBN * lightDir);
+    TSeyeDir = normalize(TBN * eyeDir);
+    vec2 uv0 = layerUV0.xy;
+    displacement = texture2D(normtex0, uv0).a
+        * scaleBiasSpecular.x + scaleBiasSpecular.y;
+    uv0 += TSeyeDir.xy * displacement;
+    TSnormal = expand(texture2D(normtex0, uv0)).rgb;
+    TShalfAngle = normalize(TSlightDir + TSeyeDir);
+    litResLayer = lit(dot(TSnormal, TSlightDir), dot(TSnormal, TShalfAngle), scaleBiasSpecular.z);
+    litRes = litResLayer;
+    vec4 diffuseSpecTex0 = texture2D(difftex0, uv0);
+    diffuse = diffuseSpecTex0.rgb;
+    specular = diffuseSpecTex0.a;
+    shadow = texture2D(lightMap, uv).r;
+    gl_FragColor.rgb += ambient.rgb * diffuse + litRes.y * lightDiffuseColour * diffuse * shadow;
+    gl_FragColor.rgb += litRes.z * lightSpecularColour * specular * shadow;
+}

@@ -266,6 +266,8 @@ bool OGKCamera::touchMoved(const OIS::MultiTouchEvent &evt)
 {
     if(mMode == FREE) {
         OIS::MultiTouchState state = evt.state;
+        Ogre::Vector2 screenSize = getScreenSize();
+        
         int origTransX = 0, origTransY = 0;
     #if !OGRE_NO_VIEWPORT_ORIENTATIONMODE
         switch(mCamera->getViewport()->getOrientationMode())
@@ -274,17 +276,29 @@ bool OGKCamera::touchMoved(const OIS::MultiTouchEvent &evt)
     #endif
         {
             case Ogre::OR_LANDSCAPELEFT:
-                origTransX = state.X.rel;
-                origTransY = state.Y.rel;
-                state.X.rel = origTransY;
-                state.Y.rel = -origTransX;
+                if (screenSize.x < screenSize.y) {
+                    origTransX = state.X.rel;
+                    origTransY = state.Y.rel;
+                    state.X.rel = origTransY;
+                    state.Y.rel = -origTransX;
+                }
+                else {
+                    state.X.rel = -state.X.rel;
+                    state.Y.rel = -state.Y.rel;
+                }
                 break;
 
             case Ogre::OR_LANDSCAPERIGHT:
-                origTransX = state.X.rel;
-                origTransY = state.Y.rel;
-                state.X.rel = -origTransY;
-                state.Y.rel = origTransX;
+                if (screenSize.x < screenSize.y) {
+                    origTransX = state.X.rel;
+                    origTransY = state.Y.rel;
+                    state.X.rel = -origTransY;
+                    state.Y.rel = origTransX;
+                }
+                else {
+                    state.X.rel = -state.X.rel;
+                    state.Y.rel = -state.Y.rel;                    
+                }
                 break;
 
                 // Portrait doesn't need any change

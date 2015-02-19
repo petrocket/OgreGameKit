@@ -4,11 +4,17 @@ vertex_program OGK/ColorVPGLSLES glsles
 {
 	source OGKColorVP.glsles
     profile glsles
+    default_params {
+        param_named_auto worldViewProj worldviewproj_matrix
+    }
 }
 fragment_program OGK/ColorFPGLSLES glsles
 {
 	source OGKColorFP.glsles
     profile glsles
+    default_params {
+        //param_named diffuseColor float3 1.0 0.0 0.0
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////

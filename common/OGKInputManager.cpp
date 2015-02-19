@@ -13,6 +13,8 @@
 #include "OGKOSXWindowInterface.h"
 #endif
 
+#include "OGKGame.h"
+
 #ifdef OGRE_IS_IOS
 #include "OISUtils.h"
 #endif
@@ -393,12 +395,16 @@ bool OGKInputManager::keyReleased( const OIS::KeyEvent &e ) {
 }
 
 #ifdef OGRE_IS_IOS
+
 bool OGKInputManager::touchMoved(const OIS::MultiTouchEvent &e)
 {
     itMouseListener    = mMouseListeners.begin();
     itMouseListenerEnd = mMouseListeners.end();
+    
+    OIS::MultiTouchEvent m = OIS::MultiTouchEvent(NULL,_fixedTouchState(e));
+
     for(; itMouseListener != itMouseListenerEnd; ++itMouseListener ) {
-        if(!itMouseListener->second->touchMoved( e ))
+        if(!itMouseListener->second->touchMoved( m ))
 			break;
     }
 	return true;
@@ -409,29 +415,7 @@ bool OGKInputManager::touchPressed(const OIS:: MultiTouchEvent &e)
     itMouseListener    = mMouseListeners.begin();
     itMouseListenerEnd = mMouseListeners.end();
     
-    Ogre::Vector2 screenSize = getScreenSize();
-    OIS::MultiTouchState s;
-    s.X.abs = e.state.X.abs * getScreenScale();
-    s.Y.abs = e.state.Y.abs * getScreenScale();
-    s.width = screenSize.x;
-    s.height = screenSize.y;
-    
-    if(getScreenOrientation() == Ogre::OR_PORTRAIT) {
-        
-    }
-    else {
-        s.X.abs = e.state.Y.abs * getScreenScale();
-        s.Y.abs = e.state.X.abs * getScreenScale();
-        
-        if(getScreenOrientation() == Ogre::OR_LANDSCAPELEFT) {
-            s.X.abs = s.width - s.X.abs;
-        }
-        else if(getScreenOrientation() == Ogre::OR_LANDSCAPERIGHT) {
-            s.Y.abs = s.height - s.Y.abs;
-        }
-    }
-    
-    OIS::MultiTouchEvent m = OIS::MultiTouchEvent(NULL,s);
+    OIS::MultiTouchEvent m = OIS::MultiTouchEvent(NULL,_fixedTouchState(e));
     
     for(; itMouseListener != itMouseListenerEnd; ++itMouseListener ) {
         if(!itMouseListener->second->touchPressed( m ))
@@ -444,8 +428,11 @@ bool OGKInputManager::touchReleased(const OIS:: MultiTouchEvent &e)
 {
     itMouseListener    = mMouseListeners.begin();
     itMouseListenerEnd = mMouseListeners.end();
+    
+    OIS::MultiTouchEvent m = OIS::MultiTouchEvent(NULL,_fixedTouchState(e));
+    
     for(; itMouseListener != itMouseListenerEnd; ++itMouseListener ) {
-        if(!itMouseListener->second->touchReleased( e ))
+        if(!itMouseListener->second->touchReleased( m ))
 			break;
     }
 	return true;
@@ -455,8 +442,11 @@ bool OGKInputManager::touchCancelled(const OIS:: MultiTouchEvent &e)
 {
     itMouseListener    = mMouseListeners.begin();
     itMouseListenerEnd = mMouseListeners.end();
+    
+    OIS::MultiTouchEvent m = OIS::MultiTouchEvent(NULL,_fixedTouchState(e));
+    
     for(; itMouseListener != itMouseListenerEnd; ++itMouseListener ) {
-        if(!itMouseListener->second->touchCancelled( e ))
+        if(!itMouseListener->second->touchCancelled( m ))
 			break;
     }
 	return true;
@@ -475,7 +465,8 @@ bool OGKInputManager::mouseMoved( const OIS::MouseEvent &e ) {
     return true;
 }
 
-bool OGKInputManager::mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {
+bool OGKInputManager::mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id )
+{
     itMouseListener    = mMouseListeners.begin();
     itMouseListenerEnd = mMouseListeners.end();
     for(; itMouseListener != itMouseListenerEnd; ++itMouseListener ) {
@@ -486,7 +477,8 @@ bool OGKInputManager::mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID
     return true;
 }
 
-bool OGKInputManager::mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {
+bool OGKInputManager::mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id )
+{
     itMouseListener    = mMouseListeners.begin();
     itMouseListenerEnd = mMouseListeners.end();
     for(; itMouseListener != mMouseListeners.end(); ++itMouseListener ) {
@@ -498,7 +490,8 @@ bool OGKInputManager::mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonI
 }
 #endif
 
-bool OGKInputManager::povMoved( const OIS::JoyStickEvent &e, int pov ) {
+bool OGKInputManager::povMoved( const OIS::JoyStickEvent &e, int pov )
+{
     itJoystickListener    = mJoystickListeners.begin();
     itJoystickListenerEnd = mJoystickListeners.end();
     for(; itJoystickListener != itJoystickListenerEnd; ++itJoystickListener ) {
@@ -509,7 +502,8 @@ bool OGKInputManager::povMoved( const OIS::JoyStickEvent &e, int pov ) {
     return true;
 }
 
-bool OGKInputManager::axisMoved( const OIS::JoyStickEvent &e, int axis ) {
+bool OGKInputManager::axisMoved( const OIS::JoyStickEvent &e, int axis )
+{
     itJoystickListener    = mJoystickListeners.begin();
     itJoystickListenerEnd = mJoystickListeners.end();
     for(; itJoystickListener != itJoystickListenerEnd; ++itJoystickListener ) {
@@ -520,7 +514,8 @@ bool OGKInputManager::axisMoved( const OIS::JoyStickEvent &e, int axis ) {
     return true;
 }
 
-bool OGKInputManager::sliderMoved( const OIS::JoyStickEvent &e, int sliderID ) {
+bool OGKInputManager::sliderMoved( const OIS::JoyStickEvent &e, int sliderID )
+{
     itJoystickListener    = mJoystickListeners.begin();
     itJoystickListenerEnd = mJoystickListeners.end();
     for(; itJoystickListener != itJoystickListenerEnd; ++itJoystickListener ) {
@@ -531,7 +526,8 @@ bool OGKInputManager::sliderMoved( const OIS::JoyStickEvent &e, int sliderID ) {
     return true;
 }
 
-bool OGKInputManager::buttonPressed( const OIS::JoyStickEvent &e, int button ) {
+bool OGKInputManager::buttonPressed( const OIS::JoyStickEvent &e, int button )
+{
     itJoystickListener    = mJoystickListeners.begin();
     itJoystickListenerEnd = mJoystickListeners.end();
     for(; itJoystickListener != itJoystickListenerEnd; ++itJoystickListener ) {
@@ -542,10 +538,12 @@ bool OGKInputManager::buttonPressed( const OIS::JoyStickEvent &e, int button ) {
     return true;
 }
 
-bool OGKInputManager::buttonReleased( const OIS::JoyStickEvent &e, int button ) {
+bool OGKInputManager::buttonReleased( const OIS::JoyStickEvent &e, int button )
+{
     itJoystickListener    = mJoystickListeners.begin();
     itJoystickListenerEnd = mJoystickListeners.end();
-    for(; itJoystickListener != itJoystickListenerEnd; ++itJoystickListener ) {
+    for(; itJoystickListener != itJoystickListenerEnd; ++itJoystickListener )
+    {
         if(!itJoystickListener->second->buttonReleased( e, button ))
 			break;
     }
@@ -553,10 +551,52 @@ bool OGKInputManager::buttonReleased( const OIS::JoyStickEvent &e, int button ) 
     return true;
 }
 
-OGKInputManager* OGKInputManager::getSingletonPtr( void ) {
+
+OGKInputManager* OGKInputManager::getSingletonPtr( void )
+{
     if( !mInputManager ) {
         mInputManager = new OGKInputManager();
     }
     
     return mInputManager;
 }
+
+#ifdef OGRE_IS_IOS
+OIS::MultiTouchState OGKInputManager::_fixedTouchState(const OIS:: MultiTouchEvent &e)
+{
+    OIS::MultiTouchState s;
+    Ogre::Vector2 screenSize = getScreenSize();
+    s.X.abs = e.state.X.abs * getScreenScale();
+    s.Y.abs = e.state.Y.abs * getScreenScale();
+    s.X.rel = e.state.X.rel;
+    s.Y.rel = e.state.Y.rel;
+    s.width = screenSize.x;
+    s.height = screenSize.y;
+    
+    if(getScreenOrientation() == Ogre::OR_PORTRAIT) {
+        
+    }
+    else {
+        // iOS 7 locked the screen dimensions, iOS 8+ gives dimesions based on orientation
+        if (s.height > s.width) {
+            // this is for iOS 7
+            s.width = screenSize.y;
+            s.height = screenSize.x;
+            
+            s.X.abs = e.state.Y.abs * getScreenScale();
+            s.Y.abs = e.state.X.abs * getScreenScale();
+            
+            if(getScreenOrientation() == Ogre::OR_LANDSCAPELEFT) {
+                s.X.abs = s.width - s.X.abs;
+            }
+            else if(getScreenOrientation() == Ogre::OR_LANDSCAPERIGHT) {
+                s.Y.abs = s.height - s.Y.abs;
+            }
+        }
+    }
+    
+    OGKLOG(Ogre::StringConverter::toString(s.X.abs) + " " + Ogre::StringConverter::toString(s.Y.abs));
+    
+    return s;
+}
+#endif

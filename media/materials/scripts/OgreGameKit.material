@@ -7,15 +7,15 @@ material OGK/DefaultSkyBox
 			lighting off
 			depth_write off
             fog_override true
-            
+
             vertex_program_ref OGK/SkyboxVP
             {
                 param_named_auto worldViewProj worldviewproj_matrix
             }
 
             fragment_program_ref OGK/SkyboxFP
-            {		
-                
+            {
+
             }
                         
 			texture_unit 0

@@ -1,0 +1,28 @@
+#version 100
+
+precision mediump int;
+precision mediump float;
+
+uniform vec4 ambient;
+uniform mat4 worldViewProj;
+uniform float lodMorph;
+
+attribute vec4 position;
+attribute vec2 uv0;
+attribute float delta;
+
+varying vec4 oColor;
+varying vec2 uv;
+varying vec4 oPosition;
+
+void main()
+{
+    vec4 pos = position;
+    //pos.y = position.y + (delta * lodMorph);
+
+    uv = uv0;
+    oColor = ambient;
+
+    oPosition = worldViewProj * pos;
+    gl_Position = oPosition;
+}

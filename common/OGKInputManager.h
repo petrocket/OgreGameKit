@@ -136,6 +136,10 @@ private:
     static OGKInputManager *mInputManager;
         
     Ogre::RenderWindow *mRenderWindow;
+        
+#ifdef OGRE_IS_IOS
+        OIS::MultiTouchState _fixedTouchState(const OIS:: MultiTouchEvent &e);
+#endif
 };
 
 #endif /* defined(__OgreGameKit__OGKInputManager__) */
