@@ -12,6 +12,7 @@
 		FA1C2DC31A82678500D935D5 /* MainMenuScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA1C2DBF1A82678500D935D5 /* MainMenuScene.cpp */; };
 		FA1C2DC41A82678500D935D5 /* SinglePlayerScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA1C2DC11A82678500D935D5 /* SinglePlayerScene.cpp */; };
 		FA1C2DCB1A82692D00D935D5 /* OgreRayCollision.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA1C2DC91A82692D00D935D5 /* OgreRayCollision.cpp */; };
+		FA536D9D1A969D1300F801DC /* scene1.scene in Resources */ = {isa = PBXBuildFile; fileRef = FA536D9C1A969D1300F801DC /* scene1.scene */; };
 		FA5D77001983F6A60078CC43 /* Gorilla.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D76BF1983F6A60078CC43 /* Gorilla.cpp */; };
 		FA5D77011983F6A60078CC43 /* Gui3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D76C11983F6A60078CC43 /* Gui3D.cpp */; };
 		FA5D77021983F6A60078CC43 /* Gui3DButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D76C31983F6A60078CC43 /* Gui3DButton.cpp */; };
@@ -210,6 +211,7 @@
 		FA1C2DC21A82678500D935D5 /* SinglePlayerScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SinglePlayerScene.h; path = ../../game/SinglePlayerScene.h; sourceTree = "<group>"; };
 		FA1C2DC91A82692D00D935D5 /* OgreRayCollision.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreRayCollision.cpp; sourceTree = "<group>"; };
 		FA1C2DCA1A82692D00D935D5 /* OgreRayCollision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreRayCollision.h; sourceTree = "<group>"; };
+		FA536D9C1A969D1300F801DC /* scene1.scene */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = scene1.scene; sourceTree = "<group>"; };
 		FA5D76BF1983F6A60078CC43 /* Gorilla.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Gorilla.cpp; sourceTree = "<group>"; };
 		FA5D76C01983F6A60078CC43 /* Gorilla.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Gorilla.h; sourceTree = "<group>"; };
 		FA5D76C11983F6A60078CC43 /* Gui3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Gui3D.cpp; sourceTree = "<group>"; };
@@ -907,6 +909,7 @@
 			children = (
 				FA8D6872198736650080C223 /* level1.scene */,
 				FA8D6873198736650080C223 /* level2.scene */,
+				FA536D9C1A969D1300F801DC /* scene1.scene */,
 			);
 			path = levels;
 			sourceTree = "<group>";
@@ -1253,6 +1256,7 @@
 				FA60B5CF1A953CD7007C5DD2 /* hdr_finalToneMapping.glsles in Resources */,
 				FA60B6061A953CD7007C5DD2 /* dejavu.png in Resources */,
 				FA60B5BA1A953CD7007C5DD2 /* hdr_downscale3x3.glsl in Resources */,
+				FA536D9D1A969D1300F801DC /* scene1.scene in Resources */,
 				FA60B6031A953CD7007C5DD2 /* default_theme.png in Resources */,
 				FA60B5FB1A953CD7007C5DD2 /* Default.compositor in Resources */,
 				FA60B5E41A953CD7007C5DD2 /* Blur1_ps20.hlsl in Resources */,
@@ -1526,6 +1530,7 @@
 					"-lboost_system",
 					"-lboost_chrono",
 					"-lboost_date_time",
+					"-lboost_atomic",
 					"-lboost_thread",
 					"-lFreeType",
 					"-lFreeImage",
@@ -1573,6 +1578,7 @@
 					"-lboost_system",
 					"-lboost_chrono",
 					"-lboost_date_time",
+					"-lboost_atomic",
 					"-lboost_thread",
 					"-lFreeType",
 					"-lFreeImage",

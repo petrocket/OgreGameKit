@@ -37,7 +37,7 @@
         <user_data type="str" name="type" value="player_spawn" />
       </entity>
     </node>
-    <node name="terrain" >
+    <node name="Terrain" >
       <position x="0.000000" y="0.000000" z="-0.000000" />
       <rotation qw="1.000000" qz="-0.000000" qx="0.000000" qy="0.000000" />
       <scale x="125.727394" y="7.894703" z="174.121521" />
@@ -45,8 +45,8 @@
         <sensors />
         <actuators />
       </game>
-      <entity damping_trans="0.03999999910593033" anisotropic_friction="False" lock_rot_y="False" name="terrain" lock_trans_x="False" lock_trans_y="False" lock_trans_z="False" actor="False" friction_z="1.0" friction_x="1.0" friction_y="1.0" lock_rot_z="False" damping_rot="0.10000000149011612" lock_rot_x="False" velocity_max="0.0" inertia_tensor="0.4000000059604645" ghost="False" mass="1.0" physics_type="STATIC" meshFile="terrain.mesh" mass_radius="1.0" velocity_min="0.0" >
-        <user_data type="str" name="type" value="terrain" />
+      <entity damping_trans="0.03999999910593033" anisotropic_friction="False" lock_rot_y="False" name="Terrain" lock_trans_x="False" lock_trans_y="False" lock_trans_z="False" actor="False" friction_z="1.0" friction_x="1.0" friction_y="1.0" lock_rot_z="False" damping_rot="0.10000000149011612" lock_rot_x="False" velocity_max="0.0" inertia_tensor="0.4000000059604645" ghost="False" mass="1.0" physics_type="STATIC" meshFile="Terrain.mesh" mass_radius="1.0" velocity_min="0.0" >
+        <user_data type="str" name="type" value="Terrain" />
       </entity>
     </node>
     <node name="Sun" >

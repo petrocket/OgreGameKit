@@ -723,7 +723,7 @@ void SinglePlayerScene::_loadLevel()
             npc->setIsEnemy(npcType == "enemy");
             mNPCs.push_back(npc);
         }
-        else if(entityType == "terrain") {
+        else if(entityType == "terrain" || entityType == "Terrain") {
             mTerrainObject = entity;
         }
     }
